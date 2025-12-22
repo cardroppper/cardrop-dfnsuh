@@ -1,21 +1,32 @@
 
 import React, { useEffect } from 'react';
-import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, ActivityIndicator, StyleSheet, Text } from 'react-native';
 import { Redirect } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
 import { colors } from '@/styles/commonStyles';
 
 export default function Index() {
-  const { isLoading, isAuthenticated } = useAuth();
+  const { isLoading, isAuthenticated, user, profile } = useAuth();
 
   useEffect(() => {
-    console.log('[Index] Auth state:', { isLoading, isAuthenticated });
-  }, [isLoading, isAuthenticated]);
+    console.log('[Index] Auth state:', { isLoading, isAuthenticated, hasUser: !!user, hasProfile: !!profile });
+  }, [isLoading, isAuthenticated, user, profile]);
 
   if (isLoading) {
     return (
       <View style={styles.container}>
         <ActivityIndicator size="large" color={colors.primary} />
+        <Text style={styles.loadingText}>Loading CarDrop...</Text>
+      </View>
+    );
+  }
+
+  if (user && !profile) {
+    console.log('[Index] User exists but profile missing, showing error');
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color={colors.primary} />
+        <Text style={styles.loadingText}>Setting up your profile...</Text>
       </View>
     );
   }
@@ -35,5 +46,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+    color: colors.textSecondary,
+    fontWeight: '500',
   },
 });

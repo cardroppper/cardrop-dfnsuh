@@ -82,14 +82,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const loadProfile = async (userId: string) => {
+  const loadProfile = async (userId: string, retryCount = 0) => {
     try {
-      console.log('[Auth] Loading profile for user:', userId);
+      console.log('[Auth] Loading profile for user:', userId, 'retry:', retryCount);
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', userId)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error('[Auth] Error loading profile:', error);
@@ -101,10 +101,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setProfile(data);
       } else {
         console.warn('[Auth] No profile found for user:', userId);
+        
+        if (retryCount < 3) {
+          console.log('[Auth] Retrying profile load in 1 second...');
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          return loadProfile(userId, retryCount + 1);
+        }
+        
         setProfile(null);
       }
     } catch (error) {
       console.error('[Auth] Error loading profile:', error);
+      
+      if (retryCount < 3) {
+        console.log('[Auth] Retrying profile load after error in 1 second...');
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        return loadProfile(userId, retryCount + 1);
+      }
+      
       setProfile(null);
     }
   };
@@ -186,24 +200,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
       }
 
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .insert({
-          id: data.user.id,
-          username: normalizedUsername,
-          display_name: displayName.trim(),
-          bio: null,
-          avatar_url: null,
-          is_private: false,
-        });
-
-      if (profileError) {
-        console.error('[Auth] Profile creation error:', profileError);
-        await supabase.auth.signOut();
-        return { success: false, error: 'Failed to create profile. Please try again.' };
-      }
-
-      console.log('[Auth] Profile created successfully');
+      console.log('[Auth] User created with session, profile should be auto-created by trigger');
+      
       await loadProfile(data.user.id);
 
       return { success: true };
@@ -250,11 +248,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setSession(data.session);
       setUser(data.user);
       await loadProfile(data.user.id);
-
-      if (!profile) {
-        console.warn('[Auth] User logged in but no profile found');
-        return { success: false, error: 'Account profile not found. Please contact support.' };
-      }
 
       return { success: true };
     } catch (error) {
