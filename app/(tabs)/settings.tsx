@@ -1,30 +1,43 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
+  TextInput,
+  TouchableOpacity,
   StyleSheet,
   ScrollView,
-  TouchableOpacity,
-  Platform,
   Alert,
+  ActivityIndicator,
+  Platform,
+  Switch,
 } from 'react-native';
 import { router } from 'expo-router';
-import { colors, commonStyles } from '@/styles/commonStyles';
-import { IconSymbol } from '@/components/IconSymbol';
 import { useAuth } from '@/contexts/AuthContext';
+import { colors, commonStyles, buttonStyles } from '@/styles/commonStyles';
+import { IconSymbol } from '@/components/IconSymbol';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function SettingsScreen() {
-  const { user, logout } = useAuth();
+  const { user, profile, logout, updateProfile } = useAuth();
+  const [isEditing, setIsEditing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  
+  const [displayName, setDisplayName] = useState(profile?.display_name || '');
+  const [bio, setBio] = useState(profile?.bio || '');
+  const [instagramHandle, setInstagramHandle] = useState(profile?.instagram_handle || '');
+  const [twitterHandle, setTwitterHandle] = useState(profile?.twitter_handle || '');
+  const [youtubeHandle, setYoutubeHandle] = useState(profile?.youtube_handle || '');
+  const [isPrivate, setIsPrivate] = useState(profile?.is_private || false);
 
   const handleLogout = () => {
     Alert.alert(
-      'Log Out',
-      'Are you sure you want to log out?',
+      'Logout',
+      'Are you sure you want to logout?',
       [
         { text: 'Cancel', style: 'cancel' },
         {
-          text: 'Log Out',
+          text: 'Logout',
           style: 'destructive',
           onPress: async () => {
             await logout();
@@ -35,161 +48,210 @@ export default function SettingsScreen() {
     );
   };
 
-  return (
-    <View style={styles.container}>
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={[
-          styles.scrollContent,
-          Platform.OS === 'android' && styles.androidPadding,
-        ]}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.header}>
-          <Text style={styles.title}>Settings</Text>
-        </View>
+  const handleSaveProfile = async () => {
+    setIsSaving(true);
+    try {
+      const result = await updateProfile({
+        display_name: displayName.trim(),
+        bio: bio.trim() || null,
+        instagram_handle: instagramHandle.trim() || null,
+        twitter_handle: twitterHandle.trim() || null,
+        youtube_handle: youtubeHandle.trim() || null,
+        is_private: isPrivate,
+      });
 
-        <View style={styles.profileCard}>
-          <IconSymbol
-            ios_icon_name="person.circle.fill"
-            android_material_icon_name="account-circle"
-            size={64}
-            color={colors.primary}
-          />
-          <View style={styles.profileInfo}>
-            <Text style={styles.profileName}>{user?.name}</Text>
-            <Text style={styles.profileUsername}>@{user?.username}</Text>
-            <Text style={styles.profileEmail}>{user?.email}</Text>
+      if (result.success) {
+        Alert.alert('Success', 'Profile updated successfully');
+        setIsEditing(false);
+      } else {
+        Alert.alert('Error', result.error || 'Failed to update profile');
+      }
+    } catch (error) {
+      console.error('[Settings] Error saving profile:', error);
+      Alert.alert('Error', 'An unexpected error occurred');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setDisplayName(profile?.display_name || '');
+    setBio(profile?.bio || '');
+    setInstagramHandle(profile?.instagram_handle || '');
+    setTwitterHandle(profile?.twitter_handle || '');
+    setYoutubeHandle(profile?.youtube_handle || '');
+    setIsPrivate(profile?.is_private || false);
+    setIsEditing(false);
+  };
+
+  if (!profile) {
+    return (
+      <View style={commonStyles.centerContent}>
+        <ActivityIndicator size="large" color={colors.primary} />
+      </View>
+    );
+  }
+
+  return (
+    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <View style={styles.header}>
+        <View style={styles.avatarContainer}>
+          <View style={styles.avatar}>
+            <IconSymbol
+              ios_icon_name="person.fill"
+              android_material_icon_name="person"
+              size={60}
+              color={colors.textSecondary}
+            />
           </View>
         </View>
+        
+        <Text style={styles.username}>@{profile.username}</Text>
+        <Text style={styles.email}>{user?.email}</Text>
+        <Text style={styles.joinDate}>
+          Member since {new Date(profile.created_at).toLocaleDateString()}
+        </Text>
+      </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Account</Text>
-          <TouchableOpacity style={styles.settingItem}>
-            <View style={styles.settingLeft}>
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Profile Information</Text>
+          {!isEditing && (
+            <TouchableOpacity onPress={() => setIsEditing(true)}>
               <IconSymbol
-                ios_icon_name="person.fill"
-                android_material_icon_name="person"
-                size={20}
-                color={colors.textSecondary}
+                ios_icon_name="pencil"
+                android_material_icon_name="edit"
+                size={24}
+                color={colors.primary}
               />
-              <Text style={styles.settingText}>Edit Profile</Text>
-            </View>
-            <IconSymbol
-              ios_icon_name="chevron.right"
-              android_material_icon_name="chevron-right"
-              size={20}
-              color={colors.textSecondary}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.settingItem}>
-            <View style={styles.settingLeft}>
-              <IconSymbol
-                ios_icon_name="lock.fill"
-                android_material_icon_name="lock"
-                size={20}
-                color={colors.textSecondary}
-              />
-              <Text style={styles.settingText}>Privacy</Text>
-            </View>
-            <IconSymbol
-              ios_icon_name="chevron.right"
-              android_material_icon_name="chevron-right"
-              size={20}
-              color={colors.textSecondary}
-            />
-          </TouchableOpacity>
+            </TouchableOpacity>
+          )}
         </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Preferences</Text>
-          <TouchableOpacity style={styles.settingItem}>
-            <View style={styles.settingLeft}>
-              <IconSymbol
-                ios_icon_name="bell.fill"
-                android_material_icon_name="notifications"
-                size={20}
-                color={colors.textSecondary}
-              />
-              <Text style={styles.settingText}>Notifications</Text>
-            </View>
-            <IconSymbol
-              ios_icon_name="chevron.right"
-              android_material_icon_name="chevron-right"
-              size={20}
-              color={colors.textSecondary}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.settingItem}>
-            <View style={styles.settingLeft}>
-              <IconSymbol
-                ios_icon_name="location.fill"
-                android_material_icon_name="location-on"
-                size={20}
-                color={colors.textSecondary}
-              />
-              <Text style={styles.settingText}>Location</Text>
-            </View>
-            <IconSymbol
-              ios_icon_name="chevron.right"
-              android_material_icon_name="chevron-right"
-              size={20}
-              color={colors.textSecondary}
-            />
-          </TouchableOpacity>
+        <View style={styles.field}>
+          <Text style={styles.label}>Display Name</Text>
+          <TextInput
+            style={[commonStyles.input, !isEditing && styles.inputDisabled]}
+            value={displayName}
+            onChangeText={setDisplayName}
+            editable={isEditing}
+            placeholder="Your display name"
+            placeholderTextColor={colors.textSecondary}
+          />
         </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>About</Text>
-          <TouchableOpacity style={styles.settingItem}>
-            <View style={styles.settingLeft}>
-              <IconSymbol
-                ios_icon_name="info.circle.fill"
-                android_material_icon_name="info"
-                size={20}
-                color={colors.textSecondary}
-              />
-              <Text style={styles.settingText}>Help & Support</Text>
-            </View>
-            <IconSymbol
-              ios_icon_name="chevron.right"
-              android_material_icon_name="chevron-right"
-              size={20}
-              color={colors.textSecondary}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.settingItem}>
-            <View style={styles.settingLeft}>
-              <IconSymbol
-                ios_icon_name="doc.text.fill"
-                android_material_icon_name="description"
-                size={20}
-                color={colors.textSecondary}
-              />
-              <Text style={styles.settingText}>Terms & Privacy</Text>
-            </View>
-            <IconSymbol
-              ios_icon_name="chevron.right"
-              android_material_icon_name="chevron-right"
-              size={20}
-              color={colors.textSecondary}
-            />
-          </TouchableOpacity>
+        <View style={styles.field}>
+          <Text style={styles.label}>Bio</Text>
+          <TextInput
+            style={[commonStyles.input, styles.bioInput, !isEditing && styles.inputDisabled]}
+            value={bio}
+            onChangeText={setBio}
+            editable={isEditing}
+            placeholder="Tell us about yourself and your rides"
+            placeholderTextColor={colors.textSecondary}
+            multiline
+            numberOfLines={4}
+          />
         </View>
 
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <View style={styles.field}>
+          <Text style={styles.label}>Instagram Handle</Text>
+          <TextInput
+            style={[commonStyles.input, !isEditing && styles.inputDisabled]}
+            value={instagramHandle}
+            onChangeText={setInstagramHandle}
+            editable={isEditing}
+            placeholder="@username"
+            placeholderTextColor={colors.textSecondary}
+            autoCapitalize="none"
+          />
+        </View>
+
+        <View style={styles.field}>
+          <Text style={styles.label}>Twitter Handle</Text>
+          <TextInput
+            style={[commonStyles.input, !isEditing && styles.inputDisabled]}
+            value={twitterHandle}
+            onChangeText={setTwitterHandle}
+            editable={isEditing}
+            placeholder="@username"
+            placeholderTextColor={colors.textSecondary}
+            autoCapitalize="none"
+          />
+        </View>
+
+        <View style={styles.field}>
+          <Text style={styles.label}>YouTube Channel</Text>
+          <TextInput
+            style={[commonStyles.input, !isEditing && styles.inputDisabled]}
+            value={youtubeHandle}
+            onChangeText={setYoutubeHandle}
+            editable={isEditing}
+            placeholder="@channelname"
+            placeholderTextColor={colors.textSecondary}
+            autoCapitalize="none"
+          />
+        </View>
+
+        <View style={styles.switchField}>
+          <View style={styles.switchLabelContainer}>
+            <Text style={styles.label}>Private Profile</Text>
+            <Text style={styles.switchDescription}>
+              Only you can see your profile and vehicles
+            </Text>
+          </View>
+          <Switch
+            value={isPrivate}
+            onValueChange={setIsPrivate}
+            disabled={!isEditing}
+            trackColor={{ false: colors.highlight, true: colors.primary }}
+            thumbColor={colors.text}
+          />
+        </View>
+
+        {isEditing && (
+          <View style={styles.editActions}>
+            <TouchableOpacity
+              style={[buttonStyles.outline, styles.cancelButton]}
+              onPress={handleCancelEdit}
+              disabled={isSaving}
+            >
+              <Text style={[buttonStyles.text, { color: colors.textSecondary }]}>
+                Cancel
+              </Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={[buttonStyles.primary, styles.saveButton]}
+              onPress={handleSaveProfile}
+              disabled={isSaving}
+            >
+              {isSaving ? (
+                <ActivityIndicator color={colors.text} />
+              ) : (
+                <Text style={buttonStyles.text}>Save Changes</Text>
+              )}
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Account</Text>
+        
+        <TouchableOpacity style={styles.dangerButton} onPress={handleLogout}>
           <IconSymbol
-            ios_icon_name="arrow.right.square.fill"
+            ios_icon_name="rectangle.portrait.and.arrow.right"
             android_material_icon_name="logout"
-            size={20}
+            size={24}
             color={colors.accent}
           />
-          <Text style={styles.logoutText}>Log Out</Text>
+          <Text style={styles.dangerButtonText}>Logout</Text>
         </TouchableOpacity>
+      </View>
 
-        <Text style={styles.version}>CarDrop v1.0.0</Text>
-      </ScrollView>
-    </View>
+      <View style={styles.bottomSpacer} />
+    </ScrollView>
   );
 }
 
@@ -198,106 +260,116 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  scrollView: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingBottom: 100,
-  },
-  androidPadding: {
-    paddingTop: 48,
+  content: {
+    padding: 20,
+    paddingTop: Platform.OS === 'android' ? 48 : 20,
   },
   header: {
-    padding: 20,
-    paddingTop: Platform.OS === 'ios' ? 60 : 20,
-  },
-  title: {
-    fontSize: 36,
-    fontWeight: '900',
-    color: colors.text,
-    letterSpacing: -0.5,
-  },
-  profileCard: {
-    backgroundColor: colors.card,
-    borderRadius: 16,
-    padding: 24,
-    marginHorizontal: 20,
-    marginBottom: 32,
-    flexDirection: 'row',
     alignItems: 'center',
-    gap: 16,
-    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.3)',
-    elevation: 4,
+    marginBottom: 32,
   },
-  profileInfo: {
-    flex: 1,
+  avatarContainer: {
+    marginBottom: 16,
   },
-  profileName: {
-    fontSize: 20,
+  avatar: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    backgroundColor: colors.card,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 3,
+    borderColor: colors.primary,
+  },
+  username: {
+    fontSize: 24,
     fontWeight: '700',
     color: colors.text,
     marginBottom: 4,
   },
-  profileUsername: {
-    fontSize: 16,
-    color: colors.primary,
+  email: {
+    fontSize: 14,
+    color: colors.textSecondary,
     marginBottom: 4,
   },
-  profileEmail: {
-    fontSize: 14,
+  joinDate: {
+    fontSize: 12,
     color: colors.textSecondary,
   },
   section: {
-    paddingHorizontal: 20,
     marginBottom: 32,
   },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: colors.textSecondary,
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-    marginBottom: 12,
-  },
-  settingItem: {
-    backgroundColor: colors.card,
-    borderRadius: 12,
-    padding: 16,
+  sectionHeader: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  settingLeft: {
-    flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
-  },
-  settingText: {
-    fontSize: 16,
-    color: colors.text,
-    fontWeight: '500',
-  },
-  logoutButton: {
-    backgroundColor: colors.card,
-    borderRadius: 12,
-    padding: 16,
-    marginHorizontal: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
     marginBottom: 16,
   },
-  logoutText: {
-    fontSize: 16,
-    color: colors.accent,
-    fontWeight: '600',
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: colors.text,
   },
-  version: {
-    textAlign: 'center',
-    color: colors.textSecondary,
+  field: {
+    marginBottom: 16,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: 8,
+  },
+  inputDisabled: {
+    opacity: 0.6,
+  },
+  bioInput: {
+    height: 100,
+    textAlignVertical: 'top',
+    paddingTop: 16,
+  },
+  switchField: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: colors.card,
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 16,
+  },
+  switchLabelContainer: {
+    flex: 1,
+    marginRight: 16,
+  },
+  switchDescription: {
     fontSize: 12,
-    marginBottom: 32,
+    color: colors.textSecondary,
+    marginTop: 4,
+  },
+  editActions: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 8,
+  },
+  cancelButton: {
+    flex: 1,
+  },
+  saveButton: {
+    flex: 1,
+  },
+  dangerButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.card,
+    padding: 16,
+    borderRadius: 12,
+    gap: 12,
+  },
+  dangerButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.accent,
+  },
+  bottomSpacer: {
+    height: 100,
   },
 });

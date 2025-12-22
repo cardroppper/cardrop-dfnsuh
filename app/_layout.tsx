@@ -20,7 +20,7 @@ import { colors } from "@/styles/commonStyles";
 SplashScreen.preventAutoHideAsync();
 
 export const unstable_settings = {
-  initialRouteName: "(auth)",
+  initialRouteName: "index",
 };
 
 export default function RootLayout() {
@@ -58,6 +58,7 @@ export default function RootLayout() {
         <AuthProvider>
           <GestureHandlerRootView style={{ flex: 1 }}>
             <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="index" />
               <Stack.Screen name="(auth)" />
               <Stack.Screen name="(tabs)" />
             </Stack>

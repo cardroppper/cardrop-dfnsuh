@@ -1,59 +1,83 @@
 
 import React, { useEffect } from 'react';
-import { NativeTabs, Icon, Label } from 'expo-router/unstable-native-tabs';
-import { router } from 'expo-router';
+import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { Redirect } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
-import { ActivityIndicator, View } from 'react-native';
 import { colors } from '@/styles/commonStyles';
+import { Tabs } from 'expo-router/unstable-native-tabs';
 
 export default function TabLayout() {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isLoading, isAuthenticated, user, profile } = useAuth();
 
   useEffect(() => {
-    console.log('iOS TabLayout - isAuthenticated:', isAuthenticated, 'isLoading:', isLoading);
-    if (!isLoading && !isAuthenticated) {
-      router.replace('/(auth)/login');
-    }
-  }, [isAuthenticated, isLoading]);
+    console.log('[TabLayout iOS] Auth state:', { isLoading, isAuthenticated, hasUser: !!user, hasProfile: !!profile });
+  }, [isLoading, isAuthenticated, user, profile]);
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
   }
 
   if (!isAuthenticated) {
-    return null;
+    console.log('[TabLayout iOS] Not authenticated, redirecting to auth');
+    return <Redirect href="/(auth)/login" />;
   }
 
   return (
-    <NativeTabs
-      backgroundColor={colors.background}
-      tintColor={colors.primary}
-      iconColor={colors.textSecondary}
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+      }}
+      tabBarActiveTintColor={colors.primary}
+      tabBarInactiveTintColor={colors.textSecondary}
     >
-      <NativeTabs.Trigger name="discover">
-        <Icon sf="sparkles" />
-        <Label>Discover</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="nearby">
-        <Icon sf="location.fill" />
-        <Label>Nearby</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="garage">
-        <Icon sf="car.fill" />
-        <Label>Garage</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="clubs">
-        <Icon sf="person.3.fill" />
-        <Label>Clubs</Label>
-      </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="settings">
-        <Icon sf="gearshape.fill" />
-        <Label>Settings</Label>
-      </NativeTabs.Trigger>
-    </NativeTabs>
+      <Tabs.Screen
+        name="discover"
+        options={{
+          title: 'Discover',
+          tabBarIcon: ({ sfSymbol }) => sfSymbol('sparkles'),
+        }}
+      />
+      <Tabs.Screen
+        name="nearby"
+        options={{
+          title: 'Nearby',
+          tabBarIcon: ({ sfSymbol }) => sfSymbol('location.fill'),
+        }}
+      />
+      <Tabs.Screen
+        name="garage"
+        options={{
+          title: 'Garage',
+          tabBarIcon: ({ sfSymbol }) => sfSymbol('car.2.fill'),
+        }}
+      />
+      <Tabs.Screen
+        name="clubs"
+        options={{
+          title: 'Clubs',
+          tabBarIcon: ({ sfSymbol }) => sfSymbol('person.3.fill'),
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: 'Settings',
+          tabBarIcon: ({ sfSymbol }) => sfSymbol('gearshape.fill'),
+        }}
+      />
+    </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: colors.background,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

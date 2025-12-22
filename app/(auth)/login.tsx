@@ -25,16 +25,23 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert('Error', 'Please fill in all fields');
+      Alert.alert('Missing Information', 'Please enter your email and password');
       return;
     }
 
     setIsLoading(true);
     try {
-      await login(email, password);
-      router.replace('/(tabs)/discover');
+      const result = await login(email, password);
+      
+      if (result.success) {
+        console.log('[Login] Login successful, navigating to app');
+        router.replace('/(tabs)/discover');
+      } else {
+        Alert.alert('Login Failed', result.error || 'Invalid credentials');
+      }
     } catch (error) {
-      Alert.alert('Login Failed', error instanceof Error ? error.message : 'An error occurred');
+      console.error('[Login] Unexpected error:', error);
+      Alert.alert('Error', 'An unexpected error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -61,29 +68,37 @@ export default function LoginScreen() {
         </View>
 
         <View style={styles.form}>
-          <TextInput
-            style={commonStyles.input}
-            placeholder="Email"
-            placeholderTextColor={colors.textSecondary}
-            value={email}
-            onChangeText={setEmail}
-            autoCapitalize="none"
-            keyboardType="email-address"
-            autoComplete="email"
-          />
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              style={commonStyles.input}
+              placeholder="your@email.com"
+              placeholderTextColor={colors.textSecondary}
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              autoComplete="email"
+              editable={!isLoading}
+            />
+          </View>
 
-          <TextInput
-            style={commonStyles.input}
-            placeholder="Password"
-            placeholderTextColor={colors.textSecondary}
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-            autoComplete="password"
-          />
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Password</Text>
+            <TextInput
+              style={commonStyles.input}
+              placeholder="Your password"
+              placeholderTextColor={colors.textSecondary}
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+              autoComplete="password"
+              editable={!isLoading}
+            />
+          </View>
 
           <TouchableOpacity
-            style={[buttonStyles.primary, styles.loginButton]}
+            style={[buttonStyles.primary, styles.loginButton, isLoading && styles.buttonDisabled]}
             onPress={handleLogin}
             disabled={isLoading}
           >
@@ -145,11 +160,25 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: 32,
   },
+  inputContainer: {
+    marginBottom: 4,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: 8,
+    marginLeft: 4,
+  },
   loginButton: {
+    marginTop: 8,
     marginBottom: 16,
   },
   signupButton: {
     marginBottom: 0,
+  },
+  buttonDisabled: {
+    opacity: 0.6,
   },
   footerText: {
     textAlign: 'center',

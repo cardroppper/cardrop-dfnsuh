@@ -1,3 +1,4 @@
+
 export type Json =
   | string
   | number
@@ -9,7 +10,47 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          id: string
+          username: string
+          display_name: string
+          bio: string | null
+          avatar_url: string | null
+          instagram_handle: string | null
+          twitter_handle: string | null
+          youtube_handle: string | null
+          is_private: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          username: string
+          display_name: string
+          bio?: string | null
+          avatar_url?: string | null
+          instagram_handle?: string | null
+          twitter_handle?: string | null
+          youtube_handle?: string | null
+          is_private?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          username?: string
+          display_name?: string
+          bio?: string | null
+          avatar_url?: string | null
+          instagram_handle?: string | null
+          twitter_handle?: string | null
+          youtube_handle?: string | null
+          is_private?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never
@@ -136,3 +177,5 @@ export const Constants = {
     Enums: {},
   },
 } as const
+
+export type Profile = Tables<'profiles'>

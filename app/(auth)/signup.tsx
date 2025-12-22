@@ -21,27 +21,65 @@ export default function SignupScreen() {
   const { signup } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [username, setUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [usernameError, setUsernameError] = useState('');
+
+  const validateUsername = (text: string) => {
+    const normalized = text.toLowerCase().replace(/[^a-z0-9_]/g, '');
+    setUsername(normalized);
+    
+    if (normalized.length > 0 && normalized.length < 3) {
+      setUsernameError('Username must be at least 3 characters');
+    } else if (normalized.length > 30) {
+      setUsernameError('Username must be 30 characters or less');
+    } else {
+      setUsernameError('');
+    }
+  };
 
   const handleSignup = async () => {
-    if (!email || !password || !name || !username) {
-      Alert.alert('Error', 'Please fill in all fields');
+    if (!email || !password || !displayName || !username) {
+      Alert.alert('Missing Information', 'Please fill in all fields');
       return;
     }
 
     if (username.length < 3) {
-      Alert.alert('Error', 'Username must be at least 3 characters');
+      Alert.alert('Invalid Username', 'Username must be at least 3 characters');
+      return;
+    }
+
+    if (password.length < 6) {
+      Alert.alert('Weak Password', 'Password must be at least 6 characters');
       return;
     }
 
     setIsLoading(true);
     try {
-      await signup(email, password, name, username);
-      router.replace('/(tabs)/discover');
+      const result = await signup(email, password, username, displayName);
+      
+      if (result.success) {
+        if (result.needsVerification) {
+          Alert.alert(
+            'Verify Your Email',
+            'We\'ve sent a verification link to your email. Please verify your email address before logging in.',
+            [
+              {
+                text: 'OK',
+                onPress: () => router.replace('/(auth)/login'),
+              },
+            ]
+          );
+        } else {
+          router.replace('/(tabs)/discover');
+        }
+      } else {
+        Alert.alert('Signup Failed', result.error || 'An error occurred during signup');
+      }
     } catch (error) {
-      Alert.alert('Signup Failed', error instanceof Error ? error.message : 'An error occurred');
+      console.error('[Signup] Unexpected error:', error);
+      Alert.alert('Error', 'An unexpected error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -68,49 +106,68 @@ export default function SignupScreen() {
         </View>
 
         <View style={styles.form}>
-          <TextInput
-            style={commonStyles.input}
-            placeholder="Full Name"
-            placeholderTextColor={colors.textSecondary}
-            value={name}
-            onChangeText={setName}
-            autoCapitalize="words"
-            autoComplete="name"
-          />
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Display Name</Text>
+            <TextInput
+              style={commonStyles.input}
+              placeholder="Your full name"
+              placeholderTextColor={colors.textSecondary}
+              value={displayName}
+              onChangeText={setDisplayName}
+              autoCapitalize="words"
+              autoComplete="name"
+              editable={!isLoading}
+            />
+          </View>
 
-          <TextInput
-            style={commonStyles.input}
-            placeholder="Username"
-            placeholderTextColor={colors.textSecondary}
-            value={username}
-            onChangeText={(text) => setUsername(text.toLowerCase().replace(/[^a-z0-9_]/g, ''))}
-            autoCapitalize="none"
-            autoComplete="username"
-          />
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Username</Text>
+            <TextInput
+              style={[commonStyles.input, usernameError ? styles.inputError : null]}
+              placeholder="username (lowercase, numbers, _)"
+              placeholderTextColor={colors.textSecondary}
+              value={username}
+              onChangeText={validateUsername}
+              autoCapitalize="none"
+              autoComplete="username"
+              editable={!isLoading}
+            />
+            {usernameError ? (
+              <Text style={styles.errorText}>{usernameError}</Text>
+            ) : null}
+          </View>
 
-          <TextInput
-            style={commonStyles.input}
-            placeholder="Email"
-            placeholderTextColor={colors.textSecondary}
-            value={email}
-            onChangeText={setEmail}
-            autoCapitalize="none"
-            keyboardType="email-address"
-            autoComplete="email"
-          />
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              style={commonStyles.input}
+              placeholder="your@email.com"
+              placeholderTextColor={colors.textSecondary}
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              autoComplete="email"
+              editable={!isLoading}
+            />
+          </View>
 
-          <TextInput
-            style={commonStyles.input}
-            placeholder="Password"
-            placeholderTextColor={colors.textSecondary}
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-            autoComplete="password"
-          />
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Password</Text>
+            <TextInput
+              style={commonStyles.input}
+              placeholder="At least 6 characters"
+              placeholderTextColor={colors.textSecondary}
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+              autoComplete="password"
+              editable={!isLoading}
+            />
+          </View>
 
           <TouchableOpacity
-            style={[buttonStyles.primary, styles.signupButton]}
+            style={[buttonStyles.primary, styles.signupButton, isLoading && styles.buttonDisabled]}
             onPress={handleSignup}
             disabled={isLoading}
           >
@@ -131,6 +188,10 @@ export default function SignupScreen() {
             </Text>
           </TouchableOpacity>
         </View>
+
+        <Text style={styles.disclaimer}>
+          By creating an account, you agree to our Terms of Service and Privacy Policy
+        </Text>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -166,12 +227,42 @@ const styles = StyleSheet.create({
   },
   form: {
     width: '100%',
-    marginBottom: 32,
+    marginBottom: 24,
+  },
+  inputContainer: {
+    marginBottom: 4,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: 8,
+    marginLeft: 4,
+  },
+  inputError: {
+    borderColor: colors.accent,
+    borderWidth: 2,
+  },
+  errorText: {
+    fontSize: 12,
+    color: colors.accent,
+    marginTop: 4,
+    marginLeft: 4,
   },
   signupButton: {
+    marginTop: 8,
     marginBottom: 16,
   },
   loginButton: {
     marginBottom: 0,
+  },
+  buttonDisabled: {
+    opacity: 0.6,
+  },
+  disclaimer: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    lineHeight: 18,
   },
 });
