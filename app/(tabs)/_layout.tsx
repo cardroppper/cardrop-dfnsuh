@@ -1,35 +1,79 @@
-import React from 'react';
-import { Stack } from 'expo-router';
+
+import React, { useEffect } from 'react';
+import { Stack, router } from 'expo-router';
+import { useAuth } from '@/contexts/AuthContext';
 import FloatingTabBar, { TabBarItem } from '@/components/FloatingTabBar';
+import { ActivityIndicator, View } from 'react-native';
+import { colors } from '@/styles/commonStyles';
 
 export default function TabLayout() {
-  // Define the tabs configuration
+  const { isAuthenticated, isLoading } = useAuth();
+
+  useEffect(() => {
+    console.log('TabLayout - isAuthenticated:', isAuthenticated, 'isLoading:', isLoading);
+    if (!isLoading && !isAuthenticated) {
+      router.replace('/(auth)/login');
+    }
+  }, [isAuthenticated, isLoading]);
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color={colors.primary} />
+      </View>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return null;
+  }
+
   const tabs: TabBarItem[] = [
     {
-      name: '(home)',
-      route: '/(tabs)/(home)/',
-      icon: 'home',
-      label: 'Home',
+      name: 'discover',
+      route: '/(tabs)/discover',
+      icon: 'explore',
+      label: 'Discover',
     },
     {
-      name: 'profile',
-      route: '/(tabs)/profile',
-      icon: 'person',
-      label: 'Profile',
+      name: 'nearby',
+      route: '/(tabs)/nearby',
+      icon: 'location-on',
+      label: 'Nearby',
+    },
+    {
+      name: 'garage',
+      route: '/(tabs)/garage',
+      icon: 'garage',
+      label: 'Garage',
+    },
+    {
+      name: 'clubs',
+      route: '/(tabs)/clubs',
+      icon: 'groups',
+      label: 'Clubs',
+    },
+    {
+      name: 'settings',
+      route: '/(tabs)/settings',
+      icon: 'settings',
+      label: 'Settings',
     },
   ];
 
-  // For Android and Web, use Stack navigation with custom floating tab bar
   return (
     <>
       <Stack
         screenOptions={{
           headerShown: false,
-          animation: 'none', // Remove fade animation to prevent black screen flash
+          animation: 'none',
         }}
       >
-        <Stack.Screen key="home" name="(home)" />
-        <Stack.Screen key="profile" name="profile" />
+        <Stack.Screen name="discover" />
+        <Stack.Screen name="nearby" />
+        <Stack.Screen name="garage" />
+        <Stack.Screen name="clubs" />
+        <Stack.Screen name="settings" />
       </Stack>
       <FloatingTabBar tabs={tabs} />
     </>
