@@ -10,6 +10,9 @@ export const colors = {
   accent: '#FF4081',
   card: '#1E1E1E',
   highlight: '#292929',
+  success: '#4CAF50',
+  warning: '#FFC107',
+  error: '#F44336',
 };
 
 export const buttonStyles = StyleSheet.create({
@@ -22,10 +25,12 @@ export const buttonStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   secondary: {
-    backgroundColor: colors.secondary,
+    backgroundColor: 'transparent',
     paddingVertical: 16,
     paddingHorizontal: 32,
     borderRadius: 12,
+    borderWidth: 2,
+    borderColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },

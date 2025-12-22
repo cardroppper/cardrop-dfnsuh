@@ -128,6 +128,44 @@ export type Database = {
           },
         ]
       }
+      vehicle_beacons: {
+        Row: {
+          id: string
+          vehicle_id: string
+          beacon_uuid: string
+          beacon_major: number | null
+          beacon_minor: number | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          vehicle_id: string
+          beacon_uuid: string
+          beacon_major?: number | null
+          beacon_minor?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          vehicle_id?: string
+          beacon_uuid?: string
+          beacon_major?: number | null
+          beacon_minor?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vehicle_beacons_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       vehicles: {
         Row: {
           body_style: string | null
@@ -331,3 +369,4 @@ export type Profile = Tables<'profiles'>
 export type Vehicle = Tables<'vehicles'>
 export type VehicleImage = Tables<'vehicle_images'>
 export type VehicleModification = Tables<'vehicle_modifications'>
+export type VehicleBeacon = Tables<'vehicle_beacons'>

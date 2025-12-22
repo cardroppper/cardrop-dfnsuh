@@ -1,3 +1,4 @@
+
 {
   "expo": {
     "name": "CarDrop",
@@ -16,7 +17,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.Natively",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSBluetoothAlwaysUsageDescription": "CarDrop uses Bluetooth to discover nearby vehicles when you start scanning. This allows you to see cars that are physically near you at meets and events.",
+        "NSBluetoothPeripheralUsageDescription": "CarDrop uses Bluetooth to discover nearby vehicles when you start scanning."
       }
     },
     "android": {
@@ -25,7 +28,15 @@
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.Natively"
+      "package": "com.anonymous.Natively",
+      "permissions": [
+        "BLUETOOTH",
+        "BLUETOOTH_ADMIN",
+        "BLUETOOTH_SCAN",
+        "BLUETOOTH_CONNECT",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
     },
     "web": {
       "favicon": "./assets/images/final_quest_240x240.png",
@@ -34,7 +45,15 @@
     "plugins": [
       "expo-font",
       "expo-router",
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "react-native-ble-plx",
+        {
+          "isBackgroundEnabled": false,
+          "modes": ["peripheral", "central"],
+          "bluetoothAlwaysPermission": "CarDrop uses Bluetooth to discover nearby vehicles when you start scanning. This allows you to see cars that are physically near you at meets and events."
+        }
+      ]
     ],
     "scheme": "natively",
     "experiments": {
