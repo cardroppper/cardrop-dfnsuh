@@ -17,6 +17,7 @@ export type Database = {
         Row: {
           avatar_url: string | null
           bio: string | null
+          cover_photo_url: string | null
           created_at: string
           display_name: string
           id: string
@@ -30,6 +31,7 @@ export type Database = {
         Insert: {
           avatar_url?: string | null
           bio?: string | null
+          cover_photo_url?: string | null
           created_at?: string
           display_name: string
           id: string
@@ -43,6 +45,7 @@ export type Database = {
         Update: {
           avatar_url?: string | null
           bio?: string | null
+          cover_photo_url?: string | null
           created_at?: string
           display_name?: string
           id?: string
@@ -91,9 +94,12 @@ export type Database = {
         Row: {
           brand_name: string | null
           category: string
+          cost: number | null
           created_at: string
           description: string | null
           id: string
+          image_url: string | null
+          install_date: string | null
           part_name: string | null
           updated_at: string
           vehicle_id: string
@@ -101,9 +107,12 @@ export type Database = {
         Insert: {
           brand_name?: string | null
           category: string
+          cost?: number | null
           created_at?: string
           description?: string | null
           id?: string
+          image_url?: string | null
+          install_date?: string | null
           part_name?: string | null
           updated_at?: string
           vehicle_id: string
@@ -111,9 +120,12 @@ export type Database = {
         Update: {
           brand_name?: string | null
           category?: string
+          cost?: number | null
           created_at?: string
           description?: string | null
           id?: string
+          image_url?: string | null
+          install_date?: string | null
           part_name?: string | null
           updated_at?: string
           vehicle_id?: string
@@ -246,6 +258,8 @@ export type Database = {
           location: string | null
           is_public: boolean
           owner_id: string
+          logo_url: string | null
+          banner_url: string | null
           created_at: string
           updated_at: string
         }
@@ -256,6 +270,8 @@ export type Database = {
           location?: string | null
           is_public?: boolean
           owner_id: string
+          logo_url?: string | null
+          banner_url?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -266,6 +282,8 @@ export type Database = {
           location?: string | null
           is_public?: boolean
           owner_id?: string
+          logo_url?: string | null
+          banner_url?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -311,6 +329,8 @@ export type Database = {
           description: string | null
           location: string
           event_date: string
+          beacon_uuid: string | null
+          auto_checkin_enabled: boolean
           created_by: string
           created_at: string
           updated_at: string
@@ -322,6 +342,8 @@ export type Database = {
           description?: string | null
           location: string
           event_date: string
+          beacon_uuid?: string | null
+          auto_checkin_enabled?: boolean
           created_by: string
           created_at?: string
           updated_at?: string
@@ -333,6 +355,8 @@ export type Database = {
           description?: string | null
           location?: string
           event_date?: string
+          beacon_uuid?: string | null
+          auto_checkin_enabled?: boolean
           created_by?: string
           created_at?: string
           updated_at?: string
@@ -417,6 +441,282 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_subscriptions: {
+        Row: {
+          id: string
+          user_id: string
+          subscription_status: string
+          subscription_start_date: string | null
+          subscription_end_date: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          subscription_status?: string
+          subscription_start_date?: string | null
+          subscription_end_date?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          subscription_status?: string
+          subscription_start_date?: string | null
+          subscription_end_date?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      beacon_detections: {
+        Row: {
+          id: string
+          detector_user_id: string
+          detected_vehicle_id: string
+          detected_user_id: string
+          rssi: number
+          location: string | null
+          detected_at: string
+        }
+        Insert: {
+          id?: string
+          detector_user_id: string
+          detected_vehicle_id: string
+          detected_user_id: string
+          rssi: number
+          location?: string | null
+          detected_at?: string
+        }
+        Update: {
+          id?: string
+          detector_user_id?: string
+          detected_vehicle_id?: string
+          detected_user_id?: string
+          rssi?: number
+          location?: string | null
+          detected_at?: string
+        }
+        Relationships: []
+      }
+      vehicle_timeline: {
+        Row: {
+          id: string
+          vehicle_id: string
+          title: string
+          description: string | null
+          entry_date: string
+          image_url: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          vehicle_id: string
+          title: string
+          description?: string | null
+          entry_date: string
+          image_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          vehicle_id?: string
+          title?: string
+          description?: string | null
+          entry_date?: string
+          image_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      vehicle_performance: {
+        Row: {
+          id: string
+          vehicle_id: string
+          zero_to_sixty: number | null
+          quarter_mile_time: number | null
+          quarter_mile_speed: number | null
+          horsepower: number | null
+          torque: number | null
+          weight_lbs: number | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          vehicle_id: string
+          zero_to_sixty?: number | null
+          quarter_mile_time?: number | null
+          quarter_mile_speed?: number | null
+          horsepower?: number | null
+          torque?: number | null
+          weight_lbs?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          vehicle_id?: string
+          zero_to_sixty?: number | null
+          quarter_mile_time?: number | null
+          quarter_mile_speed?: number | null
+          horsepower?: number | null
+          torque?: number | null
+          weight_lbs?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      club_messages: {
+        Row: {
+          id: string
+          club_id: string
+          user_id: string
+          message: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          club_id: string
+          user_id: string
+          message: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          club_id?: string
+          user_id?: string
+          message?: string
+          created_at?: string
+        }
+        Relationships: []
+      }
+      club_posts: {
+        Row: {
+          id: string
+          club_id: string
+          user_id: string
+          content: string
+          image_url: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          club_id: string
+          user_id: string
+          content: string
+          image_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          club_id?: string
+          user_id?: string
+          content?: string
+          image_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      club_hubs: {
+        Row: {
+          id: string
+          club_id: string
+          name: string
+          location: string
+          latitude: number | null
+          longitude: number | null
+          is_active: boolean
+          sync_interval_minutes: number
+          created_by: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          club_id: string
+          name: string
+          location: string
+          latitude?: number | null
+          longitude?: number | null
+          is_active?: boolean
+          sync_interval_minutes?: number
+          created_by?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          club_id?: string
+          name?: string
+          location?: string
+          latitude?: number | null
+          longitude?: number | null
+          is_active?: boolean
+          sync_interval_minutes?: number
+          created_by?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      hub_detections: {
+        Row: {
+          id: string
+          hub_id: string
+          vehicle_id: string
+          user_id: string
+          rssi: number
+          detected_at: string
+        }
+        Insert: {
+          id?: string
+          hub_id: string
+          vehicle_id: string
+          user_id: string
+          rssi: number
+          detected_at?: string
+        }
+        Update: {
+          id?: string
+          hub_id?: string
+          vehicle_id?: string
+          user_id?: string
+          rssi?: number
+          detected_at?: string
+        }
+        Relationships: []
+      }
+      user_follows: {
+        Row: {
+          id: string
+          follower_id: string
+          following_id: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          follower_id: string
+          following_id: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          follower_id?: string
+          following_id?: string
+          created_at?: string
+        }
+        Relationships: []
       }
     }
     Views: {
@@ -562,8 +862,17 @@ export type Vehicle = Tables<'vehicles'>
 export type VehicleImage = Tables<'vehicle_images'>
 export type VehicleModification = Tables<'vehicle_modifications'>
 export type VehicleBeacon = Tables<'vehicle_beacons'>
+export type VehicleTimeline = Tables<'vehicle_timeline'>
+export type VehiclePerformance = Tables<'vehicle_performance'>
 export type Club = Tables<'clubs'>
 export type ClubMember = Tables<'club_members'>
+export type ClubMessage = Tables<'club_messages'>
+export type ClubPost = Tables<'club_posts'>
+export type ClubHub = Tables<'club_hubs'>
 export type Event = Tables<'events'>
 export type EventRSVP = Tables<'event_rsvps'>
 export type EventCheckin = Tables<'event_checkins'>
+export type UserSubscription = Tables<'user_subscriptions'>
+export type BeaconDetection = Tables<'beacon_detections'>
+export type HubDetection = Tables<'hub_detections'>
+export type UserFollow = Tables<'user_follows'>
