@@ -176,6 +176,10 @@ export type Database = {
           id: string
           induction_type: string | null
           is_public: boolean
+          is_featured: boolean
+          latitude: number | null
+          longitude: number | null
+          location_updated_at: string | null
           manufacturer: string
           model: string
           power_output: string | null
@@ -195,6 +199,10 @@ export type Database = {
           id?: string
           induction_type?: string | null
           is_public?: boolean
+          is_featured?: boolean
+          latitude?: number | null
+          longitude?: number | null
+          location_updated_at?: string | null
           manufacturer: string
           model: string
           power_output?: string | null
@@ -214,6 +222,10 @@ export type Database = {
           id?: string
           induction_type?: string | null
           is_public?: boolean
+          is_featured?: boolean
+          latitude?: number | null
+          longitude?: number | null
+          location_updated_at?: string | null
           manufacturer?: string
           model?: string
           power_output?: string | null
@@ -225,6 +237,186 @@ export type Database = {
           year?: number
         }
         Relationships: []
+      }
+      clubs: {
+        Row: {
+          id: string
+          name: string
+          description: string | null
+          location: string | null
+          is_public: boolean
+          owner_id: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          description?: string | null
+          location?: string | null
+          is_public?: boolean
+          owner_id: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          description?: string | null
+          location?: string | null
+          is_public?: boolean
+          owner_id?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      club_members: {
+        Row: {
+          id: string
+          club_id: string
+          user_id: string
+          role: string
+          joined_at: string
+        }
+        Insert: {
+          id?: string
+          club_id: string
+          user_id: string
+          role?: string
+          joined_at?: string
+        }
+        Update: {
+          id?: string
+          club_id?: string
+          user_id?: string
+          role?: string
+          joined_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "club_members_club_id_fkey"
+            columns: ["club_id"]
+            isOneToOne: false
+            referencedRelation: "clubs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      events: {
+        Row: {
+          id: string
+          club_id: string
+          name: string
+          description: string | null
+          location: string
+          event_date: string
+          created_by: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          club_id: string
+          name: string
+          description?: string | null
+          location: string
+          event_date: string
+          created_by: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          club_id?: string
+          name?: string
+          description?: string | null
+          location?: string
+          event_date?: string
+          created_by?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "events_club_id_fkey"
+            columns: ["club_id"]
+            isOneToOne: false
+            referencedRelation: "clubs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      event_rsvps: {
+        Row: {
+          id: string
+          event_id: string
+          user_id: string
+          status: string
+          rsvp_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          user_id: string
+          status?: string
+          rsvp_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          user_id?: string
+          status?: string
+          rsvp_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_rsvps_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      event_checkins: {
+        Row: {
+          id: string
+          event_id: string
+          user_id: string
+          vehicle_id: string | null
+          checked_in_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          user_id: string
+          vehicle_id?: string | null
+          checked_in_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          user_id?: string
+          vehicle_id?: string | null
+          checked_in_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_checkins_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_checkins_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
@@ -370,3 +562,8 @@ export type Vehicle = Tables<'vehicles'>
 export type VehicleImage = Tables<'vehicle_images'>
 export type VehicleModification = Tables<'vehicle_modifications'>
 export type VehicleBeacon = Tables<'vehicle_beacons'>
+export type Club = Tables<'clubs'>
+export type ClubMember = Tables<'club_members'>
+export type Event = Tables<'events'>
+export type EventRSVP = Tables<'event_rsvps'>
+export type EventCheckin = Tables<'event_checkins'>
