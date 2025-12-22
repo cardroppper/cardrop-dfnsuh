@@ -8,48 +8,185 @@ export type Json =
   | Json[]
 
 export type Database = {
+  __InternalSupabase: {
+    PostgrestVersion: "14.1"
+  }
   public: {
     Tables: {
       profiles: {
         Row: {
-          id: string
-          username: string
-          display_name: string
-          bio: string | null
           avatar_url: string | null
-          instagram_handle: string | null
-          twitter_handle: string | null
-          youtube_handle: string | null
-          is_private: boolean
+          bio: string | null
           created_at: string
+          display_name: string
+          id: string
+          instagram_handle: string | null
+          is_private: boolean | null
+          twitter_handle: string | null
           updated_at: string
+          username: string
+          youtube_handle: string | null
         }
         Insert: {
-          id: string
-          username: string
-          display_name: string
-          bio?: string | null
           avatar_url?: string | null
-          instagram_handle?: string | null
-          twitter_handle?: string | null
-          youtube_handle?: string | null
-          is_private?: boolean
+          bio?: string | null
           created_at?: string
+          display_name: string
+          id: string
+          instagram_handle?: string | null
+          is_private?: boolean | null
+          twitter_handle?: string | null
           updated_at?: string
+          username: string
+          youtube_handle?: string | null
         }
         Update: {
-          id?: string
-          username?: string
-          display_name?: string
-          bio?: string | null
           avatar_url?: string | null
-          instagram_handle?: string | null
-          twitter_handle?: string | null
-          youtube_handle?: string | null
-          is_private?: boolean
+          bio?: string | null
           created_at?: string
+          display_name?: string
+          id?: string
+          instagram_handle?: string | null
+          is_private?: boolean | null
+          twitter_handle?: string | null
           updated_at?: string
+          username?: string
+          youtube_handle?: string | null
         }
+        Relationships: []
+      }
+      vehicle_images: {
+        Row: {
+          created_at: string
+          display_order: number
+          id: string
+          image_url: string
+          vehicle_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          image_url: string
+          vehicle_id: string
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          image_url?: string
+          vehicle_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vehicle_images_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vehicle_modifications: {
+        Row: {
+          brand_name: string | null
+          category: string
+          created_at: string
+          description: string | null
+          id: string
+          part_name: string | null
+          updated_at: string
+          vehicle_id: string
+        }
+        Insert: {
+          brand_name?: string | null
+          category: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          part_name?: string | null
+          updated_at?: string
+          vehicle_id: string
+        }
+        Update: {
+          brand_name?: string | null
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          part_name?: string | null
+          updated_at?: string
+          vehicle_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vehicle_modifications_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vehicles: {
+        Row: {
+          body_style: string | null
+          created_at: string
+          drivetrain: string | null
+          engine_configuration: string | null
+          fuel_type: string | null
+          id: string
+          induction_type: string | null
+          is_public: boolean
+          manufacturer: string
+          model: string
+          power_output: string | null
+          primary_image_url: string | null
+          torque_output: string | null
+          transmission_type: string | null
+          updated_at: string
+          user_id: string
+          year: number
+        }
+        Insert: {
+          body_style?: string | null
+          created_at?: string
+          drivetrain?: string | null
+          engine_configuration?: string | null
+          fuel_type?: string | null
+          id?: string
+          induction_type?: string | null
+          is_public?: boolean
+          manufacturer: string
+          model: string
+          power_output?: string | null
+          primary_image_url?: string | null
+          torque_output?: string | null
+          transmission_type?: string | null
+          updated_at?: string
+          user_id: string
+          year: number
+        }
+        Update: {
+          body_style?: string | null
+          created_at?: string
+          drivetrain?: string | null
+          engine_configuration?: string | null
+          fuel_type?: string | null
+          id?: string
+          induction_type?: string | null
+          is_public?: boolean
+          manufacturer?: string
+          model?: string
+          power_output?: string | null
+          primary_image_url?: string | null
+          torque_output?: string | null
+          transmission_type?: string | null
+          updated_at?: string
+          user_id?: string
+          year?: number
+        }
+        Relationships: []
       }
     }
     Views: {
@@ -67,21 +204,25 @@ export type Database = {
   }
 }
 
-type DefaultSchema = Database[Extract<keyof Database, "public">]
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
 
 export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-        Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-      Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
       Row: infer R
     }
     ? R
@@ -99,14 +240,16 @@ export type Tables<
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
@@ -122,14 +265,16 @@ export type TablesInsert<
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
@@ -145,14 +290,16 @@ export type TablesUpdate<
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
-> = DefaultSchemaEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
     ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
     : never
@@ -160,14 +307,16 @@ export type Enums<
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never = never,
-> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
   : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
     ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
@@ -179,3 +328,6 @@ export const Constants = {
 } as const
 
 export type Profile = Tables<'profiles'>
+export type Vehicle = Tables<'vehicles'>
+export type VehicleImage = Tables<'vehicle_images'>
+export type VehicleModification = Tables<'vehicle_modifications'>
