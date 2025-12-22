@@ -24,6 +24,7 @@ export default function NearbyScreen() {
     nearbyVehicles,
     error,
     permissionGranted,
+    isSupported,
     startScanning,
     stopScanning,
     requestPermissions,
@@ -79,6 +80,64 @@ export default function NearbyScreen() {
       return colors.textSecondary;
     }
   };
+
+  // Show platform not supported message for web
+  if (!isSupported) {
+    return (
+      <View style={styles.container}>
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={[
+            styles.scrollContent,
+            Platform.OS === 'android' && styles.androidPadding,
+          ]}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.header}>
+            <Text style={styles.title}>Nearby</Text>
+            <Text style={styles.subtitle}>
+              Discover vehicles near you using Bluetooth
+            </Text>
+          </View>
+
+          <View style={styles.notSupportedCard}>
+            <IconSymbol
+              ios_icon_name="exclamationmark.triangle.fill"
+              android_material_icon_name="error"
+              size={64}
+              color={colors.warning}
+            />
+            <Text style={styles.notSupportedTitle}>Not Available on Web</Text>
+            <Text style={styles.notSupportedText}>
+              Bluetooth scanning requires native device capabilities and is only available on iOS and Android.
+            </Text>
+            <Text style={styles.notSupportedText}>
+              Please use the CarDrop mobile app to discover nearby vehicles at meets and events.
+            </Text>
+          </View>
+
+          <View style={styles.infoSection}>
+            <View style={styles.infoCard}>
+              <IconSymbol
+                ios_icon_name="info.circle.fill"
+                android_material_icon_name="info"
+                size={24}
+                color={colors.primary}
+              />
+              <View style={styles.infoContent}>
+                <Text style={styles.infoTitle}>How it works</Text>
+                <Text style={styles.infoText}>
+                  CarDrop uses Bluetooth Low Energy (BLE) beacons to detect vehicles near you. 
+                  Only vehicles with CarDrop beacons and public visibility will appear. 
+                  Scanning only happens when you start it manually.
+                </Text>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -338,6 +397,30 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     color: colors.text,
+  },
+  notSupportedCard: {
+    backgroundColor: colors.card,
+    borderRadius: 16,
+    padding: 32,
+    marginHorizontal: 20,
+    marginBottom: 32,
+    alignItems: 'center',
+    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.3)',
+    elevation: 4,
+  },
+  notSupportedTitle: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: colors.text,
+    marginTop: 16,
+    marginBottom: 12,
+  },
+  notSupportedText: {
+    fontSize: 16,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    marginBottom: 12,
+    lineHeight: 24,
   },
   permissionCard: {
     backgroundColor: colors.card,

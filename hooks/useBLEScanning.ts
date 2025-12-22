@@ -10,10 +10,23 @@ export function useBLEScanning() {
   const [nearbyVehicles, setNearbyVehicles] = useState<NearbyVehicle[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [permissionGranted, setPermissionGranted] = useState<boolean | null>(null);
+  const [isSupported, setIsSupported] = useState<boolean>(true);
   const mountedRef = useRef(true);
 
   useEffect(() => {
     mountedRef.current = true;
+    
+    // Check if BLE is supported on this platform
+    const supported = BLEService.isBluetoothSupported();
+    setIsSupported(supported);
+    
+    if (!supported) {
+      console.log('BLE not supported on this platform');
+      if (Platform.OS === 'web') {
+        setError('Bluetooth scanning is not available on web. Please use the mobile app.');
+      }
+    }
+    
     return () => {
       mountedRef.current = false;
       if (isScanning) {
@@ -23,6 +36,11 @@ export function useBLEScanning() {
   }, [isScanning]);
 
   const requestPermissions = useCallback(async () => {
+    if (!isSupported) {
+      console.log('BLE not supported, cannot request permissions');
+      return false;
+    }
+
     try {
       const granted = await BLEService.requestPermissions();
       if (mountedRef.current) {
@@ -40,7 +58,7 @@ export function useBLEScanning() {
       }
       return false;
     }
-  }, []);
+  }, [isSupported]);
 
   const fetchVehicleData = useCallback(async (beacons: BeaconData[]) => {
     try {
@@ -133,6 +151,17 @@ export function useBLEScanning() {
   }, []);
 
   const startScanning = useCallback(async () => {
+    if (!isSupported) {
+      Alert.alert(
+        'Not Supported',
+        Platform.OS === 'web' 
+          ? 'Bluetooth scanning is not available on web. Please use the iOS or Android app to discover nearby vehicles.'
+          : 'Bluetooth is not supported on this device.',
+        [{ text: 'OK' }]
+      );
+      return;
+    }
+
     try {
       setError(null);
 
@@ -183,7 +212,7 @@ export function useBLEScanning() {
         setIsScanning(false);
       }
     }
-  }, [requestPermissions, fetchVehicleData]);
+  }, [isSupported, requestPermissions, fetchVehicleData]);
 
   const stopScanning = useCallback(() => {
     BLEService.stopScanning();
@@ -198,6 +227,7 @@ export function useBLEScanning() {
     nearbyVehicles,
     error,
     permissionGranted,
+    isSupported,
     startScanning,
     stopScanning,
     requestPermissions,

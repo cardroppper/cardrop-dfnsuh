@@ -1,20 +1,60 @@
 
-import { BleManager, Device, State } from 'react-native-ble-plx';
-import { Platform, PermissionsAndroid } from 'react-native';
+import { Platform } from 'react-native';
+
+// Only import BLE on native platforms
+let BleManager: any = null;
+let Device: any = null;
+let State: any = null;
+
+if (Platform.OS !== 'web') {
+  try {
+    const BleModule = require('react-native-ble-plx');
+    BleManager = BleModule.BleManager;
+    Device = BleModule.Device;
+    State = BleModule.State;
+  } catch (error) {
+    console.warn('react-native-ble-plx not available:', error);
+  }
+}
+
+import { PermissionsAndroid } from 'react-native';
 import { CARDROP_BEACON_UUID, BeaconData, calculateDistance } from '@/types/ble';
 
 class BLEService {
-  private manager: BleManager;
+  private manager: any = null;
   private scanning: boolean = false;
   private discoveredDevices: Map<string, BeaconData> = new Map();
   private scanTimeout: NodeJS.Timeout | null = null;
   private cleanupInterval: NodeJS.Timeout | null = null;
+  private isSupported: boolean = false;
 
   constructor() {
-    this.manager = new BleManager();
+    // Only initialize BleManager on native platforms
+    if (Platform.OS !== 'web' && BleManager) {
+      try {
+        this.manager = new BleManager();
+        this.isSupported = true;
+        console.log('BLEService initialized successfully');
+      } catch (error) {
+        console.error('Failed to initialize BleManager:', error);
+        this.isSupported = false;
+      }
+    } else {
+      console.log('BLE not supported on this platform');
+      this.isSupported = false;
+    }
+  }
+
+  isBluetoothSupported(): boolean {
+    return this.isSupported;
   }
 
   async requestPermissions(): Promise<boolean> {
+    if (!this.isSupported) {
+      console.log('BLE not supported, skipping permissions');
+      return false;
+    }
+
     try {
       if (Platform.OS === 'android') {
         if (Platform.Version >= 31) {
@@ -43,8 +83,11 @@ class BLEService {
           );
         }
       } else if (Platform.OS === 'ios') {
+        if (!this.manager) {
+          return false;
+        }
         const state = await this.manager.state();
-        return state === State.PoweredOn;
+        return state === 'PoweredOn';
       }
       return false;
     } catch (error) {
@@ -53,14 +96,32 @@ class BLEService {
     }
   }
 
-  async checkBluetoothState(): Promise<State> {
-    return await this.manager.state();
+  async checkBluetoothState(): Promise<string> {
+    if (!this.isSupported || !this.manager) {
+      return 'Unsupported';
+    }
+
+    try {
+      return await this.manager.state();
+    } catch (error) {
+      console.error('Error checking Bluetooth state:', error);
+      return 'Unknown';
+    }
   }
 
   async startScanning(
     onDeviceFound: (beacons: BeaconData[]) => void,
     onError?: (error: Error) => void
   ): Promise<boolean> {
+    if (!this.isSupported || !this.manager) {
+      const error = new Error('Bluetooth is not supported on this platform');
+      console.error(error.message);
+      if (onError) {
+        onError(error);
+      }
+      return false;
+    }
+
     try {
       if (this.scanning) {
         console.log('Already scanning');
@@ -73,7 +134,7 @@ class BLEService {
       }
 
       const state = await this.checkBluetoothState();
-      if (state !== State.PoweredOn) {
+      if (state !== 'PoweredOn') {
         throw new Error('Bluetooth is not powered on');
       }
 
@@ -85,7 +146,7 @@ class BLEService {
       this.manager.startDeviceScan(
         null,
         { allowDuplicates: false },
-        (error, device) => {
+        (error: any, device: any) => {
           if (error) {
             console.error('BLE scan error:', error);
             if (onError) {
@@ -122,7 +183,7 @@ class BLEService {
     }
   }
 
-  private isCarDropBeacon(device: Device): boolean {
+  private isCarDropBeacon(device: any): boolean {
     if (!device.name) {
       return false;
     }
@@ -154,9 +215,17 @@ class BLEService {
   }
 
   stopScanning() {
+    if (!this.isSupported || !this.manager) {
+      return;
+    }
+
     if (this.scanning) {
       console.log('Stopping BLE scan');
-      this.manager.stopDeviceScan();
+      try {
+        this.manager.stopDeviceScan();
+      } catch (error) {
+        console.error('Error stopping scan:', error);
+      }
       this.scanning = false;
     }
 
@@ -178,8 +247,16 @@ class BLEService {
   }
 
   destroy() {
+    if (!this.isSupported || !this.manager) {
+      return;
+    }
+
     this.stopScanning();
-    this.manager.destroy();
+    try {
+      this.manager.destroy();
+    } catch (error) {
+      console.error('Error destroying BLE manager:', error);
+    }
   }
 }
 
