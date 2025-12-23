@@ -12,6 +12,11 @@ export interface Profile {
   is_private: boolean;
   ghost_mode: boolean;
   free_premium: boolean;
+  notification_preferences: {
+    detection_type: 'silent' | 'vibration' | 'sound';
+    vibration: boolean;
+    sound: 'none' | 'vroom' | 'default';
+  };
   created_at: string;
   updated_at: string;
   cover_photo_url: string | null;
@@ -70,6 +75,11 @@ export interface Club {
   owner_id: string;
   logo_url: string | null;
   banner_url: string | null;
+  member_limit: number | null;
+  pricing_tier: 'free' | 'tier_50' | 'tier_100' | 'tier_200' | 'tier_500' | 'custom';
+  monthly_price: number;
+  allow_member_invites: boolean;
+  require_approval: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -80,6 +90,36 @@ export interface ClubMember {
   user_id: string;
   role: 'owner' | 'admin' | 'member';
   joined_at: string;
+}
+
+export interface ClubSubscription {
+  id: string;
+  club_id: string;
+  paid_by_user_id: string;
+  subscription_status: 'active' | 'cancelled' | 'past_due';
+  current_period_start: string | null;
+  current_period_end: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ClubInvite {
+  id: string;
+  club_id: string;
+  invited_by_user_id: string;
+  invite_code: string;
+  max_uses: number;
+  uses_count: number;
+  expires_at: string | null;
+  created_at: string;
+}
+
+export interface DetectionHighlight {
+  id: string;
+  user_id: string;
+  vehicle_id: string;
+  detected_at: string;
+  expires_at: string;
 }
 
 export interface Event {
@@ -140,7 +180,9 @@ export interface VehicleTimeline {
   title: string;
   description: string | null;
   entry_date: string;
+  media_type: 'image' | 'video';
   image_url: string | null;
+  video_url: string | null;
   created_at: string;
   updated_at: string;
 }

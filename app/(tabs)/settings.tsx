@@ -18,6 +18,9 @@ import { colors, commonStyles, buttonStyles } from '@/styles/commonStyles';
 import { IconSymbol } from '@/components/IconSymbol';
 import * as ImagePicker from 'expo-image-picker';
 
+type NotificationType = 'silent' | 'vibration' | 'sound';
+type SoundType = 'none' | 'vroom' | 'default';
+
 export default function SettingsScreen() {
   const { user, profile, logout, updateProfile } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
@@ -32,6 +35,22 @@ export default function SettingsScreen() {
   const [isPrivate, setIsPrivate] = useState(profile?.is_private || false);
   const [ghostMode, setGhostMode] = useState(profile?.ghost_mode || false);
   const [freePremium, setFreePremium] = useState(profile?.free_premium || false);
+  
+  // Notification preferences
+  const notificationPrefs = profile?.notification_preferences || {
+    detection_type: 'silent',
+    vibration: false,
+    sound: 'none',
+  };
+  const [detectionType, setDetectionType] = useState<NotificationType>(
+    notificationPrefs.detection_type || 'silent'
+  );
+  const [vibrationEnabled, setVibrationEnabled] = useState(
+    notificationPrefs.vibration || false
+  );
+  const [soundType, setSoundType] = useState<SoundType>(
+    notificationPrefs.sound || 'none'
+  );
 
   const handleLogout = () => {
     Alert.alert(
@@ -76,6 +95,27 @@ export default function SettingsScreen() {
       Alert.alert('Error', 'An unexpected error occurred');
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleSaveNotificationPrefs = async () => {
+    try {
+      const result = await updateProfile({
+        notification_preferences: {
+          detection_type: detectionType,
+          vibration: vibrationEnabled,
+          sound: soundType,
+        },
+      });
+
+      if (result.success) {
+        Alert.alert('Success', 'Notification preferences updated');
+      } else {
+        Alert.alert('Error', result.error || 'Failed to update preferences');
+      }
+    } catch (error) {
+      console.error('[Settings] Error saving notification prefs:', error);
+      Alert.alert('Error', 'An unexpected error occurred');
     }
   };
 
@@ -279,17 +319,141 @@ export default function SettingsScreen() {
             value={ghostMode}
             onValueChange={async (value) => {
               setGhostMode(value);
-              // Auto-save ghost mode changes
               const result = await updateProfile({ ghost_mode: value });
               if (!result.success) {
                 Alert.alert('Error', result.error || 'Failed to update Ghost Mode');
-                setGhostMode(!value); // Revert on error
+                setGhostMode(!value);
               }
             }}
             trackColor={{ false: colors.highlight, true: colors.primary }}
             thumbColor={colors.text}
           />
         </View>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Detection Notifications (Premium)</Text>
+        <Text style={[commonStyles.textSecondary, { marginBottom: 16 }]}>
+          Get notified when your phone detects another CarDrop vehicle nearby
+        </Text>
+        
+        <View style={styles.notificationOption}>
+          <TouchableOpacity
+            style={[
+              styles.notificationButton,
+              detectionType === 'silent' && styles.notificationButtonActive,
+            ]}
+            onPress={() => setDetectionType('silent')}
+          >
+            <IconSymbol
+              ios_icon_name="bell.slash.fill"
+              android_material_icon_name="notifications-off"
+              size={24}
+              color={detectionType === 'silent' ? colors.primary : colors.textSecondary}
+            />
+            <Text style={[
+              styles.notificationButtonText,
+              detectionType === 'silent' && styles.notificationButtonTextActive,
+            ]}>
+              Silent
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              styles.notificationButton,
+              detectionType === 'vibration' && styles.notificationButtonActive,
+            ]}
+            onPress={() => setDetectionType('vibration')}
+          >
+            <IconSymbol
+              ios_icon_name="iphone.radiowaves.left.and.right"
+              android_material_icon_name="vibration"
+              size={24}
+              color={detectionType === 'vibration' ? colors.primary : colors.textSecondary}
+            />
+            <Text style={[
+              styles.notificationButtonText,
+              detectionType === 'vibration' && styles.notificationButtonTextActive,
+            ]}>
+              Vibration
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              styles.notificationButton,
+              detectionType === 'sound' && styles.notificationButtonActive,
+            ]}
+            onPress={() => setDetectionType('sound')}
+          >
+            <IconSymbol
+              ios_icon_name="speaker.wave.2.fill"
+              android_material_icon_name="volume-up"
+              size={24}
+              color={detectionType === 'sound' ? colors.primary : colors.textSecondary}
+            />
+            <Text style={[
+              styles.notificationButtonText,
+              detectionType === 'sound' && styles.notificationButtonTextActive,
+            ]}>
+              Sound
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {detectionType === 'sound' && (
+          <View style={styles.soundOptions}>
+            <Text style={styles.label}>Sound Type</Text>
+            <TouchableOpacity
+              style={[
+                styles.soundOption,
+                soundType === 'vroom' && styles.soundOptionActive,
+              ]}
+              onPress={() => setSoundType('vroom')}
+            >
+              <IconSymbol
+                ios_icon_name="car.fill"
+                android_material_icon_name="directions-car"
+                size={20}
+                color={soundType === 'vroom' ? colors.primary : colors.textSecondary}
+              />
+              <Text style={[
+                styles.soundOptionText,
+                soundType === 'vroom' && styles.soundOptionTextActive,
+              ]}>
+                Car Vroom Vroom
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.soundOption,
+                soundType === 'default' && styles.soundOptionActive,
+              ]}
+              onPress={() => setSoundType('default')}
+            >
+              <IconSymbol
+                ios_icon_name="bell.fill"
+                android_material_icon_name="notifications"
+                size={20}
+                color={soundType === 'default' ? colors.primary : colors.textSecondary}
+              />
+              <Text style={[
+                styles.soundOptionText,
+                soundType === 'default' && styles.soundOptionTextActive,
+              ]}>
+                Default Notification
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        <TouchableOpacity
+          style={[buttonStyles.primary, { marginTop: 16 }]}
+          onPress={handleSaveNotificationPrefs}
+        >
+          <Text style={buttonStyles.text}>Save Notification Preferences</Text>
+        </TouchableOpacity>
       </View>
 
       {profile.username === 'cardrop' && (
@@ -344,7 +508,6 @@ export default function SettingsScreen() {
                 value={freePremium}
                 onValueChange={async (value) => {
                   setFreePremium(value);
-                  // Auto-save free premium changes
                   const result = await updateProfile({ free_premium: value });
                   if (result.success) {
                     Alert.alert(
@@ -355,7 +518,7 @@ export default function SettingsScreen() {
                     );
                   } else {
                     Alert.alert('Error', result.error || 'Failed to update Free Premium');
-                    setFreePremium(!value); // Revert on error
+                    setFreePremium(!value);
                   }
                 }}
                 trackColor={{ false: colors.highlight, true: '#FFD700' }}
@@ -492,6 +655,58 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     flex: 1,
+  },
+  notificationOption: {
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 16,
+  },
+  notificationButton: {
+    flex: 1,
+    backgroundColor: colors.card,
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    gap: 8,
+    borderWidth: 2,
+    borderColor: 'transparent',
+  },
+  notificationButtonActive: {
+    borderColor: colors.primary,
+    backgroundColor: colors.highlight,
+  },
+  notificationButtonText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: colors.textSecondary,
+  },
+  notificationButtonTextActive: {
+    color: colors.primary,
+  },
+  soundOptions: {
+    gap: 12,
+  },
+  soundOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    backgroundColor: colors.card,
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: 'transparent',
+  },
+  soundOptionActive: {
+    borderColor: colors.primary,
+    backgroundColor: colors.highlight,
+  },
+  soundOptionText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.textSecondary,
+  },
+  soundOptionTextActive: {
+    color: colors.primary,
   },
   dangerButton: {
     flexDirection: 'row',

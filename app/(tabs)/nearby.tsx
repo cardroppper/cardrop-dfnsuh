@@ -15,7 +15,9 @@ import { useRouter } from 'expo-router';
 import { colors, commonStyles, buttonStyles } from '@/styles/commonStyles';
 import { IconSymbol } from '@/components/IconSymbol';
 import { useBLEScanning } from '@/hooks/useBLEScanning';
+import { useDetectionHighlights } from '@/hooks/useDetectionHighlights';
 import { getDistanceLabel } from '@/types/ble';
+import * as Haptics from 'expo-haptics';
 
 export default function NearbyScreen() {
   const router = useRouter();
@@ -29,6 +31,8 @@ export default function NearbyScreen() {
     stopScanning,
     requestPermissions,
   } = useBLEScanning();
+  
+  const { highlights, isHighlighted, addHighlight } = useDetectionHighlights();
 
   useEffect(() => {
     return () => {
@@ -37,6 +41,19 @@ export default function NearbyScreen() {
       }
     };
   }, [isScanning, stopScanning]);
+
+  useEffect(() => {
+    // Add highlights for newly detected vehicles
+    nearbyVehicles.forEach(vehicle => {
+      if (!isHighlighted(vehicle.vehicleId)) {
+        addHighlight(vehicle.vehicleId);
+        // Trigger haptic feedback for new detection
+        if (Platform.OS !== 'web') {
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        }
+      }
+    });
+  }, [nearbyVehicles]);
 
   const handleStartScanning = async () => {
     await startScanning();
@@ -267,65 +284,89 @@ export default function NearbyScreen() {
                 </View>
               )}
 
-              {nearbyVehicles.map((vehicle, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.vehicleCard}
-                  onPress={() => handleVehiclePress(vehicle.vehicleId)}
-                  activeOpacity={0.7}
-                >
-                  {vehicle.primaryImageUrl ? (
-                    <Image
-                      source={{ uri: vehicle.primaryImageUrl }}
-                      style={styles.vehicleImage}
-                      resizeMode="cover"
-                    />
-                  ) : (
-                    <View style={[styles.vehicleImage, styles.vehicleImagePlaceholder]}>
-                      <IconSymbol
-                        ios_icon_name="car.fill"
-                        android_material_icon_name="directions-car"
-                        size={32}
-                        color={colors.textSecondary}
-                      />
-                    </View>
-                  )}
-
-                  <View style={styles.vehicleInfo}>
-                    <Text style={styles.vehicleName} numberOfLines={1}>
-                      {vehicle.vehicleName}
-                    </Text>
-                    <Text style={styles.vehicleOwner} numberOfLines={1}>
-                      @{vehicle.ownerUsername}
-                    </Text>
-
-                    <View style={styles.vehicleMetadata}>
-                      <View style={styles.distanceBadge}>
+              {nearbyVehicles.map((vehicle, index) => {
+                const highlighted = isHighlighted(vehicle.vehicleId);
+                
+                return (
+                  <TouchableOpacity
+                    key={index}
+                    style={[
+                      styles.vehicleCard,
+                      highlighted && styles.vehicleCardHighlighted,
+                    ]}
+                    onPress={() => handleVehiclePress(vehicle.vehicleId)}
+                    activeOpacity={0.7}
+                  >
+                    {highlighted && (
+                      <View style={styles.highlightBadge}>
                         <IconSymbol
-                          ios_icon_name={getSignalStrengthIcon(vehicle.rssi)}
-                          android_material_icon_name="bluetooth"
-                          size={14}
-                          color={getSignalStrengthColor(vehicle.rssi)}
+                          ios_icon_name="star.fill"
+                          android_material_icon_name="star"
+                          size={16}
+                          color="#FFD700"
                         />
-                        <Text style={[styles.distanceText, { color: getSignalStrengthColor(vehicle.rssi) }]}>
-                          {getDistanceLabel(vehicle.distance)}
+                        <Text style={styles.highlightBadgeText}>New</Text>
+                      </View>
+                    )}
+                    
+                    <View style={[
+                      styles.vehicleImageContainer,
+                      highlighted && styles.vehicleImageContainerHighlighted,
+                    ]}>
+                      {vehicle.primaryImageUrl ? (
+                        <Image
+                          source={{ uri: vehicle.primaryImageUrl }}
+                          style={styles.vehicleImage}
+                          resizeMode="cover"
+                        />
+                      ) : (
+                        <View style={[styles.vehicleImage, styles.vehicleImagePlaceholder]}>
+                          <IconSymbol
+                            ios_icon_name="car.fill"
+                            android_material_icon_name="directions-car"
+                            size={32}
+                            color={colors.textSecondary}
+                          />
+                        </View>
+                      )}
+                    </View>
+
+                    <View style={styles.vehicleInfo}>
+                      <Text style={styles.vehicleName} numberOfLines={1}>
+                        {vehicle.vehicleName}
+                      </Text>
+                      <Text style={styles.vehicleOwner} numberOfLines={1}>
+                        @{vehicle.ownerUsername}
+                      </Text>
+
+                      <View style={styles.vehicleMetadata}>
+                        <View style={styles.distanceBadge}>
+                          <IconSymbol
+                            ios_icon_name={getSignalStrengthIcon(vehicle.rssi)}
+                            android_material_icon_name="bluetooth"
+                            size={14}
+                            color={getSignalStrengthColor(vehicle.rssi)}
+                          />
+                          <Text style={[styles.distanceText, { color: getSignalStrengthColor(vehicle.rssi) }]}>
+                            {getDistanceLabel(vehicle.distance)}
+                          </Text>
+                        </View>
+
+                        <Text style={styles.rssiText}>
+                          Signal: {vehicle.rssi} dBm
                         </Text>
                       </View>
-
-                      <Text style={styles.rssiText}>
-                        Signal: {vehicle.rssi} dBm
-                      </Text>
                     </View>
-                  </View>
 
-                  <IconSymbol
-                    ios_icon_name="chevron.right"
-                    android_material_icon_name="chevron-right"
-                    size={20}
-                    color={colors.textSecondary}
-                  />
-                </TouchableOpacity>
-              ))}
+                    <IconSymbol
+                      ios_icon_name="chevron.right"
+                      android_material_icon_name="chevron-right"
+                      size={20}
+                      color={colors.textSecondary}
+                    />
+                  </TouchableOpacity>
+                );
+              })}
             </View>
 
             <View style={styles.infoSection}>
@@ -341,7 +382,7 @@ export default function NearbyScreen() {
                   <Text style={styles.infoText}>
                     CarDrop uses Bluetooth Low Energy (BLE) beacons to detect vehicles near you. 
                     Only vehicles with CarDrop beacons and public visibility will appear. 
-                    Scanning only happens when you start it manually.
+                    Vehicles highlighted in gold were detected in the last 24 hours.
                   </Text>
                 </View>
               </View>
@@ -508,6 +549,38 @@ const styles = StyleSheet.create({
     gap: 16,
     boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.2)',
     elevation: 2,
+    position: 'relative',
+  },
+  vehicleCardHighlighted: {
+    borderWidth: 3,
+    borderColor: '#FFD700',
+    boxShadow: '0px 4px 16px rgba(255, 215, 0, 0.3)',
+    elevation: 6,
+  },
+  highlightBadge: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    backgroundColor: '#FFD700',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    zIndex: 1,
+  },
+  highlightBadgeText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: colors.background,
+  },
+  vehicleImageContainer: {
+    borderRadius: 12,
+  },
+  vehicleImageContainerHighlighted: {
+    borderWidth: 2,
+    borderColor: '#FFD700',
   },
   vehicleImage: {
     width: 80,

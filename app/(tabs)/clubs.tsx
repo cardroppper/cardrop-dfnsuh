@@ -16,17 +16,27 @@ import { useRouter } from 'expo-router';
 import { colors, commonStyles, buttonStyles } from '@/styles/commonStyles';
 import { IconSymbol } from '@/components/IconSymbol';
 import { useClubs } from '@/hooks/useClubs';
+import { useClubEvents } from '@/hooks/useClubEvents';
+import { useClubPricing } from '@/hooks/useClubPricing';
+import { ClubCalendar } from '@/components/ClubCalendar';
 
 export default function ClubsScreen() {
   const router = useRouter();
   const { clubs, myClubs, loading, error, createClub, joinClub, leaveClub, refetch } = useClubs();
+  const { events, loading: eventsLoading } = useClubEvents();
+  const { calculatePricing } = useClubPricing();
+  
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     location: '',
     is_public: true,
+    allow_member_invites: true,
+    require_approval: false,
   });
 
   const handleRefresh = async () => {
@@ -54,6 +64,8 @@ export default function ClubsScreen() {
         description: '',
         location: '',
         is_public: true,
+        allow_member_invites: true,
+        require_approval: false,
       });
       Alert.alert('Success', 'Club created successfully!');
     } catch (err) {
@@ -99,6 +111,8 @@ export default function ClubsScreen() {
     const isMember = club.is_member;
     const isOwner = club.user_role === 'owner';
     const isAdmin = club.user_role === 'admin';
+    const memberCount = club.member_count || 0;
+    const pricing = calculatePricing(memberCount);
 
     return (
       <View key={index} style={styles.clubCard}>
@@ -151,9 +165,23 @@ export default function ClubsScreen() {
               color={colors.textSecondary}
             />
             <Text style={styles.metaText}>
-              {club.member_count || 0} {club.member_count === 1 ? 'member' : 'members'}
+              {memberCount} {memberCount === 1 ? 'member' : 'members'}
             </Text>
           </View>
+          
+          {memberCount > 15 && (
+            <View style={styles.pricingBadge}>
+              <IconSymbol
+                ios_icon_name="dollarsign.circle.fill"
+                android_material_icon_name="payments"
+                size={14}
+                color={colors.warning}
+              />
+              <Text style={styles.pricingText}>
+                ${pricing.monthlyPrice.toFixed(2)}/mo
+              </Text>
+            </View>
+          )}
         </View>
 
         <View style={styles.clubActions}>
@@ -239,6 +267,37 @@ export default function ClubsScreen() {
           </TouchableOpacity>
         </View>
 
+        {myClubs.length > 0 && (
+          <View style={styles.section}>
+            <TouchableOpacity
+              style={styles.calendarButton}
+              onPress={() => setShowCalendar(!showCalendar)}
+            >
+              <IconSymbol
+                ios_icon_name="calendar"
+                android_material_icon_name="event"
+                size={24}
+                color={colors.secondary}
+              />
+              <Text style={styles.calendarButtonText}>
+                {showCalendar ? 'Hide Calendar' : 'Show Calendar'}
+              </Text>
+              <IconSymbol
+                ios_icon_name={showCalendar ? 'chevron.up' : 'chevron.down'}
+                android_material_icon_name={showCalendar ? 'expand-less' : 'expand-more'}
+                size={20}
+                color={colors.textSecondary}
+              />
+            </TouchableOpacity>
+
+            {showCalendar && (
+              <View style={styles.calendarContainer}>
+                <ClubCalendar events={events} />
+              </View>
+            )}
+          </View>
+        )}
+
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <IconSymbol
@@ -300,6 +359,33 @@ export default function ClubsScreen() {
               {clubs.filter(c => !c.is_member).map((club, index) => renderClubCard(club, index))}
             </View>
           )}
+        </View>
+
+        <View style={styles.section}>
+          <View style={styles.pricingInfo}>
+            <Text style={styles.pricingInfoTitle}>Club Pricing</Text>
+            <Text style={styles.pricingInfoText}>
+              - Free for clubs with 15 or fewer members
+            </Text>
+            <Text style={styles.pricingInfoText}>
+              - Up to 50 members: $15/month
+            </Text>
+            <Text style={styles.pricingInfoText}>
+              - Up to 100 members: $25/month
+            </Text>
+            <Text style={styles.pricingInfoText}>
+              - Up to 200 members: $40/month
+            </Text>
+            <Text style={styles.pricingInfoText}>
+              - Up to 500 members: $75/month
+            </Text>
+            <Text style={styles.pricingInfoText}>
+              - Above 500 members: $0.15 per member/month
+            </Text>
+            <Text style={[styles.pricingInfoText, { marginTop: 8, fontStyle: 'italic' }]}>
+              Club owners/admins are responsible for payment
+            </Text>
+          </View>
         </View>
       </ScrollView>
 
@@ -371,10 +457,33 @@ export default function ClubsScreen() {
                   />
                 </TouchableOpacity>
               </View>
-              <Text style={[commonStyles.textSecondary, { marginBottom: 24 }]}>
+              <Text style={[commonStyles.textSecondary, { marginBottom: 16 }]}>
                 {formData.is_public
                   ? 'Anyone can discover and join this club'
                   : 'Only invited members can join this club'}
+              </Text>
+
+              <View style={styles.switchRow}>
+                <Text style={styles.label}>Allow Member Invites</Text>
+                <TouchableOpacity
+                  style={[
+                    styles.switch,
+                    formData.allow_member_invites && styles.switchActive,
+                  ]}
+                  onPress={() => setFormData({ ...formData, allow_member_invites: !formData.allow_member_invites })}
+                >
+                  <View
+                    style={[
+                      styles.switchThumb,
+                      formData.allow_member_invites && styles.switchThumbActive,
+                    ]}
+                  />
+                </TouchableOpacity>
+              </View>
+              <Text style={[commonStyles.textSecondary, { marginBottom: 24 }]}>
+                {formData.allow_member_invites
+                  ? 'Members can invite others to join'
+                  : 'Only admins can invite new members'}
               </Text>
 
               <TouchableOpacity
@@ -469,6 +578,28 @@ const styles = StyleSheet.create({
   createButtonText: {
     marginLeft: 0,
   },
+  calendarButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: colors.card,
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 16,
+  },
+  calendarButtonText: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.text,
+    marginLeft: 12,
+  },
+  calendarContainer: {
+    backgroundColor: colors.card,
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+  },
   clubsList: {
     gap: 16,
   },
@@ -530,12 +661,44 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.textSecondary,
   },
+  pricingBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: colors.highlight,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+  },
+  pricingText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: colors.warning,
+  },
   clubActions: {
     flexDirection: 'row',
     gap: 12,
   },
   actionButton: {
     flex: 1,
+  },
+  pricingInfo: {
+    backgroundColor: colors.card,
+    borderRadius: 16,
+    padding: 20,
+    borderLeftWidth: 4,
+    borderLeftColor: colors.secondary,
+  },
+  pricingInfoTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: colors.text,
+    marginBottom: 12,
+  },
+  pricingInfoText: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    lineHeight: 22,
   },
   modalOverlay: {
     flex: 1,

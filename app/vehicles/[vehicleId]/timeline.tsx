@@ -17,6 +17,7 @@ import { colors, commonStyles, buttonStyles } from '@/styles/commonStyles';
 import { IconSymbol } from '@/components/IconSymbol';
 import { supabase } from '@/app/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { useSubscription } from '@/hooks/useSubscription';
 import * as ImagePicker from 'expo-image-picker';
 
 interface TimelineEntry {
@@ -24,13 +25,16 @@ interface TimelineEntry {
   title: string;
   description: string | null;
   entry_date: string;
+  media_type: 'image' | 'video';
   image_url: string | null;
+  video_url: string | null;
   created_at: string;
 }
 
 export default function VehicleTimelineScreen() {
   const { vehicleId } = useLocalSearchParams<{ vehicleId: string }>();
   const { user } = useAuth();
+  const { subscription } = useSubscription();
   const router = useRouter();
   
   const [entries, setEntries] = useState<TimelineEntry[]>([]);
@@ -42,7 +46,9 @@ export default function VehicleTimelineScreen() {
     title: '',
     description: '',
     entry_date: new Date().toISOString().split('T')[0],
+    media_type: 'image' as 'image' | 'video',
     image_url: null as string | null,
+    video_url: null as string | null,
   });
 
   useEffect(() => {
@@ -77,6 +83,16 @@ export default function VehicleTimelineScreen() {
       return;
     }
 
+    // Check if user is trying to upload video without premium
+    if (formData.media_type === 'video' && !subscription.isPremium) {
+      Alert.alert(
+        'Premium Feature',
+        'Video uploads are a premium feature. Upgrade to premium to unlock video timeline entries.',
+        [{ text: 'OK' }]
+      );
+      return;
+    }
+
     try {
       if (editingEntry) {
         const { error } = await supabase
@@ -85,7 +101,9 @@ export default function VehicleTimelineScreen() {
             title: formData.title,
             description: formData.description || null,
             entry_date: formData.entry_date,
+            media_type: formData.media_type,
             image_url: formData.image_url,
+            video_url: formData.video_url,
             updated_at: new Date().toISOString(),
           })
           .eq('id', editingEntry.id);
@@ -99,7 +117,9 @@ export default function VehicleTimelineScreen() {
             title: formData.title,
             description: formData.description || null,
             entry_date: formData.entry_date,
+            media_type: formData.media_type,
             image_url: formData.image_url,
+            video_url: formData.video_url,
           });
 
         if (error) throw error;
@@ -111,7 +131,9 @@ export default function VehicleTimelineScreen() {
         title: '',
         description: '',
         entry_date: new Date().toISOString().split('T')[0],
+        media_type: 'image',
         image_url: null,
+        video_url: null,
       });
       fetchEntries();
       Alert.alert('Success', editingEntry ? 'Entry updated' : 'Entry added');
@@ -156,14 +178,27 @@ export default function VehicleTimelineScreen() {
       title: entry.title,
       description: entry.description || '',
       entry_date: entry.entry_date,
+      media_type: entry.media_type,
       image_url: entry.image_url,
+      video_url: entry.video_url,
     });
     setShowAddModal(true);
   };
 
-  const pickImage = async () => {
+  const pickMedia = async (type: 'image' | 'video') => {
+    if (type === 'video' && !subscription.isPremium) {
+      Alert.alert(
+        'Premium Feature',
+        'Video uploads are a premium feature. Upgrade to premium to unlock video timeline entries.',
+        [{ text: 'OK' }]
+      );
+      return;
+    }
+
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: type === 'video' 
+        ? ImagePicker.MediaTypeOptions.Videos 
+        : ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [16, 9],
       quality: 0.8,
@@ -171,7 +206,11 @@ export default function VehicleTimelineScreen() {
 
     if (!result.canceled && result.assets[0]) {
       // TODO: Upload to Supabase Storage
-      setFormData({ ...formData, image_url: result.assets[0].uri });
+      if (type === 'video') {
+        setFormData({ ...formData, media_type: 'video', video_url: result.assets[0].uri, image_url: null });
+      } else {
+        setFormData({ ...formData, media_type: 'image', image_url: result.assets[0].uri, video_url: null });
+      }
     }
   };
 
@@ -261,12 +300,35 @@ export default function VehicleTimelineScreen() {
                     <Text style={styles.entryDescription}>{entry.description}</Text>
                   )}
                   
-                  {entry.image_url && (
+                  {entry.media_type === 'image' && entry.image_url && (
                     <Image
                       source={{ uri: entry.image_url }}
                       style={styles.entryImage}
                       resizeMode="cover"
                     />
+                  )}
+                  
+                  {entry.media_type === 'video' && entry.video_url && (
+                    <View style={styles.videoPlaceholder}>
+                      <IconSymbol
+                        ios_icon_name="play.circle.fill"
+                        android_material_icon_name="play-circle"
+                        size={48}
+                        color={colors.primary}
+                      />
+                      <Text style={styles.videoPlaceholderText}>Video</Text>
+                      {subscription.isPremium && (
+                        <View style={styles.premiumBadge}>
+                          <IconSymbol
+                            ios_icon_name="crown.fill"
+                            android_material_icon_name="workspace-premium"
+                            size={12}
+                            color="#FFD700"
+                          />
+                          <Text style={styles.premiumBadgeText}>Premium</Text>
+                        </View>
+                      )}
+                    </View>
                   )}
                 </View>
               </View>
@@ -335,19 +397,104 @@ export default function VehicleTimelineScreen() {
                 numberOfLines={4}
               />
 
-              <Text style={styles.label}>Image (Optional)</Text>
-              <TouchableOpacity style={styles.imagePickerButton} onPress={pickImage}>
-                {formData.image_url ? (
-                  <Image source={{ uri: formData.image_url }} style={styles.previewImage} />
+              <Text style={styles.label}>Media Type</Text>
+              <View style={styles.mediaTypeButtons}>
+                <TouchableOpacity
+                  style={[
+                    styles.mediaTypeButton,
+                    formData.media_type === 'image' && styles.mediaTypeButtonActive,
+                  ]}
+                  onPress={() => setFormData({ ...formData, media_type: 'image' })}
+                >
+                  <IconSymbol
+                    ios_icon_name="photo"
+                    android_material_icon_name="image"
+                    size={24}
+                    color={formData.media_type === 'image' ? colors.primary : colors.textSecondary}
+                  />
+                  <Text style={[
+                    styles.mediaTypeButtonText,
+                    formData.media_type === 'image' && styles.mediaTypeButtonTextActive,
+                  ]}>
+                    Photo
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[
+                    styles.mediaTypeButton,
+                    formData.media_type === 'video' && styles.mediaTypeButtonActive,
+                    !subscription.isPremium && styles.mediaTypeButtonDisabled,
+                  ]}
+                  onPress={() => {
+                    if (subscription.isPremium) {
+                      setFormData({ ...formData, media_type: 'video' });
+                    } else {
+                      Alert.alert(
+                        'Premium Feature',
+                        'Video uploads are a premium feature. Upgrade to premium to unlock video timeline entries.',
+                        [{ text: 'OK' }]
+                      );
+                    }
+                  }}
+                >
+                  <IconSymbol
+                    ios_icon_name="video.fill"
+                    android_material_icon_name="videocam"
+                    size={24}
+                    color={formData.media_type === 'video' ? colors.primary : colors.textSecondary}
+                  />
+                  <Text style={[
+                    styles.mediaTypeButtonText,
+                    formData.media_type === 'video' && styles.mediaTypeButtonTextActive,
+                  ]}>
+                    Video
+                  </Text>
+                  {!subscription.isPremium && (
+                    <View style={styles.premiumLockBadge}>
+                      <IconSymbol
+                        ios_icon_name="lock.fill"
+                        android_material_icon_name="lock"
+                        size={12}
+                        color={colors.warning}
+                      />
+                    </View>
+                  )}
+                </TouchableOpacity>
+              </View>
+
+              <Text style={styles.label}>
+                {formData.media_type === 'video' ? 'Video' : 'Photo'} (Optional)
+              </Text>
+              <TouchableOpacity 
+                style={styles.imagePickerButton} 
+                onPress={() => pickMedia(formData.media_type)}
+              >
+                {(formData.image_url || formData.video_url) ? (
+                  formData.media_type === 'image' ? (
+                    <Image source={{ uri: formData.image_url! }} style={styles.previewImage} />
+                  ) : (
+                    <View style={styles.videoPreview}>
+                      <IconSymbol
+                        ios_icon_name="play.circle.fill"
+                        android_material_icon_name="play-circle"
+                        size={48}
+                        color={colors.primary}
+                      />
+                      <Text style={styles.videoPreviewText}>Video Selected</Text>
+                    </View>
+                  )
                 ) : (
                   <View style={styles.imagePickerPlaceholder}>
                     <IconSymbol
-                      ios_icon_name="photo"
-                      android_material_icon_name="add-photo-alternate"
+                      ios_icon_name={formData.media_type === 'video' ? 'video.fill' : 'photo'}
+                      android_material_icon_name={formData.media_type === 'video' ? 'videocam' : 'add-photo-alternate'}
                       size={48}
                       color={colors.textSecondary}
                     />
-                    <Text style={styles.imagePickerText}>Tap to add image</Text>
+                    <Text style={styles.imagePickerText}>
+                      Tap to add {formData.media_type === 'video' ? 'video' : 'photo'}
+                    </Text>
                   </View>
                 )}
               </TouchableOpacity>
@@ -475,6 +622,38 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: colors.highlight,
   },
+  videoPlaceholder: {
+    width: '100%',
+    height: 200,
+    borderRadius: 12,
+    backgroundColor: colors.highlight,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  videoPlaceholderText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.textSecondary,
+    marginTop: 8,
+  },
+  premiumBadge: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: colors.background,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  premiumBadgeText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#FFD700',
+  },
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -512,6 +691,47 @@ const styles = StyleSheet.create({
     height: 100,
     textAlignVertical: 'top',
   },
+  mediaTypeButtons: {
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 24,
+  },
+  mediaTypeButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    backgroundColor: colors.card,
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: 'transparent',
+    position: 'relative',
+  },
+  mediaTypeButtonActive: {
+    borderColor: colors.primary,
+    backgroundColor: colors.highlight,
+  },
+  mediaTypeButtonDisabled: {
+    opacity: 0.6,
+  },
+  mediaTypeButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.textSecondary,
+  },
+  mediaTypeButtonTextActive: {
+    color: colors.primary,
+  },
+  premiumLockBadge: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    backgroundColor: colors.background,
+    padding: 4,
+    borderRadius: 8,
+  },
   imagePickerButton: {
     marginBottom: 24,
   },
@@ -535,5 +755,19 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 12,
     backgroundColor: colors.highlight,
+  },
+  videoPreview: {
+    width: '100%',
+    height: 200,
+    borderRadius: 12,
+    backgroundColor: colors.highlight,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  videoPreviewText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.textSecondary,
+    marginTop: 8,
   },
 });
