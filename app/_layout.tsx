@@ -17,6 +17,7 @@ import { StatusBar } from "expo-status-bar";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { colors } from "@/styles/commonStyles";
 import { useBackgroundBLEScanning } from "@/hooks/useBackgroundBLEScanning";
+import { SuperwallProvider } from "expo-superwall";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -62,17 +63,27 @@ export default function RootLayout() {
     <>
       <StatusBar style="light" />
       <ThemeProvider value={CarDropDarkTheme}>
-        <AuthProvider>
-          <BackgroundBLEManager />
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <Stack screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="index" />
-              <Stack.Screen name="(auth)" />
-              <Stack.Screen name="(tabs)" />
-            </Stack>
-            <SystemBars style="light" />
-          </GestureHandlerRootView>
-        </AuthProvider>
+        <SuperwallProvider
+          apiKeys={{
+            ios: "pk_d1c3c5e8e8f8e8e8e8e8e8e8e8e8e8e8",
+            android: "pk_d1c3c5e8e8f8e8e8e8e8e8e8e8e8e8e8",
+          }}
+          onConfigurationError={(error) => {
+            console.error("[Superwall] Configuration error:", error);
+          }}
+        >
+          <AuthProvider>
+            <BackgroundBLEManager />
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <Stack screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="index" />
+                <Stack.Screen name="(auth)" />
+                <Stack.Screen name="(tabs)" />
+              </Stack>
+              <SystemBars style="light" />
+            </GestureHandlerRootView>
+          </AuthProvider>
+        </SuperwallProvider>
       </ThemeProvider>
     </>
   );

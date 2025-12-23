@@ -18,6 +18,7 @@ import { colors, commonStyles, buttonStyles } from '@/styles/commonStyles';
 import { IconSymbol } from '@/components/IconSymbol';
 import * as ImagePicker from 'expo-image-picker';
 import { useSubscription } from '@/hooks/useSubscription';
+import { useUser } from 'expo-superwall';
 
 type NotificationType = 'silent' | 'vibration' | 'sound';
 type SoundType = 'none' | 'vroom' | 'default';
@@ -25,6 +26,7 @@ type SoundType = 'none' | 'vroom' | 'default';
 export default function SettingsScreen() {
   const { user, profile, logout, updateProfile } = useAuth();
   const { subscription } = useSubscription();
+  const { identify, user: superwallUser } = useUser();
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   
@@ -57,6 +59,15 @@ export default function SettingsScreen() {
   const [soundType, setSoundType] = useState<SoundType>(
     notificationPrefs.sound || 'none'
   );
+
+  // Identify user with Superwall when component mounts
+  React.useEffect(() => {
+    if (user?.id) {
+      identify(user.id).catch((error) => {
+        console.error('[Settings] Error identifying user with Superwall:', error);
+      });
+    }
+  }, [user?.id]);
 
   const handleLogout = () => {
     Alert.alert(
@@ -139,6 +150,10 @@ export default function SettingsScreen() {
     setIsEditing(false);
   };
 
+  const handleManageSubscription = () => {
+    router.push('/subscription-management' as any);
+  };
+
   if (!profile) {
     return (
       <View style={commonStyles.centerContent}>
@@ -166,7 +181,79 @@ export default function SettingsScreen() {
         <Text style={styles.joinDate}>
           Member since {new Date(profile.created_at).toLocaleDateString()}
         </Text>
+
+        {subscription.isPremium && (
+          <View style={styles.premiumBadgeHeader}>
+            <IconSymbol
+              ios_icon_name="crown.fill"
+              android_material_icon_name="workspace-premium"
+              size={20}
+              color="#FFD700"
+            />
+            <Text style={styles.premiumText}>
+              {subscription.subscriptionSource === 'free_premium' 
+                ? 'Premium (Free)' 
+                : 'Premium Member'}
+            </Text>
+          </View>
+        )}
       </View>
+
+      {!subscription.isPremium && (
+        <TouchableOpacity 
+          style={styles.upgradeCard}
+          onPress={() => router.push('/subscription-management' as any)}
+        >
+          <View style={styles.upgradeCardContent}>
+            <IconSymbol
+              ios_icon_name="crown.fill"
+              android_material_icon_name="workspace-premium"
+              size={32}
+              color="#FFD700"
+            />
+            <View style={styles.upgradeCardText}>
+              <Text style={styles.upgradeCardTitle}>Upgrade to Premium</Text>
+              <Text style={styles.upgradeCardDescription}>
+                Unlock all features including Always Searching, Live Meet View, and more
+              </Text>
+            </View>
+            <IconSymbol
+              ios_icon_name="chevron.right"
+              android_material_icon_name="chevron-right"
+              size={24}
+              color={colors.primary}
+            />
+          </View>
+        </TouchableOpacity>
+      )}
+
+      {subscription.isPremium && subscription.subscriptionSource === 'superwall' && (
+        <TouchableOpacity 
+          style={styles.manageSubscriptionCard}
+          onPress={handleManageSubscription}
+        >
+          <View style={styles.upgradeCardContent}>
+            <IconSymbol
+              ios_icon_name="creditcard.fill"
+              android_material_icon_name="payment"
+              size={24}
+              color={colors.primary}
+            />
+            <View style={styles.upgradeCardText}>
+              <Text style={styles.manageSubscriptionTitle}>Manage Subscription</Text>
+              <Text style={styles.upgradeCardDescription}>
+                View billing, change plan, or cancel subscription
+              </Text>
+            </View>
+            <IconSymbol
+              ios_icon_name="chevron.right"
+              android_material_icon_name="chevron-right"
+              size={24}
+              color={colors.textSecondary}
+            />
+          </View>
+        </TouchableOpacity>
+      )}
 
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
@@ -689,6 +776,66 @@ const styles = StyleSheet.create({
   joinDate: {
     fontSize: 12,
     color: colors.textSecondary,
+  },
+  premiumBadgeHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginTop: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    backgroundColor: 'rgba(255, 215, 0, 0.1)',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#FFD700',
+  },
+  premiumText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#FFD700',
+  },
+  upgradeCard: {
+    backgroundColor: colors.card,
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 24,
+    borderWidth: 2,
+    borderColor: colors.primary,
+    boxShadow: '0px 4px 12px rgba(255, 107, 0, 0.3)',
+    elevation: 4,
+  },
+  upgradeCardContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+  },
+  upgradeCardText: {
+    flex: 1,
+  },
+  upgradeCardTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: colors.text,
+    marginBottom: 4,
+  },
+  upgradeCardDescription: {
+    fontSize: 13,
+    color: colors.textSecondary,
+    lineHeight: 18,
+  },
+  manageSubscriptionCard: {
+    backgroundColor: colors.card,
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 24,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  manageSubscriptionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: 4,
   },
   section: {
     marginBottom: 32,

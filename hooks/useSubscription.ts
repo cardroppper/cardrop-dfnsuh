@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/app/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { useUser } from 'expo-superwall';
 
 export interface SubscriptionStatus {
   isPremium: boolean;
@@ -9,16 +10,19 @@ export interface SubscriptionStatus {
   startDate: string | null;
   endDate: string | null;
   isFreePremium: boolean;
+  subscriptionSource: 'free_premium' | 'superwall' | 'none';
 }
 
 export function useSubscription() {
   const { user, profile } = useAuth();
+  const { subscriptionStatus: superwallStatus } = useUser();
   const [subscription, setSubscription] = useState<SubscriptionStatus>({
     isPremium: false,
     status: 'free',
     startDate: null,
     endDate: null,
     isFreePremium: false,
+    subscriptionSource: 'none',
   });
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +33,7 @@ export function useSubscription() {
     }
 
     fetchSubscription();
-  }, [user, profile?.free_premium]);
+  }, [user, profile?.free_premium, superwallStatus]);
 
   const fetchSubscription = async () => {
     if (!user) return;
@@ -37,6 +41,9 @@ export function useSubscription() {
     try {
       // Check if user has free premium enabled
       const hasFreePremium = profile?.free_premium || false;
+
+      // Check Superwall subscription status
+      const hasSuperwallPremium = superwallStatus?.status === 'ACTIVE';
 
       const { data, error } = await supabase
         .from('user_subscriptions')
@@ -49,16 +56,26 @@ export function useSubscription() {
         return;
       }
 
+      // Determine subscription source and status
+      let isPremium = false;
+      let subscriptionSource: 'free_premium' | 'superwall' | 'none' = 'none';
+
+      if (hasFreePremium) {
+        isPremium = true;
+        subscriptionSource = 'free_premium';
+      } else if (hasSuperwallPremium) {
+        isPremium = true;
+        subscriptionSource = 'superwall';
+      }
+
       if (data) {
-        // If user has free premium, they get premium access regardless of subscription status
-        const isPremium = hasFreePremium || data.subscription_status === 'premium';
-        
         setSubscription({
           isPremium,
           status: isPremium ? 'premium' : 'free',
           startDate: data.subscription_start_date,
           endDate: data.subscription_end_date,
           isFreePremium: hasFreePremium,
+          subscriptionSource,
         });
       } else {
         // Create default free subscription
@@ -66,20 +83,20 @@ export function useSubscription() {
           .from('user_subscriptions')
           .insert({
             user_id: user.id,
-            subscription_status: 'free',
+            subscription_status: isPremium ? 'premium' : 'free',
           });
 
         if (insertError) {
           console.error('Error creating subscription:', insertError);
         }
 
-        // Still grant premium if free premium is enabled
         setSubscription({
-          isPremium: hasFreePremium,
-          status: hasFreePremium ? 'premium' : 'free',
+          isPremium,
+          status: isPremium ? 'premium' : 'free',
           startDate: null,
           endDate: null,
           isFreePremium: hasFreePremium,
+          subscriptionSource,
         });
       }
     } catch (err) {

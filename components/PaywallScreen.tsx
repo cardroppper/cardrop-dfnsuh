@@ -1,18 +1,47 @@
 
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { IconSymbol } from './IconSymbol';
 import { colors, buttonStyles } from '@/styles/commonStyles';
 import { useRouter } from 'expo-router';
+import { usePlacement, useUser } from 'expo-superwall';
 
 interface PaywallScreenProps {
   feature: string;
   onDismiss?: () => void;
+  placementId?: string;
 }
 
-export function PaywallScreen({ feature, onDismiss }: PaywallScreenProps) {
+export function PaywallScreen({ feature, onDismiss, placementId = 'premium_features' }: PaywallScreenProps) {
   const router = useRouter();
+  const { identify } = useUser();
+  const { registerPlacement, state: placementState } = usePlacement({
+    onPresent: (info) => {
+      console.log('[Paywall] Presented:', info);
+    },
+    onDismiss: (info, result) => {
+      console.log('[Paywall] Dismissed:', info, 'Result:', result);
+      if (result === 'purchased' || result === 'restored') {
+        Alert.alert(
+          'Welcome to Premium!',
+          'You now have access to all premium features. Enjoy!',
+          [{ text: 'OK', onPress: onDismiss }]
+        );
+      } else {
+        onDismiss?.();
+      }
+    },
+    onError: (error) => {
+      console.error('[Paywall] Error:', error);
+      Alert.alert('Error', 'Failed to load paywall. Please try again.');
+    },
+    onSkip: (reason) => {
+      console.log('[Paywall] Skipped:', reason);
+      // User already has access, dismiss the paywall
+      onDismiss?.();
+    },
+  });
 
   const premiumFeatures = [
     {
@@ -20,6 +49,18 @@ export function PaywallScreen({ feature, onDismiss }: PaywallScreenProps) {
       androidIcon: 'history',
       title: '24-Hour Detection History',
       description: 'Access your full beacon detection history from the last 24 hours',
+    },
+    {
+      icon: 'antenna.radiowaves.left.and.right',
+      androidIcon: 'bluetooth-searching',
+      title: 'Always Searching',
+      description: 'Continuous background scanning for nearby vehicles',
+    },
+    {
+      icon: 'eye.fill',
+      androidIcon: 'visibility',
+      title: 'Live Meet View',
+      description: 'See all cars at club meets in real-time, even remotely',
     },
     {
       icon: 'person.3.fill',
@@ -39,19 +80,22 @@ export function PaywallScreen({ feature, onDismiss }: PaywallScreenProps) {
       title: 'Custom Badges',
       description: 'Stand out with exclusive premium profile badges',
     },
-    {
-      icon: 'bolt.fill',
-      androidIcon: 'flash-on',
-      title: 'Priority Support',
-      description: 'Get help faster with dedicated premium support',
-    },
-    {
-      icon: 'antenna.radiowaves.left.and.right',
-      androidIcon: 'bluetooth-searching',
-      title: 'Live Club Meets',
-      description: 'Real-time updates during active club events',
-    },
   ];
+
+  const handleUpgrade = async () => {
+    try {
+      await registerPlacement({
+        placement: placementId,
+        feature: () => {
+          console.log('[Paywall] User has access to feature');
+          onDismiss?.();
+        },
+      });
+    } catch (error) {
+      console.error('[Paywall] Error registering placement:', error);
+      Alert.alert('Error', 'Failed to show paywall. Please try again.');
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -115,26 +159,15 @@ export function PaywallScreen({ feature, onDismiss }: PaywallScreenProps) {
         <View style={styles.ctaSection}>
           <TouchableOpacity
             style={[buttonStyles.primary, styles.upgradeButton]}
-            onPress={() => {
-              console.log('Upgrade to Premium');
-            }}
+            onPress={handleUpgrade}
           >
             <Text style={[buttonStyles.text, styles.upgradeText]}>Upgrade to Premium</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={[buttonStyles.outline, styles.restoreButton]}
-            onPress={() => {
-              console.log('Restore purchases');
-            }}
-          >
-            <Text style={buttonStyles.textOutline}>
-              Restore Purchases
-            </Text>
-          </TouchableOpacity>
-
           <Text style={styles.disclaimer}>
             Subscription automatically renews unless cancelled at least 24 hours before the end of the current period.
+            {'\n\n'}
+            By subscribing, you agree to our Terms of Service and Privacy Policy.
           </Text>
         </View>
       </ScrollView>
@@ -236,14 +269,11 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   upgradeButton: {
-    marginBottom: 12,
+    marginBottom: 20,
   },
   upgradeText: {
     fontSize: 18,
     fontWeight: '700',
-  },
-  restoreButton: {
-    marginBottom: 20,
   },
   disclaimer: {
     fontSize: 11,
