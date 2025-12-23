@@ -23,7 +23,8 @@ export type Database = {
           id: string
           instagram_handle: string | null
           is_private: boolean | null
-          twitter_handle: string | null
+          x_handle: string | null
+          tiktok_handle: string | null
           updated_at: string
           username: string
           youtube_handle: string | null
@@ -37,7 +38,8 @@ export type Database = {
           id: string
           instagram_handle?: string | null
           is_private?: boolean | null
-          twitter_handle?: string | null
+          x_handle?: string | null
+          tiktok_handle?: string | null
           updated_at?: string
           username: string
           youtube_handle?: string | null
@@ -51,7 +53,8 @@ export type Database = {
           id?: string
           instagram_handle?: string | null
           is_private?: boolean | null
-          twitter_handle?: string | null
+          x_handle?: string | null
+          tiktok_handle?: string | null
           updated_at?: string
           username?: string
           youtube_handle?: string | null

@@ -26,7 +26,8 @@ export default function SettingsScreen() {
   const [displayName, setDisplayName] = useState(profile?.display_name || '');
   const [bio, setBio] = useState(profile?.bio || '');
   const [instagramHandle, setInstagramHandle] = useState(profile?.instagram_handle || '');
-  const [twitterHandle, setTwitterHandle] = useState(profile?.twitter_handle || '');
+  const [xHandle, setXHandle] = useState(profile?.x_handle || '');
+  const [tiktokHandle, setTiktokHandle] = useState(profile?.tiktok_handle || '');
   const [youtubeHandle, setYoutubeHandle] = useState(profile?.youtube_handle || '');
   const [isPrivate, setIsPrivate] = useState(profile?.is_private || false);
 
@@ -55,7 +56,8 @@ export default function SettingsScreen() {
         display_name: displayName.trim(),
         bio: bio.trim() || null,
         instagram_handle: instagramHandle.trim() || null,
-        twitter_handle: twitterHandle.trim() || null,
+        x_handle: xHandle.trim() || null,
+        tiktok_handle: tiktokHandle.trim() || null,
         youtube_handle: youtubeHandle.trim() || null,
         is_private: isPrivate,
       });
@@ -78,7 +80,8 @@ export default function SettingsScreen() {
     setDisplayName(profile?.display_name || '');
     setBio(profile?.bio || '');
     setInstagramHandle(profile?.instagram_handle || '');
-    setTwitterHandle(profile?.twitter_handle || '');
+    setXHandle(profile?.x_handle || '');
+    setTiktokHandle(profile?.tiktok_handle || '');
     setYoutubeHandle(profile?.youtube_handle || '');
     setIsPrivate(profile?.is_private || false);
     setIsEditing(false);
@@ -168,11 +171,24 @@ export default function SettingsScreen() {
         </View>
 
         <View style={styles.field}>
-          <Text style={styles.label}>Twitter Handle</Text>
+          <Text style={styles.label}>X Handle</Text>
           <TextInput
             style={[commonStyles.input, !isEditing && styles.inputDisabled]}
-            value={twitterHandle}
-            onChangeText={setTwitterHandle}
+            value={xHandle}
+            onChangeText={setXHandle}
+            editable={isEditing}
+            placeholder="@username"
+            placeholderTextColor={colors.textSecondary}
+            autoCapitalize="none"
+          />
+        </View>
+
+        <View style={styles.field}>
+          <Text style={styles.label}>TikTok Handle</Text>
+          <TextInput
+            style={[commonStyles.input, !isEditing && styles.inputDisabled]}
+            value={tiktokHandle}
+            onChangeText={setTiktokHandle}
             editable={isEditing}
             placeholder="@username"
             placeholderTextColor={colors.textSecondary}
