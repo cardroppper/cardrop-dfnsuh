@@ -1,4 +1,3 @@
-
 {
   "expo": {
     "name": "CarDrop",
@@ -50,7 +49,10 @@
         "react-native-ble-plx",
         {
           "isBackgroundEnabled": false,
-          "modes": ["peripheral", "central"],
+          "modes": [
+            "peripheral",
+            "central"
+          ],
           "bluetoothAlwaysPermission": "CarDrop uses Bluetooth to discover nearby vehicles when you start scanning. This allows you to see cars that are physically near you at meets and events."
         }
       ]

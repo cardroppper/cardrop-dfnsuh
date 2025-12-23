@@ -4,7 +4,7 @@ import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { Redirect } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
 import { colors } from '@/styles/commonStyles';
-import { Tabs } from 'expo-router/unstable-native-tabs';
+import { NativeTabs, Icon, Label } from 'expo-router/unstable-native-tabs';
 
 export default function TabLayout() {
   const { isLoading, isAuthenticated, user, profile } = useAuth();
@@ -27,49 +27,38 @@ export default function TabLayout() {
   }
 
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
+    <NativeTabs
+      tintColor={colors.primary}
+      iconColor={colors.textSecondary}
+      labelStyle={{
+        color: colors.textSecondary,
       }}
-      tabBarActiveTintColor={colors.primary}
-      tabBarInactiveTintColor={colors.textSecondary}
     >
-      <Tabs.Screen
-        name="discover"
-        options={{
-          title: 'Discover',
-          tabBarIcon: ({ sfSymbol }) => sfSymbol('sparkles'),
-        }}
-      />
-      <Tabs.Screen
-        name="nearby"
-        options={{
-          title: 'Nearby',
-          tabBarIcon: ({ sfSymbol }) => sfSymbol('location.fill'),
-        }}
-      />
-      <Tabs.Screen
-        name="garage"
-        options={{
-          title: 'Garage',
-          tabBarIcon: ({ sfSymbol }) => sfSymbol('car.2.fill'),
-        }}
-      />
-      <Tabs.Screen
-        name="clubs"
-        options={{
-          title: 'Clubs',
-          tabBarIcon: ({ sfSymbol }) => sfSymbol('person.3.fill'),
-        }}
-      />
-      <Tabs.Screen
-        name="settings"
-        options={{
-          title: 'Settings',
-          tabBarIcon: ({ sfSymbol }) => sfSymbol('gearshape.fill'),
-        }}
-      />
-    </Tabs>
+      <NativeTabs.Trigger name="discover">
+        <Label>Discover</Label>
+        <Icon sf="sparkles" />
+      </NativeTabs.Trigger>
+      
+      <NativeTabs.Trigger name="nearby">
+        <Label>Nearby</Label>
+        <Icon sf="location.fill" />
+      </NativeTabs.Trigger>
+      
+      <NativeTabs.Trigger name="garage">
+        <Label>Garage</Label>
+        <Icon sf="car.2.fill" />
+      </NativeTabs.Trigger>
+      
+      <NativeTabs.Trigger name="clubs">
+        <Label>Clubs</Label>
+        <Icon sf="person.3.fill" />
+      </NativeTabs.Trigger>
+      
+      <NativeTabs.Trigger name="settings">
+        <Label>Settings</Label>
+        <Icon sf="gearshape.fill" />
+      </NativeTabs.Trigger>
+    </NativeTabs>
   );
 }
 
