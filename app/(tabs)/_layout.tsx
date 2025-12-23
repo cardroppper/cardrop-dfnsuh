@@ -1,17 +1,33 @@
 
 import React, { useEffect } from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
-import { Tabs, Redirect } from 'expo-router';
+import { Tabs, Redirect, router } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
 import { colors } from '@/styles/commonStyles';
 import { IconSymbol } from '@/components/IconSymbol';
+import { BeaconPairingModal } from '@/components/BeaconPairingModal';
+import { useBeaconPairing } from '@/hooks/useBeaconPairing';
 
 export default function TabLayout() {
   const { isLoading, isAuthenticated, user, profile } = useAuth();
+  const { pairingBeacon, startMonitoring, stopMonitoring, dismissPairing } = useBeaconPairing();
 
   useEffect(() => {
     console.log('[TabLayout] Auth state:', { isLoading, isAuthenticated, hasUser: !!user, hasProfile: !!profile });
   }, [isLoading, isAuthenticated, user, profile]);
+
+  // Start monitoring for new beacons when authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log('[TabLayout] Starting beacon pairing monitoring');
+      startMonitoring();
+      
+      return () => {
+        console.log('[TabLayout] Stopping beacon pairing monitoring');
+        stopMonitoring();
+      };
+    }
+  }, [isAuthenticated, startMonitoring, stopMonitoring]);
 
   if (isLoading) {
     return (
@@ -26,26 +42,41 @@ export default function TabLayout() {
     return <Redirect href="/(auth)/login" />;
   }
 
+  const handlePairWithNewCar = () => {
+    dismissPairing();
+    // Navigate to add vehicle screen
+    // The beacon will be available in the BeaconSelector
+    router.push('/vehicles/add');
+  };
+
+  const handlePairWithExistingCar = () => {
+    dismissPairing();
+    // Navigate to garage where user can select a vehicle
+    // Then they can assign the beacon from the vehicle details
+    router.push('/(tabs)/garage');
+  };
+
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.textSecondary,
-        tabBarStyle: {
-          backgroundColor: colors.card,
-          borderTopColor: colors.highlight,
-          borderTopWidth: 1,
-          height: 60,
-          paddingBottom: 8,
-          paddingTop: 8,
-        },
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '600',
-        },
-      }}
-    >
+    <>
+      <Tabs
+        screenOptions={{
+          headerShown: false,
+          tabBarActiveTintColor: colors.primary,
+          tabBarInactiveTintColor: colors.textSecondary,
+          tabBarStyle: {
+            backgroundColor: colors.card,
+            borderTopColor: colors.highlight,
+            borderTopWidth: 1,
+            height: 60,
+            paddingBottom: 8,
+            paddingTop: 8,
+          },
+          tabBarLabelStyle: {
+            fontSize: 12,
+            fontWeight: '600',
+          },
+        }}
+      >
       <Tabs.Screen
         name="discover"
         options={{
@@ -117,6 +148,16 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+
+    {/* Beacon Pairing Modal */}
+    <BeaconPairingModal
+      visible={!!pairingBeacon}
+      beaconId={pairingBeacon || ''}
+      onPairWithNewCar={handlePairWithNewCar}
+      onPairWithExistingCar={handlePairWithExistingCar}
+      onDismiss={dismissPairing}
+    />
+  </>
   );
 }
 

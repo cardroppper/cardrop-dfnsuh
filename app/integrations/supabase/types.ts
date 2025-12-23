@@ -189,3 +189,21 @@ export interface UserSubscription {
   created_at: string;
   updated_at: string;
 }
+
+export interface RegisteredBeacon {
+  id: string;
+  beacon_uuid: string;
+  beacon_mac_address: string | null;
+  device_model: string;
+  manufacturer: string;
+  is_configured: boolean;
+  is_assigned: boolean;
+  assigned_to_user_id: string | null;
+  registered_by: string | null;
+  registered_at: string;
+  configured_at: string | null;
+  assigned_at: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}

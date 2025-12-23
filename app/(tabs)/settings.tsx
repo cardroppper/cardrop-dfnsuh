@@ -290,6 +290,36 @@ export default function SettingsScreen() {
         </View>
       </View>
 
+      {profile.username === 'cardrop' && (
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Developer Tools</Text>
+          
+          <TouchableOpacity 
+            style={styles.devButton} 
+            onPress={() => router.push('/dev/beacon-registration')}
+          >
+            <IconSymbol
+              ios_icon_name="antenna.radiowaves.left.and.right"
+              android_material_icon_name="bluetooth-searching"
+              size={24}
+              color={colors.secondary}
+            />
+            <View style={styles.devButtonContent}>
+              <Text style={styles.devButtonText}>Beacon Registration</Text>
+              <Text style={styles.devButtonDescription}>
+                Register and configure FSC-BP108B beacons
+              </Text>
+            </View>
+            <IconSymbol
+              ios_icon_name="chevron.right"
+              android_material_icon_name="chevron-right"
+              size={20}
+              color={colors.textSecondary}
+            />
+          </TouchableOpacity>
+        </View>
+      )}
+
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Account</Text>
         
@@ -429,6 +459,29 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: colors.accent,
+  },
+  devButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.card,
+    padding: 16,
+    borderRadius: 12,
+    gap: 12,
+    borderWidth: 2,
+    borderColor: colors.secondary,
+  },
+  devButtonContent: {
+    flex: 1,
+  },
+  devButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.secondary,
+    marginBottom: 4,
+  },
+  devButtonDescription: {
+    fontSize: 12,
+    color: colors.textSecondary,
   },
   bottomSpacer: {
     height: 100,

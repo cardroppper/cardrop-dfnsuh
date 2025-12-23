@@ -19,12 +19,14 @@ import { useRouter } from 'expo-router';
 import { VehicleFormData } from '@/types/vehicle';
 import * as ImagePicker from 'expo-image-picker';
 import { IconSymbol } from '@/components/IconSymbol';
+import { BeaconSelector } from '@/components/BeaconSelector';
 
 export default function AddVehicleScreen() {
   const { user } = useAuth();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imageUri, setImageUri] = useState<string | null>(null);
+  const [selectedBeaconId, setSelectedBeaconId] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<VehicleFormData>({
     manufacturer: '',
@@ -115,6 +117,46 @@ export default function AddVehicleScreen() {
       }
 
       console.log('[AddVehicle] Vehicle created successfully:', data.id);
+
+      // If a beacon was selected, assign it to the vehicle
+      if (selectedBeaconId) {
+        console.log('[AddVehicle] Assigning beacon to vehicle:', selectedBeaconId);
+        
+        // Create vehicle_beacon entry
+        const { error: beaconError } = await supabase
+          .from('vehicle_beacons')
+          .insert({
+            vehicle_id: data.id,
+            beacon_uuid: selectedBeaconId,
+          });
+
+        if (beaconError) {
+          console.error('[AddVehicle] Error assigning beacon:', beaconError);
+          // Don't fail the whole operation, just warn
+          Alert.alert(
+            'Warning',
+            'Vehicle created but beacon assignment failed. You can assign it later.',
+            [{ text: 'OK', onPress: () => router.back() }]
+          );
+          return;
+        }
+
+        // Update registered_beacon to mark as assigned
+        const { data: userData } = await supabase.auth.getUser();
+        const { error: updateError } = await supabase
+          .from('registered_beacons')
+          .update({
+            is_assigned: true,
+            assigned_to_user_id: userData.user?.id,
+            assigned_at: new Date().toISOString(),
+          })
+          .eq('beacon_uuid', selectedBeaconId);
+
+        if (updateError) {
+          console.error('[AddVehicle] Error updating beacon status:', updateError);
+        }
+      }
+
       Alert.alert('Success', 'Vehicle added to your garage!', [
         {
           text: 'OK',
@@ -265,6 +307,18 @@ export default function AddVehicleScreen() {
         </View>
 
         <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Beacon Assignment</Text>
+          <Text style={styles.sectionDescription}>
+            Assign a CarDrop beacon to enable proximity detection and automatic check-ins at events.
+          </Text>
+          
+          <BeaconSelector
+            selectedBeaconId={selectedBeaconId}
+            onBeaconSelected={setSelectedBeaconId}
+          />
+        </View>
+
+        <View style={styles.section}>
           <Text style={styles.sectionTitle}>Visibility</Text>
           
           <View style={styles.switchRow}>
@@ -331,6 +385,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: colors.text,
     marginBottom: 16,
+  },
+  sectionDescription: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    marginBottom: 16,
+    lineHeight: 20,
   },
   label: {
     fontSize: 14,

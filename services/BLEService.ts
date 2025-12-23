@@ -189,7 +189,11 @@ class BLEService {
     }
 
     const name = device.name.toUpperCase();
-    return name.includes('CARDROP') || name.startsWith('CD-');
+    // Check for CarDrop beacons or Feasycom FSC-BP108B beacons
+    return name.includes('CARDROP') || 
+           name.startsWith('CD-') || 
+           name.includes('FSC-BP') ||
+           name.includes('FEASYCOM');
   }
 
   private startCleanupInterval(onDeviceFound: (beacons: BeaconData[]) => void) {
