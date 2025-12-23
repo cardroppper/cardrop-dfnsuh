@@ -50,7 +50,8 @@ export function useDiscover() {
             username,
             display_name,
             avatar_url,
-            is_private
+            is_private,
+            ghost_mode
           )
         `)
         .eq('is_public', true)
@@ -76,7 +77,10 @@ export function useDiscover() {
         .filter(v => {
           const profile = v.profiles;
           if (!profile) return false;
-          if (profile.is_private && v.user_id !== user.id) return false;
+          // Filter out private profiles and ghost mode users (unless it's the current user's own vehicle)
+          if (v.user_id !== user.id) {
+            if (profile.is_private || profile.ghost_mode) return false;
+          }
           return true;
         })
         .map(vehicle => ({

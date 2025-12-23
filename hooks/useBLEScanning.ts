@@ -106,7 +106,7 @@ export function useBLEScanning() {
 
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
-        .select('id, username, display_name, is_private')
+        .select('id, username, display_name, is_private, ghost_mode')
         .in('id', userIds);
 
       if (profileError) {
@@ -120,7 +120,8 @@ export function useBLEScanning() {
           if (!vehicle || !vehicle.is_public) return false;
 
           const profile = profileData?.find((p: any) => p.id === vehicle.user_id);
-          if (!profile || profile.is_private) return false;
+          // Filter out vehicles from private profiles or users with ghost mode enabled
+          if (!profile || profile.is_private || profile.ghost_mode) return false;
 
           return true;
         })

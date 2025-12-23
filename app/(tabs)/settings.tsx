@@ -30,6 +30,7 @@ export default function SettingsScreen() {
   const [tiktokHandle, setTiktokHandle] = useState(profile?.tiktok_handle || '');
   const [youtubeHandle, setYoutubeHandle] = useState(profile?.youtube_handle || '');
   const [isPrivate, setIsPrivate] = useState(profile?.is_private || false);
+  const [ghostMode, setGhostMode] = useState(profile?.ghost_mode || false);
 
   const handleLogout = () => {
     Alert.alert(
@@ -60,6 +61,7 @@ export default function SettingsScreen() {
         tiktok_handle: tiktokHandle.trim() || null,
         youtube_handle: youtubeHandle.trim() || null,
         is_private: isPrivate,
+        ghost_mode: ghostMode,
       });
 
       if (result.success) {
@@ -84,6 +86,7 @@ export default function SettingsScreen() {
     setTiktokHandle(profile?.tiktok_handle || '');
     setYoutubeHandle(profile?.youtube_handle || '');
     setIsPrivate(profile?.is_private || false);
+    setGhostMode(profile?.ghost_mode || false);
     setIsEditing(false);
   };
 
@@ -253,6 +256,41 @@ export default function SettingsScreen() {
       </View>
 
       <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Privacy Settings</Text>
+        
+        <View style={styles.switchField}>
+          <View style={styles.switchLabelContainer}>
+            <View style={styles.labelRow}>
+              <IconSymbol
+                ios_icon_name="eye.slash.fill"
+                android_material_icon_name="visibility-off"
+                size={20}
+                color={colors.primary}
+              />
+              <Text style={[styles.label, { marginLeft: 8, marginBottom: 0 }]}>Ghost Mode</Text>
+            </View>
+            <Text style={styles.switchDescription}>
+              Hide all your vehicles from other users&apos; detection feeds. You can still scan and detect others.
+            </Text>
+          </View>
+          <Switch
+            value={ghostMode}
+            onValueChange={async (value) => {
+              setGhostMode(value);
+              // Auto-save ghost mode changes
+              const result = await updateProfile({ ghost_mode: value });
+              if (!result.success) {
+                Alert.alert('Error', result.error || 'Failed to update Ghost Mode');
+                setGhostMode(!value); // Revert on error
+              }
+            }}
+            trackColor={{ false: colors.highlight, true: colors.primary }}
+            thumbColor={colors.text}
+          />
+        </View>
+      </View>
+
+      <View style={styles.section}>
         <Text style={styles.sectionTitle}>Account</Text>
         
         <TouchableOpacity style={styles.dangerButton} onPress={handleLogout}>
@@ -325,6 +363,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     color: colors.text,
+    marginBottom: 16,
   },
   field: {
     marginBottom: 16,
@@ -334,6 +373,11 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.text,
     marginBottom: 8,
+  },
+  labelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
   },
   inputDisabled: {
     opacity: 0.6,
@@ -360,6 +404,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: colors.textSecondary,
     marginTop: 4,
+    lineHeight: 16,
   },
   editActions: {
     flexDirection: 'row',
