@@ -8,15 +8,17 @@ export interface SubscriptionStatus {
   status: 'free' | 'premium';
   startDate: string | null;
   endDate: string | null;
+  isFreePremium: boolean;
 }
 
 export function useSubscription() {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const [subscription, setSubscription] = useState<SubscriptionStatus>({
     isPremium: false,
     status: 'free',
     startDate: null,
     endDate: null,
+    isFreePremium: false,
   });
   const [loading, setLoading] = useState(true);
 
@@ -27,12 +29,15 @@ export function useSubscription() {
     }
 
     fetchSubscription();
-  }, [user]);
+  }, [user, profile?.free_premium]);
 
   const fetchSubscription = async () => {
     if (!user) return;
 
     try {
+      // Check if user has free premium enabled
+      const hasFreePremium = profile?.free_premium || false;
+
       const { data, error } = await supabase
         .from('user_subscriptions')
         .select('*')
@@ -45,11 +50,15 @@ export function useSubscription() {
       }
 
       if (data) {
+        // If user has free premium, they get premium access regardless of subscription status
+        const isPremium = hasFreePremium || data.subscription_status === 'premium';
+        
         setSubscription({
-          isPremium: data.subscription_status === 'premium',
-          status: data.subscription_status as 'free' | 'premium',
+          isPremium,
+          status: isPremium ? 'premium' : 'free',
           startDate: data.subscription_start_date,
           endDate: data.subscription_end_date,
+          isFreePremium: hasFreePremium,
         });
       } else {
         // Create default free subscription
@@ -63,6 +72,15 @@ export function useSubscription() {
         if (insertError) {
           console.error('Error creating subscription:', insertError);
         }
+
+        // Still grant premium if free premium is enabled
+        setSubscription({
+          isPremium: hasFreePremium,
+          status: hasFreePremium ? 'premium' : 'free',
+          startDate: null,
+          endDate: null,
+          isFreePremium: hasFreePremium,
+        });
       }
     } catch (err) {
       console.error('Error in fetchSubscription:', err);

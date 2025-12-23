@@ -11,6 +11,7 @@ export interface Profile {
   youtube_handle: string | null;
   is_private: boolean;
   ghost_mode: boolean;
+  free_premium: boolean;
   created_at: string;
   updated_at: string;
   cover_photo_url: string | null;

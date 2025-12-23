@@ -31,6 +31,7 @@ export default function SettingsScreen() {
   const [youtubeHandle, setYoutubeHandle] = useState(profile?.youtube_handle || '');
   const [isPrivate, setIsPrivate] = useState(profile?.is_private || false);
   const [ghostMode, setGhostMode] = useState(profile?.ghost_mode || false);
+  const [freePremium, setFreePremium] = useState(profile?.free_premium || false);
 
   const handleLogout = () => {
     Alert.alert(
@@ -87,6 +88,7 @@ export default function SettingsScreen() {
     setYoutubeHandle(profile?.youtube_handle || '');
     setIsPrivate(profile?.is_private || false);
     setGhostMode(profile?.ghost_mode || false);
+    setFreePremium(profile?.free_premium || false);
     setIsEditing(false);
   };
 
@@ -291,33 +293,77 @@ export default function SettingsScreen() {
       </View>
 
       {profile.username === 'cardrop' && (
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Developer Tools</Text>
-          
-          <TouchableOpacity 
-            style={styles.devButton} 
-            onPress={() => router.push('/dev/beacon-registration')}
-          >
-            <IconSymbol
-              ios_icon_name="antenna.radiowaves.left.and.right"
-              android_material_icon_name="bluetooth-searching"
-              size={24}
-              color={colors.secondary}
-            />
-            <View style={styles.devButtonContent}>
-              <Text style={styles.devButtonText}>Beacon Registration</Text>
-              <Text style={styles.devButtonDescription}>
-                Register and configure FSC-BP108B beacons
-              </Text>
+        <React.Fragment>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Developer Tools</Text>
+            
+            <TouchableOpacity 
+              style={styles.devButton} 
+              onPress={() => router.push('/dev/beacon-registration')}
+            >
+              <IconSymbol
+                ios_icon_name="antenna.radiowaves.left.and.right"
+                android_material_icon_name="bluetooth-searching"
+                size={24}
+                color={colors.secondary}
+              />
+              <View style={styles.devButtonContent}>
+                <Text style={styles.devButtonText}>Beacon Registration</Text>
+                <Text style={styles.devButtonDescription}>
+                  Register and configure FSC-BP108B beacons
+                </Text>
+              </View>
+              <IconSymbol
+                ios_icon_name="chevron.right"
+                android_material_icon_name="chevron-right"
+                size={20}
+                color={colors.textSecondary}
+              />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Premium Access</Text>
+            
+            <View style={styles.switchField}>
+              <View style={styles.switchLabelContainer}>
+                <View style={styles.labelRow}>
+                  <IconSymbol
+                    ios_icon_name="crown.fill"
+                    android_material_icon_name="workspace-premium"
+                    size={20}
+                    color="#FFD700"
+                  />
+                  <Text style={[styles.label, { marginLeft: 8, marginBottom: 0 }]}>Free Premium</Text>
+                </View>
+                <Text style={styles.switchDescription}>
+                  Grant yourself free premium access without requiring a subscription
+                </Text>
+              </View>
+              <Switch
+                value={freePremium}
+                onValueChange={async (value) => {
+                  setFreePremium(value);
+                  // Auto-save free premium changes
+                  const result = await updateProfile({ free_premium: value });
+                  if (result.success) {
+                    Alert.alert(
+                      'Success', 
+                      value 
+                        ? 'Free premium access enabled! You now have access to all premium features.' 
+                        : 'Free premium access disabled.'
+                    );
+                  } else {
+                    Alert.alert('Error', result.error || 'Failed to update Free Premium');
+                    setFreePremium(!value); // Revert on error
+                  }
+                }}
+                trackColor={{ false: colors.highlight, true: '#FFD700' }}
+                thumbColor={colors.text}
+              />
             </View>
-            <IconSymbol
-              ios_icon_name="chevron.right"
-              android_material_icon_name="chevron-right"
-              size={20}
-              color={colors.textSecondary}
-            />
-          </TouchableOpacity>
-        </View>
+          </View>
+        </React.Fragment>
       )}
 
       <View style={styles.section}>
