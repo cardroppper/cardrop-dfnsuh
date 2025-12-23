@@ -1,20 +1,21 @@
+
 {
   "expo": {
     "name": "CarDrop",
-    "slug": "CarDrop",
+    "slug": "cardrop",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/natively-dark.png",
-    "userInterfaceStyle": "automatic",
+    "icon": "./assets/images/6a39751f-03b5-4411-acbb-1e92f6a5988e.png",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/images/natively-dark.png",
+      "image": "./assets/images/6a39751f-03b5-4411-acbb-1e92f6a5988e.png",
       "resizeMode": "contain",
-      "backgroundColor": "#000000"
+      "backgroundColor": "#1A1A1A"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.Natively",
+      "bundleIdentifier": "com.cardrop.app",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSBluetoothAlwaysUsageDescription": "CarDrop uses Bluetooth to discover nearby vehicles when you start scanning. This allows you to see cars that are physically near you at meets and events.",
@@ -23,11 +24,11 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/natively-dark.png",
-        "backgroundColor": "#000000"
+        "foregroundImage": "./assets/images/6a39751f-03b5-4411-acbb-1e92f6a5988e.png",
+        "backgroundColor": "#1A1A1A"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.Natively",
+      "package": "com.cardrop.app",
       "permissions": [
         "BLUETOOTH",
         "BLUETOOTH_ADMIN",
@@ -38,7 +39,7 @@
       ]
     },
     "web": {
-      "favicon": "./assets/images/final_quest_240x240.png",
+      "favicon": "./assets/images/6a39751f-03b5-4411-acbb-1e92f6a5988e.png",
       "bundler": "metro"
     },
     "plugins": [
@@ -57,7 +58,7 @@
         }
       ]
     ],
-    "scheme": "natively",
+    "scheme": "cardrop",
     "experiments": {
       "typedRoutes": true
     },
@@ -65,5 +66,5 @@
       "router": {}
     }
   },
-  "scheme": "CarDrop"
+  "scheme": "cardrop"
 }

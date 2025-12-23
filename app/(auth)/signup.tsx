@@ -11,11 +11,11 @@ import {
   ScrollView,
   ActivityIndicator,
   Alert,
+  Image,
 } from 'react-native';
 import { router } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
 import { colors, commonStyles, buttonStyles } from '@/styles/commonStyles';
-import { IconSymbol } from '@/components/IconSymbol';
 
 export default function SignupScreen() {
   const { signup } = useAuth();
@@ -95,14 +95,13 @@ export default function SignupScreen() {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.header}>
-          <IconSymbol
-            ios_icon_name="car.fill"
-            android_material_icon_name="directions-car"
-            size={60}
-            color={colors.primary}
+          <Image
+            source={require('@/assets/images/6a39751f-03b5-4411-acbb-1e92f6a5988e.png')}
+            style={styles.logo}
+            resizeMode="contain"
           />
           <Text style={styles.title}>Join CarDrop</Text>
-          <Text style={styles.subtitle}>Create your automotive profile</Text>
+          <Text style={styles.slogan}>BE PROUD. DROP IT.</Text>
         </View>
 
         <View style={styles.form}>
@@ -172,7 +171,7 @@ export default function SignupScreen() {
             disabled={isLoading}
           >
             {isLoading ? (
-              <ActivityIndicator color={colors.text} />
+              <ActivityIndicator color="#000000" />
             ) : (
               <Text style={buttonStyles.text}>Create Account</Text>
             )}
@@ -183,7 +182,7 @@ export default function SignupScreen() {
             onPress={() => router.back()}
             disabled={isLoading}
           >
-            <Text style={[buttonStyles.text, { color: colors.primary }]}>
+            <Text style={buttonStyles.textOutline}>
               Already have an account? Log In
             </Text>
           </TouchableOpacity>
@@ -212,18 +211,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 40,
   },
+  logo: {
+    width: 100,
+    height: 100,
+    marginBottom: 12,
+  },
   title: {
     fontSize: 36,
     fontWeight: '900',
     color: colors.text,
-    marginTop: 16,
-    letterSpacing: -0.5,
+    marginTop: 8,
+    letterSpacing: 1,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif-condensed',
   },
-  subtitle: {
-    fontSize: 16,
+  slogan: {
+    fontSize: 12,
     color: colors.textSecondary,
     marginTop: 8,
-    fontWeight: '500',
+    fontWeight: '600',
+    letterSpacing: 1,
+    textTransform: 'uppercase',
   },
   form: {
     width: '100%',
@@ -240,12 +247,12 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   inputError: {
-    borderColor: colors.accent,
+    borderColor: colors.error,
     borderWidth: 2,
   },
   errorText: {
     fontSize: 12,
-    color: colors.accent,
+    color: colors.error,
     marginTop: 4,
     marginLeft: 4,
   },

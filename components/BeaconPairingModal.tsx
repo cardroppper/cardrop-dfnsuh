@@ -39,7 +39,6 @@ export function BeaconPairingModal({
     if (visible) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       
-      // Scale in animation
       Animated.spring(scaleAnim, {
         toValue: 1,
         tension: 50,
@@ -47,7 +46,6 @@ export function BeaconPairingModal({
         useNativeDriver: true,
       }).start();
 
-      // Pulse animation
       Animated.loop(
         Animated.sequence([
           Animated.timing(pulseAnim, {
@@ -110,7 +108,6 @@ export function BeaconPairingModal({
           ]}
         >
           <View style={styles.card}>
-            {/* Beacon Icon with Pulse */}
             <Animated.View
               style={[
                 styles.iconContainer,
@@ -124,20 +121,17 @@ export function BeaconPairingModal({
                   ios_icon_name="dot.radiowaves.left.and.right"
                   android_material_icon_name="bluetooth"
                   size={64}
-                  color={colors.secondary}
+                  color={colors.primary}
                 />
               </View>
             </Animated.View>
 
-            {/* Title */}
             <Text style={styles.title}>CarDrop Beacon Detected</Text>
             
-            {/* Subtitle */}
             <Text style={styles.subtitle}>
               A new CarDrop beacon is nearby and ready to pair with your vehicle.
             </Text>
 
-            {/* Beacon ID */}
             <View style={styles.beaconIdContainer}>
               <Text style={styles.beaconIdLabel}>Beacon ID</Text>
               <Text style={styles.beaconId} numberOfLines={1}>
@@ -145,7 +139,6 @@ export function BeaconPairingModal({
               </Text>
             </View>
 
-            {/* Action Buttons */}
             <View style={styles.actions}>
               <TouchableOpacity
                 style={[buttonStyles.primary, styles.primaryButton]}
@@ -155,7 +148,7 @@ export function BeaconPairingModal({
                   ios_icon_name="plus.circle.fill"
                   android_material_icon_name="add-circle"
                   size={20}
-                  color={colors.text}
+                  color="#000000"
                 />
                 <Text style={[buttonStyles.text, styles.buttonText]}>
                   Add New Car
@@ -172,7 +165,7 @@ export function BeaconPairingModal({
                   size={20}
                   color={colors.primary}
                 />
-                <Text style={[buttonStyles.text, styles.buttonText, { color: colors.primary }]}>
+                <Text style={[buttonStyles.textOutline, styles.buttonText]}>
                   Choose from Garage
                 </Text>
               </TouchableOpacity>
@@ -209,8 +202,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     boxShadow: '0px 10px 40px rgba(0, 0, 0, 0.5)',
     elevation: 10,
-    borderWidth: 1,
-    borderColor: colors.highlight,
+    borderWidth: 2,
+    borderColor: colors.primary,
   },
   iconContainer: {
     marginBottom: 24,
@@ -223,7 +216,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 3,
-    borderColor: colors.secondary,
+    borderColor: colors.primary,
   },
   title: {
     fontSize: 24,
@@ -245,6 +238,8 @@ const styles = StyleSheet.create({
     padding: 16,
     width: '100%',
     marginBottom: 24,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   beaconIdLabel: {
     fontSize: 12,

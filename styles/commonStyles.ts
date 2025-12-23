@@ -2,17 +2,23 @@
 import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
 
 export const colors = {
-  background: '#121212',
+  // CarDrop Brand Colors
+  background: '#1A1A1A',
+  backgroundDark: '#0D0D0D',
   text: '#FFFFFF',
   textSecondary: '#A0A0A0',
-  primary: '#BB86FC',
-  secondary: '#03DAC6',
-  accent: '#FF4081',
-  card: '#1E1E1E',
-  highlight: '#292929',
+  primary: '#FF9933', // CarDrop Orange
+  primaryDark: '#E67E22',
+  secondary: '#FF9933',
+  accent: '#FF9933',
+  card: '#252525',
+  cardDark: '#1F1F1F',
+  highlight: '#2F2F2F',
   success: '#4CAF50',
   warning: '#FFC107',
   error: '#F44336',
+  gold: '#FFD700',
+  border: '#3A3A3A',
 };
 
 export const buttonStyles = StyleSheet.create({
@@ -45,9 +51,14 @@ export const buttonStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    color: colors.text,
+    color: '#000000',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
+  },
+  textOutline: {
+    color: colors.primary,
+    fontSize: 16,
+    fontWeight: '700',
   },
 });
 
@@ -72,7 +83,7 @@ export const commonStyles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: '800',
+    fontWeight: '900',
     textAlign: 'center',
     color: colors.text,
     marginBottom: 10,
@@ -109,6 +120,8 @@ export const commonStyles = StyleSheet.create({
     marginBottom: 16,
     boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.3)',
     elevation: 4,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   input: {
     backgroundColor: colors.highlight,
@@ -117,7 +130,7 @@ export const commonStyles = StyleSheet.create({
     fontSize: 16,
     color: colors.text,
     borderWidth: 1,
-    borderColor: colors.card,
+    borderColor: colors.border,
     marginBottom: 16,
   },
   inputFocused: {

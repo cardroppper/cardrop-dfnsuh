@@ -56,7 +56,7 @@ export function PaywallScreen({ feature, onDismiss }: PaywallScreenProps) {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={['#FFD700', '#FFA500', '#FF8C00']}
+        colors={[colors.primary, colors.primaryDark, '#D35400']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.header}
@@ -95,7 +95,7 @@ export function PaywallScreen({ feature, onDismiss }: PaywallScreenProps) {
                   ios_icon_name={item.icon}
                   android_material_icon_name={item.androidIcon}
                   size={24}
-                  color="#FFD700"
+                  color={colors.primary}
                 />
               </View>
               <View style={styles.featureText}>
@@ -106,7 +106,7 @@ export function PaywallScreen({ feature, onDismiss }: PaywallScreenProps) {
                 ios_icon_name="checkmark.circle.fill"
                 android_material_icon_name="check-circle"
                 size={24}
-                color="#4CAF50"
+                color={colors.success}
               />
             </View>
           ))}
@@ -117,27 +117,18 @@ export function PaywallScreen({ feature, onDismiss }: PaywallScreenProps) {
             style={[buttonStyles.primary, styles.upgradeButton]}
             onPress={() => {
               console.log('Upgrade to Premium');
-              // TODO: Integrate with Superwall
             }}
           >
-            <LinearGradient
-              colors={['#FFD700', '#FFA500']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-              style={styles.upgradeGradient}
-            >
-              <Text style={styles.upgradeText}>Upgrade to Premium</Text>
-            </LinearGradient>
+            <Text style={[buttonStyles.text, styles.upgradeText]}>Upgrade to Premium</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[buttonStyles.outline, styles.restoreButton]}
             onPress={() => {
               console.log('Restore purchases');
-              // TODO: Implement restore purchases
             }}
           >
-            <Text style={[buttonStyles.text, { color: colors.textSecondary }]}>
+            <Text style={buttonStyles.textOutline}>
               Restore Purchases
             </Text>
           </TouchableOpacity>
@@ -176,6 +167,7 @@ const styles = StyleSheet.create({
     color: '#000',
     marginTop: 16,
     marginBottom: 8,
+    letterSpacing: 1,
   },
   headerSubtitle: {
     fontSize: 18,
@@ -214,12 +206,14 @@ const styles = StyleSheet.create({
     gap: 12,
     boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.2)',
     elevation: 2,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   featureIcon: {
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: 'rgba(255, 215, 0, 0.1)',
+    backgroundColor: colors.highlight,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -243,17 +237,10 @@ const styles = StyleSheet.create({
   },
   upgradeButton: {
     marginBottom: 12,
-    overflow: 'hidden',
-  },
-  upgradeGradient: {
-    paddingVertical: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   upgradeText: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#000',
   },
   restoreButton: {
     marginBottom: 20,

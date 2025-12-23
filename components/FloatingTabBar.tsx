@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     boxShadow: '0px 8px 24px rgba(0, 0, 0, 0.5)',
     elevation: 8,
     borderWidth: 1,
-    borderColor: colors.highlight,
+    borderColor: colors.border,
   },
   tab: {
     flex: 1,

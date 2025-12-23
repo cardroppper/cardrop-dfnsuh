@@ -44,15 +44,11 @@ export default function TabLayout() {
 
   const handlePairWithNewCar = () => {
     dismissPairing();
-    // Navigate to add vehicle screen
-    // The beacon will be available in the BeaconSelector
     router.push('/vehicles/add');
   };
 
   const handlePairWithExistingCar = () => {
     dismissPairing();
-    // Navigate to garage where user can select a vehicle
-    // Then they can assign the beacon from the vehicle details
     router.push('/(tabs)/garage');
   };
 
@@ -65,7 +61,7 @@ export default function TabLayout() {
           tabBarInactiveTintColor: colors.textSecondary,
           tabBarStyle: {
             backgroundColor: colors.card,
-            borderTopColor: colors.highlight,
+            borderTopColor: colors.border,
             borderTopWidth: 1,
             height: 60,
             paddingBottom: 8,
@@ -149,7 +145,6 @@ export default function TabLayout() {
       />
     </Tabs>
 
-    {/* Beacon Pairing Modal */}
     <BeaconPairingModal
       visible={!!pairingBeacon}
       beaconId={pairingBeacon || ''}

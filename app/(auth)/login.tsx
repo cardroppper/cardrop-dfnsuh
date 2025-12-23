@@ -11,11 +11,11 @@ import {
   ScrollView,
   ActivityIndicator,
   Alert,
+  Image,
 } from 'react-native';
 import { router } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
 import { colors, commonStyles, buttonStyles } from '@/styles/commonStyles';
-import { IconSymbol } from '@/components/IconSymbol';
 
 export default function LoginScreen() {
   const { login } = useAuth();
@@ -57,14 +57,13 @@ export default function LoginScreen() {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.header}>
-          <IconSymbol
-            ios_icon_name="car.fill"
-            android_material_icon_name="directions-car"
-            size={80}
-            color={colors.primary}
+          <Image
+            source={require('@/assets/images/6a39751f-03b5-4411-acbb-1e92f6a5988e.png')}
+            style={styles.logo}
+            resizeMode="contain"
           />
-          <Text style={styles.title}>CarDrop</Text>
-          <Text style={styles.subtitle}>Real Cars. Real Owners.</Text>
+          <Text style={styles.title}>CARDROP</Text>
+          <Text style={styles.slogan}>BE PROUD. DROP IT.</Text>
         </View>
 
         <View style={styles.form}>
@@ -103,7 +102,7 @@ export default function LoginScreen() {
             disabled={isLoading}
           >
             {isLoading ? (
-              <ActivityIndicator color={colors.text} />
+              <ActivityIndicator color="#000000" />
             ) : (
               <Text style={buttonStyles.text}>Log In</Text>
             )}
@@ -114,14 +113,14 @@ export default function LoginScreen() {
             onPress={() => router.push('/(auth)/signup')}
             disabled={isLoading}
           >
-            <Text style={[buttonStyles.text, { color: colors.primary }]}>
+            <Text style={buttonStyles.textOutline}>
               Create Account
             </Text>
           </TouchableOpacity>
         </View>
 
         <Text style={styles.footerText}>
-          Join the automotive community
+          Real Cars. Real Owners. Real Presence.
         </Text>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -143,18 +142,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 48,
   },
+  logo: {
+    width: 120,
+    height: 120,
+    marginBottom: 16,
+  },
   title: {
     fontSize: 48,
     fontWeight: '900',
     color: colors.text,
-    marginTop: 16,
-    letterSpacing: -1,
+    marginTop: 8,
+    letterSpacing: 2,
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif-condensed',
   },
-  subtitle: {
-    fontSize: 16,
+  slogan: {
+    fontSize: 14,
     color: colors.textSecondary,
     marginTop: 8,
-    fontWeight: '500',
+    fontWeight: '600',
+    letterSpacing: 1,
+    textTransform: 'uppercase',
   },
   form: {
     width: '100%',
