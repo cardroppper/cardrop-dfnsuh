@@ -12,6 +12,7 @@ export interface Profile {
   is_private: boolean;
   ghost_mode: boolean;
   free_premium: boolean;
+  always_searching_enabled: boolean;
   notification_preferences: {
     detection_type: 'silent' | 'vibration' | 'sound';
     vibration: boolean;

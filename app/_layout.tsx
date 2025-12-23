@@ -16,12 +16,19 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { colors } from "@/styles/commonStyles";
+import { useBackgroundBLEScanning } from "@/hooks/useBackgroundBLEScanning";
 
 SplashScreen.preventAutoHideAsync();
 
 export const unstable_settings = {
   initialRouteName: "index",
 };
+
+function BackgroundBLEManager() {
+  // This component manages background BLE scanning
+  useBackgroundBLEScanning();
+  return null;
+}
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -56,6 +63,7 @@ export default function RootLayout() {
       <StatusBar style="light" />
       <ThemeProvider value={CarDropDarkTheme}>
         <AuthProvider>
+          <BackgroundBLEManager />
           <GestureHandlerRootView style={{ flex: 1 }}>
             <Stack screenOptions={{ headerShown: false }}>
               <Stack.Screen name="index" />

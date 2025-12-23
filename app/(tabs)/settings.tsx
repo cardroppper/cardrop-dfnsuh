@@ -17,12 +17,14 @@ import { useAuth } from '@/contexts/AuthContext';
 import { colors, commonStyles, buttonStyles } from '@/styles/commonStyles';
 import { IconSymbol } from '@/components/IconSymbol';
 import * as ImagePicker from 'expo-image-picker';
+import { useSubscription } from '@/hooks/useSubscription';
 
 type NotificationType = 'silent' | 'vibration' | 'sound';
 type SoundType = 'none' | 'vroom' | 'default';
 
 export default function SettingsScreen() {
   const { user, profile, logout, updateProfile } = useAuth();
+  const { subscription } = useSubscription();
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   
@@ -35,6 +37,7 @@ export default function SettingsScreen() {
   const [isPrivate, setIsPrivate] = useState(profile?.is_private || false);
   const [ghostMode, setGhostMode] = useState(profile?.ghost_mode || false);
   const [freePremium, setFreePremium] = useState(profile?.free_premium || false);
+  const [alwaysSearching, setAlwaysSearching] = useState(profile?.always_searching_enabled || false);
   
   // Notification preferences
   const notificationPrefs = profile?.notification_preferences || {
@@ -129,6 +132,7 @@ export default function SettingsScreen() {
     setIsPrivate(profile?.is_private || false);
     setGhostMode(profile?.ghost_mode || false);
     setFreePremium(profile?.free_premium || false);
+    setAlwaysSearching(profile?.always_searching_enabled || false);
     setIsEditing(false);
   };
 
@@ -331,8 +335,62 @@ export default function SettingsScreen() {
         </View>
       </View>
 
+      {subscription.isPremium && (
+        <View style={styles.section}>
+          <View style={styles.premiumBadge}>
+            <IconSymbol
+              ios_icon_name="crown.fill"
+              android_material_icon_name="workspace-premium"
+              size={20}
+              color="#FFD700"
+            />
+            <Text style={styles.sectionTitle}>Premium Features</Text>
+          </View>
+          
+          <View style={styles.switchField}>
+            <View style={styles.switchLabelContainer}>
+              <View style={styles.labelRow}>
+                <IconSymbol
+                  ios_icon_name="antenna.radiowaves.left.and.right"
+                  android_material_icon_name="bluetooth-searching"
+                  size={20}
+                  color={colors.primary}
+                />
+                <Text style={[styles.label, { marginLeft: 8, marginBottom: 0 }]}>Always Searching</Text>
+              </View>
+              <Text style={styles.switchDescription}>
+                Continuously scan for nearby vehicles in the background. Your phone will automatically detect CarDrop vehicles even when the app is closed.
+              </Text>
+              <Text style={[styles.switchDescription, { color: colors.accent, marginTop: 4 }]}>
+                Note: This feature may impact battery life.
+              </Text>
+            </View>
+            <Switch
+              value={alwaysSearching}
+              onValueChange={async (value) => {
+                setAlwaysSearching(value);
+                const result = await updateProfile({ always_searching_enabled: value });
+                if (result.success) {
+                  Alert.alert(
+                    value ? 'Always Searching Enabled' : 'Always Searching Disabled',
+                    value 
+                      ? 'Your phone will now continuously scan for nearby CarDrop vehicles in the background. You\'ll receive notifications when vehicles are detected based on your notification preferences.'
+                      : 'Background scanning has been disabled. You can still manually scan for vehicles in the Nearby tab.'
+                  );
+                } else {
+                  Alert.alert('Error', result.error || 'Failed to update Always Searching');
+                  setAlwaysSearching(!value);
+                }
+              }}
+              trackColor={{ false: colors.highlight, true: colors.primary }}
+              thumbColor={colors.text}
+            />
+          </View>
+        </View>
+      )}
+
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Detection Notifications (Premium)</Text>
+        <Text style={styles.sectionTitle}>Detection Notifications {subscription.isPremium ? '(Premium)' : ''}</Text>
         <Text style={[commonStyles.textSecondary, { marginBottom: 16 }]}>
           Get notified when your phone detects another CarDrop vehicle nearby
         </Text>
@@ -603,6 +661,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: colors.text,
     marginBottom: 16,
+  },
+  premiumBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 0,
   },
   field: {
     marginBottom: 16,
