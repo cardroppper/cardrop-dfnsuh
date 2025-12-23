@@ -13,6 +13,7 @@ export interface Profile {
   ghost_mode: boolean;
   free_premium: boolean;
   always_searching_enabled: boolean;
+  attendance_mode: 'manual' | 'automatic';
   notification_preferences: {
     detection_type: 'silent' | 'vibration' | 'sound';
     vibration: boolean;
@@ -133,6 +134,9 @@ export interface Event {
   created_by: string;
   beacon_uuid: string | null;
   auto_checkin_enabled: boolean;
+  latitude: number | null;
+  longitude: number | null;
+  geofence_radius_meters: number;
   created_at: string;
   updated_at: string;
 }
@@ -250,4 +254,14 @@ export interface RegisteredBeacon {
   notes: string | null;
   created_at: string;
   updated_at: string;
+}
+
+export interface EventMeetDetection {
+  id: string;
+  event_id: string;
+  vehicle_id: string;
+  detected_by_user_id: string;
+  rssi: number;
+  detected_at: string;
+  expires_at: string;
 }

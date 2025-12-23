@@ -114,6 +114,40 @@ export function useBLEScanning() {
         return;
       }
 
+      // Check if user is checked in to any active events
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: checkins } = await supabase
+          .from('event_checkins')
+          .select('event_id')
+          .eq('user_id', user.id);
+
+        // Log detections for all checked-in events
+        if (checkins && checkins.length > 0) {
+          for (const checkin of checkins) {
+            for (const beaconItem of beaconData) {
+              const beacon = beacons.find(b => b.deviceId === beaconItem.beacon_uuid);
+              if (beacon) {
+                // Log detection (will be deduplicated by unique constraint)
+                await supabase
+                  .from('event_meet_detections')
+                  .insert({
+                    event_id: checkin.event_id,
+                    vehicle_id: beaconItem.vehicle_id,
+                    detected_by_user_id: user.id,
+                    rssi: beacon.rssi,
+                  })
+                  .then(({ error }) => {
+                    if (error && !error.message.includes('duplicate')) {
+                      console.error('[BLE] Error logging event detection:', error);
+                    }
+                  });
+              }
+            }
+          }
+        }
+      }
+
       const vehicles: NearbyVehicle[] = beaconData
         .filter((b: any) => {
           const vehicle = b.vehicles;

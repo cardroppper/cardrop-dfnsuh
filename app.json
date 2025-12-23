@@ -19,7 +19,9 @@
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSBluetoothAlwaysUsageDescription": "CarDrop uses Bluetooth to discover nearby vehicles when you start scanning. This allows you to see cars that are physically near you at meets and events.",
-        "NSBluetoothPeripheralUsageDescription": "CarDrop uses Bluetooth to discover nearby vehicles when you start scanning."
+        "NSBluetoothPeripheralUsageDescription": "CarDrop uses Bluetooth to discover nearby vehicles when you start scanning.",
+        "NSLocationWhenInUseUsageDescription": "CarDrop uses your location to automatically check you in to events when you arrive at the meet location. This is an optional premium feature that can be enabled in settings.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "CarDrop uses your location to automatically check you in to events when you arrive at the meet location. This is an optional premium feature that can be enabled in settings."
       }
     },
     "android": {
@@ -35,7 +37,8 @@
         "BLUETOOTH_SCAN",
         "BLUETOOTH_CONNECT",
         "ACCESS_FINE_LOCATION",
-        "ACCESS_COARSE_LOCATION"
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION"
       ]
     },
     "web": {
@@ -46,6 +49,13 @@
       "expo-font",
       "expo-router",
       "expo-web-browser",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "CarDrop uses your location to automatically check you in to events when you arrive at the meet location. This is an optional premium feature that can be enabled in settings.",
+          "locationWhenInUsePermission": "CarDrop uses your location to automatically check you in to events when you arrive at the meet location."
+        }
+      ],
       [
         "react-native-ble-plx",
         {

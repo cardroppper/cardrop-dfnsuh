@@ -16,6 +16,8 @@ import { colors, commonStyles, buttonStyles } from '@/styles/commonStyles';
 import { IconSymbol } from '@/components/IconSymbol';
 import { useBLEScanning } from '@/hooks/useBLEScanning';
 import { useDetectionHighlights } from '@/hooks/useDetectionHighlights';
+import { useEventMeetVehicles } from '@/hooks/useEventMeetVehicles';
+import { useSubscription } from '@/hooks/useSubscription';
 import { getDistanceLabel } from '@/types/ble';
 import * as Haptics from 'expo-haptics';
 
@@ -33,6 +35,8 @@ export default function NearbyScreen() {
   } = useBLEScanning();
   
   const { highlights, isHighlighted, addHighlight } = useDetectionHighlights();
+  const { isVehicleAtMeet, getMeetInfo } = useEventMeetVehicles();
+  const { subscription } = useSubscription();
 
   useEffect(() => {
     return () => {
@@ -286,6 +290,8 @@ export default function NearbyScreen() {
 
               {nearbyVehicles.map((vehicle, index) => {
                 const highlighted = isHighlighted(vehicle.vehicleId);
+                const atMeet = subscription.isPremium && isVehicleAtMeet(vehicle.vehicleId);
+                const meetInfo = atMeet ? getMeetInfo(vehicle.vehicleId) : null;
                 
                 return (
                   <TouchableOpacity
@@ -293,11 +299,12 @@ export default function NearbyScreen() {
                     style={[
                       styles.vehicleCard,
                       highlighted && styles.vehicleCardHighlighted,
+                      atMeet && styles.vehicleCardAtMeet,
                     ]}
                     onPress={() => handleVehiclePress(vehicle.vehicleId)}
                     activeOpacity={0.7}
                   >
-                    {highlighted && (
+                    {highlighted && !atMeet && (
                       <View style={styles.highlightBadge}>
                         <IconSymbol
                           ios_icon_name="star.fill"
@@ -308,10 +315,18 @@ export default function NearbyScreen() {
                         <Text style={styles.highlightBadgeText}>New</Text>
                       </View>
                     )}
+
+                    {atMeet && (
+                      <View style={styles.liveMeetBadge}>
+                        <View style={styles.liveMeetDot} />
+                        <Text style={styles.liveMeetBadgeText}>AT MEET</Text>
+                      </View>
+                    )}
                     
                     <View style={[
                       styles.vehicleImageContainer,
-                      highlighted && styles.vehicleImageContainerHighlighted,
+                      highlighted && !atMeet && styles.vehicleImageContainerHighlighted,
+                      atMeet && styles.vehicleImageContainerAtMeet,
                     ]}>
                       {vehicle.primaryImageUrl ? (
                         <Image
@@ -338,6 +353,12 @@ export default function NearbyScreen() {
                       <Text style={styles.vehicleOwner} numberOfLines={1}>
                         @{vehicle.ownerUsername}
                       </Text>
+
+                      {atMeet && meetInfo && (
+                        <Text style={styles.meetInfoText} numberOfLines={1}>
+                          {meetInfo.event_name} • {meetInfo.club_name}
+                        </Text>
+                      )}
 
                       <View style={styles.vehicleMetadata}>
                         <View style={styles.distanceBadge}>
@@ -557,6 +578,12 @@ const styles = StyleSheet.create({
     boxShadow: '0px 4px 16px rgba(255, 215, 0, 0.3)',
     elevation: 6,
   },
+  vehicleCardAtMeet: {
+    borderWidth: 3,
+    borderColor: colors.accent,
+    boxShadow: '0px 4px 16px rgba(255, 69, 0, 0.4)',
+    elevation: 8,
+  },
   highlightBadge: {
     position: 'absolute',
     top: 8,
@@ -575,12 +602,41 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: colors.background,
   },
+  liveMeetBadge: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    backgroundColor: colors.accent,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    zIndex: 1,
+  },
+  liveMeetDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: colors.text,
+  },
+  liveMeetBadgeText: {
+    fontSize: 10,
+    fontWeight: '900',
+    color: colors.text,
+    letterSpacing: 0.5,
+  },
   vehicleImageContainer: {
     borderRadius: 12,
   },
   vehicleImageContainerHighlighted: {
     borderWidth: 2,
     borderColor: '#FFD700',
+  },
+  vehicleImageContainerAtMeet: {
+    borderWidth: 2,
+    borderColor: colors.accent,
   },
   vehicleImage: {
     width: 80,
@@ -605,6 +661,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.textSecondary,
     fontWeight: '500',
+  },
+  meetInfoText: {
+    fontSize: 12,
+    color: colors.accent,
+    fontWeight: '600',
+    marginTop: 2,
   },
   vehicleMetadata: {
     flexDirection: 'row',

@@ -26,6 +26,9 @@ export interface Event {
   location: string;
   event_date: string;
   created_by: string;
+  latitude: number | null;
+  longitude: number | null;
+  geofence_radius_meters: number;
   created_at: string;
   updated_at: string;
 }

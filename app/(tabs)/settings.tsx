@@ -38,6 +38,9 @@ export default function SettingsScreen() {
   const [ghostMode, setGhostMode] = useState(profile?.ghost_mode || false);
   const [freePremium, setFreePremium] = useState(profile?.free_premium || false);
   const [alwaysSearching, setAlwaysSearching] = useState(profile?.always_searching_enabled || false);
+  const [attendanceMode, setAttendanceMode] = useState<'manual' | 'automatic'>(
+    (profile as any)?.attendance_mode || 'manual'
+  );
   
   // Notification preferences
   const notificationPrefs = profile?.notification_preferences || {
@@ -380,6 +383,46 @@ export default function SettingsScreen() {
                 } else {
                   Alert.alert('Error', result.error || 'Failed to update Always Searching');
                   setAlwaysSearching(!value);
+                }
+              }}
+              trackColor={{ false: colors.highlight, true: colors.primary }}
+              thumbColor={colors.text}
+            />
+          </View>
+
+          <View style={styles.switchField}>
+            <View style={styles.switchLabelContainer}>
+              <View style={styles.labelRow}>
+                <IconSymbol
+                  ios_icon_name="location.fill"
+                  android_material_icon_name="location-on"
+                  size={20}
+                  color={colors.primary}
+                />
+                <Text style={[styles.label, { marginLeft: 8, marginBottom: 0 }]}>Event Attendance Mode</Text>
+              </View>
+              <Text style={styles.switchDescription}>
+                {attendanceMode === 'automatic' 
+                  ? 'Automatic: Your attendance is marked when you arrive at event locations'
+                  : 'Manual: Press a button to mark your attendance at events'}
+              </Text>
+            </View>
+            <Switch
+              value={attendanceMode === 'automatic'}
+              onValueChange={async (value) => {
+                const newMode = value ? 'automatic' : 'manual';
+                setAttendanceMode(newMode);
+                const result = await updateProfile({ attendance_mode: newMode } as any);
+                if (result.success) {
+                  Alert.alert(
+                    'Attendance Mode Updated',
+                    value 
+                      ? 'Your attendance will now be automatically marked when you arrive at event locations. Make sure location services are enabled.'
+                      : 'You will now need to manually check in to events by pressing the check-in button.'
+                  );
+                } else {
+                  Alert.alert('Error', result.error || 'Failed to update attendance mode');
+                  setAttendanceMode(value ? 'manual' : 'automatic');
                 }
               }}
               trackColor={{ false: colors.highlight, true: colors.primary }}
