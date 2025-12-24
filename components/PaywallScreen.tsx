@@ -1,11 +1,23 @@
 
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { IconSymbol } from './IconSymbol';
 import { colors, buttonStyles } from '@/styles/commonStyles';
 import { useRouter } from 'expo-router';
-import { usePlacement, useUser } from 'expo-superwall';
+
+// Conditionally import Superwall hooks only on native platforms
+let usePlacement: any = null;
+let useUser: any = null;
+if (Platform.OS === 'ios' || Platform.OS === 'android') {
+  try {
+    const superwallModule = require('expo-superwall');
+    usePlacement = superwallModule.usePlacement;
+    useUser = superwallModule.useUser;
+  } catch (error) {
+    console.warn('[PaywallScreen] Superwall not available:', error);
+  }
+}
 
 interface PaywallScreenProps {
   feature: string;
@@ -15,33 +27,45 @@ interface PaywallScreenProps {
 
 export function PaywallScreen({ feature, onDismiss, placementId = 'premium_features' }: PaywallScreenProps) {
   const router = useRouter();
-  const { identify } = useUser();
-  const { registerPlacement, state: placementState } = usePlacement({
-    onPresent: (info) => {
-      console.log('[Paywall] Presented:', info);
-    },
-    onDismiss: (info, result) => {
-      console.log('[Paywall] Dismissed:', info, 'Result:', result);
-      if (result === 'purchased' || result === 'restored') {
-        Alert.alert(
-          'Welcome to Premium!',
-          'You now have access to all premium features. Enjoy!',
-          [{ text: 'OK', onPress: onDismiss }]
-        );
-      } else {
-        onDismiss?.();
-      }
-    },
-    onError: (error) => {
-      console.error('[Paywall] Error:', error);
-      Alert.alert('Error', 'Failed to load paywall. Please try again.');
-    },
-    onSkip: (reason) => {
-      console.log('[Paywall] Skipped:', reason);
-      // User already has access, dismiss the paywall
-      onDismiss?.();
-    },
-  });
+  
+  // Only use Superwall hooks on native platforms
+  let registerPlacement: any = null;
+  let placementState: any = null;
+
+  if (usePlacement && Platform.OS !== 'web') {
+    try {
+      const placementData = usePlacement({
+        onPresent: (info: any) => {
+          console.log('[Paywall] Presented:', info);
+        },
+        onDismiss: (info: any, result: any) => {
+          console.log('[Paywall] Dismissed:', info, 'Result:', result);
+          if (result === 'purchased' || result === 'restored') {
+            Alert.alert(
+              'Welcome to Premium!',
+              'You now have access to all premium features. Enjoy!',
+              [{ text: 'OK', onPress: onDismiss }]
+            );
+          } else {
+            onDismiss?.();
+          }
+        },
+        onError: (error: any) => {
+          console.error('[Paywall] Error:', error);
+          Alert.alert('Error', 'Failed to load paywall. Please try again.');
+        },
+        onSkip: (reason: any) => {
+          console.log('[Paywall] Skipped:', reason);
+          // User already has access, dismiss the paywall
+          onDismiss?.();
+        },
+      });
+      registerPlacement = placementData.registerPlacement;
+      placementState = placementData.state;
+    } catch (error) {
+      console.warn('[PaywallScreen] Error initializing Superwall placement:', error);
+    }
+  }
 
   const premiumFeatures = [
     {
@@ -83,6 +107,22 @@ export function PaywallScreen({ feature, onDismiss, placementId = 'premium_featu
   ];
 
   const handleUpgrade = async () => {
+    // On web, show a message that payments are only available on mobile
+    if (Platform.OS === 'web') {
+      Alert.alert(
+        'Mobile Only',
+        'Premium subscriptions are only available on the iOS and Android apps. Please download the mobile app to upgrade.',
+        [{ text: 'OK' }]
+      );
+      return;
+    }
+
+    // On native platforms, use Superwall
+    if (!registerPlacement) {
+      Alert.alert('Error', 'Payment system is not available. Please try again later.');
+      return;
+    }
+
     try {
       await registerPlacement({
         placement: placementId,
@@ -131,6 +171,21 @@ export function PaywallScreen({ feature, onDismiss, placementId = 'premium_featu
       </LinearGradient>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        {Platform.OS === 'web' && (
+          <View style={styles.webNotice}>
+            <IconSymbol
+              ios_icon_name="info.circle.fill"
+              android_material_icon_name="info"
+              size={24}
+              color={colors.primary}
+            />
+            <Text style={styles.webNoticeText}>
+              Premium subscriptions are only available on the iOS and Android apps.
+              Download the mobile app to upgrade!
+            </Text>
+          </View>
+        )}
+
         <View style={styles.featuresList}>
           {premiumFeatures.map((item, index) => (
             <View key={index} style={styles.featureItem}>
@@ -161,14 +216,18 @@ export function PaywallScreen({ feature, onDismiss, placementId = 'premium_featu
             style={[buttonStyles.primary, styles.upgradeButton]}
             onPress={handleUpgrade}
           >
-            <Text style={[buttonStyles.text, styles.upgradeText]}>Upgrade to Premium</Text>
+            <Text style={[buttonStyles.text, styles.upgradeText]}>
+              {Platform.OS === 'web' ? 'Download Mobile App' : 'Upgrade to Premium'}
+            </Text>
           </TouchableOpacity>
 
-          <Text style={styles.disclaimer}>
-            Subscription automatically renews unless cancelled at least 24 hours before the end of the current period.
-            {'\n\n'}
-            By subscribing, you agree to our Terms of Service and Privacy Policy.
-          </Text>
+          {Platform.OS !== 'web' && (
+            <Text style={styles.disclaimer}>
+              Subscription automatically renews unless cancelled at least 24 hours before the end of the current period.
+              {'\n\n'}
+              By subscribing, you agree to our Terms of Service and Privacy Policy.
+            </Text>
+          )}
         </View>
       </ScrollView>
     </View>
@@ -225,6 +284,21 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+  webNotice: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.highlight,
+    padding: 16,
+    margin: 20,
+    borderRadius: 12,
+    gap: 12,
+  },
+  webNoticeText: {
+    flex: 1,
+    fontSize: 14,
+    color: colors.text,
+    lineHeight: 20,
   },
   featuresList: {
     padding: 20,

@@ -1,8 +1,19 @@
 
 import { useState, useEffect } from 'react';
+import { Platform } from 'react-native';
 import { supabase } from '@/app/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { useUser } from 'expo-superwall';
+
+// Conditionally import Superwall hooks only on native platforms
+let useUser: any = null;
+if (Platform.OS === 'ios' || Platform.OS === 'android') {
+  try {
+    const superwallModule = require('expo-superwall');
+    useUser = superwallModule.useUser;
+  } catch (error) {
+    console.warn('[useSubscription] Superwall not available:', error);
+  }
+}
 
 export interface SubscriptionStatus {
   isPremium: boolean;
@@ -15,7 +26,18 @@ export interface SubscriptionStatus {
 
 export function useSubscription() {
   const { user, profile } = useAuth();
-  const { subscriptionStatus: superwallStatus } = useUser();
+  
+  // Only use Superwall hooks on native platforms
+  let superwallStatus = null;
+  if (useUser) {
+    try {
+      const superwallData = useUser();
+      superwallStatus = superwallData?.subscriptionStatus;
+    } catch (error) {
+      console.warn('[useSubscription] Error accessing Superwall data:', error);
+    }
+  }
+
   const [subscription, setSubscription] = useState<SubscriptionStatus>({
     isPremium: false,
     status: 'free',
@@ -42,7 +64,7 @@ export function useSubscription() {
       // Check if user has free premium enabled
       const hasFreePremium = profile?.free_premium || false;
 
-      // Check Superwall subscription status
+      // Check Superwall subscription status (only on native platforms)
       const hasSuperwallPremium = superwallStatus?.status === 'ACTIVE';
 
       const { data, error } = await supabase

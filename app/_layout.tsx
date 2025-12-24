@@ -6,7 +6,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { SystemBars } from "react-native-edge-to-edge";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useColorScheme } from "react-native";
+import { useColorScheme, Platform } from "react-native";
 import {
   DarkTheme,
   DefaultTheme,
@@ -17,7 +17,6 @@ import { StatusBar } from "expo-status-bar";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { colors } from "@/styles/commonStyles";
 import { useBackgroundBLEScanning } from "@/hooks/useBackgroundBLEScanning";
-import { SuperwallProvider } from "expo-superwall";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -29,6 +28,37 @@ function BackgroundBLEManager() {
   // This component manages background BLE scanning
   useBackgroundBLEScanning();
   return null;
+}
+
+// Wrapper component that conditionally renders SuperwallProvider only on native platforms
+function ConditionalSuperwallProvider({ children }: { children: React.ReactNode }) {
+  // Only use Superwall on native platforms (iOS and Android)
+  if (Platform.OS === 'ios' || Platform.OS === 'android') {
+    try {
+      // Dynamically require Superwall only on native platforms
+      const { SuperwallProvider } = require('expo-superwall');
+      
+      return (
+        <SuperwallProvider
+          apiKeys={{
+            ios: "pk_d1c3c5e8e8f8e8e8e8e8e8e8e8e8e8e8",
+            android: "pk_d1c3c5e8e8f8e8e8e8e8e8e8e8e8e8e8",
+          }}
+          onConfigurationError={(error) => {
+            console.error("[Superwall] Configuration error:", error);
+          }}
+        >
+          {children}
+        </SuperwallProvider>
+      );
+    } catch (error) {
+      console.warn('[ConditionalSuperwallProvider] Superwall not available:', error);
+      return <>{children}</>;
+    }
+  }
+
+  // On web, just render children without Superwall
+  return <>{children}</>;
 }
 
 export default function RootLayout() {
@@ -63,15 +93,7 @@ export default function RootLayout() {
     <>
       <StatusBar style="light" />
       <ThemeProvider value={CarDropDarkTheme}>
-        <SuperwallProvider
-          apiKeys={{
-            ios: "pk_d1c3c5e8e8f8e8e8e8e8e8e8e8e8e8e8",
-            android: "pk_d1c3c5e8e8f8e8e8e8e8e8e8e8e8e8e8",
-          }}
-          onConfigurationError={(error) => {
-            console.error("[Superwall] Configuration error:", error);
-          }}
-        >
+        <ConditionalSuperwallProvider>
           <AuthProvider>
             <BackgroundBLEManager />
             <GestureHandlerRootView style={{ flex: 1 }}>
@@ -83,7 +105,7 @@ export default function RootLayout() {
               <SystemBars style="light" />
             </GestureHandlerRootView>
           </AuthProvider>
-        </SuperwallProvider>
+        </ConditionalSuperwallProvider>
       </ThemeProvider>
     </>
   );

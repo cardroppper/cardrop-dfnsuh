@@ -9,24 +9,44 @@ import {
   Alert,
   Modal,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { router } from 'expo-router';
 import { colors, buttonStyles } from '@/styles/commonStyles';
 import { IconSymbol } from '@/components/IconSymbol';
 import { useSubscription } from '@/hooks/useSubscription';
 import { PaywallScreen } from '@/components/PaywallScreen';
-import { usePlacement } from 'expo-superwall';
+
+// Conditionally import Superwall hooks only on native platforms
+let usePlacement: any = null;
+if (Platform.OS === 'ios' || Platform.OS === 'android') {
+  try {
+    const superwallModule = require('expo-superwall');
+    usePlacement = superwallModule.usePlacement;
+  } catch (error) {
+    console.warn('[SubscriptionManagement] Superwall not available:', error);
+  }
+}
 
 export default function SubscriptionManagementScreen() {
   const { subscription, loading } = useSubscription();
   const [showPaywall, setShowPaywall] = useState(false);
 
-  const { registerPlacement } = usePlacement({
-    onDismiss: (info, result) => {
-      console.log('[SubscriptionManagement] Paywall dismissed:', result);
-      setShowPaywall(false);
-    },
-  });
+  // Only use Superwall hooks on native platforms
+  let registerPlacement: any = null;
+  if (usePlacement && Platform.OS !== 'web') {
+    try {
+      const placementData = usePlacement({
+        onDismiss: (info: any, result: any) => {
+          console.log('[SubscriptionManagement] Paywall dismissed:', result);
+          setShowPaywall(false);
+        },
+      });
+      registerPlacement = placementData.registerPlacement;
+    } catch (error) {
+      console.warn('[SubscriptionManagement] Error initializing Superwall placement:', error);
+    }
+  }
 
   const premiumFeatures = [
     {
@@ -68,6 +88,14 @@ export default function SubscriptionManagementScreen() {
   ];
 
   const handleUpgrade = () => {
+    if (Platform.OS === 'web') {
+      Alert.alert(
+        'Mobile Only',
+        'Premium subscriptions are only available on the iOS and Android apps. Please download the mobile app to upgrade.',
+        [{ text: 'OK' }]
+      );
+      return;
+    }
     setShowPaywall(true);
   };
 
@@ -113,6 +141,21 @@ export default function SubscriptionManagementScreen() {
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        {Platform.OS === 'web' && (
+          <View style={styles.webNotice}>
+            <IconSymbol
+              ios_icon_name="info.circle.fill"
+              android_material_icon_name="info"
+              size={24}
+              color={colors.primary}
+            />
+            <Text style={styles.webNoticeText}>
+              Premium subscriptions are only available on the iOS and Android apps.
+              Download the mobile app to upgrade!
+            </Text>
+          </View>
+        )}
+
         {subscription.isPremium ? (
           <View style={styles.statusCard}>
             <View style={styles.statusHeader}>
@@ -129,7 +172,7 @@ export default function SubscriptionManagementScreen() {
                 ? 'You have free premium access granted by CarDrop.'
                 : 'You have full access to all premium features.'}
             </Text>
-            {subscription.subscriptionSource === 'superwall' && (
+            {subscription.subscriptionSource === 'superwall' && Platform.OS !== 'web' && (
               <TouchableOpacity
                 style={[buttonStyles.outline, styles.manageButton]}
                 onPress={handleManageSubscription}
@@ -158,9 +201,13 @@ export default function SubscriptionManagementScreen() {
               style={[buttonStyles.primary, styles.upgradeButton]}
               onPress={handleUpgrade}
             >
-              <Text style={buttonStyles.text}>Start Free Trial</Text>
+              <Text style={buttonStyles.text}>
+                {Platform.OS === 'web' ? 'Download Mobile App' : 'Start Free Trial'}
+              </Text>
             </TouchableOpacity>
-            <Text style={styles.trialNote}>7-day free trial, then $4.99/month</Text>
+            {Platform.OS !== 'web' && (
+              <Text style={styles.trialNote}>7-day free trial, then $4.99/month</Text>
+            )}
           </View>
         )}
 
@@ -225,18 +272,20 @@ export default function SubscriptionManagementScreen() {
         <View style={styles.bottomSpacer} />
       </ScrollView>
 
-      <Modal
-        visible={showPaywall}
-        animationType="slide"
-        presentationStyle="pageSheet"
-        onRequestClose={() => setShowPaywall(false)}
-      >
-        <PaywallScreen
-          feature="premium_subscription"
-          placementId="premium_features"
-          onDismiss={() => setShowPaywall(false)}
-        />
-      </Modal>
+      {Platform.OS !== 'web' && (
+        <Modal
+          visible={showPaywall}
+          animationType="slide"
+          presentationStyle="pageSheet"
+          onRequestClose={() => setShowPaywall(false)}
+        >
+          <PaywallScreen
+            feature="premium_subscription"
+            placementId="premium_features"
+            onDismiss={() => setShowPaywall(false)}
+          />
+        </Modal>
+      )}
     </View>
   );
 }
@@ -276,6 +325,21 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+  webNotice: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.highlight,
+    padding: 16,
+    margin: 20,
+    borderRadius: 12,
+    gap: 12,
+  },
+  webNoticeText: {
+    flex: 1,
+    fontSize: 14,
+    color: colors.text,
+    lineHeight: 20,
   },
   statusCard: {
     margin: 20,
