@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/app/integrations/supabase/client';
 import { Event, EventWithDetails, EventRSVP, EventCheckin } from '@/types/club';
 
@@ -8,7 +8,7 @@ export function useEvents(clubId?: string) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchEvents = async () => {
+  const fetchEvents = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -78,7 +78,7 @@ export function useEvents(clubId?: string) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [clubId]);
 
   const createEvent = async (eventData: {
     club_id: string;
@@ -156,7 +156,7 @@ export function useEvents(clubId?: string) {
 
   useEffect(() => {
     fetchEvents();
-  }, [clubId]);
+  }, [fetchEvents]);
 
   return {
     events,

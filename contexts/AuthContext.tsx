@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/app/integrations/supabase/client';
 import { Session, User, AuthError } from '@supabase/supabase-js';
 import { Profile } from '@/app/integrations/supabase/types';
@@ -28,61 +28,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    console.log('[Auth] Initializing auth context');
-    initializeAuth();
-
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('[Auth] Auth state changed:', event, session?.user?.id);
-      
-      if (event === 'SIGNED_IN' && session) {
-        setSession(session);
-        setUser(session.user);
-        await loadProfile(session.user.id);
-      } else if (event === 'SIGNED_OUT') {
-        setSession(null);
-        setUser(null);
-        setProfile(null);
-      } else if (event === 'TOKEN_REFRESHED' && session) {
-        setSession(session);
-        setUser(session.user);
-      } else if (event === 'USER_UPDATED' && session) {
-        setUser(session.user);
-      }
-    });
-
-    return () => {
-      authListener.subscription.unsubscribe();
-    };
-  }, []);
-
-  const initializeAuth = async () => {
-    try {
-      console.log('[Auth] Checking for existing session');
-      const { data: { session }, error } = await supabase.auth.getSession();
-      
-      if (error) {
-        console.error('[Auth] Error getting session:', error);
-        throw error;
-      }
-
-      if (session) {
-        console.log('[Auth] Found existing session for user:', session.user.id);
-        setSession(session);
-        setUser(session.user);
-        await loadProfile(session.user.id);
-      } else {
-        console.log('[Auth] No existing session found');
-      }
-    } catch (error) {
-      console.error('[Auth] Error initializing auth:', error);
-      setError(error instanceof Error ? error.message : 'Failed to initialize authentication');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const loadProfile = async (userId: string, retryCount = 0) => {
+  const loadProfile = useCallback(async (userId: string, retryCount = 0) => {
     try {
       console.log('[Auth] Loading profile for user:', userId, 'retry:', retryCount);
       const { data, error } = await supabase
@@ -121,7 +67,61 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       
       setProfile(null);
     }
-  };
+  }, []);
+
+  const initializeAuth = useCallback(async () => {
+    try {
+      console.log('[Auth] Checking for existing session');
+      const { data: { session }, error } = await supabase.auth.getSession();
+      
+      if (error) {
+        console.error('[Auth] Error getting session:', error);
+        throw error;
+      }
+
+      if (session) {
+        console.log('[Auth] Found existing session for user:', session.user.id);
+        setSession(session);
+        setUser(session.user);
+        await loadProfile(session.user.id);
+      } else {
+        console.log('[Auth] No existing session found');
+      }
+    } catch (error) {
+      console.error('[Auth] Error initializing auth:', error);
+      setError(error instanceof Error ? error.message : 'Failed to initialize authentication');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [loadProfile]);
+
+  useEffect(() => {
+    console.log('[Auth] Initializing auth context');
+    initializeAuth();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('[Auth] Auth state changed:', event, session?.user?.id);
+      
+      if (event === 'SIGNED_IN' && session) {
+        setSession(session);
+        setUser(session.user);
+        await loadProfile(session.user.id);
+      } else if (event === 'SIGNED_OUT') {
+        setSession(null);
+        setUser(null);
+        setProfile(null);
+      } else if (event === 'TOKEN_REFRESHED' && session) {
+        setSession(session);
+        setUser(session.user);
+      } else if (event === 'USER_UPDATED' && session) {
+        setUser(session.user);
+      }
+    });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, [initializeAuth, loadProfile]);
 
   const checkUsernameAvailability = async (username: string): Promise<boolean> => {
     try {

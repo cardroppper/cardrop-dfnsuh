@@ -17,6 +17,7 @@ import { StatusBar } from "expo-status-bar";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { colors } from "@/styles/commonStyles";
 import { useBackgroundBLEScanning } from "@/hooks/useBackgroundBLEScanning";
+import { SuperwallProvider } from "expo-superwall";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -35,9 +36,6 @@ function ConditionalSuperwallProvider({ children }: { children: React.ReactNode 
   // Only use Superwall on native platforms (iOS and Android)
   if (Platform.OS === 'ios' || Platform.OS === 'android') {
     try {
-      // Dynamically require Superwall only on native platforms
-      const { SuperwallProvider } = require('expo-superwall');
-      
       return (
         <SuperwallProvider
           apiKeys={{

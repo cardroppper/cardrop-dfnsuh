@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/app/integrations/supabase/client';
 import { Vehicle, VehicleModification, VehicleImage } from '@/app/integrations/supabase/types';
 import { useAuth } from '@/contexts/AuthContext';
@@ -15,7 +15,7 @@ export function useVehicles() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const loadVehicles = async () => {
+  const loadVehicles = useCallback(async () => {
     if (!user) {
       console.log('[useVehicles] No user, skipping load');
       setVehicles([]);
@@ -47,11 +47,11 @@ export function useVehicles() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     loadVehicles();
-  }, [user?.id]);
+  }, [loadVehicles]);
 
   return {
     vehicles,
@@ -66,7 +66,7 @@ export function useVehicleDetails(vehicleId: string | null) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const loadVehicleDetails = async () => {
+  const loadVehicleDetails = useCallback(async () => {
     if (!vehicleId) {
       console.log('[useVehicleDetails] No vehicle ID provided');
       setVehicle(null);
@@ -104,11 +104,11 @@ export function useVehicleDetails(vehicleId: string | null) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [vehicleId]);
 
   useEffect(() => {
     loadVehicleDetails();
-  }, [vehicleId]);
+  }, [loadVehicleDetails]);
 
   return {
     vehicle,

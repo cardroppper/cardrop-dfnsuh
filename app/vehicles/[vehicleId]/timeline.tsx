@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -51,11 +51,7 @@ export default function VehicleTimelineScreen() {
     video_url: null as string | null,
   });
 
-  useEffect(() => {
-    fetchEntries();
-  }, [vehicleId]);
-
-  const fetchEntries = async () => {
+  const fetchEntries = useCallback(async () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
@@ -75,7 +71,11 @@ export default function VehicleTimelineScreen() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [vehicleId]);
+
+  useEffect(() => {
+    fetchEntries();
+  }, [fetchEntries]);
 
   const handleSaveEntry = async () => {
     if (!formData.title.trim()) {

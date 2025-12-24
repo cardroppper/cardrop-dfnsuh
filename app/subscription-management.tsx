@@ -16,17 +16,7 @@ import { colors, buttonStyles } from '@/styles/commonStyles';
 import { IconSymbol } from '@/components/IconSymbol';
 import { useSubscription } from '@/hooks/useSubscription';
 import { PaywallScreen } from '@/components/PaywallScreen';
-
-// Conditionally import Superwall hooks only on native platforms
-let usePlacement: any = null;
-if (Platform.OS === 'ios' || Platform.OS === 'android') {
-  try {
-    const superwallModule = require('expo-superwall');
-    usePlacement = superwallModule.usePlacement;
-  } catch (error) {
-    console.warn('[SubscriptionManagement] Superwall not available:', error);
-  }
-}
+import { usePlacement } from 'expo-superwall';
 
 export default function SubscriptionManagementScreen() {
   const { subscription, loading } = useSubscription();
@@ -34,7 +24,7 @@ export default function SubscriptionManagementScreen() {
 
   // Only use Superwall hooks on native platforms
   let registerPlacement: any = null;
-  if (usePlacement && Platform.OS !== 'web') {
+  if (Platform.OS !== 'web') {
     try {
       const placementData = usePlacement({
         onDismiss: (info: any, result: any) => {
@@ -436,6 +426,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 12,
     gap: 12,
+    boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.2)',
+    elevation: 2,
     borderWidth: 1,
     borderColor: colors.border,
   },

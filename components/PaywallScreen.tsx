@@ -5,19 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { IconSymbol } from './IconSymbol';
 import { colors, buttonStyles } from '@/styles/commonStyles';
 import { useRouter } from 'expo-router';
-
-// Conditionally import Superwall hooks only on native platforms
-let usePlacement: any = null;
-let useUser: any = null;
-if (Platform.OS === 'ios' || Platform.OS === 'android') {
-  try {
-    const superwallModule = require('expo-superwall');
-    usePlacement = superwallModule.usePlacement;
-    useUser = superwallModule.useUser;
-  } catch (error) {
-    console.warn('[PaywallScreen] Superwall not available:', error);
-  }
-}
+import { usePlacement } from 'expo-superwall';
 
 interface PaywallScreenProps {
   feature: string;
@@ -32,7 +20,7 @@ export function PaywallScreen({ feature, onDismiss, placementId = 'premium_featu
   let registerPlacement: any = null;
   let placementState: any = null;
 
-  if (usePlacement && Platform.OS !== 'web') {
+  if (Platform.OS !== 'web') {
     try {
       const placementData = usePlacement({
         onPresent: (info: any) => {

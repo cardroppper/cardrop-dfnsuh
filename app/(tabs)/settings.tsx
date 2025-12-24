@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -18,7 +18,17 @@ import { colors, commonStyles, buttonStyles } from '@/styles/commonStyles';
 import { IconSymbol } from '@/components/IconSymbol';
 import * as ImagePicker from 'expo-image-picker';
 import { useSubscription } from '@/hooks/useSubscription';
-import { useUser } from 'expo-superwall';
+
+// Only import useUser on native platforms
+let useUser: any = null;
+if (Platform.OS !== 'web') {
+  try {
+    const SuperwallModule = require('expo-superwall');
+    useUser = SuperwallModule.useUser;
+  } catch (error) {
+    console.warn('[Settings] expo-superwall not available:', error);
+  }
+}
 
 type NotificationType = 'silent' | 'vibration' | 'sound';
 type SoundType = 'none' | 'vroom' | 'default';
@@ -26,7 +36,20 @@ type SoundType = 'none' | 'vroom' | 'default';
 export default function SettingsScreen() {
   const { user, profile, logout, updateProfile } = useAuth();
   const { subscription } = useSubscription();
-  const { identify, user: superwallUser } = useUser();
+  
+  // Only use Superwall hooks on native platforms
+  let identify: any = null;
+  let superwallUser: any = null;
+  if (Platform.OS !== 'web' && useUser) {
+    try {
+      const superwallData = useUser();
+      identify = superwallData?.identify;
+      superwallUser = superwallData?.user;
+    } catch (error) {
+      console.warn('[Settings] Error accessing Superwall user:', error);
+    }
+  }
+
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   
@@ -61,13 +84,17 @@ export default function SettingsScreen() {
   );
 
   // Identify user with Superwall when component mounts
-  React.useEffect(() => {
-    if (user?.id) {
-      identify(user.id).catch((error) => {
+  const identifyUser = useCallback(() => {
+    if (user?.id && identify) {
+      identify(user.id).catch((error: any) => {
         console.error('[Settings] Error identifying user with Superwall:', error);
       });
     }
-  }, [user?.id]);
+  }, [user?.id, identify]);
+
+  React.useEffect(() => {
+    identifyUser();
+  }, [identifyUser]);
 
   const handleLogout = () => {
     Alert.alert(

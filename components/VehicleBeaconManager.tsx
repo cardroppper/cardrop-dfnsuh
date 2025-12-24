@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -26,11 +26,7 @@ export function VehicleBeaconManager({ vehicleId, onClose }: VehicleBeaconManage
   const [existingBeacon, setExistingBeacon] = useState<any>(null);
   const [fetchingBeacon, setFetchingBeacon] = useState(true);
 
-  useEffect(() => {
-    fetchExistingBeacon();
-  }, [vehicleId]);
-
-  const fetchExistingBeacon = async () => {
+  const fetchExistingBeacon = useCallback(async () => {
     try {
       setFetchingBeacon(true);
       const { data, error } = await supabase
@@ -53,7 +49,11 @@ export function VehicleBeaconManager({ vehicleId, onClose }: VehicleBeaconManage
     } finally {
       setFetchingBeacon(false);
     }
-  };
+  }, [vehicleId]);
+
+  useEffect(() => {
+    fetchExistingBeacon();
+  }, [fetchExistingBeacon]);
 
   const handleSaveBeacon = async () => {
     if (!beaconId.trim()) {

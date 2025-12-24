@@ -3,17 +3,7 @@ import { useState, useEffect } from 'react';
 import { Platform } from 'react-native';
 import { supabase } from '@/app/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-
-// Conditionally import Superwall hooks only on native platforms
-let useUser: any = null;
-if (Platform.OS === 'ios' || Platform.OS === 'android') {
-  try {
-    const superwallModule = require('expo-superwall');
-    useUser = superwallModule.useUser;
-  } catch (error) {
-    console.warn('[useSubscription] Superwall not available:', error);
-  }
-}
+import { useUser } from 'expo-superwall';
 
 export interface SubscriptionStatus {
   isPremium: boolean;
@@ -29,7 +19,7 @@ export function useSubscription() {
   
   // Only use Superwall hooks on native platforms
   let superwallStatus = null;
-  if (useUser) {
+  if (Platform.OS !== 'web') {
     try {
       const superwallData = useUser();
       superwallStatus = superwallData?.subscriptionStatus;
@@ -47,15 +37,6 @@ export function useSubscription() {
     subscriptionSource: 'none',
   });
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!user) {
-      setLoading(false);
-      return;
-    }
-
-    fetchSubscription();
-  }, [user, profile?.free_premium, superwallStatus]);
 
   const fetchSubscription = async () => {
     if (!user) return;
@@ -127,6 +108,15 @@ export function useSubscription() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+
+    fetchSubscription();
+  }, [user, profile?.free_premium, superwallStatus]);
 
   const updateSubscription = async (status: 'free' | 'premium') => {
     if (!user) return;

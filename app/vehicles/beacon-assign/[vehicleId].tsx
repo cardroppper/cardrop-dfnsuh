@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -27,11 +27,7 @@ export default function BeaconAssignScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
-  useEffect(() => {
-    loadVehicleAndBeacon();
-  }, [vehicleId]);
-
-  const loadVehicleAndBeacon = async () => {
+  const loadVehicleAndBeacon = useCallback(async () => {
     try {
       setIsLoading(true);
 
@@ -73,7 +69,11 @@ export default function BeaconAssignScreen() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [vehicleId, router]);
+
+  useEffect(() => {
+    loadVehicleAndBeacon();
+  }, [loadVehicleAndBeacon]);
 
   const handleSave = async () => {
     if (!vehicle) return;

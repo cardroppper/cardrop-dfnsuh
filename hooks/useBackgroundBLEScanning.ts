@@ -1,5 +1,5 @@
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { Platform, AppState, AppStateStatus } from 'react-native';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSubscription } from '@/hooks/useSubscription';
@@ -23,107 +23,7 @@ export function useBackgroundBLEScanning() {
   const scanningRef = useRef(false);
   const detectedVehiclesRef = useRef<Set<string>>(new Set());
 
-  useEffect(() => {
-    // Only run on native platforms
-    if (Platform.OS === 'web') {
-      console.log('[BackgroundBLE] Web platform detected, skipping background scanning');
-      return;
-    }
-
-    // Check if user has premium and always searching enabled
-    const shouldScan = subscription.isPremium && profile?.always_searching_enabled;
-
-    if (!shouldScan) {
-      console.log('[BackgroundBLE] Background scanning disabled:', {
-        isPremium: subscription.isPremium,
-        alwaysSearching: profile?.always_searching_enabled,
-      });
-      
-      // Stop scanning if it was running
-      if (scanningRef.current) {
-        stopBackgroundScanning();
-      }
-      return;
-    }
-
-    console.log('[BackgroundBLE] Background scanning enabled, starting...');
-    startBackgroundScanning();
-
-    // Listen to app state changes
-    const subscription_listener = AppState.addEventListener('change', handleAppStateChange);
-
-    return () => {
-      console.log('[BackgroundBLE] Cleaning up background scanning');
-      subscription_listener.remove();
-      stopBackgroundScanning();
-    };
-  }, [subscription.isPremium, profile?.always_searching_enabled]);
-
-  const handleAppStateChange = (nextAppState: AppStateStatus) => {
-    console.log('[BackgroundBLE] App state changed:', appState.current, '->', nextAppState);
-    
-    const shouldScan = subscription.isPremium && profile?.always_searching_enabled;
-    
-    if (!shouldScan) {
-      return;
-    }
-
-    // Start scanning when app becomes active
-    if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
-      console.log('[BackgroundBLE] App became active, starting scanning');
-      startBackgroundScanning();
-    }
-    // Keep scanning in background if always searching is enabled
-    // Note: On iOS, background BLE scanning has limitations
-    else if (nextAppState.match(/inactive|background/)) {
-      console.log('[BackgroundBLE] App went to background, continuing scanning');
-      // Scanning continues in background
-    }
-
-    appState.current = nextAppState;
-  };
-
-  const startBackgroundScanning = async () => {
-    if (scanningRef.current) {
-      console.log('[BackgroundBLE] Already scanning');
-      return;
-    }
-
-    try {
-      const hasPermissions = await BLEService.requestPermissions();
-      if (!hasPermissions) {
-        console.log('[BackgroundBLE] BLE permissions not granted');
-        return;
-      }
-
-      const state = await BLEService.checkBluetoothState();
-      if (state !== 'PoweredOn') {
-        console.log('[BackgroundBLE] Bluetooth not powered on:', state);
-        return;
-      }
-
-      scanningRef.current = true;
-      console.log('[BackgroundBLE] Starting BLE scan');
-
-      const success = await BLEService.startScanning(
-        (beacons) => handleBeaconsDetected(beacons),
-        (error) => {
-          console.error('[BackgroundBLE] Scanning error:', error);
-          scanningRef.current = false;
-        }
-      );
-
-      if (!success) {
-        scanningRef.current = false;
-        console.log('[BackgroundBLE] Failed to start scanning');
-      }
-    } catch (error) {
-      console.error('[BackgroundBLE] Error starting background scan:', error);
-      scanningRef.current = false;
-    }
-  };
-
-  const stopBackgroundScanning = () => {
+  const stopBackgroundScanning = useCallback(() => {
     if (!scanningRef.current) {
       return;
     }
@@ -132,9 +32,87 @@ export function useBackgroundBLEScanning() {
     BLEService.stopScanning();
     scanningRef.current = false;
     detectedVehiclesRef.current.clear();
-  };
+  }, []);
 
-  const handleBeaconsDetected = async (beacons: BeaconData[]) => {
+  const storeDetection = useCallback(async (vehicleData: any, beacons: BeaconData[]) => {
+    if (!profile) return;
+
+    try {
+      const vehicle = vehicleData.vehicles;
+      const beacon = beacons.find(b => b.deviceId === vehicleData.beacon_uuid);
+
+      // Store in beacon_detections table
+      const { error: detectionError } = await supabase
+        .from('beacon_detections')
+        .insert({
+          detector_user_id: profile.id,
+          detected_vehicle_id: vehicle.id,
+          detected_user_id: vehicle.user_id,
+          rssi: beacon?.rssi || -100,
+          detected_at: new Date().toISOString(),
+        });
+
+      if (detectionError) {
+        console.error('[BackgroundBLE] Error storing detection:', detectionError);
+      }
+
+      // Store in detection_highlights table (24-hour highlight)
+      const expiresAt = new Date();
+      expiresAt.setHours(expiresAt.getHours() + 24);
+
+      const { error: highlightError } = await supabase
+        .from('detection_highlights')
+        .insert({
+          user_id: profile.id,
+          vehicle_id: vehicle.id,
+          detected_at: new Date().toISOString(),
+          expires_at: expiresAt.toISOString(),
+        });
+
+      if (highlightError) {
+        console.error('[BackgroundBLE] Error storing highlight:', highlightError);
+      }
+
+      console.log('[BackgroundBLE] Detection stored successfully');
+    } catch (error) {
+      console.error('[BackgroundBLE] Error storing detection:', error);
+    }
+  }, [profile]);
+
+  const triggerDetectionNotification = useCallback(async (vehicle: any) => {
+    if (!profile?.notification_preferences) {
+      return;
+    }
+
+    const prefs = profile.notification_preferences;
+    const vehicleName = `${vehicle.year} ${vehicle.manufacturer} ${vehicle.model}`;
+
+    console.log('[BackgroundBLE] Triggering notification:', prefs.detection_type, vehicleName);
+
+    // Handle vibration
+    if (prefs.detection_type === 'vibration' || prefs.vibration) {
+      try {
+        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        console.log('[BackgroundBLE] Vibration triggered');
+      } catch (error) {
+        console.error('[BackgroundBLE] Error triggering vibration:', error);
+      }
+    }
+
+    // Handle sound
+    if (prefs.detection_type === 'sound') {
+      // Note: Playing sounds in background requires additional setup
+      // For now, we'll just log it
+      console.log('[BackgroundBLE] Sound notification:', prefs.sound);
+      // TODO: Implement sound playback
+      // This would require expo-av or similar and proper background audio permissions
+    }
+
+    // Silent notifications are handled by the database entries
+    // The user will see them in the Nearby tab with gold highlights
+  }, [profile]);
+
+  const handleBeaconsDetected = useCallback(async (beacons: BeaconData[]) => {
     if (beacons.length === 0) {
       return;
     }
@@ -217,85 +195,107 @@ export function useBackgroundBLEScanning() {
     } catch (error) {
       console.error('[BackgroundBLE] Error handling beacon detection:', error);
     }
-  };
+  }, [storeDetection, triggerDetectionNotification]);
 
-  const storeDetection = async (vehicleData: any, beacons: BeaconData[]) => {
-    if (!profile) return;
-
-    try {
-      const vehicle = vehicleData.vehicles;
-      const beacon = beacons.find(b => b.deviceId === vehicleData.beacon_uuid);
-
-      // Store in beacon_detections table
-      const { error: detectionError } = await supabase
-        .from('beacon_detections')
-        .insert({
-          detector_user_id: profile.id,
-          detected_vehicle_id: vehicle.id,
-          detected_user_id: vehicle.user_id,
-          rssi: beacon?.rssi || -100,
-          detected_at: new Date().toISOString(),
-        });
-
-      if (detectionError) {
-        console.error('[BackgroundBLE] Error storing detection:', detectionError);
-      }
-
-      // Store in detection_highlights table (24-hour highlight)
-      const expiresAt = new Date();
-      expiresAt.setHours(expiresAt.getHours() + 24);
-
-      const { error: highlightError } = await supabase
-        .from('detection_highlights')
-        .insert({
-          user_id: profile.id,
-          vehicle_id: vehicle.id,
-          detected_at: new Date().toISOString(),
-          expires_at: expiresAt.toISOString(),
-        });
-
-      if (highlightError) {
-        console.error('[BackgroundBLE] Error storing highlight:', highlightError);
-      }
-
-      console.log('[BackgroundBLE] Detection stored successfully');
-    } catch (error) {
-      console.error('[BackgroundBLE] Error storing detection:', error);
-    }
-  };
-
-  const triggerDetectionNotification = async (vehicle: any) => {
-    if (!profile?.notification_preferences) {
+  const startBackgroundScanning = useCallback(async () => {
+    if (scanningRef.current) {
+      console.log('[BackgroundBLE] Already scanning');
       return;
     }
 
-    const prefs = profile.notification_preferences;
-    const vehicleName = `${vehicle.year} ${vehicle.manufacturer} ${vehicle.model}`;
-
-    console.log('[BackgroundBLE] Triggering notification:', prefs.detection_type, vehicleName);
-
-    // Handle vibration
-    if (prefs.detection_type === 'vibration' || prefs.vibration) {
-      try {
-        await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        console.log('[BackgroundBLE] Vibration triggered');
-      } catch (error) {
-        console.error('[BackgroundBLE] Error triggering vibration:', error);
+    try {
+      const hasPermissions = await BLEService.requestPermissions();
+      if (!hasPermissions) {
+        console.log('[BackgroundBLE] BLE permissions not granted');
+        return;
       }
+
+      const state = await BLEService.checkBluetoothState();
+      if (state !== 'PoweredOn') {
+        console.log('[BackgroundBLE] Bluetooth not powered on:', state);
+        return;
+      }
+
+      scanningRef.current = true;
+      console.log('[BackgroundBLE] Starting BLE scan');
+
+      const success = await BLEService.startScanning(
+        handleBeaconsDetected,
+        (error) => {
+          console.error('[BackgroundBLE] Scanning error:', error);
+          scanningRef.current = false;
+        }
+      );
+
+      if (!success) {
+        scanningRef.current = false;
+        console.log('[BackgroundBLE] Failed to start scanning');
+      }
+    } catch (error) {
+      console.error('[BackgroundBLE] Error starting background scan:', error);
+      scanningRef.current = false;
+    }
+  }, [handleBeaconsDetected]);
+
+  const handleAppStateChange = useCallback((nextAppState: AppStateStatus) => {
+    console.log('[BackgroundBLE] App state changed:', appState.current, '->', nextAppState);
+    
+    const shouldScan = subscription.isPremium && profile?.always_searching_enabled;
+    
+    if (!shouldScan) {
+      return;
     }
 
-    // Handle sound
-    if (prefs.detection_type === 'sound') {
-      // Note: Playing sounds in background requires additional setup
-      // For now, we'll just log it
-      console.log('[BackgroundBLE] Sound notification:', prefs.sound);
-      // TODO: Implement sound playback
-      // This would require expo-av or similar and proper background audio permissions
+    // Start scanning when app becomes active
+    if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
+      console.log('[BackgroundBLE] App became active, starting scanning');
+      startBackgroundScanning();
+    }
+    // Keep scanning in background if always searching is enabled
+    // Note: On iOS, background BLE scanning has limitations
+    else if (nextAppState.match(/inactive|background/)) {
+      console.log('[BackgroundBLE] App went to background, continuing scanning');
+      // Scanning continues in background
     }
 
-    // Silent notifications are handled by the database entries
-    // The user will see them in the Nearby tab with gold highlights
-  };
+    appState.current = nextAppState;
+  }, [subscription.isPremium, profile?.always_searching_enabled, startBackgroundScanning]);
+
+  useEffect(() => {
+    // Only run on native platforms
+    if (Platform.OS === 'web') {
+      console.log('[BackgroundBLE] Web platform detected, skipping background scanning');
+      return;
+    }
+
+    // Check if user has premium and always searching enabled
+    const shouldScan = subscription.isPremium && profile?.always_searching_enabled;
+
+    if (!shouldScan) {
+      console.log('[BackgroundBLE] Background scanning disabled:', {
+        isPremium: subscription.isPremium,
+        alwaysSearching: profile?.always_searching_enabled,
+      });
+      
+      // Stop scanning if it was running
+      if (scanningRef.current) {
+        stopBackgroundScanning();
+      }
+      return;
+    }
+
+    console.log('[BackgroundBLE] Background scanning enabled, starting...');
+    startBackgroundScanning();
+
+    // Listen to app state changes
+    const subscription_listener = AppState.addEventListener('change', handleAppStateChange);
+
+    return () => {
+      console.log('[BackgroundBLE] Cleaning up background scanning');
+      subscription_listener.remove();
+      stopBackgroundScanning();
+    };
+  }, [subscription.isPremium, profile?.always_searching_enabled, startBackgroundScanning, handleAppStateChange, stopBackgroundScanning]);
 
   return {
     isScanning: scanningRef.current,

@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -46,8 +46,7 @@ export default function NearbyScreen() {
     };
   }, [isScanning, stopScanning]);
 
-  useEffect(() => {
-    // Add highlights for newly detected vehicles
+  const handleNewDetections = useCallback(() => {
     nearbyVehicles.forEach(vehicle => {
       if (!isHighlighted(vehicle.vehicleId)) {
         addHighlight(vehicle.vehicleId);
@@ -57,7 +56,11 @@ export default function NearbyScreen() {
         }
       }
     });
-  }, [nearbyVehicles]);
+  }, [nearbyVehicles, isHighlighted, addHighlight]);
+
+  useEffect(() => {
+    handleNewDetections();
+  }, [handleNewDetections]);
 
   const handleStartScanning = async () => {
     await startScanning();

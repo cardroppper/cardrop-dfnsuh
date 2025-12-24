@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -30,7 +30,7 @@ export default function ClubDetailScreen() {
   const [showLiveMeetView, setShowLiveMeetView] = useState(false);
   const { events, loading: eventsLoading, refetch: refetchEvents, checkInToEvent } = useEvents(clubId as string);
 
-  const fetchClubDetails = async () => {
+  const fetchClubDetails = useCallback(async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
@@ -68,7 +68,7 @@ export default function ClubDetailScreen() {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, [clubId]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -78,7 +78,7 @@ export default function ClubDetailScreen() {
 
   useEffect(() => {
     fetchClubDetails();
-  }, [clubId]);
+  }, [fetchClubDetails]);
 
   if (loading) {
     return (

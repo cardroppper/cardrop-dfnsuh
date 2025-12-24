@@ -1,5 +1,6 @@
 
-import { Platform } from 'react-native';
+import { Platform, PermissionsAndroid } from 'react-native';
+import { CARDROP_BEACON_UUID, BeaconData, calculateDistance } from '@/types/ble';
 
 // Only import BLE on native platforms
 let BleManager: any = null;
@@ -16,9 +17,6 @@ if (Platform.OS !== 'web') {
     console.warn('react-native-ble-plx not available:', error);
   }
 }
-
-import { PermissionsAndroid } from 'react-native';
-import { CARDROP_BEACON_UUID, BeaconData, calculateDistance } from '@/types/ble';
 
 class BLEService {
   private manager: any = null;
