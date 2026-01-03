@@ -73,86 +73,100 @@ export default function TabLayout() {
           },
         }}
       >
-      <Tabs.Screen
-        name="discover"
-        options={{
-          title: 'Discover',
-          tabBarIcon: ({ color, size }) => (
-            <IconSymbol
-              ios_icon_name="sparkles"
-              android_material_icon_name="explore"
-              size={size}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="nearby"
-        options={{
-          title: 'Nearby',
-          tabBarIcon: ({ color, size }) => (
-            <IconSymbol
-              ios_icon_name="location.fill"
-              android_material_icon_name="near-me"
-              size={size}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="garage"
-        options={{
-          title: 'Garage',
-          tabBarIcon: ({ color, size }) => (
-            <IconSymbol
-              ios_icon_name="car.2.fill"
-              android_material_icon_name="garage"
-              size={size}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="clubs"
-        options={{
-          title: 'Clubs',
-          tabBarIcon: ({ color, size }) => (
-            <IconSymbol
-              ios_icon_name="person.3.fill"
-              android_material_icon_name="groups"
-              size={size}
-              color={color}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="settings"
-        options={{
-          title: 'Settings',
-          tabBarIcon: ({ color, size }) => (
-            <IconSymbol
-              ios_icon_name="gearshape.fill"
-              android_material_icon_name="settings"
-              size={size}
-              color={color}
-            />
-          ),
-        }}
-      />
-    </Tabs>
+        <Tabs.Screen
+          name="discover"
+          options={{
+            title: 'Discover',
+            tabBarIcon: ({ color, size }) => (
+              <IconSymbol
+                ios_icon_name="sparkles"
+                android_material_icon_name="explore"
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="nearby"
+          options={{
+            title: 'Nearby',
+            tabBarIcon: ({ color, size }) => (
+              <IconSymbol
+                ios_icon_name="location.fill"
+                android_material_icon_name="near-me"
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="garage"
+          options={{
+            title: 'Garage',
+            tabBarIcon: ({ color, size }) => (
+              <IconSymbol
+                ios_icon_name="car.2.fill"
+                android_material_icon_name="garage"
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="clubs"
+          options={{
+            title: 'Clubs',
+            tabBarIcon: ({ color, size }) => (
+              <IconSymbol
+                ios_icon_name="person.3.fill"
+                android_material_icon_name="groups"
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="messages"
+          options={{
+            title: 'Messages',
+            tabBarIcon: ({ color, size }) => (
+              <IconSymbol
+                ios_icon_name="message.fill"
+                android_material_icon_name="message"
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="settings"
+          options={{
+            title: 'Settings',
+            tabBarIcon: ({ color, size }) => (
+              <IconSymbol
+                ios_icon_name="gearshape.fill"
+                android_material_icon_name="settings"
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+        />
+      </Tabs>
 
-    <BeaconPairingModal
-      visible={!!pairingBeacon}
-      beaconId={pairingBeacon || ''}
-      onPairWithNewCar={handlePairWithNewCar}
-      onPairWithExistingCar={handlePairWithExistingCar}
-      onDismiss={dismissPairing}
-    />
-  </>
+      <BeaconPairingModal
+        visible={!!pairingBeacon}
+        beaconId={pairingBeacon || ''}
+        onPairWithNewCar={handlePairWithNewCar}
+        onPairWithExistingCar={handlePairWithExistingCar}
+        onDismiss={dismissPairing}
+      />
+    </>
   );
 }
 
