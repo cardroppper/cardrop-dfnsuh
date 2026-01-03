@@ -11,6 +11,7 @@ import {
   Modal,
   Alert,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { colors, commonStyles, buttonStyles } from '@/styles/commonStyles';
@@ -29,6 +30,9 @@ export default function ClubsScreen() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
+  const [isJoining, setIsJoining] = useState<string | null>(null);
+  const [isLeaving, setIsLeaving] = useState<string | null>(null);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -41,8 +45,14 @@ export default function ClubsScreen() {
 
   const handleRefresh = async () => {
     setRefreshing(true);
-    await refetch();
-    setRefreshing(false);
+    try {
+      await refetch();
+    } catch (error) {
+      console.error('[Clubs] Error refreshing:', error);
+      Alert.alert('Error', 'Failed to refresh clubs. Please try again.');
+    } finally {
+      setRefreshing(false);
+    }
   };
 
   const handleCreateClub = async () => {
@@ -56,8 +66,13 @@ export default function ClubsScreen() {
       return;
     }
 
+    if (isCreating) return; // Prevent double-tap
+
+    setIsCreating(true);
     try {
+      console.log('[Clubs] Creating club:', formData.name);
       await createClub(formData);
+      
       setShowCreateModal(false);
       setFormData({
         name: '',
@@ -67,20 +82,47 @@ export default function ClubsScreen() {
         allow_member_invites: true,
         require_approval: false,
       });
+      
       Alert.alert('Success', 'Club created successfully!');
-    } catch (err) {
-      console.error('Error creating club:', err);
-      Alert.alert('Error', 'Failed to create club. Please try again.');
+      console.log('[Clubs] Club created successfully');
+    } catch (err: any) {
+      console.error('[Clubs] Error creating club:', err);
+      
+      let errorMessage = 'Failed to create club. Please try again.';
+      if (err.message?.includes('network') || err.message?.includes('fetch')) {
+        errorMessage = 'Network error. Please check your connection and try again.';
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+      
+      Alert.alert('Error', errorMessage);
+    } finally {
+      setIsCreating(false);
     }
   };
 
   const handleJoinClub = async (clubId: string) => {
+    if (isJoining) return; // Prevent double-tap
+    
+    setIsJoining(clubId);
     try {
+      console.log('[Clubs] Joining club:', clubId);
       await joinClub(clubId);
       Alert.alert('Success', 'You have joined the club!');
-    } catch (err) {
-      console.error('Error joining club:', err);
-      Alert.alert('Error', 'Failed to join club. Please try again.');
+      console.log('[Clubs] Successfully joined club');
+    } catch (err: any) {
+      console.error('[Clubs] Error joining club:', err);
+      
+      let errorMessage = 'Failed to join club. Please try again.';
+      if (err.message?.includes('network') || err.message?.includes('fetch')) {
+        errorMessage = 'Network error. Please check your connection and try again.';
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+      
+      Alert.alert('Error', errorMessage);
+    } finally {
+      setIsJoining(null);
     }
   };
 
@@ -94,12 +136,27 @@ export default function ClubsScreen() {
           text: 'Leave',
           style: 'destructive',
           onPress: async () => {
+            if (isLeaving) return; // Prevent double-tap
+            
+            setIsLeaving(clubId);
             try {
+              console.log('[Clubs] Leaving club:', clubId);
               await leaveClub(clubId);
               Alert.alert('Success', 'You have left the club');
-            } catch (err) {
-              console.error('Error leaving club:', err);
-              Alert.alert('Error', 'Failed to leave club. Please try again.');
+              console.log('[Clubs] Successfully left club');
+            } catch (err: any) {
+              console.error('[Clubs] Error leaving club:', err);
+              
+              let errorMessage = 'Failed to leave club. Please try again.';
+              if (err.message?.includes('network') || err.message?.includes('fetch')) {
+                errorMessage = 'Network error. Please check your connection and try again.';
+              } else if (err.message) {
+                errorMessage = err.message;
+              }
+              
+              Alert.alert('Error', errorMessage);
+            } finally {
+              setIsLeaving(null);
             }
           },
         },
@@ -113,6 +170,8 @@ export default function ClubsScreen() {
     const isAdmin = club.user_role === 'admin';
     const memberCount = club.member_count || 0;
     const pricing = calculatePricing(memberCount);
+    const isJoiningThis = isJoining === club.id;
+    const isLeavingThis = isLeaving === club.id;
 
     return (
       <View key={index} style={styles.clubCard}>
@@ -190,26 +249,37 @@ export default function ClubsScreen() {
               <TouchableOpacity
                 style={[buttonStyles.primary, styles.actionButton]}
                 onPress={() => {
-                  console.log('Navigate to club details:', club.id);
+                  console.log('[Clubs] Navigate to club details:', club.id);
+                  router.push(`/clubs/${club.id}`);
                 }}
               >
                 <Text style={buttonStyles.text}>View Club</Text>
               </TouchableOpacity>
               {!isOwner && (
                 <TouchableOpacity
-                  style={[buttonStyles.outline, styles.actionButton]}
+                  style={[buttonStyles.outline, styles.actionButton, isLeavingThis && styles.buttonDisabled]}
                   onPress={() => handleLeaveClub(club.id, club.name)}
+                  disabled={isLeavingThis}
                 >
-                  <Text style={[buttonStyles.text, { color: colors.error }]}>Leave</Text>
+                  {isLeavingThis ? (
+                    <ActivityIndicator size="small" color={colors.error} />
+                  ) : (
+                    <Text style={[buttonStyles.text, { color: colors.error }]}>Leave</Text>
+                  )}
                 </TouchableOpacity>
               )}
             </React.Fragment>
           ) : (
             <TouchableOpacity
-              style={[buttonStyles.primary, styles.actionButton]}
+              style={[buttonStyles.primary, styles.actionButton, isJoiningThis && styles.buttonDisabled]}
               onPress={() => handleJoinClub(club.id)}
+              disabled={isJoiningThis}
             >
-              <Text style={buttonStyles.text}>Join Club</Text>
+              {isJoiningThis ? (
+                <ActivityIndicator size="small" color={colors.text} />
+              ) : (
+                <Text style={buttonStyles.text}>Join Club</Text>
+              )}
             </TouchableOpacity>
           )}
         </View>
@@ -309,7 +379,10 @@ export default function ClubsScreen() {
             <Text style={styles.sectionTitle}>My Clubs</Text>
           </View>
           {loading && myClubs.length === 0 ? (
-            <Text style={commonStyles.textSecondary}>Loading...</Text>
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color={colors.primary} />
+              <Text style={commonStyles.textSecondary}>Loading clubs...</Text>
+            </View>
           ) : myClubs.length === 0 ? (
             <View style={commonStyles.emptyState}>
               <IconSymbol
@@ -342,7 +415,10 @@ export default function ClubsScreen() {
             <Text style={styles.sectionTitle}>Discover Clubs</Text>
           </View>
           {loading && clubs.length === 0 ? (
-            <Text style={commonStyles.textSecondary}>Loading...</Text>
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color={colors.primary} />
+              <Text style={commonStyles.textSecondary}>Loading clubs...</Text>
+            </View>
           ) : clubs.filter(c => !c.is_member).length === 0 ? (
             <View style={commonStyles.emptyState}>
               <IconSymbol
@@ -393,13 +469,16 @@ export default function ClubsScreen() {
         visible={showCreateModal}
         animationType="slide"
         transparent={true}
-        onRequestClose={() => setShowCreateModal(false)}
+        onRequestClose={() => !isCreating && setShowCreateModal(false)}
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>Create Club</Text>
-              <TouchableOpacity onPress={() => setShowCreateModal(false)}>
+              <TouchableOpacity 
+                onPress={() => setShowCreateModal(false)}
+                disabled={isCreating}
+              >
                 <IconSymbol
                   ios_icon_name="xmark.circle.fill"
                   android_material_icon_name="cancel"
@@ -418,6 +497,7 @@ export default function ClubsScreen() {
                 placeholder="Enter club name"
                 placeholderTextColor={colors.textSecondary}
                 maxLength={100}
+                editable={!isCreating}
               />
 
               <Text style={styles.label}>Description</Text>
@@ -429,6 +509,7 @@ export default function ClubsScreen() {
                 placeholderTextColor={colors.textSecondary}
                 multiline
                 numberOfLines={4}
+                editable={!isCreating}
               />
 
               <Text style={styles.label}>Location</Text>
@@ -438,6 +519,7 @@ export default function ClubsScreen() {
                 onChangeText={(text) => setFormData({ ...formData, location: text })}
                 placeholder="City, State"
                 placeholderTextColor={colors.textSecondary}
+                editable={!isCreating}
               />
 
               <View style={styles.switchRow}>
@@ -447,7 +529,8 @@ export default function ClubsScreen() {
                     styles.switch,
                     formData.is_public && styles.switchActive,
                   ]}
-                  onPress={() => setFormData({ ...formData, is_public: !formData.is_public })}
+                  onPress={() => !isCreating && setFormData({ ...formData, is_public: !formData.is_public })}
+                  disabled={isCreating}
                 >
                   <View
                     style={[
@@ -470,7 +553,8 @@ export default function ClubsScreen() {
                     styles.switch,
                     formData.allow_member_invites && styles.switchActive,
                   ]}
-                  onPress={() => setFormData({ ...formData, allow_member_invites: !formData.allow_member_invites })}
+                  onPress={() => !isCreating && setFormData({ ...formData, allow_member_invites: !formData.allow_member_invites })}
+                  disabled={isCreating}
                 >
                   <View
                     style={[
@@ -487,15 +571,21 @@ export default function ClubsScreen() {
               </Text>
 
               <TouchableOpacity
-                style={[buttonStyles.primary, { marginBottom: 16 }]}
+                style={[buttonStyles.primary, { marginBottom: 16 }, isCreating && styles.buttonDisabled]}
                 onPress={handleCreateClub}
+                disabled={isCreating}
               >
-                <Text style={buttonStyles.text}>Create Club</Text>
+                {isCreating ? (
+                  <ActivityIndicator size="small" color={colors.text} />
+                ) : (
+                  <Text style={buttonStyles.text}>Create Club</Text>
+                )}
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={buttonStyles.outline}
                 onPress={() => setShowCreateModal(false)}
+                disabled={isCreating}
               >
                 <Text style={buttonStyles.text}>Cancel</Text>
               </TouchableOpacity>
@@ -553,6 +643,11 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     color: colors.text,
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    padding: 32,
+    gap: 12,
   },
   section: {
     paddingHorizontal: 20,
@@ -681,6 +776,9 @@ const styles = StyleSheet.create({
   },
   actionButton: {
     flex: 1,
+  },
+  buttonDisabled: {
+    opacity: 0.6,
   },
   pricingInfo: {
     backgroundColor: colors.card,
