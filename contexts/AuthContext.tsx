@@ -1,8 +1,10 @@
 
+import { Session, User, AuthError } from '@supabase/supabase-js';
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/app/integrations/supabase/client';
-import { Session, User, AuthError } from '@supabase/supabase-js';
 import { Profile } from '@/app/integrations/supabase/types';
+import { Alert } from 'react-native';
+import * as Network from 'expo-network';
 
 interface AuthContextType {
   user: User | null;
@@ -21,6 +23,14 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within AuthProvider');
+  }
+  return context;
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -28,104 +38,93 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const loadProfile = useCallback(async (userId: string, retryCount = 0) => {
-    try {
-      console.log('[Auth] Loading profile for user:', userId, 'retry:', retryCount);
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', userId)
-        .maybeSingle();
+  const isAuthenticated = !!user && !!session;
 
-      if (error) {
-        console.error('[Auth] Error loading profile:', error);
-        throw error;
-      }
-
-      if (data) {
-        console.log('[Auth] Profile loaded:', data.username);
-        setProfile(data);
-      } else {
-        console.warn('[Auth] No profile found for user:', userId);
-        
-        if (retryCount < 3) {
-          console.log('[Auth] Retrying profile load in 1 second...');
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          return loadProfile(userId, retryCount + 1);
-        }
-        
-        setProfile(null);
-      }
-    } catch (error) {
-      console.error('[Auth] Error loading profile:', error);
-      
-      if (retryCount < 3) {
-        console.log('[Auth] Retrying profile load after error in 1 second...');
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        return loadProfile(userId, retryCount + 1);
-      }
-      
-      setProfile(null);
-    }
-  }, []);
-
+  // Initialize auth state
   const initializeAuth = useCallback(async () => {
+    console.log('[AuthContext] Initializing auth...');
     try {
-      console.log('[Auth] Checking for existing session');
-      const { data: { session }, error } = await supabase.auth.getSession();
+      const { data: { session: currentSession }, error: sessionError } = await supabase.auth.getSession();
       
-      if (error) {
-        console.error('[Auth] Error getting session:', error);
-        throw error;
+      if (sessionError) {
+        console.error('[AuthContext] Session error:', sessionError);
+        throw sessionError;
       }
 
-      if (session) {
-        console.log('[Auth] Found existing session for user:', session.user.id);
-        setSession(session);
-        setUser(session.user);
-        await loadProfile(session.user.id);
-      } else {
-        console.log('[Auth] No existing session found');
+      console.log('[AuthContext] Current session:', currentSession ? 'exists' : 'none');
+      setSession(currentSession);
+      setUser(currentSession?.user ?? null);
+
+      if (currentSession?.user) {
+        await loadProfile(currentSession.user.id);
       }
-    } catch (error) {
-      console.error('[Auth] Error initializing auth:', error);
-      setError(error instanceof Error ? error.message : 'Failed to initialize authentication');
+    } catch (err: any) {
+      console.error('[AuthContext] Initialize error:', err);
+      setError(err.message);
     } finally {
       setIsLoading(false);
     }
-  }, [loadProfile]);
+  }, []);
 
+  // Load user profile
+  const loadProfile = useCallback(async (userId: string) => {
+    console.log('[AuthContext] Loading profile for user:', userId);
+    try {
+      const { data, error: profileError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
+
+      if (profileError) {
+        console.error('[AuthContext] Profile load error:', profileError);
+        throw profileError;
+      }
+
+      console.log('[AuthContext] Profile loaded:', data?.username);
+      setProfile(data);
+    } catch (err: any) {
+      console.error('[AuthContext] Load profile error:', err);
+      setError(err.message);
+    }
+  }, []);
+
+  // Set up auth state listener
   useEffect(() => {
-    console.log('[Auth] Initializing auth context');
+    console.log('[AuthContext] Setting up auth listener...');
     initializeAuth();
 
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('[Auth] Auth state changed:', event, session?.user?.id);
-      
-      if (event === 'SIGNED_IN' && session) {
-        setSession(session);
-        setUser(session.user);
-        await loadProfile(session.user.id);
-      } else if (event === 'SIGNED_OUT') {
-        setSession(null);
-        setUser(null);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, currentSession) => {
+      console.log('[AuthContext] Auth state changed:', event);
+      setSession(currentSession);
+      setUser(currentSession?.user ?? null);
+
+      if (currentSession?.user) {
+        await loadProfile(currentSession.user.id);
+      } else {
         setProfile(null);
-      } else if (event === 'TOKEN_REFRESHED' && session) {
-        setSession(session);
-        setUser(session.user);
-      } else if (event === 'USER_UPDATED' && session) {
-        setUser(session.user);
       }
     });
 
     return () => {
-      authListener.subscription.unsubscribe();
+      console.log('[AuthContext] Cleaning up auth listener');
+      subscription.unsubscribe();
     };
   }, [initializeAuth, loadProfile]);
 
+  // Check username availability
   const checkUsernameAvailability = async (username: string): Promise<boolean> => {
+    console.log('[AuthContext] Checking username availability:', username);
+    
     try {
-      console.log('[Auth] Checking username availability:', username);
+      // Check network connectivity first
+      const networkState = await Network.getNetworkStateAsync();
+      if (!networkState.isConnected) {
+        console.warn('[AuthContext] No network connection, skipping username check');
+        // Return true to allow signup to proceed - database will handle duplicate validation
+        return true;
+      }
+
       const { data, error } = await supabase
         .from('profiles')
         .select('username')
@@ -133,304 +132,327 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .maybeSingle();
 
       if (error) {
-        console.error('[Auth] Error checking username:', error);
-        
-        // If it's a network error, we'll allow the signup to proceed
-        // The database trigger will handle duplicate username validation
-        if (error.message?.includes('Failed to fetch') || 
-            error.message?.includes('Network request failed') ||
-            error.message?.includes('fetch failed')) {
-          console.warn('[Auth] Network error during username check, allowing signup to proceed');
+        console.error('[AuthContext] Username check error:', error);
+        // If there's a network error, allow signup to proceed
+        if (error.message?.includes('network') || error.message?.includes('fetch')) {
+          console.warn('[AuthContext] Network error during username check, allowing signup to proceed');
           return true;
         }
-        
-        return false;
+        throw error;
       }
 
       const isAvailable = !data;
-      console.log('[Auth] Username available:', isAvailable);
+      console.log('[AuthContext] Username available:', isAvailable);
       return isAvailable;
-    } catch (error) {
-      console.error('[Auth] Error checking username availability:', error);
+    } catch (err: any) {
+      console.error('[AuthContext] Username availability check failed:', err);
       
-      // If there's a network error, allow signup to proceed
-      // The database will handle validation
-      if (error instanceof TypeError && error.message.includes('Network request failed')) {
-        console.warn('[Auth] Network error during username check, allowing signup to proceed');
+      // Handle network errors gracefully
+      if (err.message?.includes('Network request failed') || err.message?.includes('fetch')) {
+        console.warn('[AuthContext] Network error, allowing signup to proceed');
         return true;
       }
       
-      return false;
+      throw err;
     }
   };
 
+  // Signup function
   const signup = async (
     email: string,
     password: string,
     username: string,
     displayName: string
   ): Promise<{ success: boolean; error?: string; needsVerification?: boolean }> => {
+    console.log('[AuthContext] Starting signup process...');
+    setError(null);
+
     try {
-      console.log('[Auth] Starting signup for:', email, username);
-      setError(null);
+      // Check network connectivity
+      const networkState = await Network.getNetworkStateAsync();
+      if (!networkState.isConnected) {
+        console.error('[AuthContext] No network connection');
+        return {
+          success: false,
+          error: 'No internet connection. Please check your network and try again.',
+        };
+      }
 
+      // Normalize username
       const normalizedUsername = username.toLowerCase().trim();
+      console.log('[AuthContext] Normalized username:', normalizedUsername);
 
-      if (normalizedUsername.length < 3 || normalizedUsername.length > 30) {
-        return { success: false, error: 'Username must be between 3 and 30 characters' };
+      // Check username availability
+      console.log('[AuthContext] Checking username availability...');
+      const isUsernameAvailable = await checkUsernameAvailability(normalizedUsername);
+      
+      if (!isUsernameAvailable) {
+        console.log('[AuthContext] Username already taken');
+        return {
+          success: false,
+          error: 'This username is already taken. Please choose a different username.',
+        };
       }
 
-      if (!/^[a-z0-9_]+$/.test(normalizedUsername)) {
-        return { success: false, error: 'Username can only contain lowercase letters, numbers, and underscores' };
-      }
-
-      // Check username availability (with network error handling)
-      try {
-        const isAvailable = await checkUsernameAvailability(normalizedUsername);
-        if (!isAvailable) {
-          return { success: false, error: 'Username is already taken' };
-        }
-      } catch (error) {
-        console.warn('[Auth] Username check failed, proceeding with signup:', error);
-        // Continue with signup - database trigger will handle duplicate validation
-      }
-
-      const { data, error } = await supabase.auth.signUp({
-        email,
+      // Create auth user
+      console.log('[AuthContext] Creating auth user...');
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: email.trim(),
         password,
         options: {
-          emailRedirectTo: 'https://natively.dev/email-confirmed',
           data: {
             username: normalizedUsername,
             display_name: displayName.trim(),
-          }
-        }
+          },
+        },
       });
 
-      if (error) {
-        console.error('[Auth] Signup error:', error);
+      if (authError) {
+        console.error('[AuthContext] Auth signup error:', authError);
         
         // Provide user-friendly error messages
-        if (error.message?.includes('Failed to fetch') || 
-            error.message?.includes('Network request failed') ||
-            error.message?.includes('fetch failed')) {
-          return { 
-            success: false, 
-            error: 'Network connection error. Please check your internet connection and try again.' 
+        if (authError.message?.includes('already registered')) {
+          return {
+            success: false,
+            error: 'An account with this email already exists. Please try logging in instead.',
           };
         }
         
-        if (error.message?.includes('User already registered')) {
-          return { success: false, error: 'An account with this email already exists' };
-        }
-        
-        if (error.message?.includes('duplicate key value violates unique constraint')) {
-          return { success: false, error: 'Username is already taken' };
-        }
-        
-        return { success: false, error: error.message };
-      }
-
-      if (!data.user) {
-        return { success: false, error: 'Failed to create account' };
-      }
-
-      console.log('[Auth] User created:', data.user.id);
-
-      if (!data.session) {
-        console.log('[Auth] Email verification required');
-        return { 
-          success: true, 
-          needsVerification: true,
-          error: 'Please check your email to verify your account before logging in'
+        return {
+          success: false,
+          error: authError.message || 'Failed to create account. Please try again.',
         };
       }
 
-      console.log('[Auth] User created with session, profile should be auto-created by trigger');
-      
-      await loadProfile(data.user.id);
+      if (!authData.user) {
+        console.error('[AuthContext] No user returned from signup');
+        return {
+          success: false,
+          error: 'Failed to create account. Please try again.',
+        };
+      }
 
-      return { success: true };
-    } catch (error) {
-      console.error('[Auth] Unexpected signup error:', error);
+      console.log('[AuthContext] Auth user created:', authData.user.id);
+
+      // Create profile
+      console.log('[AuthContext] Creating profile...');
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .insert({
+          id: authData.user.id,
+          username: normalizedUsername,
+          display_name: displayName.trim(),
+          bio: null,
+          avatar_url: null,
+          is_private: false,
+          ghost_mode: false,
+          free_premium: false,
+          always_searching_enabled: false,
+          attendance_mode: 'manual',
+          notification_preferences: {
+            detection_type: 'vibration',
+            vibration: true,
+            sound: 'default',
+          },
+        });
+
+      if (profileError) {
+        console.error('[AuthContext] Profile creation error:', profileError);
+        
+        // If profile creation fails due to duplicate username, provide helpful message
+        if (profileError.message?.includes('duplicate') || profileError.message?.includes('unique')) {
+          return {
+            success: false,
+            error: 'This username is already taken. Please choose a different username.',
+          };
+        }
+        
+        return {
+          success: false,
+          error: profileError.message || 'Failed to create profile. Please try again.',
+        };
+      }
+
+      console.log('[AuthContext] Profile created successfully');
+
+      // Check if email verification is required
+      const needsVerification = !authData.session;
+      console.log('[AuthContext] Needs verification:', needsVerification);
+
+      if (!needsVerification && authData.session) {
+        setSession(authData.session);
+        setUser(authData.user);
+        await loadProfile(authData.user.id);
+      }
+
+      return {
+        success: true,
+        needsVerification,
+      };
+    } catch (err: any) {
+      console.error('[AuthContext] Signup error:', err);
       
-      // Handle network errors specifically
-      if (error instanceof TypeError && error.message.includes('Network request failed')) {
-        return { 
-          success: false, 
-          error: 'Network connection error. Please check your internet connection and try again.' 
+      // Handle network errors
+      if (err.message?.includes('Network request failed') || err.message?.includes('fetch failed')) {
+        return {
+          success: false,
+          error: 'Network connection error. Please check your internet connection and try again.',
         };
       }
       
-      const message = error instanceof Error ? error.message : 'An unexpected error occurred';
-      setError(message);
-      return { success: false, error: message };
+      return {
+        success: false,
+        error: err.message || 'An unexpected error occurred. Please try again.',
+      };
     }
   };
 
+  // Login function
   const login = async (
     email: string,
     password: string
   ): Promise<{ success: boolean; error?: string }> => {
-    try {
-      console.log('[Auth] Starting login for:', email);
-      setError(null);
+    console.log('[AuthContext] Starting login process...');
+    setError(null);
 
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
+    try {
+      // Check network connectivity
+      const networkState = await Network.getNetworkStateAsync();
+      if (!networkState.isConnected) {
+        console.error('[AuthContext] No network connection');
+        return {
+          success: false,
+          error: 'No internet connection. Please check your network and try again.',
+        };
+      }
+
+      const { data, error: loginError } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
         password,
       });
 
-      if (error) {
-        console.error('[Auth] Login error:', error);
+      if (loginError) {
+        console.error('[AuthContext] Login error:', loginError);
         
-        // Handle network errors
-        if (error.message?.includes('Failed to fetch') || 
-            error.message?.includes('Network request failed') ||
-            error.message?.includes('fetch failed')) {
-          return { 
-            success: false, 
-            error: 'Network connection error. Please check your internet connection and try again.' 
+        // Provide user-friendly error messages
+        if (loginError.message?.includes('Invalid login credentials')) {
+          return {
+            success: false,
+            error: 'Invalid email or password. Please try again.',
           };
         }
         
-        let errorMessage = error.message;
-        
-        if (error.message.includes('Email not confirmed')) {
-          errorMessage = 'Please verify your email address before logging in. Check your inbox for the verification link.';
-        } else if (error.message.includes('Invalid login credentials')) {
-          errorMessage = 'Invalid email or password. Please try again.';
+        if (loginError.message?.includes('Email not confirmed')) {
+          return {
+            success: false,
+            error: 'Please verify your email address before logging in.',
+          };
         }
         
-        return { success: false, error: errorMessage };
+        return {
+          success: false,
+          error: loginError.message || 'Login failed. Please try again.',
+        };
       }
 
-      if (!data.user || !data.session) {
-        return { success: false, error: 'Login failed. Please try again.' };
+      if (!data.session || !data.user) {
+        console.error('[AuthContext] No session returned from login');
+        return {
+          success: false,
+          error: 'Login failed. Please try again.',
+        };
       }
 
-      console.log('[Auth] Login successful for user:', data.user.id);
-      
+      console.log('[AuthContext] Login successful');
       setSession(data.session);
       setUser(data.user);
       await loadProfile(data.user.id);
 
       return { success: true };
-    } catch (error) {
-      console.error('[Auth] Unexpected login error:', error);
+    } catch (err: any) {
+      console.error('[AuthContext] Login error:', err);
       
       // Handle network errors
-      if (error instanceof TypeError && error.message.includes('Network request failed')) {
-        return { 
-          success: false, 
-          error: 'Network connection error. Please check your internet connection and try again.' 
+      if (err.message?.includes('Network request failed') || err.message?.includes('fetch failed')) {
+        return {
+          success: false,
+          error: 'Network connection error. Please check your internet connection and try again.',
         };
       }
       
-      const message = error instanceof Error ? error.message : 'An unexpected error occurred';
-      setError(message);
-      return { success: false, error: message };
+      return {
+        success: false,
+        error: err.message || 'An unexpected error occurred. Please try again.',
+      };
     }
   };
 
+  // Logout function
   const logout = async () => {
+    console.log('[AuthContext] Logging out...');
     try {
-      console.log('[Auth] Logging out');
-      setError(null);
+      const { error: logoutError } = await supabase.auth.signOut();
       
-      const { error } = await supabase.auth.signOut();
-      
-      if (error) {
-        console.error('[Auth] Logout error:', error);
-        throw error;
+      if (logoutError) {
+        console.error('[AuthContext] Logout error:', logoutError);
+        throw logoutError;
       }
 
-      setSession(null);
       setUser(null);
       setProfile(null);
-      console.log('[Auth] Logout successful');
-    } catch (error) {
-      console.error('[Auth] Error during logout:', error);
-      setError(error instanceof Error ? error.message : 'Failed to logout');
+      setSession(null);
+      console.log('[AuthContext] Logout successful');
+    } catch (err: any) {
+      console.error('[AuthContext] Logout error:', err);
+      setError(err.message);
+      throw err;
     }
   };
 
+  // Refresh profile
   const refreshProfile = async () => {
+    console.log('[AuthContext] Refreshing profile...');
     if (user) {
       await loadProfile(user.id);
     }
   };
 
+  // Update profile
   const updateProfile = async (
     updates: Partial<Profile>
   ): Promise<{ success: boolean; error?: string }> => {
+    console.log('[AuthContext] Updating profile...');
+    
+    if (!user) {
+      return {
+        success: false,
+        error: 'Not authenticated',
+      };
+    }
+
     try {
-      if (!user) {
-        return { success: false, error: 'Not authenticated' };
-      }
-
-      console.log('[Auth] Updating profile:', updates);
-
-      if (updates.username) {
-        const normalizedUsername = updates.username.toLowerCase().trim();
-        
-        if (normalizedUsername !== profile?.username) {
-          try {
-            const isAvailable = await checkUsernameAvailability(normalizedUsername);
-            if (!isAvailable) {
-              return { success: false, error: 'Username is already taken' };
-            }
-          } catch (error) {
-            console.warn('[Auth] Username check failed during update:', error);
-            // Continue with update - database will handle validation
-          }
-        }
-        
-        updates.username = normalizedUsername;
-      }
-
-      const { error } = await supabase
+      const { error: updateError } = await supabase
         .from('profiles')
         .update(updates)
         .eq('id', user.id);
 
-      if (error) {
-        console.error('[Auth] Profile update error:', error);
-        
-        // Handle network errors
-        if (error.message?.includes('Failed to fetch') || 
-            error.message?.includes('Network request failed') ||
-            error.message?.includes('fetch failed')) {
-          return { 
-            success: false, 
-            error: 'Network connection error. Please check your internet connection and try again.' 
-          };
-        }
-        
-        if (error.message?.includes('duplicate key value violates unique constraint')) {
-          return { success: false, error: 'Username is already taken' };
-        }
-        
-        return { success: false, error: error.message };
-      }
-
-      await loadProfile(user.id);
-      console.log('[Auth] Profile updated successfully');
-      
-      return { success: true };
-    } catch (error) {
-      console.error('[Auth] Unexpected profile update error:', error);
-      
-      // Handle network errors
-      if (error instanceof TypeError && error.message.includes('Network request failed')) {
-        return { 
-          success: false, 
-          error: 'Network connection error. Please check your internet connection and try again.' 
+      if (updateError) {
+        console.error('[AuthContext] Profile update error:', updateError);
+        return {
+          success: false,
+          error: updateError.message,
         };
       }
-      
-      const message = error instanceof Error ? error.message : 'Failed to update profile';
-      return { success: false, error: message };
+
+      console.log('[AuthContext] Profile updated successfully');
+      await loadProfile(user.id);
+      return { success: true };
+    } catch (err: any) {
+      console.error('[AuthContext] Profile update error:', err);
+      return {
+        success: false,
+        error: err.message,
+      };
     }
   };
 
@@ -441,7 +463,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         profile,
         session,
         isLoading,
-        isAuthenticated: !!user && !!profile,
+        isAuthenticated,
         error,
         login,
         signup,
@@ -454,12 +476,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
 }

@@ -40,28 +40,38 @@ export default function SignupScreen() {
   };
 
   const handleSignup = async () => {
+    console.log('[Signup] Button pressed');
+    
     if (!email || !password || !displayName || !username) {
+      console.log('[Signup] Missing fields:', { email: !!email, password: !!password, displayName: !!displayName, username: !!username });
       Alert.alert('Missing Information', 'Please fill in all fields');
       return;
     }
 
     if (username.length < 3) {
+      console.log('[Signup] Username too short:', username.length);
       Alert.alert('Invalid Username', 'Username must be at least 3 characters');
       return;
     }
 
     if (password.length < 6) {
+      console.log('[Signup] Password too short:', password.length);
       Alert.alert('Weak Password', 'Password must be at least 6 characters');
       return;
     }
 
+    console.log('[Signup] Starting signup process...');
     setIsLoading(true);
+    
     try {
-      console.log('[Signup] Attempting signup...');
+      console.log('[Signup] Calling signup function with:', { email, username, displayName });
       const result = await signup(email, password, username, displayName);
+      console.log('[Signup] Signup result:', result);
       
       if (result.success) {
+        console.log('[Signup] Signup successful!');
         if (result.needsVerification) {
+          console.log('[Signup] Email verification needed');
           Alert.alert(
             'Verify Your Email',
             'We\'ve sent a verification link to your email. Please verify your email address before logging in.',
@@ -73,17 +83,17 @@ export default function SignupScreen() {
             ]
           );
         } else {
-          console.log('[Signup] Signup successful, navigating to discover');
+          console.log('[Signup] No verification needed, navigating to discover');
           router.replace('/(tabs)/discover');
         }
       } else {
-        console.error('[Signup] Signup failed:', result.error);
+        console.error('[Signup] Signup failed with error:', result.error);
         
         // Provide helpful error messages
         let errorTitle = 'Signup Failed';
         let errorMessage = result.error || 'An error occurred during signup';
         
-        if (errorMessage.includes('Network connection error')) {
+        if (errorMessage.includes('Network connection error') || errorMessage.includes('Network request failed')) {
           errorTitle = 'Connection Error';
           errorMessage = 'Unable to connect to the server. Please check your internet connection and try again.';
         } else if (errorMessage.includes('already exists') || errorMessage.includes('already registered')) {
@@ -94,15 +104,23 @@ export default function SignupScreen() {
           errorMessage = 'This username is already in use. Please choose a different username.';
         }
         
+        console.log('[Signup] Showing error alert:', errorTitle, errorMessage);
         Alert.alert(errorTitle, errorMessage);
       }
-    } catch (error) {
-      console.error('[Signup] Unexpected error:', error);
+    } catch (error: any) {
+      console.error('[Signup] Unexpected error during signup:', error);
+      console.error('[Signup] Error details:', {
+        message: error?.message,
+        name: error?.name,
+        stack: error?.stack,
+      });
+      
       Alert.alert(
-        'Connection Error',
-        'Unable to connect to the server. Please check your internet connection and try again.'
+        'Error',
+        error?.message || 'An unexpected error occurred. Please try again.'
       );
     } finally {
+      console.log('[Signup] Signup process complete, setting loading to false');
       setIsLoading(false);
     }
   };
@@ -191,9 +209,13 @@ export default function SignupScreen() {
             style={[buttonStyles.primary, styles.signupButton, isLoading && styles.buttonDisabled]}
             onPress={handleSignup}
             disabled={isLoading}
+            activeOpacity={0.7}
           >
             {isLoading ? (
-              <ActivityIndicator color="#000000" />
+              <View style={styles.loadingContainer}>
+                <ActivityIndicator color="#000000" />
+                <Text style={[buttonStyles.text, styles.loadingText]}>Creating Account...</Text>
+              </View>
             ) : (
               <Text style={buttonStyles.text}>Create Account</Text>
             )}
@@ -203,6 +225,7 @@ export default function SignupScreen() {
             style={[buttonStyles.outline, styles.loginButton]}
             onPress={() => router.back()}
             disabled={isLoading}
+            activeOpacity={0.7}
           >
             <Text style={buttonStyles.textOutline}>
               Already have an account? Log In
@@ -287,6 +310,14 @@ const styles = StyleSheet.create({
   },
   buttonDisabled: {
     opacity: 0.6,
+  },
+  loadingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingText: {
+    marginLeft: 8,
   },
   disclaimer: {
     fontSize: 12,
