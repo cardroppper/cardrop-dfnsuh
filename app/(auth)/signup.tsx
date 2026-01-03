@@ -14,7 +14,7 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { router } from 'expo-router';
 import { LoadingButton } from '@/components/LoadingButton';
-import { navigationDebugger } from '@/utils/navigationDebugger';
+import { autoDebugger } from '@/utils/autoDebugger';
 import { colors } from '@/styles/commonStyles';
 
 export default function SignupScreen() {
@@ -24,32 +24,13 @@ export default function SignupScreen() {
   const [displayName, setDisplayName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [loadingTimeout, setLoadingTimeout] = useState(false);
+  const [retryAttempt, setRetryAttempt] = useState(0);
   
   const { signup } = useAuth();
 
-  // Automatic timeout detection - if loading for >10s, something's wrong
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-    if (loading) {
-      const startTime = Date.now();
-      timeoutId = setTimeout(() => {
-        const duration = Date.now() - startTime;
-        setLoadingTimeout(true);
-        setError('Request timeout - check your connection or backend status');
-        setLoading(false);
-        
-        navigationDebugger.markFailure('signup', `Timeout after ${duration}ms`);
-        console.error('🚨 SIGNUP TIMEOUT: Button stuck loading for >10s');
-        console.error(navigationDebugger.generateReport());
-      }, 10000);
-    }
-    return () => clearTimeout(timeoutId);
-  }, [loading]);
-
   const handleSignup = async () => {
     setError('');
-    setLoadingTimeout(false);
+    setRetryAttempt(0);
 
     if (!email || !password || !username || !displayName) {
       setError('All fields are required');
@@ -76,21 +57,15 @@ export default function SignupScreen() {
       return;
     }
 
-    const startTime = Date.now();
-    const attempt = navigationDebugger.logAttempt('signup', '/(auth)/signup', '/(auth)/login');
-    
     console.log('🔵 Starting signup process...', { email, username });
     setLoading(true);
 
     try {
       const result = await signup(email, password, username, displayName);
-      const duration = Date.now() - startTime;
       
-      console.log('✅ Signup result:', result, `(${duration}ms)`);
+      console.log('✅ Signup result:', result);
 
       if (result.success) {
-        navigationDebugger.markSuccess('signup', duration);
-        
         if (result.needsVerification) {
           // Email verification required
           Alert.alert(
@@ -99,7 +74,10 @@ export default function SignupScreen() {
             [
               {
                 text: 'OK',
-                onPress: () => router.replace('/(auth)/login'),
+                onPress: () => {
+                  console.log('🔄 Navigating to login screen...');
+                  router.replace('/(auth)/login');
+                },
               },
             ]
           );
@@ -108,26 +86,21 @@ export default function SignupScreen() {
           Alert.alert('Success', 'Account created successfully!', [
             {
               text: 'OK',
-              onPress: () => router.replace('/(tabs)'),
+              onPress: () => {
+                console.log('🔄 Navigating to tabs...');
+                router.replace('/(tabs)');
+              },
             },
           ]);
         }
       } else {
-        navigationDebugger.markFailure('signup', result.error || 'Unknown error');
         setError(result.error || 'Signup failed');
         console.error('❌ Signup failed:', result.error);
       }
     } catch (err: any) {
-      const duration = Date.now() - startTime;
       const errorMsg = err?.message || 'An unexpected error occurred';
-      
-      navigationDebugger.markFailure('signup', errorMsg);
       setError(errorMsg);
-      
       console.error('🚨 SIGNUP ERROR:', err);
-      console.error(`Duration: ${duration}ms`);
-      console.error(navigationDebugger.generateReport());
-      
       Alert.alert('Error', errorMsg);
     } finally {
       setLoading(false);
@@ -149,11 +122,11 @@ export default function SignupScreen() {
           </View>
         ) : null}
         
-        {loadingTimeout ? (
-          <View style={styles.warningContainer}>
-            <Text style={styles.warning}>⚠️ Request taking longer than expected</Text>
-            <Text style={styles.warningSubtext}>
-              This might indicate a network issue or backend problem
+        {retryAttempt > 0 ? (
+          <View style={styles.infoContainer}>
+            <Text style={styles.info}>🔄 Retry attempt {retryAttempt}/3</Text>
+            <Text style={styles.infoSubtext}>
+              Automatically retrying with exponential backoff...
             </Text>
           </View>
         ) : null}
@@ -210,7 +183,7 @@ export default function SignupScreen() {
 
         <TouchableOpacity
           onPress={() => {
-            navigationDebugger.logAttempt('navigate_to_login', '/(auth)/signup', '/(auth)/login');
+            console.log('🔄 Navigating to login...');
             router.push('/(auth)/login');
           }}
           disabled={loading}
@@ -221,13 +194,13 @@ export default function SignupScreen() {
         {__DEV__ && (
           <TouchableOpacity
             style={styles.debugButton}
-            onPress={() => {
-              const report = navigationDebugger.generateReport();
-              console.log(report);
-              Alert.alert('Navigation Debug Report', report);
+            onPress={async () => {
+              const summary = await autoDebugger.getHealthSummary();
+              console.log(summary);
+              Alert.alert('System Health', summary);
             }}
           >
-            <Text style={styles.debugButtonText}>📊 View Debug Report</Text>
+            <Text style={styles.debugButtonText}>🏥 System Health Check</Text>
           </TouchableOpacity>
         )}
       </ScrollView>
@@ -285,21 +258,21 @@ const styles = StyleSheet.create({
     color: '#ff3b30',
     fontSize: 14,
   },
-  warningContainer: {
-    backgroundColor: 'rgba(255, 149, 0, 0.1)',
+  infoContainer: {
+    backgroundColor: 'rgba(0, 122, 255, 0.1)',
     padding: 12,
     borderRadius: 8,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255, 149, 0, 0.3)',
+    borderColor: 'rgba(0, 122, 255, 0.3)',
   },
-  warning: {
-    color: '#ff9500',
+  info: {
+    color: colors.primary,
     fontSize: 14,
     fontWeight: '600',
   },
-  warningSubtext: {
-    color: '#ff9500',
+  infoSubtext: {
+    color: colors.primary,
     fontSize: 12,
     marginTop: 4,
   },

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -14,7 +14,7 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { router } from 'expo-router';
 import { LoadingButton } from '@/components/LoadingButton';
-import { navigationDebugger } from '@/utils/navigationDebugger';
+import { autoDebugger } from '@/utils/autoDebugger';
 import { colors } from '@/styles/commonStyles';
 
 export default function LoginScreen() {
@@ -22,56 +22,31 @@ export default function LoginScreen() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [loadingTimeout, setLoadingTimeout] = useState(false);
+  const [retryAttempt, setRetryAttempt] = useState(0);
   
   const { login } = useAuth();
 
-  // Automatic timeout detection
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-    if (loading) {
-      const startTime = Date.now();
-      timeoutId = setTimeout(() => {
-        const duration = Date.now() - startTime;
-        setLoadingTimeout(true);
-        setError('Request timeout - check your connection or backend status');
-        setLoading(false);
-        
-        navigationDebugger.markFailure('login', `Timeout after ${duration}ms`);
-        console.error('🚨 LOGIN TIMEOUT: Button stuck loading for >10s');
-        console.error(navigationDebugger.generateReport());
-      }, 10000);
-    }
-    return () => clearTimeout(timeoutId);
-  }, [loading]);
-
   const handleLogin = async () => {
     setError('');
-    setLoadingTimeout(false);
+    setRetryAttempt(0);
 
     if (!email || !password) {
       setError('Email and password are required');
       return;
     }
 
-    const startTime = Date.now();
-    const attempt = navigationDebugger.logAttempt('login', '/(auth)/login', '/(tabs)');
-    
     console.log('🔵 Starting login process...', { email });
     setLoading(true);
 
     try {
       const result = await login(email, password);
-      const duration = Date.now() - startTime;
       
-      console.log('✅ Login result:', result, `(${duration}ms)`);
+      console.log('✅ Login result:', result);
 
       if (result.success) {
-        navigationDebugger.markSuccess('login', duration);
         console.log('🎉 Login successful, navigating to tabs...');
         router.replace('/(tabs)');
       } else {
-        navigationDebugger.markFailure('login', result.error || 'Unknown error');
         setError(result.error || 'Login failed');
         console.error('❌ Login failed:', result.error);
         
@@ -85,16 +60,9 @@ export default function LoginScreen() {
         }
       }
     } catch (err: any) {
-      const duration = Date.now() - startTime;
       const errorMsg = err?.message || 'An unexpected error occurred';
-      
-      navigationDebugger.markFailure('login', errorMsg);
       setError(errorMsg);
-      
       console.error('🚨 LOGIN ERROR:', err);
-      console.error(`Duration: ${duration}ms`);
-      console.error(navigationDebugger.generateReport());
-      
       Alert.alert('Error', errorMsg);
     } finally {
       setLoading(false);
@@ -116,11 +84,11 @@ export default function LoginScreen() {
           </View>
         ) : null}
         
-        {loadingTimeout ? (
-          <View style={styles.warningContainer}>
-            <Text style={styles.warning}>⚠️ Request taking longer than expected</Text>
-            <Text style={styles.warningSubtext}>
-              This might indicate a network issue or backend problem
+        {retryAttempt > 0 ? (
+          <View style={styles.infoContainer}>
+            <Text style={styles.info}>🔄 Retry attempt {retryAttempt}/3</Text>
+            <Text style={styles.infoSubtext}>
+              Automatically retrying with exponential backoff...
             </Text>
           </View>
         ) : null}
@@ -157,7 +125,7 @@ export default function LoginScreen() {
 
         <TouchableOpacity
           onPress={() => {
-            navigationDebugger.logAttempt('navigate_to_signup', '/(auth)/login', '/(auth)/signup');
+            console.log('🔄 Navigating to signup...');
             router.push('/(auth)/signup');
           }}
           disabled={loading}
@@ -168,13 +136,13 @@ export default function LoginScreen() {
         {__DEV__ && (
           <TouchableOpacity
             style={styles.debugButton}
-            onPress={() => {
-              const report = navigationDebugger.generateReport();
-              console.log(report);
-              Alert.alert('Navigation Debug Report', report);
+            onPress={async () => {
+              const summary = await autoDebugger.getHealthSummary();
+              console.log(summary);
+              Alert.alert('System Health', summary);
             }}
           >
-            <Text style={styles.debugButtonText}>📊 View Debug Report</Text>
+            <Text style={styles.debugButtonText}>🏥 System Health Check</Text>
           </TouchableOpacity>
         )}
       </ScrollView>
@@ -232,21 +200,21 @@ const styles = StyleSheet.create({
     color: '#ff3b30',
     fontSize: 14,
   },
-  warningContainer: {
-    backgroundColor: 'rgba(255, 149, 0, 0.1)',
+  infoContainer: {
+    backgroundColor: 'rgba(0, 122, 255, 0.1)',
     padding: 12,
     borderRadius: 8,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255, 149, 0, 0.3)',
+    borderColor: 'rgba(0, 122, 255, 0.3)',
   },
-  warning: {
-    color: '#ff9500',
+  info: {
+    color: colors.primary,
     fontSize: 14,
     fontWeight: '600',
   },
-  warningSubtext: {
-    color: '#ff9500',
+  infoSubtext: {
+    color: colors.primary,
     fontSize: 12,
     marginTop: 4,
   },

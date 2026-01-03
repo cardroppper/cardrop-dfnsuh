@@ -18,6 +18,7 @@ import { StatusBar } from "expo-status-bar";
 import { WidgetProvider } from "@/contexts/WidgetContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { FloatingDebugButton } from "@/components/FloatingDebugButton";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -105,6 +106,7 @@ export default function RootLayout() {
                 />
               </Stack>
               <SystemBars style={"auto"} />
+              <FloatingDebugButton />
             </GestureHandlerRootView>
           </WidgetProvider>
         </AuthProvider>

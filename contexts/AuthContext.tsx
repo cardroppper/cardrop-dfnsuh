@@ -5,6 +5,7 @@ import { supabase } from '@/app/integrations/supabase/client';
 import { Profile } from '@/app/integrations/supabase/types';
 import { Alert } from 'react-native';
 import * as Network from 'expo-network';
+import { autoDebugger } from '@/utils/autoDebugger';
 
 interface AuthContextType {
   user: User | null;
@@ -42,12 +43,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Initialize auth state
   const initializeAuth = useCallback(async () => {
+    const operationId = autoDebugger.registerOperation('initialize_auth');
     console.log('[AuthContext] Initializing auth...');
+    
     try {
       const { data: { session: currentSession }, error: sessionError } = await supabase.auth.getSession();
       
       if (sessionError) {
         console.error('[AuthContext] Session error:', sessionError);
+        autoDebugger.markFailure(operationId, sessionError.message);
         throw sessionError;
       }
 
@@ -58,18 +62,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (currentSession?.user) {
         await loadProfile(currentSession.user.id);
       }
+      
+      autoDebugger.markSuccess(operationId);
     } catch (err: any) {
       console.error('[AuthContext] Initialize error:', err);
+      autoDebugger.markFailure(operationId, err.message);
       setError(err.message);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  // Load user profile with retry logic for newly created profiles
+  // Load user profile with enhanced retry logic and better error handling
   const loadProfile = useCallback(async (userId: string, retryCount = 0) => {
+    const operationId = autoDebugger.registerOperation('load_profile');
     console.log('[AuthContext] Loading profile for user:', userId, 'retry:', retryCount);
+    
     try {
+      // Wait a bit on first load to give the trigger time to create the profile
+      if (retryCount === 0) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+
       const { data, error: profileError } = await supabase
         .from('profiles')
         .select('*')
@@ -78,21 +92,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (profileError) {
         // If profile doesn't exist yet and we haven't retried too many times, wait and retry
-        if (profileError.code === 'PGRST116' && retryCount < 5) {
-          console.log('[AuthContext] Profile not found yet, retrying in 500ms...');
-          await new Promise(resolve => setTimeout(resolve, 500));
+        if (profileError.code === 'PGRST116' && retryCount < 8) {
+          console.log('[AuthContext] Profile not found yet, retrying in 1s... (attempt', retryCount + 1, 'of 8)');
+          await new Promise(resolve => setTimeout(resolve, 1000));
           return loadProfile(userId, retryCount + 1);
         }
         
         console.error('[AuthContext] Profile load error:', profileError);
+        autoDebugger.markFailure(operationId, `Profile not found after ${retryCount} retries: ${profileError.message}`);
+        
+        // If profile still doesn't exist after retries, there's a problem with the trigger
+        if (profileError.code === 'PGRST116') {
+          throw new Error('Profile creation failed. Please contact support.');
+        }
+        
         throw profileError;
       }
 
       console.log('[AuthContext] Profile loaded:', data?.username);
       setProfile(data);
+      autoDebugger.markSuccess(operationId);
     } catch (err: any) {
       console.error('[AuthContext] Load profile error:', err);
+      autoDebugger.markFailure(operationId, err.message);
       setError(err.message);
+      throw err;
     }
   }, []);
 
@@ -121,6 +145,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Check username availability
   const checkUsernameAvailability = async (username: string): Promise<boolean> => {
+    const operationId = autoDebugger.registerOperation('check_username');
     console.log('[AuthContext] Checking username availability:', username);
     
     try {
@@ -128,6 +153,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const networkState = await Network.getNetworkStateAsync();
       if (!networkState.isConnected) {
         console.warn('[AuthContext] No network connection, skipping username check');
+        autoDebugger.markSuccess(operationId);
         // Return true to allow signup to proceed - database will handle duplicate validation
         return true;
       }
@@ -143,16 +169,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // If there's a network error, allow signup to proceed
         if (error.message?.includes('network') || error.message?.includes('fetch')) {
           console.warn('[AuthContext] Network error during username check, allowing signup to proceed');
+          autoDebugger.markSuccess(operationId);
           return true;
         }
+        autoDebugger.markFailure(operationId, error.message);
         throw error;
       }
 
       const isAvailable = !data;
       console.log('[AuthContext] Username available:', isAvailable);
+      autoDebugger.markSuccess(operationId);
       return isAvailable;
     } catch (err: any) {
       console.error('[AuthContext] Username availability check failed:', err);
+      autoDebugger.markFailure(operationId, err.message);
       
       // Handle network errors gracefully
       if (err.message?.includes('Network request failed') || err.message?.includes('fetch')) {
@@ -164,7 +194,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Signup function
+  // Signup function with auto-retry
   const signup = async (
     email: string,
     password: string,
@@ -175,90 +205,80 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setError(null);
 
     try {
-      // Check network connectivity
-      const networkState = await Network.getNetworkStateAsync();
-      if (!networkState.isConnected) {
-        console.error('[AuthContext] No network connection');
-        return {
-          success: false,
-          error: 'No internet connection. Please check your network and try again.',
-        };
-      }
+      // Use auto-retry for the entire signup operation
+      const result = await autoDebugger.executeWithRetry(
+        'signup',
+        async () => {
+          // Check network connectivity
+          const networkState = await Network.getNetworkStateAsync();
+          if (!networkState.isConnected) {
+            throw new Error('No internet connection. Please check your network and try again.');
+          }
 
-      // Normalize username
-      const normalizedUsername = username.toLowerCase().trim();
-      console.log('[AuthContext] Normalized username:', normalizedUsername);
+          // Normalize username
+          const normalizedUsername = username.toLowerCase().trim();
+          console.log('[AuthContext] Normalized username:', normalizedUsername);
 
-      // Check username availability
-      console.log('[AuthContext] Checking username availability...');
-      const isUsernameAvailable = await checkUsernameAvailability(normalizedUsername);
-      
-      if (!isUsernameAvailable) {
-        console.log('[AuthContext] Username already taken');
-        return {
-          success: false,
-          error: 'This username is already taken. Please choose a different username.',
-        };
-      }
+          // Check username availability
+          console.log('[AuthContext] Checking username availability...');
+          const isUsernameAvailable = await checkUsernameAvailability(normalizedUsername);
+          
+          if (!isUsernameAvailable) {
+            throw new Error('This username is already taken. Please choose a different username.');
+          }
 
-      // Create auth user - the database trigger will automatically create the profile
-      console.log('[AuthContext] Creating auth user...');
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: email.trim(),
-        password,
-        options: {
-          data: {
-            username: normalizedUsername,
-            display_name: displayName.trim(),
-          },
-        },
-      });
+          // Create auth user - the database trigger will automatically create the profile
+          console.log('[AuthContext] Creating auth user...');
+          const { data: authData, error: authError } = await supabase.auth.signUp({
+            email: email.trim(),
+            password,
+            options: {
+              data: {
+                username: normalizedUsername,
+                display_name: displayName.trim(),
+              },
+            },
+          });
 
-      if (authError) {
-        console.error('[AuthContext] Auth signup error:', authError);
-        
-        // Provide user-friendly error messages
-        if (authError.message?.includes('already registered')) {
+          if (authError) {
+            console.error('[AuthContext] Auth signup error:', authError);
+            
+            // Provide user-friendly error messages
+            if (authError.message?.includes('already registered')) {
+              throw new Error('An account with this email already exists. Please try logging in instead.');
+            }
+            
+            throw new Error(authError.message || 'Failed to create account. Please try again.');
+          }
+
+          if (!authData.user) {
+            throw new Error('Failed to create account. Please try again.');
+          }
+
+          console.log('[AuthContext] Auth user created:', authData.user.id);
+          console.log('[AuthContext] Waiting for profile to be created by database trigger...');
+
+          // Check if email verification is required
+          const needsVerification = !authData.session;
+          console.log('[AuthContext] Needs verification:', needsVerification);
+
+          if (!needsVerification && authData.session) {
+            console.log('[AuthContext] Session created, updating state and loading profile');
+            setSession(authData.session);
+            setUser(authData.user);
+            
+            // Wait for the profile to be created by the trigger and then load it
+            await loadProfile(authData.user.id);
+          }
+
           return {
-            success: false,
-            error: 'An account with this email already exists. Please try logging in instead.',
+            success: true,
+            needsVerification,
           };
         }
-        
-        return {
-          success: false,
-          error: authError.message || 'Failed to create account. Please try again.',
-        };
-      }
+      );
 
-      if (!authData.user) {
-        console.error('[AuthContext] No user returned from signup');
-        return {
-          success: false,
-          error: 'Failed to create account. Please try again.',
-        };
-      }
-
-      console.log('[AuthContext] Auth user created:', authData.user.id);
-      console.log('[AuthContext] Profile will be created automatically by database trigger');
-
-      // Check if email verification is required
-      const needsVerification = !authData.session;
-      console.log('[AuthContext] Needs verification:', needsVerification);
-
-      if (!needsVerification && authData.session) {
-        console.log('[AuthContext] Session created, updating state and loading profile');
-        setSession(authData.session);
-        setUser(authData.user);
-        
-        // Wait for the profile to be created by the trigger and then load it
-        await loadProfile(authData.user.id);
-      }
-
-      return {
-        success: true,
-        needsVerification,
-      };
+      return result;
     } catch (err: any) {
       console.error('[AuthContext] Signup error:', err);
       
@@ -277,7 +297,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Login function
+  // Login function with auto-retry
   const login = async (
     email: string,
     password: string
@@ -286,59 +306,50 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setError(null);
 
     try {
-      // Check network connectivity
-      const networkState = await Network.getNetworkStateAsync();
-      if (!networkState.isConnected) {
-        console.error('[AuthContext] No network connection');
-        return {
-          success: false,
-          error: 'No internet connection. Please check your network and try again.',
-        };
-      }
+      // Use auto-retry for the entire login operation
+      const result = await autoDebugger.executeWithRetry(
+        'login',
+        async () => {
+          // Check network connectivity
+          const networkState = await Network.getNetworkStateAsync();
+          if (!networkState.isConnected) {
+            throw new Error('No internet connection. Please check your network and try again.');
+          }
 
-      const { data, error: loginError } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
-        password,
-      });
+          const { data, error: loginError } = await supabase.auth.signInWithPassword({
+            email: email.trim(),
+            password,
+          });
 
-      if (loginError) {
-        console.error('[AuthContext] Login error:', loginError);
-        
-        // Provide user-friendly error messages
-        if (loginError.message?.includes('Invalid login credentials')) {
-          return {
-            success: false,
-            error: 'Invalid email or password. Please try again.',
-          };
+          if (loginError) {
+            console.error('[AuthContext] Login error:', loginError);
+            
+            // Provide user-friendly error messages
+            if (loginError.message?.includes('Invalid login credentials')) {
+              throw new Error('Invalid email or password. Please try again.');
+            }
+            
+            if (loginError.message?.includes('Email not confirmed')) {
+              throw new Error('Please verify your email address before logging in.');
+            }
+            
+            throw new Error(loginError.message || 'Login failed. Please try again.');
+          }
+
+          if (!data.session || !data.user) {
+            throw new Error('Login failed. Please try again.');
+          }
+
+          console.log('[AuthContext] Login successful, updating state');
+          setSession(data.session);
+          setUser(data.user);
+          await loadProfile(data.user.id);
+
+          return { success: true };
         }
-        
-        if (loginError.message?.includes('Email not confirmed')) {
-          return {
-            success: false,
-            error: 'Please verify your email address before logging in.',
-          };
-        }
-        
-        return {
-          success: false,
-          error: loginError.message || 'Login failed. Please try again.',
-        };
-      }
+      );
 
-      if (!data.session || !data.user) {
-        console.error('[AuthContext] No session returned from login');
-        return {
-          success: false,
-          error: 'Login failed. Please try again.',
-        };
-      }
-
-      console.log('[AuthContext] Login successful, updating state');
-      setSession(data.session);
-      setUser(data.user);
-      await loadProfile(data.user.id);
-
-      return { success: true };
+      return result;
     } catch (err: any) {
       console.error('[AuthContext] Login error:', err);
       
@@ -359,12 +370,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Logout function
   const logout = async () => {
+    const operationId = autoDebugger.registerOperation('logout');
     console.log('[AuthContext] Logging out...');
+    
     try {
       const { error: logoutError } = await supabase.auth.signOut();
       
       if (logoutError) {
         console.error('[AuthContext] Logout error:', logoutError);
+        autoDebugger.markFailure(operationId, logoutError.message);
         throw logoutError;
       }
 
@@ -372,8 +386,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setProfile(null);
       setSession(null);
       console.log('[AuthContext] Logout successful');
+      autoDebugger.markSuccess(operationId);
     } catch (err: any) {
       console.error('[AuthContext] Logout error:', err);
+      autoDebugger.markFailure(operationId, err.message);
       setError(err.message);
       throw err;
     }
@@ -391,9 +407,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const updateProfile = async (
     updates: Partial<Profile>
   ): Promise<{ success: boolean; error?: string }> => {
+    const operationId = autoDebugger.registerOperation('update_profile');
     console.log('[AuthContext] Updating profile...');
     
     if (!user) {
+      autoDebugger.markFailure(operationId, 'Not authenticated');
       return {
         success: false,
         error: 'Not authenticated',
@@ -408,6 +426,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (updateError) {
         console.error('[AuthContext] Profile update error:', updateError);
+        autoDebugger.markFailure(operationId, updateError.message);
         return {
           success: false,
           error: updateError.message,
@@ -416,9 +435,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       console.log('[AuthContext] Profile updated successfully');
       await loadProfile(user.id);
+      autoDebugger.markSuccess(operationId);
       return { success: true };
     } catch (err: any) {
       console.error('[AuthContext] Profile update error:', err);
+      autoDebugger.markFailure(operationId, err.message);
       return {
         success: false,
         error: err.message,
