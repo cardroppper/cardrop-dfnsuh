@@ -1,3 +1,4 @@
+
 /* eslint-disable */
 
 // @eslint-ignore-file
@@ -53,11 +54,16 @@ export default function EditableElement_(_props: PropsWithChildren<any>) {
     return cloneElement(children, props);
   }
 
+  // Safety check: if __trace is missing, just return the children
+  if (!props?.__trace) {
+    return cloneElement(children, props);
+  }
+
   const type = getType(children);
   const __sourceLocation = props.__sourceLocation;
   const __trace = props.__trace;
   const id = __trace.join("");
-  const attributes = overwrittenProps[id] ?? {};
+  const attributes = overwrittenProps?.[id] ?? {};
 
   const editStyling =
     selected === id
