@@ -70,9 +70,6 @@
     "scheme": "cardrop",
     "experiments": {
       "typedRoutes": true
-    },
-    "extra": {
-      "router": {}
     }
   },
   "scheme": "CarDrop"

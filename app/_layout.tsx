@@ -6,7 +6,8 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { SystemBars } from "react-native-edge-to-edge";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useColorScheme, Platform } from "react-native";
+import { useColorScheme, Alert } from "react-native";
+import { useNetworkState } from "expo-network";
 import {
   DarkTheme,
   DefaultTheme,
@@ -14,53 +15,20 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
+import { WidgetProvider } from "@/contexts/WidgetContext";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AuthProvider } from "@/contexts/AuthContext";
-import { colors } from "@/styles/commonStyles";
-import { useBackgroundBLEScanning } from "@/hooks/useBackgroundBLEScanning";
-import { SuperwallProvider } from "expo-superwall";
 
+// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export const unstable_settings = {
   initialRouteName: "index",
 };
 
-function BackgroundBLEManager() {
-  // This component manages background BLE scanning
-  useBackgroundBLEScanning();
-  return null;
-}
-
-// Wrapper component that conditionally renders SuperwallProvider only on native platforms
-function ConditionalSuperwallProvider({ children }: { children: React.ReactNode }) {
-  // Only use Superwall on native platforms (iOS and Android)
-  if (Platform.OS === 'ios' || Platform.OS === 'android') {
-    try {
-      return (
-        <SuperwallProvider
-          apiKeys={{
-            ios: "pk_d1c3c5e8e8f8e8e8e8e8e8e8e8e8e8e8",
-            android: "pk_d1c3c5e8e8f8e8e8e8e8e8e8e8e8e8e8",
-          }}
-          onConfigurationError={(error) => {
-            console.error("[Superwall] Configuration error:", error);
-          }}
-        >
-          {children}
-        </SuperwallProvider>
-      );
-    } catch (error) {
-      console.warn('[ConditionalSuperwallProvider] Superwall not available:', error);
-      return <>{children}</>;
-    }
-  }
-
-  // On web, just render children without Superwall
-  return <>{children}</>;
-}
-
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const networkState = useNetworkState();
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
@@ -71,40 +39,76 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
+  React.useEffect(() => {
+    if (
+      !networkState.isConnected &&
+      networkState.isInternetReachable === false
+    ) {
+      Alert.alert(
+        "🔌 You are offline",
+        "You can keep using the app! Your changes will be saved locally and synced when you are back online."
+      );
+    }
+  }, [networkState.isConnected, networkState.isInternetReachable]);
+
   if (!loaded) {
     return null;
   }
 
-  const CarDropDarkTheme: Theme = {
+  const CustomDefaultTheme: Theme = {
+    ...DefaultTheme,
+    dark: false,
+    colors: {
+      primary: "rgb(255, 140, 0)",
+      background: "rgb(242, 242, 247)",
+      card: "rgb(255, 255, 255)",
+      text: "rgb(0, 0, 0)",
+      border: "rgb(216, 216, 220)",
+      notification: "rgb(255, 59, 48)",
+    },
+  };
+
+  const CustomDarkTheme: Theme = {
     ...DarkTheme,
     colors: {
-      primary: colors.primary,
-      background: colors.background,
-      card: colors.card,
-      text: colors.text,
-      border: colors.highlight,
-      notification: colors.accent,
+      primary: "rgb(255, 140, 0)",
+      background: "rgb(18, 18, 18)",
+      card: "rgb(28, 28, 30)",
+      text: "rgb(255, 255, 255)",
+      border: "rgb(44, 44, 46)",
+      notification: "rgb(255, 69, 58)",
     },
   };
 
   return (
-    <>
-      <StatusBar style="light" />
-      <ThemeProvider value={CarDropDarkTheme}>
-        <ConditionalSuperwallProvider>
-          <AuthProvider>
-            <BackgroundBLEManager />
+    <ErrorBoundary>
+      <StatusBar style="auto" animated />
+      <ThemeProvider
+        value={colorScheme === "dark" ? CustomDarkTheme : CustomDefaultTheme}
+      >
+        <AuthProvider>
+          <WidgetProvider>
             <GestureHandlerRootView style={{ flex: 1 }}>
-              <Stack screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="index" />
-                <Stack.Screen name="(auth)" />
-                <Stack.Screen name="(tabs)" />
+              <Stack>
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+                <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="vehicles" options={{ headerShown: false }} />
+                <Stack.Screen name="clubs" options={{ headerShown: false }} />
+                <Stack.Screen name="dev" options={{ headerShown: false }} />
+                <Stack.Screen
+                  name="subscription-management"
+                  options={{
+                    presentation: "modal",
+                    title: "Manage Subscription",
+                  }}
+                />
               </Stack>
-              <SystemBars style="light" />
+              <SystemBars style={"auto"} />
             </GestureHandlerRootView>
-          </AuthProvider>
-        </ConditionalSuperwallProvider>
+          </WidgetProvider>
+        </AuthProvider>
       </ThemeProvider>
-    </>
+    </ErrorBoundary>
   );
 }
