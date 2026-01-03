@@ -1,133 +1,136 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  ActivityIndicator,
-  Alert,
-  Image,
 } from 'react-native';
-import { router } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
-import { colors, commonStyles, buttonStyles } from '@/styles/commonStyles';
+import { router } from 'expo-router';
+import { LoadingButton } from '@/components/LoadingButton';
+import { navigationDebugger } from '@/utils/navigationDebugger';
+import { colors } from '@/styles/commonStyles';
 
 export default function SignupScreen() {
-  const { signup } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [displayName, setDisplayName] = useState('');
   const [username, setUsername] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [usernameError, setUsernameError] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [loadingTimeout, setLoadingTimeout] = useState(false);
+  
+  const { signup } = useAuth();
 
-  const validateUsername = (text: string) => {
-    const normalized = text.toLowerCase().replace(/[^a-z0-9_]/g, '');
-    setUsername(normalized);
-    
-    if (normalized.length > 0 && normalized.length < 3) {
-      setUsernameError('Username must be at least 3 characters');
-    } else if (normalized.length > 30) {
-      setUsernameError('Username must be 30 characters or less');
-    } else {
-      setUsernameError('');
+  // Automatic timeout detection - if loading for >10s, something's wrong
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    if (loading) {
+      const startTime = Date.now();
+      timeoutId = setTimeout(() => {
+        const duration = Date.now() - startTime;
+        setLoadingTimeout(true);
+        setError('Request timeout - check your connection or backend status');
+        setLoading(false);
+        
+        navigationDebugger.markFailure('signup', `Timeout after ${duration}ms`);
+        console.error('🚨 SIGNUP TIMEOUT: Button stuck loading for >10s');
+        console.error(navigationDebugger.generateReport());
+      }, 10000);
     }
-  };
+    return () => clearTimeout(timeoutId);
+  }, [loading]);
 
   const handleSignup = async () => {
-    console.log('[Signup] Button pressed');
-    
-    if (!email || !password || !displayName || !username) {
-      console.log('[Signup] Missing fields:', { email: !!email, password: !!password, displayName: !!displayName, username: !!username });
-      Alert.alert('Missing Information', 'Please fill in all fields');
+    setError('');
+    setLoadingTimeout(false);
+
+    if (!email || !password || !username || !displayName) {
+      setError('All fields are required');
       return;
     }
 
-    if (username.length < 3) {
-      console.log('[Signup] Username too short:', username.length);
-      Alert.alert('Invalid Username', 'Username must be at least 3 characters');
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address');
       return;
     }
 
+    // Validate password strength
     if (password.length < 6) {
-      console.log('[Signup] Password too short:', password.length);
-      Alert.alert('Weak Password', 'Password must be at least 6 characters');
+      setError('Password must be at least 6 characters long');
       return;
     }
 
-    console.log('[Signup] Starting signup process...');
-    setIsLoading(true);
+    // Validate username format
+    const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+    if (!usernameRegex.test(username)) {
+      setError('Username must be 3-20 characters (letters, numbers, underscore only)');
+      return;
+    }
+
+    const startTime = Date.now();
+    const attempt = navigationDebugger.logAttempt('signup', '/(auth)/signup', '/(auth)/login');
     
+    console.log('🔵 Starting signup process...', { email, username });
+    setLoading(true);
+
     try {
-      console.log('[Signup] Calling signup function with:', { email, username, displayName });
       const result = await signup(email, password, username, displayName);
-      console.log('[Signup] Signup result:', result);
+      const duration = Date.now() - startTime;
       
+      console.log('✅ Signup result:', result, `(${duration}ms)`);
+
       if (result.success) {
-        console.log('[Signup] Signup successful!');
+        navigationDebugger.markSuccess('signup', duration);
+        
         if (result.needsVerification) {
-          console.log('[Signup] Email verification needed');
+          // Email verification required
           Alert.alert(
-            'Verify Your Email',
-            'We\'ve sent a verification link to your email. Please verify your email address before logging in.',
+            'Check Your Email',
+            `We've sent a verification link to ${email}. Please check your email and click the link to verify your account before logging in.`,
             [
               {
                 text: 'OK',
-                onPress: () => {
-                  console.log('[Signup] Navigating to login after verification alert');
-                  router.replace('/(auth)/login');
-                },
+                onPress: () => router.replace('/(auth)/login'),
               },
             ]
           );
         } else {
-          console.log('[Signup] No verification needed, navigating to discover');
-          // Add a small delay to ensure auth state is updated
-          setTimeout(() => {
-            router.replace('/(tabs)/discover');
-          }, 100);
+          // No verification needed, account created and logged in
+          Alert.alert('Success', 'Account created successfully!', [
+            {
+              text: 'OK',
+              onPress: () => router.replace('/(tabs)'),
+            },
+          ]);
         }
       } else {
-        console.error('[Signup] Signup failed with error:', result.error);
-        
-        // Provide helpful error messages
-        let errorTitle = 'Signup Failed';
-        let errorMessage = result.error || 'An error occurred during signup';
-        
-        if (errorMessage.includes('Network connection error') || errorMessage.includes('Network request failed')) {
-          errorTitle = 'Connection Error';
-          errorMessage = 'Unable to connect to the server. Please check your internet connection and try again.';
-        } else if (errorMessage.includes('already exists') || errorMessage.includes('already registered')) {
-          errorTitle = 'Account Exists';
-          errorMessage = 'An account with this email already exists. Please try logging in instead.';
-        } else if (errorMessage.includes('already taken')) {
-          errorTitle = 'Username Taken';
-          errorMessage = 'This username is already in use. Please choose a different username.';
-        }
-        
-        console.log('[Signup] Showing error alert:', errorTitle, errorMessage);
-        Alert.alert(errorTitle, errorMessage);
+        navigationDebugger.markFailure('signup', result.error || 'Unknown error');
+        setError(result.error || 'Signup failed');
+        console.error('❌ Signup failed:', result.error);
       }
-    } catch (error: any) {
-      console.error('[Signup] Unexpected error during signup:', error);
-      console.error('[Signup] Error details:', {
-        message: error?.message,
-        name: error?.name,
-        stack: error?.stack,
-      });
+    } catch (err: any) {
+      const duration = Date.now() - startTime;
+      const errorMsg = err?.message || 'An unexpected error occurred';
       
-      Alert.alert(
-        'Error',
-        error?.message || 'An unexpected error occurred. Please try again.'
-      );
+      navigationDebugger.markFailure('signup', errorMsg);
+      setError(errorMsg);
+      
+      console.error('🚨 SIGNUP ERROR:', err);
+      console.error(`Duration: ${duration}ms`);
+      console.error(navigationDebugger.generateReport());
+      
+      Alert.alert('Error', errorMsg);
     } finally {
-      console.log('[Signup] Signup process complete, setting loading to false');
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
@@ -136,112 +139,97 @@ export default function SignupScreen() {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
-      >
-        <View style={styles.header}>
-          <Image
-            source={require('@/assets/images/6a39751f-03b5-4411-acbb-1e92f6a5988e.png')}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-          <Text style={styles.title}>Join CarDrop</Text>
-          <Text style={styles.slogan}>BE PROUD. DROP IT.</Text>
-        </View>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <Text style={styles.title}>Create Account</Text>
+        <Text style={styles.subtitle}>Join CarDrop</Text>
 
-        <View style={styles.form}>
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Display Name</Text>
-            <TextInput
-              style={commonStyles.input}
-              placeholder="Your full name"
-              placeholderTextColor={colors.textSecondary}
-              value={displayName}
-              onChangeText={setDisplayName}
-              autoCapitalize="words"
-              autoComplete="name"
-              editable={!isLoading}
-            />
+        {error ? (
+          <View style={styles.errorContainer}>
+            <Text style={styles.error}>{error}</Text>
           </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Username</Text>
-            <TextInput
-              style={[commonStyles.input, usernameError ? styles.inputError : null]}
-              placeholder="username (lowercase, numbers, _)"
-              placeholderTextColor={colors.textSecondary}
-              value={username}
-              onChangeText={validateUsername}
-              autoCapitalize="none"
-              autoComplete="username"
-              editable={!isLoading}
-            />
-            {usernameError ? (
-              <Text style={styles.errorText}>{usernameError}</Text>
-            ) : null}
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              style={commonStyles.input}
-              placeholder="your@email.com"
-              placeholderTextColor={colors.textSecondary}
-              value={email}
-              onChangeText={setEmail}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              autoComplete="email"
-              editable={!isLoading}
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-              style={commonStyles.input}
-              placeholder="At least 6 characters"
-              placeholderTextColor={colors.textSecondary}
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-              autoComplete="password"
-              editable={!isLoading}
-            />
-          </View>
-
-          <TouchableOpacity
-            style={[buttonStyles.primary, styles.signupButton, isLoading && styles.buttonDisabled]}
-            onPress={handleSignup}
-            disabled={isLoading}
-            activeOpacity={0.7}
-          >
-            {isLoading ? (
-              <View style={styles.loadingContainer}>
-                <ActivityIndicator color="#000000" />
-                <Text style={[buttonStyles.text, styles.loadingText]}>Creating Account...</Text>
-              </View>
-            ) : (
-              <Text style={buttonStyles.text}>Create Account</Text>
-            )}
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[buttonStyles.outline, styles.loginButton]}
-            onPress={() => router.back()}
-            disabled={isLoading}
-            activeOpacity={0.7}
-          >
-            <Text style={buttonStyles.textOutline}>
-              Already have an account? Log In
+        ) : null}
+        
+        {loadingTimeout ? (
+          <View style={styles.warningContainer}>
+            <Text style={styles.warning}>⚠️ Request taking longer than expected</Text>
+            <Text style={styles.warningSubtext}>
+              This might indicate a network issue or backend problem
             </Text>
-          </TouchableOpacity>
-        </View>
+          </View>
+        ) : null}
 
-        <Text style={styles.disclaimer}>
-          By creating an account, you agree to our Terms of Service and Privacy Policy
-        </Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          placeholderTextColor="#666"
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          keyboardType="email-address"
+          editable={!loading}
+          autoCorrect={false}
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Username"
+          placeholderTextColor="#666"
+          value={username}
+          onChangeText={setUsername}
+          autoCapitalize="none"
+          editable={!loading}
+          autoCorrect={false}
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Display Name"
+          placeholderTextColor="#666"
+          value={displayName}
+          onChangeText={setDisplayName}
+          editable={!loading}
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Password (min 6 characters)"
+          placeholderTextColor="#666"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          editable={!loading}
+          autoCorrect={false}
+        />
+
+        <LoadingButton
+          title="Create Account"
+          onPress={handleSignup}
+          loading={loading}
+          style={styles.button}
+        />
+
+        <TouchableOpacity
+          onPress={() => {
+            navigationDebugger.logAttempt('navigate_to_login', '/(auth)/signup', '/(auth)/login');
+            router.push('/(auth)/login');
+          }}
+          disabled={loading}
+        >
+          <Text style={styles.link}>Already have an account? Log in</Text>
+        </TouchableOpacity>
+
+        {__DEV__ && (
+          <TouchableOpacity
+            style={styles.debugButton}
+            onPress={() => {
+              const report = navigationDebugger.generateReport();
+              console.log(report);
+              Alert.alert('Navigation Debug Report', report);
+            }}
+          >
+            <Text style={styles.debugButtonText}>📊 View Debug Report</Text>
+          </TouchableOpacity>
+        )}
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -255,80 +243,82 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    padding: 24,
-    paddingTop: Platform.OS === 'android' ? 48 : 24,
-  },
-  header: {
-    alignItems: 'center',
-    marginBottom: 40,
-  },
-  logo: {
-    width: 100,
-    height: 100,
-    marginBottom: 12,
+    padding: 20,
   },
   title: {
-    fontSize: 36,
-    fontWeight: '900',
-    color: colors.text,
-    marginTop: 8,
-    letterSpacing: 1,
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif-condensed',
-  },
-  slogan: {
-    fontSize: 12,
-    color: colors.textSecondary,
-    marginTop: 8,
-    fontWeight: '600',
-    letterSpacing: 1,
-    textTransform: 'uppercase',
-  },
-  form: {
-    width: '100%',
-    marginBottom: 24,
-  },
-  inputContainer: {
-    marginBottom: 4,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 32,
+    fontWeight: 'bold',
     color: colors.text,
     marginBottom: 8,
-    marginLeft: 4,
   },
-  inputError: {
-    borderColor: colors.error,
-    borderWidth: 2,
+  subtitle: {
+    fontSize: 18,
+    color: colors.textSecondary,
+    marginBottom: 32,
   },
-  errorText: {
-    fontSize: 12,
-    color: colors.error,
-    marginTop: 4,
-    marginLeft: 4,
+  input: {
+    backgroundColor: colors.surface,
+    color: colors.text,
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 16,
+    fontSize: 16,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
-  signupButton: {
-    marginTop: 8,
+  button: {
+    backgroundColor: colors.primary,
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
     marginBottom: 16,
   },
-  loginButton: {
-    marginBottom: 0,
+  errorContainer: {
+    backgroundColor: 'rgba(255, 59, 48, 0.1)',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 59, 48, 0.3)',
   },
-  buttonDisabled: {
-    opacity: 0.6,
+  error: {
+    color: '#ff3b30',
+    fontSize: 14,
   },
-  loadingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+  warningContainer: {
+    backgroundColor: 'rgba(255, 149, 0, 0.1)',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 149, 0, 0.3)',
   },
-  loadingText: {
-    marginLeft: 8,
+  warning: {
+    color: '#ff9500',
+    fontSize: 14,
+    fontWeight: '600',
   },
-  disclaimer: {
+  warningSubtext: {
+    color: '#ff9500',
     fontSize: 12,
-    color: colors.textSecondary,
+    marginTop: 4,
+  },
+  link: {
+    color: colors.primary,
     textAlign: 'center',
-    lineHeight: 18,
+    fontSize: 16,
+  },
+  debugButton: {
+    marginTop: 20,
+    padding: 12,
+    backgroundColor: 'rgba(0, 122, 255, 0.1)',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(0, 122, 255, 0.3)',
+  },
+  debugButtonText: {
+    color: colors.primary,
+    textAlign: 'center',
+    fontSize: 14,
   },
 });

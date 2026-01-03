@@ -5,6 +5,7 @@ export const colors = {
   // CarDrop Brand Colors
   background: '#1A1A1A',
   backgroundDark: '#0D0D0D',
+  surface: '#252525',
   text: '#FFFFFF',
   textSecondary: '#A0A0A0',
   primary: '#FF9933', // CarDrop Orange
