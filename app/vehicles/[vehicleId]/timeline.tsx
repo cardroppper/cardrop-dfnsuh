@@ -11,6 +11,7 @@ import {
   Alert,
   Platform,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { colors, commonStyles, buttonStyles } from '@/styles/commonStyles';
@@ -19,6 +20,7 @@ import { supabase } from '@/app/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSubscription } from '@/hooks/useSubscription';
 import * as ImagePicker from 'expo-image-picker';
+import * as Network from 'expo-network';
 
 interface TimelineEntry {
   id: string;
@@ -41,6 +43,8 @@ export default function VehicleTimelineScreen() {
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingEntry, setEditingEntry] = useState<TimelineEntry | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   
   const [formData, setFormData] = useState({
     title: '',
@@ -54,6 +58,8 @@ export default function VehicleTimelineScreen() {
   const fetchEntries = useCallback(async () => {
     try {
       setLoading(true);
+      console.log('[Timeline] Fetching entries for vehicle:', vehicleId);
+      
       const { data, error } = await supabase
         .from('vehicle_timeline')
         .select('*')
@@ -61,13 +67,36 @@ export default function VehicleTimelineScreen() {
         .order('entry_date', { ascending: false });
 
       if (error) {
-        console.error('Error fetching timeline:', error);
+        console.error('[Timeline] Error fetching timeline:', error);
+        
+        if (error.code === 'PGRST301') {
+          Alert.alert(
+            'Connection Error',
+            'Unable to load timeline entries. Please check your internet connection.',
+            [{ text: 'OK' }]
+          );
+        } else {
+          Alert.alert(
+            'Error',
+            'Failed to load timeline entries. Please try again.',
+            [{ text: 'OK' }]
+          );
+        }
         return;
       }
 
+      console.log('[Timeline] Loaded', data?.length || 0, 'entries');
       setEntries(data || []);
-    } catch (err) {
-      console.error('Error in fetchEntries:', err);
+    } catch (err: any) {
+      console.error('[Timeline] Error in fetchEntries:', err);
+      
+      if (err.message?.includes('network') || err.message?.includes('fetch')) {
+        Alert.alert(
+          'Network Error',
+          'Unable to connect to the server. Please check your internet connection.',
+          [{ text: 'OK' }]
+        );
+      }
     } finally {
       setLoading(false);
     }
@@ -79,7 +108,7 @@ export default function VehicleTimelineScreen() {
 
   const handleSaveEntry = async () => {
     if (!formData.title.trim()) {
-      Alert.alert('Error', 'Title is required');
+      Alert.alert('Missing Information', 'Please enter a title for this timeline entry.', [{ text: 'OK' }]);
       return;
     }
 
@@ -93,7 +122,25 @@ export default function VehicleTimelineScreen() {
       return;
     }
 
+    // Check network connectivity
     try {
+      const networkState = await Network.getNetworkStateAsync();
+      if (!networkState.isConnected || !networkState.isInternetReachable) {
+        Alert.alert(
+          'No Internet Connection',
+          'Please check your internet connection and try again.',
+          [{ text: 'OK' }]
+        );
+        return;
+      }
+    } catch (error) {
+      console.error('[Timeline] Error checking network:', error);
+    }
+
+    try {
+      setIsSaving(true);
+      console.log('[Timeline] Saving entry:', editingEntry ? 'update' : 'create');
+      
       if (editingEntry) {
         const { error } = await supabase
           .from('vehicle_timeline')
@@ -108,7 +155,17 @@ export default function VehicleTimelineScreen() {
           })
           .eq('id', editingEntry.id);
 
-        if (error) throw error;
+        if (error) {
+          console.error('[Timeline] Error updating entry:', error);
+          Alert.alert(
+            'Error',
+            `Failed to update entry: ${error.message}\n\nPlease try again.`,
+            [{ text: 'OK' }]
+          );
+          return;
+        }
+        
+        console.log('[Timeline] Entry updated successfully');
       } else {
         const { error } = await supabase
           .from('vehicle_timeline')
@@ -122,7 +179,17 @@ export default function VehicleTimelineScreen() {
             video_url: formData.video_url,
           });
 
-        if (error) throw error;
+        if (error) {
+          console.error('[Timeline] Error creating entry:', error);
+          Alert.alert(
+            'Error',
+            `Failed to create entry: ${error.message}\n\nPlease try again.`,
+            [{ text: 'OK' }]
+          );
+          return;
+        }
+        
+        console.log('[Timeline] Entry created successfully');
       }
 
       setShowAddModal(false);
@@ -135,18 +202,29 @@ export default function VehicleTimelineScreen() {
         image_url: null,
         video_url: null,
       });
-      fetchEntries();
-      Alert.alert('Success', editingEntry ? 'Entry updated' : 'Entry added');
-    } catch (err) {
-      console.error('Error saving entry:', err);
-      Alert.alert('Error', 'Failed to save entry');
+      await fetchEntries();
+      Alert.alert('Success', editingEntry ? 'Timeline entry updated!' : 'Timeline entry added!', [{ text: 'OK' }]);
+    } catch (err: any) {
+      console.error('[Timeline] Error saving entry:', err);
+      
+      if (err.message?.includes('network') || err.message?.includes('fetch')) {
+        Alert.alert(
+          'Network Error',
+          'Unable to save entry. Please check your internet connection and try again.',
+          [{ text: 'OK' }]
+        );
+      } else {
+        Alert.alert('Error', 'An unexpected error occurred. Please try again.', [{ text: 'OK' }]);
+      }
+    } finally {
+      setIsSaving(false);
     }
   };
 
   const handleDeleteEntry = (entry: TimelineEntry) => {
     Alert.alert(
       'Delete Entry',
-      'Are you sure you want to delete this timeline entry?',
+      `Are you sure you want to delete "${entry.title}"? This action cannot be undone.`,
       [
         { text: 'Cancel', style: 'cancel' },
         {
@@ -154,17 +232,41 @@ export default function VehicleTimelineScreen() {
           style: 'destructive',
           onPress: async () => {
             try {
+              setIsDeleting(true);
+              console.log('[Timeline] Deleting entry:', entry.id);
+              
               const { error } = await supabase
                 .from('vehicle_timeline')
                 .delete()
                 .eq('id', entry.id);
 
-              if (error) throw error;
-              fetchEntries();
-              Alert.alert('Success', 'Entry deleted');
-            } catch (err) {
-              console.error('Error deleting entry:', err);
-              Alert.alert('Error', 'Failed to delete entry');
+              if (error) {
+                console.error('[Timeline] Error deleting entry:', error);
+                Alert.alert(
+                  'Error',
+                  `Failed to delete entry: ${error.message}\n\nPlease try again.`,
+                  [{ text: 'OK' }]
+                );
+                return;
+              }
+              
+              console.log('[Timeline] Entry deleted successfully');
+              await fetchEntries();
+              Alert.alert('Success', 'Timeline entry deleted.', [{ text: 'OK' }]);
+            } catch (err: any) {
+              console.error('[Timeline] Error deleting entry:', err);
+              
+              if (err.message?.includes('network') || err.message?.includes('fetch')) {
+                Alert.alert(
+                  'Network Error',
+                  'Unable to delete entry. Please check your internet connection and try again.',
+                  [{ text: 'OK' }]
+                );
+              } else {
+                Alert.alert('Error', 'An unexpected error occurred. Please try again.', [{ text: 'OK' }]);
+              }
+            } finally {
+              setIsDeleting(false);
             }
           },
         },
@@ -195,22 +297,38 @@ export default function VehicleTimelineScreen() {
       return;
     }
 
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: type === 'video' 
-        ? ImagePicker.MediaTypeOptions.Videos 
-        : ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [16, 9],
-      quality: 0.8,
-    });
-
-    if (!result.canceled && result.assets[0]) {
-      // TODO: Upload to Supabase Storage
-      if (type === 'video') {
-        setFormData({ ...formData, media_type: 'video', video_url: result.assets[0].uri, image_url: null });
-      } else {
-        setFormData({ ...formData, media_type: 'image', image_url: result.assets[0].uri, video_url: null });
+    try {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      
+      if (status !== 'granted') {
+        Alert.alert(
+          'Permission Required',
+          'Please grant camera roll permissions in your device settings to add media.',
+          [{ text: 'OK' }]
+        );
+        return;
       }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: type === 'video' 
+          ? ImagePicker.MediaTypeOptions.Videos 
+          : ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [16, 9],
+        quality: 0.8,
+      });
+
+      if (!result.canceled && result.assets[0]) {
+        // TODO: Upload to Supabase Storage
+        if (type === 'video') {
+          setFormData({ ...formData, media_type: 'video', video_url: result.assets[0].uri, image_url: null });
+        } else {
+          setFormData({ ...formData, media_type: 'image', image_url: result.assets[0].uri, video_url: null });
+        }
+      }
+    } catch (error) {
+      console.error('[Timeline] Error picking media:', error);
+      Alert.alert('Error', 'Failed to select media. Please try again.');
     }
   };
 
@@ -235,19 +353,26 @@ export default function VehicleTimelineScreen() {
           />
         </TouchableOpacity>
         <Text style={styles.title}>Timeline</Text>
-        <TouchableOpacity onPress={() => setShowAddModal(true)} style={styles.addButton}>
+        <TouchableOpacity 
+          onPress={() => setShowAddModal(true)} 
+          style={styles.addButton}
+          disabled={loading || isDeleting}
+        >
           <IconSymbol
             ios_icon_name="plus.circle.fill"
             android_material_icon_name="add-circle"
             size={28}
-            color={colors.primary}
+            color={loading || isDeleting ? colors.textSecondary : colors.primary}
           />
         </TouchableOpacity>
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {loading ? (
-          <Text style={commonStyles.textSecondary}>Loading...</Text>
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color={colors.primary} />
+            <Text style={[commonStyles.textSecondary, { marginTop: 16 }]}>Loading timeline...</Text>
+          </View>
         ) : entries.length === 0 ? (
           <View style={commonStyles.emptyState}>
             <IconSymbol
@@ -275,21 +400,31 @@ export default function VehicleTimelineScreen() {
                   <View style={styles.entryHeader}>
                     <Text style={styles.entryDate}>{formatDate(entry.entry_date)}</Text>
                     <View style={styles.entryActions}>
-                      <TouchableOpacity onPress={() => handleEditEntry(entry)}>
+                      <TouchableOpacity 
+                        onPress={() => handleEditEntry(entry)}
+                        disabled={isDeleting}
+                      >
                         <IconSymbol
                           ios_icon_name="pencil"
                           android_material_icon_name="edit"
                           size={20}
-                          color={colors.primary}
+                          color={isDeleting ? colors.textSecondary : colors.primary}
                         />
                       </TouchableOpacity>
-                      <TouchableOpacity onPress={() => handleDeleteEntry(entry)}>
-                        <IconSymbol
-                          ios_icon_name="trash"
-                          android_material_icon_name="delete"
-                          size={20}
-                          color={colors.error}
-                        />
+                      <TouchableOpacity 
+                        onPress={() => handleDeleteEntry(entry)}
+                        disabled={isDeleting}
+                      >
+                        {isDeleting ? (
+                          <ActivityIndicator size="small" color={colors.accent} />
+                        ) : (
+                          <IconSymbol
+                            ios_icon_name="trash"
+                            android_material_icon_name="delete"
+                            size={20}
+                            color={colors.accent}
+                          />
+                        )}
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -342,8 +477,10 @@ export default function VehicleTimelineScreen() {
         animationType="slide"
         transparent={true}
         onRequestClose={() => {
-          setShowAddModal(false);
-          setEditingEntry(null);
+          if (!isSaving) {
+            setShowAddModal(false);
+            setEditingEntry(null);
+          }
         }}
       >
         <View style={styles.modalOverlay}>
@@ -354,15 +491,18 @@ export default function VehicleTimelineScreen() {
               </Text>
               <TouchableOpacity
                 onPress={() => {
-                  setShowAddModal(false);
-                  setEditingEntry(null);
+                  if (!isSaving) {
+                    setShowAddModal(false);
+                    setEditingEntry(null);
+                  }
                 }}
+                disabled={isSaving}
               >
                 <IconSymbol
                   ios_icon_name="xmark.circle.fill"
                   android_material_icon_name="cancel"
                   size={28}
-                  color={colors.textSecondary}
+                  color={isSaving ? colors.textSecondary : colors.text}
                 />
               </TouchableOpacity>
             </View>
@@ -375,6 +515,7 @@ export default function VehicleTimelineScreen() {
                 onChangeText={(text) => setFormData({ ...formData, title: text })}
                 placeholder="e.g., First Track Day"
                 placeholderTextColor={colors.textSecondary}
+                editable={!isSaving}
               />
 
               <Text style={styles.label}>Date</Text>
@@ -384,6 +525,7 @@ export default function VehicleTimelineScreen() {
                 onChangeText={(text) => setFormData({ ...formData, entry_date: text })}
                 placeholder="YYYY-MM-DD"
                 placeholderTextColor={colors.textSecondary}
+                editable={!isSaving}
               />
 
               <Text style={styles.label}>Description</Text>
@@ -395,6 +537,7 @@ export default function VehicleTimelineScreen() {
                 placeholderTextColor={colors.textSecondary}
                 multiline
                 numberOfLines={4}
+                editable={!isSaving}
               />
 
               <Text style={styles.label}>Media Type</Text>
@@ -405,6 +548,7 @@ export default function VehicleTimelineScreen() {
                     formData.media_type === 'image' && styles.mediaTypeButtonActive,
                   ]}
                   onPress={() => setFormData({ ...formData, media_type: 'image' })}
+                  disabled={isSaving}
                 >
                   <IconSymbol
                     ios_icon_name="photo"
@@ -437,6 +581,7 @@ export default function VehicleTimelineScreen() {
                       );
                     }
                   }}
+                  disabled={isSaving}
                 >
                   <IconSymbol
                     ios_icon_name="video.fill"
@@ -469,6 +614,7 @@ export default function VehicleTimelineScreen() {
               <TouchableOpacity 
                 style={styles.imagePickerButton} 
                 onPress={() => pickMedia(formData.media_type)}
+                disabled={isSaving}
               >
                 {(formData.image_url || formData.video_url) ? (
                   formData.media_type === 'image' ? (
@@ -500,20 +646,33 @@ export default function VehicleTimelineScreen() {
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={[buttonStyles.primary, { marginTop: 24, marginBottom: 16 }]}
+                style={[buttonStyles.primary, { marginTop: 24, marginBottom: 16 }, isSaving && styles.buttonDisabled]}
                 onPress={handleSaveEntry}
+                disabled={isSaving}
               >
-                <Text style={buttonStyles.text}>
-                  {editingEntry ? 'Update Entry' : 'Add Entry'}
-                </Text>
+                {isSaving ? (
+                  <View style={styles.loadingButtonContainer}>
+                    <ActivityIndicator color={colors.text} />
+                    <Text style={[buttonStyles.text, { marginLeft: 8 }]}>
+                      {editingEntry ? 'Updating...' : 'Adding...'}
+                    </Text>
+                  </View>
+                ) : (
+                  <Text style={buttonStyles.text}>
+                    {editingEntry ? 'Update Entry' : 'Add Entry'}
+                  </Text>
+                )}
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={buttonStyles.outline}
                 onPress={() => {
-                  setShowAddModal(false);
-                  setEditingEntry(null);
+                  if (!isSaving) {
+                    setShowAddModal(false);
+                    setEditingEntry(null);
+                  }
                 }}
+                disabled={isSaving}
               >
                 <Text style={buttonStyles.text}>Cancel</Text>
               </TouchableOpacity>
@@ -554,6 +713,11 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: 20,
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 60,
   },
   timeline: {
     paddingBottom: 40,
@@ -769,5 +933,13 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.textSecondary,
     marginTop: 8,
+  },
+  buttonDisabled: {
+    opacity: 0.5,
+  },
+  loadingButtonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
