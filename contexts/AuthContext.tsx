@@ -66,9 +66,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // Load user profile
-  const loadProfile = useCallback(async (userId: string) => {
-    console.log('[AuthContext] Loading profile for user:', userId);
+  // Load user profile with retry logic for newly created profiles
+  const loadProfile = useCallback(async (userId: string, retryCount = 0) => {
+    console.log('[AuthContext] Loading profile for user:', userId, 'retry:', retryCount);
     try {
       const { data, error: profileError } = await supabase
         .from('profiles')
@@ -77,6 +77,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .single();
 
       if (profileError) {
+        // If profile doesn't exist yet and we haven't retried too many times, wait and retry
+        if (profileError.code === 'PGRST116' && retryCount < 5) {
+          console.log('[AuthContext] Profile not found yet, retrying in 500ms...');
+          await new Promise(resolve => setTimeout(resolve, 500));
+          return loadProfile(userId, retryCount + 1);
+        }
+        
         console.error('[AuthContext] Profile load error:', profileError);
         throw profileError;
       }
@@ -194,7 +201,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
       }
 
-      // Create auth user
+      // Create auth user - the database trigger will automatically create the profile
       console.log('[AuthContext] Creating auth user...');
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: email.trim(),
@@ -233,56 +240,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       console.log('[AuthContext] Auth user created:', authData.user.id);
-
-      // Create profile
-      console.log('[AuthContext] Creating profile...');
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .insert({
-          id: authData.user.id,
-          username: normalizedUsername,
-          display_name: displayName.trim(),
-          bio: null,
-          avatar_url: null,
-          is_private: false,
-          ghost_mode: false,
-          free_premium: false,
-          always_searching_enabled: false,
-          attendance_mode: 'manual',
-          notification_preferences: {
-            detection_type: 'vibration',
-            vibration: true,
-            sound: 'default',
-          },
-        });
-
-      if (profileError) {
-        console.error('[AuthContext] Profile creation error:', profileError);
-        
-        // If profile creation fails due to duplicate username, provide helpful message
-        if (profileError.message?.includes('duplicate') || profileError.message?.includes('unique')) {
-          return {
-            success: false,
-            error: 'This username is already taken. Please choose a different username.',
-          };
-        }
-        
-        return {
-          success: false,
-          error: profileError.message || 'Failed to create profile. Please try again.',
-        };
-      }
-
-      console.log('[AuthContext] Profile created successfully');
+      console.log('[AuthContext] Profile will be created automatically by database trigger');
 
       // Check if email verification is required
       const needsVerification = !authData.session;
       console.log('[AuthContext] Needs verification:', needsVerification);
 
       if (!needsVerification && authData.session) {
-        console.log('[AuthContext] Session created, updating state');
+        console.log('[AuthContext] Session created, updating state and loading profile');
         setSession(authData.session);
         setUser(authData.user);
+        
+        // Wait for the profile to be created by the trigger and then load it
         await loadProfile(authData.user.id);
       }
 
