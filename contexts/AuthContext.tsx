@@ -125,6 +125,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const checkUsernameAvailability = async (username: string): Promise<boolean> => {
     try {
+      console.log('[Auth] Checking username availability:', username);
       const { data, error } = await supabase
         .from('profiles')
         .select('username')
@@ -133,12 +134,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error) {
         console.error('[Auth] Error checking username:', error);
+        
+        // If it's a network error, we'll allow the signup to proceed
+        // The database trigger will handle duplicate username validation
+        if (error.message?.includes('Failed to fetch') || 
+            error.message?.includes('Network request failed') ||
+            error.message?.includes('fetch failed')) {
+          console.warn('[Auth] Network error during username check, allowing signup to proceed');
+          return true;
+        }
+        
         return false;
       }
 
-      return !data;
+      const isAvailable = !data;
+      console.log('[Auth] Username available:', isAvailable);
+      return isAvailable;
     } catch (error) {
       console.error('[Auth] Error checking username availability:', error);
+      
+      // If there's a network error, allow signup to proceed
+      // The database will handle validation
+      if (error instanceof TypeError && error.message.includes('Network request failed')) {
+        console.warn('[Auth] Network error during username check, allowing signup to proceed');
+        return true;
+      }
+      
       return false;
     }
   };
@@ -163,9 +184,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { success: false, error: 'Username can only contain lowercase letters, numbers, and underscores' };
       }
 
-      const isAvailable = await checkUsernameAvailability(normalizedUsername);
-      if (!isAvailable) {
-        return { success: false, error: 'Username is already taken' };
+      // Check username availability (with network error handling)
+      try {
+        const isAvailable = await checkUsernameAvailability(normalizedUsername);
+        if (!isAvailable) {
+          return { success: false, error: 'Username is already taken' };
+        }
+      } catch (error) {
+        console.warn('[Auth] Username check failed, proceeding with signup:', error);
+        // Continue with signup - database trigger will handle duplicate validation
       }
 
       const { data, error } = await supabase.auth.signUp({
@@ -182,6 +209,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error) {
         console.error('[Auth] Signup error:', error);
+        
+        // Provide user-friendly error messages
+        if (error.message?.includes('Failed to fetch') || 
+            error.message?.includes('Network request failed') ||
+            error.message?.includes('fetch failed')) {
+          return { 
+            success: false, 
+            error: 'Network connection error. Please check your internet connection and try again.' 
+          };
+        }
+        
+        if (error.message?.includes('User already registered')) {
+          return { success: false, error: 'An account with this email already exists' };
+        }
+        
+        if (error.message?.includes('duplicate key value violates unique constraint')) {
+          return { success: false, error: 'Username is already taken' };
+        }
+        
         return { success: false, error: error.message };
       }
 
@@ -207,6 +253,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return { success: true };
     } catch (error) {
       console.error('[Auth] Unexpected signup error:', error);
+      
+      // Handle network errors specifically
+      if (error instanceof TypeError && error.message.includes('Network request failed')) {
+        return { 
+          success: false, 
+          error: 'Network connection error. Please check your internet connection and try again.' 
+        };
+      }
+      
       const message = error instanceof Error ? error.message : 'An unexpected error occurred';
       setError(message);
       return { success: false, error: message };
@@ -228,6 +283,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error) {
         console.error('[Auth] Login error:', error);
+        
+        // Handle network errors
+        if (error.message?.includes('Failed to fetch') || 
+            error.message?.includes('Network request failed') ||
+            error.message?.includes('fetch failed')) {
+          return { 
+            success: false, 
+            error: 'Network connection error. Please check your internet connection and try again.' 
+          };
+        }
+        
         let errorMessage = error.message;
         
         if (error.message.includes('Email not confirmed')) {
@@ -252,6 +318,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return { success: true };
     } catch (error) {
       console.error('[Auth] Unexpected login error:', error);
+      
+      // Handle network errors
+      if (error instanceof TypeError && error.message.includes('Network request failed')) {
+        return { 
+          success: false, 
+          error: 'Network connection error. Please check your internet connection and try again.' 
+        };
+      }
+      
       const message = error instanceof Error ? error.message : 'An unexpected error occurred';
       setError(message);
       return { success: false, error: message };
@@ -300,9 +375,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const normalizedUsername = updates.username.toLowerCase().trim();
         
         if (normalizedUsername !== profile?.username) {
-          const isAvailable = await checkUsernameAvailability(normalizedUsername);
-          if (!isAvailable) {
-            return { success: false, error: 'Username is already taken' };
+          try {
+            const isAvailable = await checkUsernameAvailability(normalizedUsername);
+            if (!isAvailable) {
+              return { success: false, error: 'Username is already taken' };
+            }
+          } catch (error) {
+            console.warn('[Auth] Username check failed during update:', error);
+            // Continue with update - database will handle validation
           }
         }
         
@@ -316,6 +396,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error) {
         console.error('[Auth] Profile update error:', error);
+        
+        // Handle network errors
+        if (error.message?.includes('Failed to fetch') || 
+            error.message?.includes('Network request failed') ||
+            error.message?.includes('fetch failed')) {
+          return { 
+            success: false, 
+            error: 'Network connection error. Please check your internet connection and try again.' 
+          };
+        }
+        
+        if (error.message?.includes('duplicate key value violates unique constraint')) {
+          return { success: false, error: 'Username is already taken' };
+        }
+        
         return { success: false, error: error.message };
       }
 
@@ -325,6 +420,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return { success: true };
     } catch (error) {
       console.error('[Auth] Unexpected profile update error:', error);
+      
+      // Handle network errors
+      if (error instanceof TypeError && error.message.includes('Network request failed')) {
+        return { 
+          success: false, 
+          error: 'Network connection error. Please check your internet connection and try again.' 
+        };
+      }
+      
       const message = error instanceof Error ? error.message : 'Failed to update profile';
       return { success: false, error: message };
     }

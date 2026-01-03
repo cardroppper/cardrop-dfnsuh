@@ -57,6 +57,7 @@ export default function SignupScreen() {
 
     setIsLoading(true);
     try {
+      console.log('[Signup] Attempting signup...');
       const result = await signup(email, password, username, displayName);
       
       if (result.success) {
@@ -72,14 +73,35 @@ export default function SignupScreen() {
             ]
           );
         } else {
+          console.log('[Signup] Signup successful, navigating to discover');
           router.replace('/(tabs)/discover');
         }
       } else {
-        Alert.alert('Signup Failed', result.error || 'An error occurred during signup');
+        console.error('[Signup] Signup failed:', result.error);
+        
+        // Provide helpful error messages
+        let errorTitle = 'Signup Failed';
+        let errorMessage = result.error || 'An error occurred during signup';
+        
+        if (errorMessage.includes('Network connection error')) {
+          errorTitle = 'Connection Error';
+          errorMessage = 'Unable to connect to the server. Please check your internet connection and try again.';
+        } else if (errorMessage.includes('already exists') || errorMessage.includes('already registered')) {
+          errorTitle = 'Account Exists';
+          errorMessage = 'An account with this email already exists. Please try logging in instead.';
+        } else if (errorMessage.includes('already taken')) {
+          errorTitle = 'Username Taken';
+          errorMessage = 'This username is already in use. Please choose a different username.';
+        }
+        
+        Alert.alert(errorTitle, errorMessage);
       }
     } catch (error) {
       console.error('[Signup] Unexpected error:', error);
-      Alert.alert('Error', 'An unexpected error occurred. Please try again.');
+      Alert.alert(
+        'Connection Error',
+        'Unable to connect to the server. Please check your internet connection and try again.'
+      );
     } finally {
       setIsLoading(false);
     }
