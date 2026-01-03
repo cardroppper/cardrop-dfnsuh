@@ -54,8 +54,8 @@ export default function EditableElement_(_props: PropsWithChildren<any>) {
     return cloneElement(children, props);
   }
 
-  // Safety check: if __trace is missing, just return the children
-  if (!props?.__trace) {
+  // Safety check: if __trace is undefined, just return the children
+  if (!props?.__trace || !Array.isArray(props.__trace)) {
     return cloneElement(children, props);
   }
 
