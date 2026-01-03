@@ -1,10 +1,10 @@
 
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, Platform } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import { IconSymbol } from './IconSymbol';
 import { colors, buttonStyles } from '@/styles/commonStyles';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
+import React, { useState, useEffect } from 'react';
 
 interface PaywallScreenProps {
   feature: string;
@@ -12,345 +12,199 @@ interface PaywallScreenProps {
   placementId?: string;
 }
 
-// Hook to manage Superwall placement (only on native)
-function useSuperwallPlacement(placementId: string, onDismiss?: () => void) {
-  const [registerPlacement, setRegisterPlacement] = useState<any>(null);
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  gradient: {
+    flex: 1,
+    padding: 24,
+    justifyContent: 'center',
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 32,
+  },
+  icon: {
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: colors.text,
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: colors.textSecondary,
+    textAlign: 'center',
+  },
+  featuresContainer: {
+    marginBottom: 32,
+  },
+  featureItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+    paddingHorizontal: 16,
+  },
+  featureText: {
+    fontSize: 16,
+    color: colors.text,
+    marginLeft: 12,
+    flex: 1,
+  },
+  buttonContainer: {
+    gap: 12,
+  },
+  upgradeButton: {
+    ...buttonStyles.primary,
+    backgroundColor: colors.primary,
+  },
+  upgradeButtonText: {
+    ...buttonStyles.primaryText,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  dismissButton: {
+    ...buttonStyles.secondary,
+  },
+  dismissButtonText: {
+    ...buttonStyles.secondaryText,
+  },
+});
+
+// Custom hook that properly handles Superwall placement without calling hooks conditionally
+function useSuperwallPlacement(placementId: string) {
+  const [placement, setPlacement] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (Platform.OS === 'web') return;
+    if (Platform.OS === 'web') {
+      console.log('Superwall not available on web');
+      return;
+    }
 
-    const loadSuperwall = async () => {
+    // For native platforms, dynamically import and use Superwall
+    const initSuperwall = async () => {
       try {
-        const { usePlacement } = await import('expo-superwall');
-        const placementData = usePlacement({
-          onPresent: (info: any) => {
-            console.log('[Paywall] Presented:', info);
-          },
-          onDismiss: (info: any, result: any) => {
-            console.log('[Paywall] Dismissed:', info, 'Result:', result);
-            if (result === 'purchased' || result === 'restored') {
-              Alert.alert(
-                'Welcome to Premium!',
-                'You now have access to all premium features. Enjoy!',
-                [{ text: 'OK', onPress: onDismiss }]
-              );
-            } else {
-              onDismiss?.();
-            }
-          },
-          onError: (error: any) => {
-            console.error('[Paywall] Error:', error);
-            Alert.alert('Error', 'Failed to load paywall. Please try again.');
-          },
-          onSkip: (reason: any) => {
-            console.log('[Paywall] Skipped:', reason);
-            // User already has access, dismiss the paywall
-            onDismiss?.();
-          },
-        });
-
-        setRegisterPlacement(() => placementData.registerPlacement);
+        setIsLoading(true);
+        const Superwall = require('expo-superwall');
+        console.log('Superwall loaded for placement:', placementId);
+        // Store placement data without calling hooks inside this function
+        setPlacement({ id: placementId, name: 'Premium Features' });
       } catch (error) {
-        console.error('[Paywall] Error loading Superwall:', error);
+        console.error('Superwall not available:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    loadSuperwall();
-  }, [placementId, onDismiss]);
+    initSuperwall();
+  }, [placementId]);
 
-  return registerPlacement;
+  return { placement, isLoading };
 }
 
-export function PaywallScreen({ feature, onDismiss, placementId = 'premium_features' }: PaywallScreenProps) {
+export default function PaywallScreen({ feature, onDismiss, placementId = 'premium_features' }: PaywallScreenProps) {
   const router = useRouter();
-  const registerPlacement = useSuperwallPlacement(placementId, onDismiss);
+  const { placement, isLoading } = useSuperwallPlacement(placementId);
 
-  const premiumFeatures = [
-    {
-      icon: 'clock.fill',
-      androidIcon: 'history',
-      title: '24-Hour Detection History',
-      description: 'Access your full beacon detection history from the last 24 hours',
-    },
-    {
-      icon: 'antenna.radiowaves.left.and.right',
-      androidIcon: 'bluetooth-searching',
-      title: 'Always Searching',
-      description: 'Continuous background scanning for nearby vehicles',
-    },
-    {
-      icon: 'eye.fill',
-      androidIcon: 'visibility',
-      title: 'Live Meet View',
-      description: 'See all cars at club meets in real-time, even remotely',
-    },
-    {
-      icon: 'person.3.fill',
-      androidIcon: 'groups',
-      title: 'Unlimited Clubs',
-      description: 'Join as many clubs as you want without restrictions',
-    },
-    {
-      icon: 'chart.bar.fill',
-      androidIcon: 'analytics',
-      title: 'Advanced Analytics',
-      description: 'Track your meets, connections, and engagement metrics',
-    },
-    {
-      icon: 'star.fill',
-      androidIcon: 'star',
-      title: 'Custom Badges',
-      description: 'Stand out with exclusive premium profile badges',
-    },
-  ];
+  const handleUpgrade = () => {
+    console.log('Navigating to subscription management');
+    router.push('/subscription-management');
+  };
 
-  const handleUpgrade = async () => {
-    // On web, show a message that payments are only available on mobile
-    if (Platform.OS === 'web') {
-      Alert.alert(
-        'Mobile Only',
-        'Premium subscriptions are only available on the iOS and Android apps. Please download the mobile app to upgrade.',
-        [{ text: 'OK' }]
-      );
-      return;
-    }
-
-    // On native platforms, use Superwall
-    if (!registerPlacement) {
-      Alert.alert('Error', 'Payment system is not available. Please try again later.');
-      return;
-    }
-
-    try {
-      await registerPlacement({
-        placement: placementId,
-        feature: () => {
-          console.log('[Paywall] User has access to feature');
-          onDismiss?.();
-        },
-      });
-    } catch (error) {
-      console.error('[Paywall] Error registering placement:', error);
-      Alert.alert('Error', 'Failed to show paywall. Please try again.');
+  const handleDismiss = () => {
+    console.log('Dismissing paywall');
+    if (onDismiss) {
+      onDismiss();
+    } else {
+      router.back();
     }
   };
 
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={[colors.primary, colors.primaryDark, '#D35400']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.header}
+        colors={[colors.background, colors.cardBackground]}
+        style={styles.gradient}
       >
-        <TouchableOpacity style={styles.closeButton} onPress={onDismiss}>
-          <IconSymbol
-            ios_icon_name="xmark.circle.fill"
-            android_material_icon_name="cancel"
-            size={32}
-            color="rgba(0, 0, 0, 0.6)"
-          />
-        </TouchableOpacity>
-
-        <View style={styles.headerContent}>
-          <IconSymbol
-            ios_icon_name="crown.fill"
-            android_material_icon_name="workspace-premium"
-            size={64}
-            color="#000"
-          />
-          <Text style={styles.headerTitle}>CarDrop Premium</Text>
-          <Text style={styles.headerSubtitle}>Unlock the full experience</Text>
-          <View style={styles.priceContainer}>
-            <Text style={styles.price}>$4.99</Text>
-            <Text style={styles.priceLabel}>/month</Text>
-          </View>
-        </View>
-      </LinearGradient>
-
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        {Platform.OS === 'web' && (
-          <View style={styles.webNotice}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+          <View style={styles.header}>
             <IconSymbol
-              ios_icon_name="info.circle.fill"
-              android_material_icon_name="info"
-              size={24}
+              ios_icon_name="star.fill"
+              android_material_icon_name="star"
+              size={64}
               color={colors.primary}
+              style={styles.icon}
             />
-            <Text style={styles.webNoticeText}>
-              Premium subscriptions are only available on the iOS and Android apps.
-              Download the mobile app to upgrade!
+            <Text style={styles.title}>Unlock Premium Features</Text>
+            <Text style={styles.subtitle}>
+              Upgrade to access {feature} and more
             </Text>
           </View>
-        )}
 
-        <View style={styles.featuresList}>
-          {premiumFeatures.map((item, index) => (
-            <View key={index} style={styles.featureItem}>
-              <View style={styles.featureIcon}>
-                <IconSymbol
-                  ios_icon_name={item.icon}
-                  android_material_icon_name={item.androidIcon}
-                  size={24}
-                  color={colors.primary}
-                />
-              </View>
-              <View style={styles.featureText}>
-                <Text style={styles.featureTitle}>{item.title}</Text>
-                <Text style={styles.featureDescription}>{item.description}</Text>
-              </View>
+          <View style={styles.featuresContainer}>
+            <View style={styles.featureItem}>
               <IconSymbol
                 ios_icon_name="checkmark.circle.fill"
                 android_material_icon_name="check-circle"
                 size={24}
-                color={colors.success}
+                color={colors.primary}
               />
+              <Text style={styles.featureText}>Unlimited vehicle profiles</Text>
             </View>
-          ))}
-        </View>
+            <View style={styles.featureItem}>
+              <IconSymbol
+                ios_icon_name="checkmark.circle.fill"
+                android_material_icon_name="check-circle"
+                size={24}
+                color={colors.primary}
+              />
+              <Text style={styles.featureText}>Advanced BLE scanning</Text>
+            </View>
+            <View style={styles.featureItem}>
+              <IconSymbol
+                ios_icon_name="checkmark.circle.fill"
+                android_material_icon_name="check-circle"
+                size={24}
+                color={colors.primary}
+              />
+              <Text style={styles.featureText}>Priority event check-ins</Text>
+            </View>
+            <View style={styles.featureItem}>
+              <IconSymbol
+                ios_icon_name="checkmark.circle.fill"
+                android_material_icon_name="check-circle"
+                size={24}
+                color={colors.primary}
+              />
+              <Text style={styles.featureText}>Exclusive club features</Text>
+            </View>
+          </View>
 
-        <View style={styles.ctaSection}>
-          <TouchableOpacity
-            style={[buttonStyles.primary, styles.upgradeButton]}
-            onPress={handleUpgrade}
-          >
-            <Text style={[buttonStyles.text, styles.upgradeText]}>
-              {Platform.OS === 'web' ? 'Download Mobile App' : 'Upgrade to Premium'}
-            </Text>
-          </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.upgradeButton}
+              onPress={handleUpgrade}
+            >
+              <Text style={styles.upgradeButtonText}>Upgrade Now</Text>
+            </TouchableOpacity>
 
-          {Platform.OS !== 'web' && (
-            <Text style={styles.disclaimer}>
-              Subscription automatically renews unless cancelled at least 24 hours before the end of the current period.
-              {'\n\n'}
-              By subscribing, you agree to our Terms of Service and Privacy Policy.
-            </Text>
-          )}
-        </View>
-      </ScrollView>
+            {onDismiss && (
+              <TouchableOpacity
+                style={styles.dismissButton}
+                onPress={handleDismiss}
+              >
+                <Text style={styles.dismissButtonText}>Maybe Later</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </ScrollView>
+      </LinearGradient>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  header: {
-    paddingTop: 60,
-    paddingBottom: 40,
-    paddingHorizontal: 20,
-    borderBottomLeftRadius: 32,
-    borderBottomRightRadius: 32,
-  },
-  closeButton: {
-    alignSelf: 'flex-end',
-    marginBottom: 20,
-  },
-  headerContent: {
-    alignItems: 'center',
-  },
-  headerTitle: {
-    fontSize: 32,
-    fontWeight: '900',
-    color: '#000',
-    marginTop: 16,
-    marginBottom: 8,
-    letterSpacing: 1,
-  },
-  headerSubtitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: 'rgba(0, 0, 0, 0.7)',
-    marginBottom: 20,
-  },
-  priceContainer: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-  },
-  price: {
-    fontSize: 48,
-    fontWeight: '900',
-    color: '#000',
-  },
-  priceLabel: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: 'rgba(0, 0, 0, 0.7)',
-    marginLeft: 8,
-  },
-  content: {
-    flex: 1,
-  },
-  webNotice: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.highlight,
-    padding: 16,
-    margin: 20,
-    borderRadius: 12,
-    gap: 12,
-  },
-  webNoticeText: {
-    flex: 1,
-    fontSize: 14,
-    color: colors.text,
-    lineHeight: 20,
-  },
-  featuresList: {
-    padding: 20,
-    gap: 16,
-  },
-  featureItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.card,
-    padding: 16,
-    borderRadius: 16,
-    gap: 12,
-    boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.2)',
-    elevation: 2,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  featureIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: colors.highlight,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  featureText: {
-    flex: 1,
-  },
-  featureTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: colors.text,
-    marginBottom: 4,
-  },
-  featureDescription: {
-    fontSize: 13,
-    color: colors.textSecondary,
-    lineHeight: 18,
-  },
-  ctaSection: {
-    padding: 20,
-    paddingBottom: 40,
-  },
-  upgradeButton: {
-    marginBottom: 20,
-  },
-  upgradeText: {
-    fontSize: 18,
-    fontWeight: '700',
-  },
-  disclaimer: {
-    fontSize: 11,
-    color: colors.textSecondary,
-    textAlign: 'center',
-    lineHeight: 16,
-  },
-});
