@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { IconSymbol } from './IconSymbol';
@@ -12,8 +12,58 @@ interface PaywallScreenProps {
   placementId?: string;
 }
 
+// Hook to manage Superwall placement (only on native)
+function useSuperwallPlacement(placementId: string, onDismiss?: () => void) {
+  const [registerPlacement, setRegisterPlacement] = useState<any>(null);
+
+  useEffect(() => {
+    if (Platform.OS === 'web') return;
+
+    const loadSuperwall = async () => {
+      try {
+        const { usePlacement } = await import('expo-superwall');
+        const placementData = usePlacement({
+          onPresent: (info: any) => {
+            console.log('[Paywall] Presented:', info);
+          },
+          onDismiss: (info: any, result: any) => {
+            console.log('[Paywall] Dismissed:', info, 'Result:', result);
+            if (result === 'purchased' || result === 'restored') {
+              Alert.alert(
+                'Welcome to Premium!',
+                'You now have access to all premium features. Enjoy!',
+                [{ text: 'OK', onPress: onDismiss }]
+              );
+            } else {
+              onDismiss?.();
+            }
+          },
+          onError: (error: any) => {
+            console.error('[Paywall] Error:', error);
+            Alert.alert('Error', 'Failed to load paywall. Please try again.');
+          },
+          onSkip: (reason: any) => {
+            console.log('[Paywall] Skipped:', reason);
+            // User already has access, dismiss the paywall
+            onDismiss?.();
+          },
+        });
+
+        setRegisterPlacement(() => placementData.registerPlacement);
+      } catch (error) {
+        console.error('[Paywall] Error loading Superwall:', error);
+      }
+    };
+
+    loadSuperwall();
+  }, [placementId, onDismiss]);
+
+  return registerPlacement;
+}
+
 export function PaywallScreen({ feature, onDismiss, placementId = 'premium_features' }: PaywallScreenProps) {
   const router = useRouter();
+  const registerPlacement = useSuperwallPlacement(placementId, onDismiss);
 
   const premiumFeatures = [
     {
@@ -66,42 +116,12 @@ export function PaywallScreen({ feature, onDismiss, placementId = 'premium_featu
     }
 
     // On native platforms, use Superwall
+    if (!registerPlacement) {
+      Alert.alert('Error', 'Payment system is not available. Please try again later.');
+      return;
+    }
+
     try {
-      const { usePlacement } = await import('expo-superwall');
-      const placementData = usePlacement({
-        onPresent: (info: any) => {
-          console.log('[Paywall] Presented:', info);
-        },
-        onDismiss: (info: any, result: any) => {
-          console.log('[Paywall] Dismissed:', info, 'Result:', result);
-          if (result === 'purchased' || result === 'restored') {
-            Alert.alert(
-              'Welcome to Premium!',
-              'You now have access to all premium features. Enjoy!',
-              [{ text: 'OK', onPress: onDismiss }]
-            );
-          } else {
-            onDismiss?.();
-          }
-        },
-        onError: (error: any) => {
-          console.error('[Paywall] Error:', error);
-          Alert.alert('Error', 'Failed to load paywall. Please try again.');
-        },
-        onSkip: (reason: any) => {
-          console.log('[Paywall] Skipped:', reason);
-          // User already has access, dismiss the paywall
-          onDismiss?.();
-        },
-      });
-
-      const registerPlacement = placementData.registerPlacement;
-
-      if (!registerPlacement) {
-        Alert.alert('Error', 'Payment system is not available. Please try again later.');
-        return;
-      }
-
       await registerPlacement({
         placement: placementId,
         feature: () => {

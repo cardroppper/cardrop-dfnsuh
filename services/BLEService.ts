@@ -8,14 +8,13 @@ let Device: any = null;
 let State: any = null;
 
 if (Platform.OS !== 'web') {
-  try {
-    const BleModule = require('react-native-ble-plx');
+  import('react-native-ble-plx').then((BleModule) => {
     BleManager = BleModule.BleManager;
     Device = BleModule.Device;
     State = BleModule.State;
-  } catch (error) {
+  }).catch((error) => {
     console.warn('react-native-ble-plx not available:', error);
-  }
+  });
 }
 
 class BLEService {

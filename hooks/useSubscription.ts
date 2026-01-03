@@ -13,8 +13,33 @@ export interface SubscriptionStatus {
   subscriptionSource: 'free_premium' | 'superwall' | 'none';
 }
 
+// Hook to get Superwall user data (only on native)
+function useSuperwallUser() {
+  const [subscriptionStatus, setSubscriptionStatus] = useState<any>(null);
+
+  useEffect(() => {
+    if (Platform.OS === 'web') return;
+
+    const loadSuperwallUser = async () => {
+      try {
+        const SuperwallModule = await import('expo-superwall');
+        const { useUser } = SuperwallModule;
+        const superwallData = useUser();
+        setSubscriptionStatus(superwallData?.subscriptionStatus);
+      } catch (error) {
+        console.warn('[useSubscription] Error accessing Superwall data:', error);
+      }
+    };
+
+    loadSuperwallUser();
+  }, []);
+
+  return subscriptionStatus;
+}
+
 export function useSubscription() {
   const { user, profile } = useAuth();
+  const superwallStatus = useSuperwallUser();
   const [subscription, setSubscription] = useState<SubscriptionStatus>({
     isPremium: false,
     status: 'free',
@@ -25,22 +50,6 @@ export function useSubscription() {
   });
   const [loading, setLoading] = useState(true);
 
-  // Get Superwall status (only on native platforms)
-  const getSuperwallStatus = useCallback(() => {
-    if (Platform.OS === 'web') return null;
-    
-    try {
-      // Dynamic import for native-only module
-      const SuperwallModule = require('expo-superwall');
-      const { useUser } = SuperwallModule;
-      const superwallData = useUser();
-      return superwallData?.subscriptionStatus;
-    } catch (error) {
-      console.warn('[useSubscription] Error accessing Superwall data:', error);
-      return null;
-    }
-  }, []);
-
   const fetchSubscription = useCallback(async () => {
     if (!user) return;
 
@@ -49,7 +58,6 @@ export function useSubscription() {
       const hasFreePremium = profile?.free_premium || false;
 
       // Check Superwall subscription status (only on native platforms)
-      const superwallStatus = getSuperwallStatus();
       const hasSuperwallPremium = superwallStatus?.status === 'ACTIVE';
 
       const { data, error } = await supabase
@@ -111,7 +119,7 @@ export function useSubscription() {
     } finally {
       setLoading(false);
     }
-  }, [user, profile?.free_premium, getSuperwallStatus]);
+  }, [user, profile?.free_premium, superwallStatus]);
 
   useEffect(() => {
     if (!user) {
@@ -120,7 +128,7 @@ export function useSubscription() {
     }
 
     fetchSubscription();
-  }, [user, profile?.free_premium, fetchSubscription]);
+  }, [user, profile?.free_premium, superwallStatus, fetchSubscription]);
 
   const updateSubscription = async (status: 'free' | 'premium') => {
     if (!user) return;

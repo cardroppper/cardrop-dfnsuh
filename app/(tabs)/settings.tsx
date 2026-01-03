@@ -65,12 +65,10 @@ export default function SettingsScreen() {
 
     try {
       const SuperwallModule = await import('expo-superwall');
-      const { useUser } = SuperwallModule;
-      const superwallData = useUser();
-      const identifyFn = superwallData?.identify;
+      const { identify: superwallIdentify } = SuperwallModule;
       
-      if (identifyFn) {
-        await identifyFn(user.id);
+      if (superwallIdentify) {
+        await superwallIdentify(user.id);
       }
     } catch (error) {
       console.warn('[Settings] Error identifying user with Superwall:', error);

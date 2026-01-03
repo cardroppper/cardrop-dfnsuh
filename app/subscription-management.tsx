@@ -12,254 +12,224 @@ import {
   Platform,
 } from 'react-native';
 import { router } from 'expo-router';
-import { colors, buttonStyles } from '@/styles/commonStyles';
 import { IconSymbol } from '@/components/IconSymbol';
+import { colors, buttonStyles } from '@/styles/commonStyles';
 import { useSubscription } from '@/hooks/useSubscription';
 import { PaywallScreen } from '@/components/PaywallScreen';
 
 export default function SubscriptionManagementScreen() {
-  const { subscription, loading } = useSubscription();
+  const { subscription } = useSubscription();
   const [showPaywall, setShowPaywall] = useState(false);
 
-  const premiumFeatures = [
-    {
-      icon: 'clock.fill',
-      androidIcon: 'history',
-      title: '24-Hour Detection History',
-      description: 'Access your full beacon detection history from the last 24 hours',
-    },
-    {
-      icon: 'antenna.radiowaves.left.and.right',
-      androidIcon: 'bluetooth-searching',
-      title: 'Always Searching',
-      description: 'Continuous background scanning for nearby vehicles',
-    },
-    {
-      icon: 'eye.fill',
-      androidIcon: 'visibility',
-      title: 'Live Meet View',
-      description: 'See all cars at club meets in real-time, even remotely',
-    },
-    {
-      icon: 'location.fill',
-      androidIcon: 'location-on',
-      title: 'Automatic Attendance',
-      description: 'Auto check-in to events when you arrive at the location',
-    },
-    {
-      icon: 'person.3.fill',
-      androidIcon: 'groups',
-      title: 'Unlimited Clubs',
-      description: 'Join as many clubs as you want without restrictions',
-    },
-    {
-      icon: 'chart.bar.fill',
-      androidIcon: 'analytics',
-      title: 'Advanced Analytics',
-      description: 'Track your meets, connections, and engagement metrics',
-    },
-  ];
+  const handleUpgrade = () => {
+    setShowPaywall(true);
+  };
 
-  const handleUpgrade = async () => {
+  const handleManageSubscription = async () => {
     if (Platform.OS === 'web') {
       Alert.alert(
         'Mobile Only',
-        'Premium subscriptions are only available on the iOS and Android apps. Please download the mobile app to upgrade.',
+        'Subscription management is only available on the iOS and Android apps.',
         [{ text: 'OK' }]
       );
       return;
     }
 
-    setShowPaywall(true);
-  };
-
-  const handleManageSubscription = () => {
-    Alert.alert(
-      'Manage Subscription',
-      'To manage your subscription, cancel, or change your plan, please visit your device\'s subscription settings.',
-      [
-        {
-          text: 'Open Settings',
-          onPress: () => {
-            // On iOS, this would open App Store subscriptions
-            // On Android, this would open Play Store subscriptions
-            Alert.alert('Info', 'Please open your device settings and navigate to subscriptions.');
+    try {
+      const { restorePurchases } = await import('expo-superwall');
+      
+      Alert.alert(
+        'Manage Subscription',
+        'To manage your subscription, please visit your device settings:\n\niOS: Settings > [Your Name] > Subscriptions\nAndroid: Play Store > Menu > Subscriptions',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'Restore Purchases',
+            onPress: async () => {
+              try {
+                await restorePurchases();
+                Alert.alert('Success', 'Your purchases have been restored.');
+              } catch (error) {
+                console.error('[SubscriptionManagement] Error restoring purchases:', error);
+                Alert.alert('Error', 'Failed to restore purchases. Please try again.');
+              }
+            },
           },
-        },
-        { text: 'Cancel', style: 'cancel' },
-      ]
-    );
+        ]
+      );
+    } catch (error) {
+      console.error('[SubscriptionManagement] Error:', error);
+      Alert.alert('Error', 'Failed to access subscription management.');
+    }
   };
-
-  if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={colors.primary} />
-      </View>
-    );
-  }
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <IconSymbol
-            ios_icon_name="chevron.left"
-            android_material_icon_name="arrow-back"
-            size={24}
-            color={colors.text}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Subscription</Text>
-        <View style={styles.headerSpacer} />
-      </View>
-
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        {Platform.OS === 'web' && (
-          <View style={styles.webNotice}>
+      <ScrollView style={styles.content}>
+        <View style={styles.header}>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => router.back()}
+          >
             <IconSymbol
-              ios_icon_name="info.circle.fill"
-              android_material_icon_name="info"
+              ios_icon_name="chevron.left"
+              android_material_icon_name="arrow-back"
+              size={24}
+              color={colors.text}
+            />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Subscription</Text>
+        </View>
+
+        <View style={styles.statusCard}>
+          <View style={styles.statusHeader}>
+            <IconSymbol
+              ios_icon_name={subscription.isPremium ? 'crown.fill' : 'crown'}
+              android_material_icon_name="workspace-premium"
+              size={48}
+              color={subscription.isPremium ? '#FFD700' : colors.textSecondary}
+            />
+            <Text style={styles.statusTitle}>
+              {subscription.isPremium ? 'Premium Member' : 'Free Plan'}
+            </Text>
+            {subscription.isPremium && subscription.subscriptionSource === 'free_premium' && (
+              <Text style={styles.statusSubtitle}>(Free Premium Access)</Text>
+            )}
+          </View>
+
+          {subscription.isPremium && subscription.startDate && (
+            <View style={styles.statusDetails}>
+              <View style={styles.statusRow}>
+                <Text style={styles.statusLabel}>Started:</Text>
+                <Text style={styles.statusValue}>
+                  {new Date(subscription.startDate).toLocaleDateString()}
+                </Text>
+              </View>
+              {subscription.endDate && (
+                <View style={styles.statusRow}>
+                  <Text style={styles.statusLabel}>Renews:</Text>
+                  <Text style={styles.statusValue}>
+                    {new Date(subscription.endDate).toLocaleDateString()}
+                  </Text>
+                </View>
+              )}
+            </View>
+          )}
+        </View>
+
+        {!subscription.isPremium && (
+          <TouchableOpacity
+            style={[buttonStyles.primary, styles.upgradeButton]}
+            onPress={handleUpgrade}
+          >
+            <IconSymbol
+              ios_icon_name="crown.fill"
+              android_material_icon_name="workspace-premium"
+              size={24}
+              color={colors.text}
+            />
+            <Text style={[buttonStyles.text, { marginLeft: 12 }]}>
+              Upgrade to Premium
+            </Text>
+          </TouchableOpacity>
+        )}
+
+        {subscription.isPremium && subscription.subscriptionSource === 'superwall' && (
+          <TouchableOpacity
+            style={[buttonStyles.outline, styles.manageButton]}
+            onPress={handleManageSubscription}
+          >
+            <IconSymbol
+              ios_icon_name="gearshape.fill"
+              android_material_icon_name="settings"
               size={24}
               color={colors.primary}
             />
-            <Text style={styles.webNoticeText}>
-              Premium subscriptions are only available on the iOS and Android apps.
-              Download the mobile app to upgrade!
+            <Text style={[buttonStyles.text, { color: colors.primary, marginLeft: 12 }]}>
+              Manage Subscription
             </Text>
-          </View>
-        )}
-
-        {subscription.isPremium ? (
-          <View style={styles.statusCard}>
-            <View style={styles.statusHeader}>
-              <IconSymbol
-                ios_icon_name="crown.fill"
-                android_material_icon_name="workspace-premium"
-                size={48}
-                color="#FFD700"
-              />
-              <Text style={styles.statusTitle}>Premium Active</Text>
-            </View>
-            <Text style={styles.statusDescription}>
-              {subscription.subscriptionSource === 'free_premium'
-                ? 'You have free premium access granted by CarDrop.'
-                : 'You have full access to all premium features.'}
-            </Text>
-            {subscription.subscriptionSource === 'superwall' && Platform.OS !== 'web' && (
-              <TouchableOpacity
-                style={[buttonStyles.outline, styles.manageButton]}
-                onPress={handleManageSubscription}
-              >
-                <Text style={buttonStyles.textOutline}>Manage Subscription</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-        ) : (
-          <View style={styles.upgradeCard}>
-            <View style={styles.upgradeHeader}>
-              <IconSymbol
-                ios_icon_name="crown.fill"
-                android_material_icon_name="workspace-premium"
-                size={64}
-                color={colors.primary}
-              />
-              <Text style={styles.upgradeTitle}>Upgrade to Premium</Text>
-              <Text style={styles.upgradeSubtitle}>Unlock the full CarDrop experience</Text>
-              <View style={styles.priceContainer}>
-                <Text style={styles.price}>$4.99</Text>
-                <Text style={styles.priceLabel}>/month</Text>
-              </View>
-            </View>
-            <TouchableOpacity
-              style={[buttonStyles.primary, styles.upgradeButton]}
-              onPress={handleUpgrade}
-            >
-              <Text style={buttonStyles.text}>
-                {Platform.OS === 'web' ? 'Download Mobile App' : 'Start Free Trial'}
-              </Text>
-            </TouchableOpacity>
-            {Platform.OS !== 'web' && (
-              <Text style={styles.trialNote}>7-day free trial, then $4.99/month</Text>
-            )}
-          </View>
+          </TouchableOpacity>
         )}
 
         <View style={styles.featuresSection}>
-          <Text style={styles.featuresTitle}>
-            {subscription.isPremium ? 'Your Premium Features' : 'Premium Features'}
-          </Text>
-          {premiumFeatures.map((feature, index) => (
-            <View key={index} style={styles.featureCard}>
-              <View style={styles.featureIcon}>
-                <IconSymbol
-                  ios_icon_name={feature.icon}
-                  android_material_icon_name={feature.androidIcon}
-                  size={24}
-                  color={subscription.isPremium ? colors.success : colors.primary}
-                />
-              </View>
-              <View style={styles.featureContent}>
-                <Text style={styles.featureTitle}>{feature.title}</Text>
-                <Text style={styles.featureDescription}>{feature.description}</Text>
-              </View>
-              {subscription.isPremium && (
-                <IconSymbol
-                  ios_icon_name="checkmark.circle.fill"
-                  android_material_icon_name="check-circle"
-                  size={24}
-                  color={colors.success}
-                />
-              )}
-            </View>
-          ))}
-        </View>
-
-        <View style={styles.faqSection}>
-          <Text style={styles.faqTitle}>Frequently Asked Questions</Text>
+          <Text style={styles.sectionTitle}>Premium Features</Text>
           
-          <View style={styles.faqItem}>
-            <Text style={styles.faqQuestion}>Can I cancel anytime?</Text>
-            <Text style={styles.faqAnswer}>
-              Yes! You can cancel your subscription at any time from your device settings. 
-              You&apos;ll continue to have access until the end of your billing period.
-            </Text>
-          </View>
+          <View style={styles.featuresList}>
+            <View style={styles.featureItem}>
+              <IconSymbol
+                ios_icon_name="clock.fill"
+                android_material_icon_name="history"
+                size={24}
+                color={colors.primary}
+              />
+              <Text style={styles.featureText}>24-Hour Detection History</Text>
+            </View>
 
-          <View style={styles.faqItem}>
-            <Text style={styles.faqQuestion}>What happens after the free trial?</Text>
-            <Text style={styles.faqAnswer}>
-              After your 7-day free trial, you&apos;ll be charged $4.99/month. 
-              You can cancel anytime during the trial without being charged.
-            </Text>
-          </View>
+            <View style={styles.featureItem}>
+              <IconSymbol
+                ios_icon_name="antenna.radiowaves.left.and.right"
+                android_material_icon_name="bluetooth-searching"
+                size={24}
+                color={colors.primary}
+              />
+              <Text style={styles.featureText}>Always Searching Mode</Text>
+            </View>
 
-          <View style={styles.faqItem}>
-            <Text style={styles.faqQuestion}>Do I need premium for basic features?</Text>
-            <Text style={styles.faqAnswer}>
-              No! You can still scan for nearby vehicles, join clubs, and attend events with a free account. 
-              Premium unlocks advanced features like background scanning and live meet views.
-            </Text>
+            <View style={styles.featureItem}>
+              <IconSymbol
+                ios_icon_name="eye.fill"
+                android_material_icon_name="visibility"
+                size={24}
+                color={colors.primary}
+              />
+              <Text style={styles.featureText}>Live Meet View</Text>
+            </View>
+
+            <View style={styles.featureItem}>
+              <IconSymbol
+                ios_icon_name="person.3.fill"
+                android_material_icon_name="groups"
+                size={24}
+                color={colors.primary}
+              />
+              <Text style={styles.featureText}>Unlimited Clubs</Text>
+            </View>
+
+            <View style={styles.featureItem}>
+              <IconSymbol
+                ios_icon_name="chart.bar.fill"
+                android_material_icon_name="analytics"
+                size={24}
+                color={colors.primary}
+              />
+              <Text style={styles.featureText}>Advanced Analytics</Text>
+            </View>
+
+            <View style={styles.featureItem}>
+              <IconSymbol
+                ios_icon_name="star.fill"
+                android_material_icon_name="star"
+                size={24}
+                color={colors.primary}
+              />
+              <Text style={styles.featureText}>Custom Badges</Text>
+            </View>
           </View>
         </View>
-
-        <View style={styles.bottomSpacer} />
       </ScrollView>
 
-      {Platform.OS !== 'web' && (
-        <Modal
-          visible={showPaywall}
-          animationType="slide"
-          presentationStyle="pageSheet"
-          onRequestClose={() => setShowPaywall(false)}
-        >
-          <PaywallScreen
-            feature="premium_subscription"
-            placementId="premium_features"
-            onDismiss={() => setShowPaywall(false)}
-          />
-        </Modal>
-      )}
+      <Modal
+        visible={showPaywall}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={() => setShowPaywall(false)}
+      >
+        <PaywallScreen
+          feature="premium_subscription"
+          onDismiss={() => setShowPaywall(false)}
+          placementId="subscription_management"
+        />
+      </Modal>
     </View>
   );
 }
@@ -269,64 +239,35 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  loadingContainer: {
+  content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.background,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingTop: 60,
-    paddingBottom: 20,
-    backgroundColor: colors.card,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    padding: 20,
+    paddingTop: Platform.OS === 'android' ? 48 : 20,
   },
   backButton: {
-    padding: 8,
+    marginRight: 16,
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: '700',
     color: colors.text,
   },
-  headerSpacer: {
-    width: 40,
-  },
-  content: {
-    flex: 1,
-  },
-  webNotice: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.highlight,
-    padding: 16,
-    margin: 20,
-    borderRadius: 12,
-    gap: 12,
-  },
-  webNoticeText: {
-    flex: 1,
-    fontSize: 14,
-    color: colors.text,
-    lineHeight: 20,
-  },
   statusCard: {
-    margin: 20,
-    padding: 24,
     backgroundColor: colors.card,
-    borderRadius: 20,
+    margin: 20,
+    marginTop: 0,
+    padding: 24,
+    borderRadius: 16,
     borderWidth: 2,
-    borderColor: '#FFD700',
-    alignItems: 'center',
+    borderColor: colors.border,
   },
   statusHeader: {
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 20,
   },
   statusTitle: {
     fontSize: 24,
@@ -334,133 +275,65 @@ const styles = StyleSheet.create({
     color: colors.text,
     marginTop: 12,
   },
-  statusDescription: {
+  statusSubtitle: {
     fontSize: 14,
     color: colors.textSecondary,
-    textAlign: 'center',
-    marginBottom: 20,
-    lineHeight: 20,
+    marginTop: 4,
   },
-  manageButton: {
-    width: '100%',
+  statusDetails: {
+    gap: 12,
   },
-  upgradeCard: {
-    margin: 20,
-    padding: 24,
-    backgroundColor: colors.card,
-    borderRadius: 20,
-    borderWidth: 2,
-    borderColor: colors.primary,
-    alignItems: 'center',
-  },
-  upgradeHeader: {
-    alignItems: 'center',
-    marginBottom: 24,
-  },
-  upgradeTitle: {
-    fontSize: 28,
-    fontWeight: '900',
-    color: colors.text,
-    marginTop: 16,
-    marginBottom: 8,
-  },
-  upgradeSubtitle: {
-    fontSize: 16,
-    color: colors.textSecondary,
-    marginBottom: 20,
-  },
-  priceContainer: {
+  statusRow: {
     flexDirection: 'row',
-    alignItems: 'baseline',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
-  price: {
-    fontSize: 48,
-    fontWeight: '900',
-    color: colors.primary,
-  },
-  priceLabel: {
-    fontSize: 20,
-    fontWeight: '600',
+  statusLabel: {
+    fontSize: 14,
     color: colors.textSecondary,
-    marginLeft: 8,
+  },
+  statusValue: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.text,
   },
   upgradeButton: {
-    width: '100%',
-    marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 20,
+    marginBottom: 16,
   },
-  trialNote: {
-    fontSize: 12,
-    color: colors.textSecondary,
-    textAlign: 'center',
+  manageButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 20,
+    marginBottom: 16,
   },
   featuresSection: {
     padding: 20,
   },
-  featuresTitle: {
+  sectionTitle: {
     fontSize: 20,
     fontWeight: '700',
     color: colors.text,
     marginBottom: 16,
   },
-  featureCard: {
+  featuresList: {
+    gap: 16,
+  },
+  featureItem: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.card,
     padding: 16,
     borderRadius: 12,
-    marginBottom: 12,
-    gap: 12,
-    boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.2)',
-    elevation: 2,
-    borderWidth: 1,
-    borderColor: colors.border,
+    gap: 16,
   },
-  featureIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: colors.highlight,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  featureContent: {
+  featureText: {
+    fontSize: 16,
+    color: colors.text,
     flex: 1,
-  },
-  featureTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: colors.text,
-    marginBottom: 4,
-  },
-  featureDescription: {
-    fontSize: 13,
-    color: colors.textSecondary,
-    lineHeight: 18,
-  },
-  faqSection: {
-    padding: 20,
-  },
-  faqTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: colors.text,
-    marginBottom: 16,
-  },
-  faqItem: {
-    marginBottom: 20,
-  },
-  faqQuestion: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: colors.text,
-    marginBottom: 8,
-  },
-  faqAnswer: {
-    fontSize: 14,
-    color: colors.textSecondary,
-    lineHeight: 20,
-  },
-  bottomSpacer: {
-    height: 40,
   },
 });
