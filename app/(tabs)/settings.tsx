@@ -19,36 +19,12 @@ import { IconSymbol } from '@/components/IconSymbol';
 import * as ImagePicker from 'expo-image-picker';
 import { useSubscription } from '@/hooks/useSubscription';
 
-// Only import useUser on native platforms
-let useUser: any = null;
-if (Platform.OS !== 'web') {
-  try {
-    const SuperwallModule = require('expo-superwall');
-    useUser = SuperwallModule.useUser;
-  } catch (error) {
-    console.warn('[Settings] expo-superwall not available:', error);
-  }
-}
-
 type NotificationType = 'silent' | 'vibration' | 'sound';
 type SoundType = 'none' | 'vroom' | 'default';
 
 export default function SettingsScreen() {
   const { user, profile, logout, updateProfile } = useAuth();
   const { subscription } = useSubscription();
-  
-  // Only use Superwall hooks on native platforms
-  let identify: any = null;
-  let superwallUser: any = null;
-  if (Platform.OS !== 'web' && useUser) {
-    try {
-      const superwallData = useUser();
-      identify = superwallData?.identify;
-      superwallUser = superwallData?.user;
-    } catch (error) {
-      console.warn('[Settings] Error accessing Superwall user:', error);
-    }
-  }
 
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -83,18 +59,27 @@ export default function SettingsScreen() {
     notificationPrefs.sound || 'none'
   );
 
-  // Identify user with Superwall when component mounts
-  const identifyUser = useCallback(() => {
-    if (user?.id && identify) {
-      identify(user.id).catch((error: any) => {
-        console.error('[Settings] Error identifying user with Superwall:', error);
-      });
+  // Identify user with Superwall when component mounts (only on native)
+  const identify = useCallback(async () => {
+    if (Platform.OS === 'web' || !user?.id) return;
+
+    try {
+      const SuperwallModule = await import('expo-superwall');
+      const { useUser } = SuperwallModule;
+      const superwallData = useUser();
+      const identifyFn = superwallData?.identify;
+      
+      if (identifyFn) {
+        await identifyFn(user.id);
+      }
+    } catch (error) {
+      console.warn('[Settings] Error identifying user with Superwall:', error);
     }
-  }, [user?.id, identify]);
+  }, [user?.id]);
 
   React.useEffect(() => {
-    identifyUser();
-  }, [identifyUser]);
+    identify();
+  }, [identify]);
 
   const handleLogout = () => {
     Alert.alert(

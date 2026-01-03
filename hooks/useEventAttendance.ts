@@ -137,6 +137,31 @@ export function useEventAttendance(eventId: string) {
     return R * c; // Distance in meters
   };
 
+  // Manual check-in
+  const checkInToEvent = useCallback(async (vehicleId?: string) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      const { error } = await supabase
+        .from('event_checkins')
+        .insert({
+          event_id: eventId,
+          user_id: user.id,
+          vehicle_id: vehicleId || null,
+        });
+
+      if (error) throw error;
+
+      setIsCheckedIn(true);
+      Alert.alert('Success', 'You are now checked in to this event!');
+    } catch (error) {
+      console.error('[useEventAttendance] Error checking in:', error);
+      Alert.alert('Error', 'Failed to check in to event');
+      throw error;
+    }
+  }, [eventId]);
+
   // Check if user is at event location
   const checkUserLocation = useCallback(async () => {
     if (!eventLocation || attendanceMode !== 'automatic') return;
@@ -166,32 +191,7 @@ export function useEventAttendance(eventId: string) {
     } catch (error) {
       console.error('[useEventAttendance] Error checking user location:', error);
     }
-  }, [eventLocation, attendanceMode, isCheckedIn]);
-
-  // Manual check-in
-  const checkInToEvent = useCallback(async (vehicleId?: string) => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
-
-      const { error } = await supabase
-        .from('event_checkins')
-        .insert({
-          event_id: eventId,
-          user_id: user.id,
-          vehicle_id: vehicleId || null,
-        });
-
-      if (error) throw error;
-
-      setIsCheckedIn(true);
-      Alert.alert('Success', 'You are now checked in to this event!');
-    } catch (error) {
-      console.error('[useEventAttendance] Error checking in:', error);
-      Alert.alert('Error', 'Failed to check in to event');
-      throw error;
-    }
-  }, [eventId]);
+  }, [eventLocation, attendanceMode, isCheckedIn, checkInToEvent]);
 
   // Log a vehicle detection at the meet
   const logVehicleDetection = useCallback(async (
@@ -328,7 +328,7 @@ export function useEventAttendance(eventId: string) {
     fetchEventLocation();
     checkCheckinStatus();
     checkPremiumStatus();
-  }, [eventId]);
+  }, [eventId, fetchAttendanceMode, fetchEventLocation, checkCheckinStatus, checkPremiumStatus]);
 
   // Check location periodically if automatic mode
   useEffect(() => {

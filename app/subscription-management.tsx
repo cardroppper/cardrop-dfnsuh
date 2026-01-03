@@ -16,27 +16,10 @@ import { colors, buttonStyles } from '@/styles/commonStyles';
 import { IconSymbol } from '@/components/IconSymbol';
 import { useSubscription } from '@/hooks/useSubscription';
 import { PaywallScreen } from '@/components/PaywallScreen';
-import { usePlacement } from 'expo-superwall';
 
 export default function SubscriptionManagementScreen() {
   const { subscription, loading } = useSubscription();
   const [showPaywall, setShowPaywall] = useState(false);
-
-  // Only use Superwall hooks on native platforms
-  let registerPlacement: any = null;
-  if (Platform.OS !== 'web') {
-    try {
-      const placementData = usePlacement({
-        onDismiss: (info: any, result: any) => {
-          console.log('[SubscriptionManagement] Paywall dismissed:', result);
-          setShowPaywall(false);
-        },
-      });
-      registerPlacement = placementData.registerPlacement;
-    } catch (error) {
-      console.warn('[SubscriptionManagement] Error initializing Superwall placement:', error);
-    }
-  }
 
   const premiumFeatures = [
     {
@@ -77,7 +60,7 @@ export default function SubscriptionManagementScreen() {
     },
   ];
 
-  const handleUpgrade = () => {
+  const handleUpgrade = async () => {
     if (Platform.OS === 'web') {
       Alert.alert(
         'Mobile Only',
@@ -86,6 +69,7 @@ export default function SubscriptionManagementScreen() {
       );
       return;
     }
+
     setShowPaywall(true);
   };
 
