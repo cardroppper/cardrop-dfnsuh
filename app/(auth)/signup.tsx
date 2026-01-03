@@ -78,13 +78,19 @@ export default function SignupScreen() {
             [
               {
                 text: 'OK',
-                onPress: () => router.replace('/(auth)/login'),
+                onPress: () => {
+                  console.log('[Signup] Navigating to login after verification alert');
+                  router.replace('/(auth)/login');
+                },
               },
             ]
           );
         } else {
           console.log('[Signup] No verification needed, navigating to discover');
-          router.replace('/(tabs)/discover');
+          // Add a small delay to ensure auth state is updated
+          setTimeout(() => {
+            router.replace('/(tabs)/discover');
+          }, 100);
         }
       } else {
         console.error('[Signup] Signup failed with error:', result.error);

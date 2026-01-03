@@ -24,25 +24,60 @@ export default function LoginScreen() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async () => {
+    console.log('[Login] Button pressed');
+    
     if (!email || !password) {
+      console.log('[Login] Missing fields');
       Alert.alert('Missing Information', 'Please enter your email and password');
       return;
     }
 
+    console.log('[Login] Starting login process...');
     setIsLoading(true);
+    
     try {
+      console.log('[Login] Calling login function');
       const result = await login(email, password);
+      console.log('[Login] Login result:', result);
       
       if (result.success) {
         console.log('[Login] Login successful, navigating to app');
-        router.replace('/(tabs)/discover');
+        // Add a small delay to ensure auth state is updated
+        setTimeout(() => {
+          router.replace('/(tabs)/discover');
+        }, 100);
       } else {
-        Alert.alert('Login Failed', result.error || 'Invalid credentials');
+        console.error('[Login] Login failed with error:', result.error);
+        
+        // Provide helpful error messages
+        let errorTitle = 'Login Failed';
+        let errorMessage = result.error || 'Invalid credentials';
+        
+        if (errorMessage.includes('Network connection error') || errorMessage.includes('Network request failed')) {
+          errorTitle = 'Connection Error';
+          errorMessage = 'Unable to connect to the server. Please check your internet connection and try again.';
+        } else if (errorMessage.includes('Invalid email or password')) {
+          errorTitle = 'Invalid Credentials';
+          errorMessage = 'The email or password you entered is incorrect. Please try again.';
+        } else if (errorMessage.includes('Email not confirmed')) {
+          errorTitle = 'Email Not Verified';
+          errorMessage = 'Please verify your email address before logging in. Check your inbox for the verification link.';
+        }
+        
+        console.log('[Login] Showing error alert:', errorTitle, errorMessage);
+        Alert.alert(errorTitle, errorMessage);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('[Login] Unexpected error:', error);
-      Alert.alert('Error', 'An unexpected error occurred. Please try again.');
+      console.error('[Login] Error details:', {
+        message: error?.message,
+        name: error?.name,
+        stack: error?.stack,
+      });
+      
+      Alert.alert('Error', error?.message || 'An unexpected error occurred. Please try again.');
     } finally {
+      console.log('[Login] Login process complete, setting loading to false');
       setIsLoading(false);
     }
   };
@@ -100,9 +135,13 @@ export default function LoginScreen() {
             style={[buttonStyles.primary, styles.loginButton, isLoading && styles.buttonDisabled]}
             onPress={handleLogin}
             disabled={isLoading}
+            activeOpacity={0.7}
           >
             {isLoading ? (
-              <ActivityIndicator color="#000000" />
+              <View style={styles.loadingContainer}>
+                <ActivityIndicator color="#000000" />
+                <Text style={[buttonStyles.text, styles.loadingText]}>Logging In...</Text>
+              </View>
             ) : (
               <Text style={buttonStyles.text}>Log In</Text>
             )}
@@ -112,6 +151,7 @@ export default function LoginScreen() {
             style={[buttonStyles.outline, styles.signupButton]}
             onPress={() => router.push('/(auth)/signup')}
             disabled={isLoading}
+            activeOpacity={0.7}
           >
             <Text style={buttonStyles.textOutline}>
               Create Account
@@ -186,6 +226,14 @@ const styles = StyleSheet.create({
   },
   buttonDisabled: {
     opacity: 0.6,
+  },
+  loadingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingText: {
+    marginLeft: 8,
   },
   footerText: {
     textAlign: 'center',

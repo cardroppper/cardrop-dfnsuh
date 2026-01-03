@@ -38,7 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const isAuthenticated = !!user && !!session;
+  const isAuthenticated = !!user && !!session && !!profile;
 
   // Initialize auth state
   const initializeAuth = useCallback(async () => {
@@ -280,6 +280,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.log('[AuthContext] Needs verification:', needsVerification);
 
       if (!needsVerification && authData.session) {
+        console.log('[AuthContext] Session created, updating state');
         setSession(authData.session);
         setUser(authData.user);
         await loadProfile(authData.user.id);
@@ -363,7 +364,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
       }
 
-      console.log('[AuthContext] Login successful');
+      console.log('[AuthContext] Login successful, updating state');
       setSession(data.session);
       setUser(data.user);
       await loadProfile(data.user.id);
