@@ -1,12 +1,14 @@
+
 {
   "expo": {
     "name": "CarDrop",
-    "slug": "CarDrop",
-    "version": "1.0.0",
+    "slug": "cardrop-dfnsuh",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/b7c66c53-8dea-43bf-bc60-3e5e66ecb613.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "scheme": "cardrop",
     "splash": {
       "image": "./assets/images/1c867cde-aadb-4f1e-8906-868c43a7f0fa.png",
       "resizeMode": "contain",
@@ -53,8 +55,8 @@
         "READ_MEDIA_IMAGES",
         "READ_MEDIA_VIDEO"
       ],
-      "package": "com.cardrop.app",
-      "versionCode": 1
+      "package": "com.CARDROP.CARDROP",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/images/8b4b7908-f6d2-4b0f-ad18-5b6444964a08.png",
@@ -87,7 +89,6 @@
         }
       ]
     ],
-    "scheme": "cardrop",
     "experiments": {
       "typedRoutes": true
     },
@@ -101,6 +102,5 @@
     "privacy": "unlisted",
     "description": "CarDrop - The automotive social network for real car enthusiasts. Connect with nearby vehicles, join clubs, and showcase your build.",
     "primaryColor": "#FF8C42"
-  },
-  "scheme": "CarDrop"
+  }
 }
