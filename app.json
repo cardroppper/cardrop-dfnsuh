@@ -1,9 +1,8 @@
 
 {
   "expo": {
-    "name": "CarDrop",
-    "slug": "cardrop",
-    "scheme": "cardrop",
+    "name": "Natively",
+    "slug": "Natively",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/natively-dark.png",
@@ -16,18 +15,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.cardrop",
+      "bundleIdentifier": "com.anonymous.Natively",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false,
-        "NSBluetoothAlwaysUsageDescription": "CarDrop uses Bluetooth to detect nearby vehicles at car meets and events.",
-        "NSBluetoothPeripheralUsageDescription": "CarDrop uses Bluetooth to broadcast your vehicle's presence to other users.",
-        "NSLocationWhenInUseUsageDescription": "CarDrop uses your location to show nearby vehicles and events.",
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "CarDrop uses your location to detect nearby vehicles even when the app is in the background.",
-        "NSCameraUsageDescription": "CarDrop needs camera access to take photos of your vehicle and modifications.",
-        "NSPhotoLibraryUsageDescription": "CarDrop needs photo library access to select photos of your vehicle.",
-        "UIBackgroundModes": ["location", "bluetooth-central"]
-      },
-      "deploymentTarget": "15.1"
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -35,33 +26,8 @@
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.cardrop",
-      "permissions": [
-        "ACCESS_FINE_LOCATION",
-        "ACCESS_COARSE_LOCATION",
-        "BLUETOOTH",
-        "BLUETOOTH_ADMIN",
-        "BLUETOOTH_SCAN",
-        "BLUETOOTH_CONNECT",
-        "BLUETOOTH_ADVERTISE",
-        "CAMERA",
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE"
-      ],
-      "intentFilters": [
-        {
-          "action": "VIEW",
-          "autoVerify": true,
-          "data": [
-            {
-              "scheme": "https",
-              "host": "*.cardrop.app",
-              "pathPrefix": "/"
-            }
-          ],
-          "category": ["BROWSABLE", "DEFAULT"]
-        }
-      ]
+      "package": "com.anonymous.Natively",
+      "minSdkVersion": 24
     },
     "web": {
       "favicon": "./assets/images/final_quest_240x240.png",
@@ -71,48 +37,21 @@
       "expo-font",
       "expo-router",
       "expo-web-browser",
-      "expo-location",
-      "expo-image-picker",
-      "expo-secure-store",
       [
         "expo-build-properties",
         {
-          "ios": {
-            "deploymentTarget": "15.1"
-          },
           "android": {
-            "compileSdkVersion": 34,
-            "targetSdkVersion": 34,
-            "minSdkVersion": 23
+            "minSdkVersion": 24
           }
-        }
-      ],
-      [
-        "react-native-ble-plx",
-        {
-          "isBackgroundEnabled": true,
-          "modes": ["peripheral", "central"],
-          "bluetoothAlwaysPermission": "CarDrop uses Bluetooth to detect nearby vehicles at car meets and events."
-        }
-      ],
-      [
-        "@stripe/stripe-react-native",
-        {
-          "merchantIdentifier": "merchant.com.anonymous.cardrop",
-          "enableGooglePay": true
         }
       ]
     ],
+    "scheme": "natively",
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "your-project-id"
-      }
+      "router": {}
     }
   }
 }
