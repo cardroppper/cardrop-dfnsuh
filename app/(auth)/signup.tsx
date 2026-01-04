@@ -1,5 +1,14 @@
 
-import React, { useState } from 'react';
+import {
+  validateEmail,
+  validatePassword,
+  validateUsername,
+  validateDisplayName,
+} from '@/utils/validation';
+import { useRouter } from 'expo-router';
+import { isOnline, showOfflineAlert } from '@/utils/networkUtils';
+import { useAuth } from '@/contexts/AuthContext';
+import { IconSymbol } from '@/components/IconSymbol';
 import {
   View,
   Text,
@@ -12,368 +21,36 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import React, { useState } from 'react';
 import { colors, commonStyles, buttonStyles } from '@/styles/commonStyles';
-import { useAuth } from '@/contexts/AuthContext';
-import { IconSymbol } from '@/components/IconSymbol';
-import {
-  validateEmail,
-  validatePassword,
-  validateUsername,
-  validateDisplayName,
-} from '@/utils/validation';
-import { isOnline, showOfflineAlert } from '@/utils/networkUtils';
 import * as Haptics from 'expo-haptics';
-
-export default function SignupScreen() {
-  const router = useRouter();
-  const { signup, checkUsernameAvailability } = useAuth();
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [displayName, setDisplayName] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  // Field-specific errors
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
-  const [usernameError, setUsernameError] = useState('');
-  const [displayNameError, setDisplayNameError] = useState('');
-
-  const validateField = async (field: string, value: string) => {
-    switch (field) {
-      case 'email':
-        const emailValidation = validateEmail(value);
-        setEmailError(emailValidation.isValid ? '' : emailValidation.error || '');
-        return emailValidation.isValid;
-
-      case 'password':
-        const passwordValidation = validatePassword(value);
-        setPasswordError(passwordValidation.isValid ? '' : passwordValidation.error || '');
-        return passwordValidation.isValid;
-
-      case 'confirmPassword':
-        if (value !== password) {
-          setConfirmPasswordError('Passwords do not match');
-          return false;
-        }
-        setConfirmPasswordError('');
-        return true;
-
-      case 'username':
-        const usernameValidation = validateUsername(value);
-        if (!usernameValidation.isValid) {
-          setUsernameError(usernameValidation.error || '');
-          return false;
-        }
-
-        // Check availability
-        try {
-          const available = await checkUsernameAvailability(value.trim());
-          if (!available) {
-            setUsernameError('Username is already taken');
-            return false;
-          }
-          setUsernameError('');
-          return true;
-        } catch (error) {
-          console.error('Error checking username:', error);
-          return true; // Allow to proceed if check fails
-        }
-
-      case 'displayName':
-        const displayNameValidation = validateDisplayName(value);
-        setDisplayNameError(displayNameValidation.isValid ? '' : displayNameValidation.error || '');
-        return displayNameValidation.isValid;
-
-      default:
-        return true;
-    }
-  };
-
-  const handleSignup = async () => {
-    try {
-      // Haptic feedback
-      if (Platform.OS !== 'web') {
-        await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-      }
-
-      // Check network connection
-      if (!(await isOnline())) {
-        showOfflineAlert();
-        return;
-      }
-
-      // Validate all fields
-      const emailValid = await validateField('email', email);
-      const passwordValid = await validateField('password', password);
-      const confirmPasswordValid = await validateField('confirmPassword', confirmPassword);
-      const usernameValid = await validateField('username', username);
-      const displayNameValid = await validateField('displayName', displayName);
-
-      if (!emailValid || !passwordValid || !confirmPasswordValid || !usernameValid || !displayNameValid) {
-        Alert.alert('Validation Error', 'Please fix the errors before continuing');
-        return;
-      }
-
-      setLoading(true);
-
-      const result = await signup(
-        email.trim(),
-        password,
-        username.trim(),
-        displayName.trim()
-      );
-
-      if (result.success) {
-        if (result.needsVerification) {
-          Alert.alert(
-            '✅ Account Created',
-            'Please check your email to verify your account before logging in.',
-            [
-              {
-                text: 'OK',
-                onPress: () => router.replace('/(auth)/login'),
-              },
-            ]
-          );
-        } else {
-          // Auto-navigate to app
-          router.replace('/(tabs)/discover');
-        }
-      } else {
-        Alert.alert('Signup Failed', result.error || 'An error occurred during signup');
-      }
-    } catch (error: any) {
-      console.error('Signup error:', error);
-      Alert.alert(
-        'Signup Failed',
-        error.message || 'An unexpected error occurred. Please try again.'
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => router.back()}
-            disabled={loading}
-          >
-            <IconSymbol
-              ios_icon_name="chevron.left"
-              android_material_icon_name="arrow-back"
-              size={24}
-              color={colors.text}
-            />
-          </TouchableOpacity>
-          <Text style={styles.title}>Create Account</Text>
-          <Text style={styles.subtitle}>Join the CarDrop community</Text>
-        </View>
-
-        <View style={styles.form}>
-          {/* Email */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              style={[styles.input, emailError && styles.inputError]}
-              placeholder="your@email.com"
-              placeholderTextColor={colors.textSecondary}
-              value={email}
-              onChangeText={setEmail}
-              onBlur={() => validateField('email', email)}
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="email-address"
-              textContentType="emailAddress"
-              editable={!loading}
-            />
-            {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
-          </View>
-
-          {/* Username */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Username</Text>
-            <TextInput
-              style={[styles.input, usernameError && styles.inputError]}
-              placeholder="username"
-              placeholderTextColor={colors.textSecondary}
-              value={username}
-              onChangeText={setUsername}
-              onBlur={() => validateField('username', username)}
-              autoCapitalize="none"
-              autoCorrect={false}
-              textContentType="username"
-              editable={!loading}
-            />
-            {usernameError ? <Text style={styles.errorText}>{usernameError}</Text> : null}
-          </View>
-
-          {/* Display Name */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Display Name</Text>
-            <TextInput
-              style={[styles.input, displayNameError && styles.inputError]}
-              placeholder="Your Name"
-              placeholderTextColor={colors.textSecondary}
-              value={displayName}
-              onChangeText={setDisplayName}
-              onBlur={() => validateField('displayName', displayName)}
-              autoCapitalize="words"
-              autoCorrect={false}
-              textContentType="name"
-              editable={!loading}
-            />
-            {displayNameError ? <Text style={styles.errorText}>{displayNameError}</Text> : null}
-          </View>
-
-          {/* Password */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Password</Text>
-            <View style={styles.passwordContainer}>
-              <TextInput
-                style={[styles.passwordInput, passwordError && styles.inputError]}
-                placeholder="••••••••"
-                placeholderTextColor={colors.textSecondary}
-                value={password}
-                onChangeText={setPassword}
-                onBlur={() => validateField('password', password)}
-                secureTextEntry={!showPassword}
-                autoCapitalize="none"
-                autoCorrect={false}
-                textContentType="newPassword"
-                editable={!loading}
-              />
-              <TouchableOpacity
-                style={styles.eyeButton}
-                onPress={() => setShowPassword(!showPassword)}
-                disabled={loading}
-              >
-                <IconSymbol
-                  ios_icon_name={showPassword ? 'eye.slash.fill' : 'eye.fill'}
-                  android_material_icon_name={showPassword ? 'visibility-off' : 'visibility'}
-                  size={20}
-                  color={colors.textSecondary}
-                />
-              </TouchableOpacity>
-            </View>
-            {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
-          </View>
-
-          {/* Confirm Password */}
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Confirm Password</Text>
-            <View style={styles.passwordContainer}>
-              <TextInput
-                style={[styles.passwordInput, confirmPasswordError && styles.inputError]}
-                placeholder="••••••••"
-                placeholderTextColor={colors.textSecondary}
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-                onBlur={() => validateField('confirmPassword', confirmPassword)}
-                secureTextEntry={!showConfirmPassword}
-                autoCapitalize="none"
-                autoCorrect={false}
-                textContentType="newPassword"
-                editable={!loading}
-              />
-              <TouchableOpacity
-                style={styles.eyeButton}
-                onPress={() => setShowConfirmPassword(!showConfirmPassword)}
-                disabled={loading}
-              >
-                <IconSymbol
-                  ios_icon_name={showConfirmPassword ? 'eye.slash.fill' : 'eye.fill'}
-                  android_material_icon_name={showConfirmPassword ? 'visibility-off' : 'visibility'}
-                  size={20}
-                  color={colors.textSecondary}
-                />
-              </TouchableOpacity>
-            </View>
-            {confirmPasswordError ? <Text style={styles.errorText}>{confirmPasswordError}</Text> : null}
-          </View>
-
-          <TouchableOpacity
-            style={[buttonStyles.primary, styles.signupButton, loading && styles.buttonDisabled]}
-            onPress={handleSignup}
-            disabled={loading}
-          >
-            {loading ? (
-              <ActivityIndicator color="#000000" />
-            ) : (
-              <Text style={buttonStyles.text}>Create Account</Text>
-            )}
-          </TouchableOpacity>
-
-          <View style={styles.footer}>
-            <Text style={styles.footerText}>Already have an account? </Text>
-            <TouchableOpacity onPress={() => router.push('/(auth)/login')} disabled={loading}>
-              <Text style={styles.linkText}>Log In</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
-  );
-}
+import { validatePasswordStrength, PasswordValidationResult } from '@/utils/security';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
   },
-  scrollView: {
-    flex: 1,
-  },
   scrollContent: {
     flexGrow: 1,
-    paddingBottom: 40,
-  },
-  header: {
-    paddingTop: Platform.OS === 'ios' ? 60 : 48,
-    paddingHorizontal: 20,
-    paddingBottom: 32,
-  },
-  backButton: {
-    width: 40,
-    height: 40,
     justifyContent: 'center',
-    marginBottom: 16,
+    padding: 24,
   },
   title: {
-    fontSize: 36,
-    fontWeight: '900',
+    fontSize: 32,
+    fontWeight: 'bold',
     color: colors.text,
     marginBottom: 8,
-    letterSpacing: -0.5,
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
     color: colors.textSecondary,
-    fontWeight: '500',
-  },
-  form: {
-    paddingHorizontal: 20,
+    marginBottom: 32,
+    textAlign: 'center',
   },
   inputContainer: {
-    marginBottom: 20,
+    marginBottom: 16,
   },
   label: {
     fontSize: 14,
@@ -382,7 +59,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   input: {
-    backgroundColor: colors.highlight,
+    backgroundColor: colors.surface,
     borderRadius: 12,
     padding: 16,
     fontSize: 16,
@@ -393,52 +70,396 @@ const styles = StyleSheet.create({
   inputError: {
     borderColor: colors.error,
   },
-  passwordContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    position: 'relative',
+  errorText: {
+    color: colors.error,
+    fontSize: 12,
+    marginTop: 4,
   },
-  passwordInput: {
-    flex: 1,
-    backgroundColor: colors.highlight,
-    borderRadius: 12,
-    padding: 16,
-    paddingRight: 50,
-    fontSize: 16,
-    color: colors.text,
+  passwordStrengthContainer: {
+    marginTop: 8,
+  },
+  passwordStrengthBar: {
+    height: 4,
+    backgroundColor: colors.border,
+    borderRadius: 2,
+    overflow: 'hidden',
+    marginBottom: 4,
+  },
+  passwordStrengthFill: {
+    height: '100%',
+    borderRadius: 2,
+  },
+  passwordStrengthText: {
+    fontSize: 12,
+    marginTop: 4,
+  },
+  passwordRequirements: {
+    marginTop: 8,
+    padding: 12,
+    backgroundColor: colors.surface,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: colors.border,
   },
-  eyeButton: {
-    position: 'absolute',
-    right: 16,
-    padding: 4,
-  },
-  errorText: {
+  requirementText: {
     fontSize: 12,
-    color: colors.error,
-    marginTop: 6,
-    marginLeft: 4,
+    color: colors.textSecondary,
+    marginBottom: 4,
   },
-  signupButton: {
-    marginTop: 12,
-    marginBottom: 24,
+  requirementMet: {
+    color: colors.success,
   },
-  buttonDisabled: {
-    opacity: 0.6,
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  footerText: {
-    fontSize: 14,
+  requirementNotMet: {
     color: colors.textSecondary,
   },
-  linkText: {
+  signupButton: {
+    ...buttonStyles.primary,
+    marginTop: 24,
+  },
+  signupButtonDisabled: {
+    ...buttonStyles.primary,
+    opacity: 0.5,
+  },
+  signupButtonText: {
+    ...buttonStyles.primaryText,
+  },
+  loginContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 24,
+  },
+  loginText: {
+    color: colors.textSecondary,
     fontSize: 14,
+  },
+  loginLink: {
     color: colors.primary,
+    fontSize: 14,
     fontWeight: '600',
+    marginLeft: 4,
+  },
+  securityBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 16,
+    padding: 12,
+    backgroundColor: colors.surface,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  securityBadgeText: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginLeft: 8,
   },
 });
+
+export default function SignupScreen() {
+  const router = useRouter();
+  const { signup, isLoading } = useAuth();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+  const [displayNameError, setDisplayNameError] = useState('');
+
+  const [passwordStrength, setPasswordStrength] = useState<PasswordValidationResult | null>(null);
+
+  const validateField = (field: string, value: string) => {
+    switch (field) {
+      case 'email':
+        const emailResult = validateEmail(value);
+        setEmailError(emailResult.isValid ? '' : emailResult.error || '');
+        break;
+      case 'password':
+        const passwordResult = validatePassword(value);
+        setPasswordError(passwordResult.isValid ? '' : passwordResult.error || '');
+        
+        // Check password strength
+        const strengthResult = validatePasswordStrength(value, {
+          email,
+          username,
+          name: displayName,
+        });
+        setPasswordStrength(strengthResult);
+        break;
+      case 'username':
+        const usernameResult = validateUsername(value);
+        setUsernameError(usernameResult.isValid ? '' : usernameResult.error || '');
+        break;
+      case 'displayName':
+        const displayNameResult = validateDisplayName(value);
+        setDisplayNameError(displayNameResult.isValid ? '' : displayNameResult.error || '');
+        break;
+    }
+  };
+
+  const handleSignup = async () => {
+    if (Platform.OS !== 'web') {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    }
+
+    // Check network
+    const online = await isOnline();
+    if (!online) {
+      showOfflineAlert();
+      return;
+    }
+
+    // Validate all fields
+    validateField('email', email);
+    validateField('password', password);
+    validateField('username', username);
+    validateField('displayName', displayName);
+
+    if (emailError || passwordError || usernameError || displayNameError) {
+      Alert.alert('Validation Error', 'Please fix the errors before continuing');
+      return;
+    }
+
+    if (!email || !password || !username || !displayName) {
+      Alert.alert('Missing Information', 'Please fill in all fields');
+      return;
+    }
+
+    // Check password strength
+    if (passwordStrength && !passwordStrength.isValid) {
+      Alert.alert(
+        'Weak Password',
+        passwordStrength.errors.join('\n\n'),
+        [{ text: 'OK' }]
+      );
+      return;
+    }
+
+    const result = await signup(email, password, username, displayName);
+
+    if (result.success) {
+      if (result.needsVerification) {
+        Alert.alert(
+          'Verify Your Email',
+          'Please check your email and click the verification link to complete your registration.',
+          [
+            {
+              text: 'OK',
+              onPress: () => router.replace('/(auth)/login'),
+            },
+          ]
+        );
+      } else {
+        router.replace('/(tabs)/discover');
+      }
+    } else {
+      Alert.alert('Signup Failed', result.error || 'An error occurred during signup');
+    }
+  };
+
+  const getPasswordStrengthColor = (strength: string) => {
+    switch (strength) {
+      case 'weak':
+        return colors.error;
+      case 'medium':
+        return '#FFA500';
+      case 'strong':
+        return '#4CAF50';
+      case 'very-strong':
+        return '#2E7D32';
+      default:
+        return colors.border;
+    }
+  };
+
+  const getPasswordStrengthLabel = (strength: string) => {
+    switch (strength) {
+      case 'weak':
+        return 'Weak';
+      case 'medium':
+        return 'Medium';
+      case 'strong':
+        return 'Strong';
+      case 'very-strong':
+        return 'Very Strong';
+      default:
+        return '';
+    }
+  };
+
+  const isFormValid = email && password && username && displayName && 
+    !emailError && !passwordError && !usernameError && !displayNameError &&
+    passwordStrength?.isValid;
+
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+      >
+        <Text style={styles.title}>Create Account</Text>
+        <Text style={styles.subtitle}>Join the CarDrop community</Text>
+
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            style={[styles.input, emailError ? styles.inputError : null]}
+            placeholder="your@email.com"
+            placeholderTextColor={colors.textSecondary}
+            value={email}
+            onChangeText={(text) => {
+              setEmail(text);
+              validateField('email', text);
+            }}
+            autoCapitalize="none"
+            keyboardType="email-address"
+            autoComplete="email"
+            editable={!isLoading}
+          />
+          {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Username</Text>
+          <TextInput
+            style={[styles.input, usernameError ? styles.inputError : null]}
+            placeholder="username"
+            placeholderTextColor={colors.textSecondary}
+            value={username}
+            onChangeText={(text) => {
+              setUsername(text);
+              validateField('username', text);
+            }}
+            autoCapitalize="none"
+            autoComplete="username"
+            editable={!isLoading}
+          />
+          {usernameError ? <Text style={styles.errorText}>{usernameError}</Text> : null}
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Display Name</Text>
+          <TextInput
+            style={[styles.input, displayNameError ? styles.inputError : null]}
+            placeholder="Your Name"
+            placeholderTextColor={colors.textSecondary}
+            value={displayName}
+            onChangeText={(text) => {
+              setDisplayName(text);
+              validateField('displayName', text);
+            }}
+            autoCapitalize="words"
+            autoComplete="name"
+            editable={!isLoading}
+          />
+          {displayNameError ? <Text style={styles.errorText}>{displayNameError}</Text> : null}
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>Password</Text>
+          <View style={{ position: 'relative' }}>
+            <TextInput
+              style={[styles.input, passwordError ? styles.inputError : null, { paddingRight: 50 }]}
+              placeholder="••••••••••••"
+              placeholderTextColor={colors.textSecondary}
+              value={password}
+              onChangeText={(text) => {
+                setPassword(text);
+                validateField('password', text);
+              }}
+              secureTextEntry={!showPassword}
+              autoCapitalize="none"
+              autoComplete="password-new"
+              editable={!isLoading}
+            />
+            <TouchableOpacity
+              style={{ position: 'absolute', right: 16, top: 16 }}
+              onPress={() => setShowPassword(!showPassword)}
+            >
+              <IconSymbol
+                ios_icon_name={showPassword ? 'eye.slash' : 'eye'}
+                android_material_icon_name={showPassword ? 'visibility-off' : 'visibility'}
+                size={20}
+                color={colors.textSecondary}
+              />
+            </TouchableOpacity>
+          </View>
+          {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
+
+          {password && passwordStrength && (
+            <View style={styles.passwordStrengthContainer}>
+              <View style={styles.passwordStrengthBar}>
+                <View
+                  style={[
+                    styles.passwordStrengthFill,
+                    {
+                      width: `${passwordStrength.score}%`,
+                      backgroundColor: getPasswordStrengthColor(passwordStrength.strength),
+                    },
+                  ]}
+                />
+              </View>
+              <Text
+                style={[
+                  styles.passwordStrengthText,
+                  { color: getPasswordStrengthColor(passwordStrength.strength) },
+                ]}
+              >
+                Password Strength: {getPasswordStrengthLabel(passwordStrength.strength)}
+              </Text>
+
+              {!passwordStrength.isValid && passwordStrength.errors.length > 0 && (
+                <View style={styles.passwordRequirements}>
+                  {passwordStrength.errors.map((error, index) => (
+                    <Text key={index} style={[styles.requirementText, styles.requirementNotMet]}>
+                      • {error}
+                    </Text>
+                  ))}
+                </View>
+              )}
+            </View>
+          )}
+        </View>
+
+        <View style={styles.securityBadge}>
+          <IconSymbol
+            ios_icon_name="lock.shield"
+            android_material_icon_name="lock"
+            size={16}
+            color={colors.success}
+          />
+          <Text style={styles.securityBadgeText}>
+            Enterprise-grade security • Encrypted storage • NIST compliant
+          </Text>
+        </View>
+
+        <TouchableOpacity
+          style={isFormValid && !isLoading ? styles.signupButton : styles.signupButtonDisabled}
+          onPress={handleSignup}
+          disabled={!isFormValid || isLoading}
+        >
+          {isLoading ? (
+            <ActivityIndicator color={colors.background} />
+          ) : (
+            <Text style={styles.signupButtonText}>Create Account</Text>
+          )}
+        </TouchableOpacity>
+
+        <View style={styles.loginContainer}>
+          <Text style={styles.loginText}>Already have an account?</Text>
+          <TouchableOpacity onPress={() => router.push('/(auth)/login')}>
+            <Text style={styles.loginLink}>Log In</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
+}

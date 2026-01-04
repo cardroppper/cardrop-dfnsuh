@@ -4,8 +4,15 @@ import * as Network from 'expo-network';
 import { Alert } from 'react-native';
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/app/integrations/supabase/client';
-import { autoDebugger } from '@/utils/autoDebugger';
-import { Session, User, AuthError } from '@supabase/supabase-js';
+import { Session, User } from '@supabase/supabase-js';
+import {
+  rateLimiter,
+  RATE_LIMITS,
+  logSecurityEvent,
+  SecurityEventType,
+  generateDeviceId,
+  validatePasswordStrength,
+} from '@/utils/security';
 
 interface AuthContextType {
   user: User | null;
@@ -39,10 +46,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // FIXED: Wrap loadProfile in useCallback with proper dependencies
   const loadProfile = useCallback(async (userId: string) => {
     try {
-      console.log('Loading profile for user:', userId);
+      console.log('[Auth] Loading profile for user:', userId);
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -50,46 +56,46 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .single();
 
       if (error) {
-        console.error('Error loading profile:', error);
+        console.error('[Auth] Error loading profile:', error);
         setError('Failed to load profile');
         return;
       }
 
       if (data) {
-        console.log('Profile loaded successfully:', data.username);
+        console.log('[Auth] Profile loaded successfully:', data.username);
         setProfile(data);
         setError(null);
       }
     } catch (err) {
-      console.error('Exception loading profile:', err);
+      console.error('[Auth] Exception loading profile:', err);
       setError('Failed to load profile');
     }
   }, []);
 
   const initializeAuth = useCallback(async () => {
     try {
-      console.log('Initializing auth...');
+      console.log('[Auth] Initializing authentication...');
       setIsLoading(true);
 
       const { data: { session: currentSession }, error: sessionError } = await supabase.auth.getSession();
 
       if (sessionError) {
-        console.error('Session error:', sessionError);
+        console.error('[Auth] Session error:', sessionError);
         setError(sessionError.message);
         setIsLoading(false);
         return;
       }
 
       if (currentSession) {
-        console.log('Session found, loading user data...');
+        console.log('[Auth] Session found, loading user data...');
         setSession(currentSession);
         setUser(currentSession.user);
         await loadProfile(currentSession.user.id);
       } else {
-        console.log('No active session found');
+        console.log('[Auth] No active session found');
       }
     } catch (err) {
-      console.error('Error initializing auth:', err);
+      console.error('[Auth] Error initializing auth:', err);
       setError('Failed to initialize authentication');
     } finally {
       setIsLoading(false);
@@ -100,16 +106,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     initializeAuth();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, newSession) => {
-      console.log('Auth state changed:', event);
+      console.log('[Auth] Auth state changed:', event);
 
       if (event === 'SIGNED_IN' && newSession) {
         setSession(newSession);
         setUser(newSession.user);
         await loadProfile(newSession.user.id);
+        
+        // Log successful login
+        await logSecurityEvent({
+          type: SecurityEventType.LOGIN_SUCCESS,
+          userId: newSession.user.id,
+          metadata: { method: 'email' },
+        });
       } else if (event === 'SIGNED_OUT') {
         setSession(null);
         setUser(null);
         setProfile(null);
+        
+        // Log logout
+        await logSecurityEvent({
+          type: SecurityEventType.LOGOUT,
+        });
       } else if (event === 'TOKEN_REFRESHED' && newSession) {
         setSession(newSession);
         setUser(newSession.user);
@@ -130,13 +148,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .maybeSingle();
 
       if (error) {
-        console.error('Error checking username:', error);
+        console.error('[Auth] Error checking username:', error);
         return false;
       }
 
       return !data;
     } catch (err) {
-      console.error('Exception checking username:', err);
+      console.error('[Auth] Exception checking username:', err);
       return false;
     }
   };
@@ -151,6 +169,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsLoading(true);
       setError(null);
 
+      // Check network connectivity
       const networkState = await Network.getNetworkStateAsync();
       if (!networkState.isConnected) {
         return {
@@ -159,6 +178,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
       }
 
+      // Rate limiting
+      const rateLimitCheck = rateLimiter.check(`signup:${email}`, RATE_LIMITS.signup);
+      if (!rateLimitCheck.allowed) {
+        await logSecurityEvent({
+          type: SecurityEventType.SUSPICIOUS_ACTIVITY,
+          metadata: {
+            reason: 'signup_rate_limit_exceeded',
+            email,
+            retryAfter: rateLimitCheck.retryAfter,
+          },
+        });
+        return {
+          success: false,
+          error: `Too many signup attempts. Please try again in ${rateLimitCheck.retryAfter} seconds.`,
+        };
+      }
+
+      // Validate password strength
+      const passwordValidation = validatePasswordStrength(password, {
+        email,
+        username,
+        name: displayName,
+      });
+
+      if (!passwordValidation.isValid) {
+        return {
+          success: false,
+          error: passwordValidation.errors[0] || 'Password does not meet security requirements',
+        };
+      }
+
+      // Check username availability
       const isAvailable = await checkUsernameAvailability(username);
       if (!isAvailable) {
         return {
@@ -167,6 +218,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
       }
 
+      // Attempt signup
       const { data, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
@@ -179,7 +231,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
 
       if (signUpError) {
-        console.error('Signup error:', signUpError);
+        console.error('[Auth] Signup error:', signUpError);
+        
+        // Log failed signup
+        await logSecurityEvent({
+          type: SecurityEventType.SUSPICIOUS_ACTIVITY,
+          metadata: {
+            reason: 'signup_failed',
+            email,
+            error: signUpError.message,
+          },
+        });
+        
         return {
           success: false,
           error: signUpError.message || 'Failed to create account. Please try again.',
@@ -197,11 +260,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setSession(data.session);
         setUser(data.user);
         await loadProfile(data.user.id);
+        
+        // Reset rate limiter on success
+        rateLimiter.reset(`signup:${email}`);
       }
 
       return { success: true };
     } catch (err) {
-      console.error('Exception during signup:', err);
+      console.error('[Auth] Exception during signup:', err);
       return {
         success: false,
         error: 'An unexpected error occurred. Please try again.',
@@ -219,6 +285,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsLoading(true);
       setError(null);
 
+      // Check network connectivity
       const networkState = await Network.getNetworkStateAsync();
       if (!networkState.isConnected) {
         return {
@@ -227,16 +294,45 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
       }
 
+      // Rate limiting
+      const rateLimitCheck = rateLimiter.check(`login:${email}`, RATE_LIMITS.login);
+      if (!rateLimitCheck.allowed) {
+        await logSecurityEvent({
+          type: SecurityEventType.ACCOUNT_LOCKED,
+          metadata: {
+            reason: 'login_rate_limit_exceeded',
+            email,
+            retryAfter: rateLimitCheck.retryAfter,
+          },
+        });
+        return {
+          success: false,
+          error: `Too many login attempts. Please try again in ${rateLimitCheck.retryAfter} seconds.`,
+        };
+      }
+
+      // Attempt login
       const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
       if (signInError) {
-        console.error('Login error:', signInError);
+        console.error('[Auth] Login error:', signInError);
+        
+        // Log failed login
+        await logSecurityEvent({
+          type: SecurityEventType.LOGIN_FAILURE,
+          metadata: {
+            reason: 'invalid_credentials',
+            email,
+            error: signInError.message,
+          },
+        });
+        
         return {
           success: false,
-          error: signInError.message || 'Invalid email or password. Please try again.',
+          error: 'Invalid email or password. Please try again.',
         };
       }
 
@@ -244,11 +340,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setSession(data.session);
         setUser(data.user);
         await loadProfile(data.user.id);
+        
+        // Reset rate limiter on success
+        rateLimiter.reset(`login:${email}`);
       }
 
       return { success: true };
     } catch (err) {
-      console.error('Exception during login:', err);
+      console.error('[Auth] Exception during login:', err);
       return {
         success: false,
         error: 'An unexpected error occurred. Please try again.',
@@ -261,13 +360,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = async () => {
     try {
       setIsLoading(true);
+      
+      const userId = user?.id;
+      
       await supabase.auth.signOut();
       setSession(null);
       setUser(null);
       setProfile(null);
       setError(null);
+      
+      // Log logout
+      if (userId) {
+        await logSecurityEvent({
+          type: SecurityEventType.LOGOUT,
+          userId,
+        });
+      }
     } catch (err) {
-      console.error('Error during logout:', err);
+      console.error('[Auth] Error during logout:', err);
       setError('Failed to log out');
     } finally {
       setIsLoading(false);
@@ -296,7 +406,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .eq('id', user.id);
 
       if (updateError) {
-        console.error('Error updating profile:', updateError);
+        console.error('[Auth] Error updating profile:', updateError);
         return {
           success: false,
           error: updateError.message || 'Failed to update profile',
@@ -304,9 +414,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
 
       await loadProfile(user.id);
+      
+      // Log profile update
+      await logSecurityEvent({
+        type: SecurityEventType.DATA_ACCESS,
+        userId: user.id,
+        metadata: {
+          action: 'profile_update',
+          fields: Object.keys(updates),
+        },
+      });
+      
       return { success: true };
     } catch (err) {
-      console.error('Exception updating profile:', err);
+      console.error('[Auth] Exception updating profile:', err);
       return {
         success: false,
         error: 'An unexpected error occurred',
