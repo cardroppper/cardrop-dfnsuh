@@ -5,8 +5,6 @@ import { colors, buttonStyles } from '@/styles/commonStyles';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState, useEffect } from 'react';
-// FIXED: Changed require() to ES6 import
-import premiumImage from '../assets/images/natively-dark.png';
 
 interface PaywallScreenProps {
   feature: string;
@@ -93,7 +91,8 @@ function useSuperwallPlacement(placementId: string) {
     const initSuperwall = async () => {
       try {
         setIsLoading(true);
-        const Superwall = require('expo-superwall');
+        // Dynamic import for native platforms only
+        const { default: Superwall } = await import('expo-superwall');
         console.log('Superwall loaded for placement:', placementId);
         // Store placement data without calling hooks inside this function
         setPlacement({ id: placementId, name: 'Premium Features' });
