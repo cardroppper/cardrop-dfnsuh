@@ -92,7 +92,7 @@ function useSuperwallPlacement(placementId: string) {
       try {
         setIsLoading(true);
         // Dynamic import for native platforms only
-        const { default: Superwall } = await import('expo-superwall');
+        const Superwall = await import('expo-superwall');
         console.log('Superwall loaded for placement:', placementId);
         // Store placement data without calling hooks inside this function
         setPlacement({ id: placementId, name: 'Premium Features' });

@@ -96,7 +96,7 @@ export const validatePasswordStrength = (
     score += 10;
   }
 
-  if (PASSWORD_REQUIREMENTS.requireSpecialChars && !/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password)) {
+  if (PASSWORD_REQUIREMENTS.requireSpecialChars && !/[!@#$%^&*()_+\-=\]{};':"\\|,.<>/?]/.test(password)) {
     errors.push('Password must contain at least one special character');
   } else {
     score += 15;
