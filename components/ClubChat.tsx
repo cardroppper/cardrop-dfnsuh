@@ -1,5 +1,10 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { colors } from '@/styles/commonStyles';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { supabase } from '@/app/integrations/supabase/client';
+import { IconSymbol } from '@/components/IconSymbol';
+import { RealtimeChannel } from '@supabase/supabase-js';
 import {
   View,
   Text,
@@ -11,11 +16,6 @@ import {
   Platform,
   ActivityIndicator,
 } from 'react-native';
-import { supabase } from '@/app/integrations/supabase/client';
-import { colors } from '@/styles/commonStyles';
-import { IconSymbol } from '@/components/IconSymbol';
-import { useAuth } from '@/contexts/AuthContext';
-import { RealtimeChannel } from '@supabase/supabase-js';
 
 interface ClubMessage {
   id: string;
@@ -35,18 +35,122 @@ interface ClubChatProps {
   canMessage: boolean;
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  messagesList: {
+    flex: 1,
+    padding: 16,
+  },
+  messageContainer: {
+    marginBottom: 16,
+    maxWidth: '80%',
+  },
+  ownMessage: {
+    alignSelf: 'flex-end',
+    backgroundColor: colors.primary,
+    borderRadius: 16,
+    borderBottomRightRadius: 4,
+    padding: 12,
+  },
+  otherMessage: {
+    alignSelf: 'flex-start',
+    backgroundColor: colors.cardBackground,
+    borderRadius: 16,
+    borderBottomLeftRadius: 4,
+    padding: 12,
+  },
+  messageHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  username: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: colors.textSecondary,
+  },
+  ownUsername: {
+    color: 'rgba(255, 255, 255, 0.8)',
+  },
+  messageText: {
+    fontSize: 15,
+    color: colors.text,
+  },
+  ownMessageText: {
+    color: '#FFFFFF',
+  },
+  timestamp: {
+    fontSize: 11,
+    color: colors.textSecondary,
+    marginTop: 4,
+  },
+  ownTimestamp: {
+    color: 'rgba(255, 255, 255, 0.7)',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    backgroundColor: colors.cardBackground,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+  },
+  input: {
+    flex: 1,
+    backgroundColor: colors.background,
+    borderRadius: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    marginRight: 8,
+    color: colors.text,
+    fontSize: 15,
+  },
+  sendButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  sendButtonDisabled: {
+    backgroundColor: colors.border,
+  },
+  emptyContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 32,
+  },
+  emptyText: {
+    fontSize: 16,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    marginTop: 16,
+  },
+  loadingContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
 export function ClubChat({ clubId, canMessage }: ClubChatProps) {
   const { user } = useAuth();
   const [messages, setMessages] = useState<ClubMessage[]>([]);
-  const [messageText, setMessageText] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [sending, setSending] = useState(false);
+  const [newMessage, setNewMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSending, setIsSending] = useState(false);
   const flatListRef = useRef<FlatList>(null);
   const channelRef = useRef<RealtimeChannel | null>(null);
 
-  const fetchMessages = async () => {
+  // FIXED: Wrap fetchMessages in useCallback and add to dependency array
+  const fetchMessages = useCallback(async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       const { data, error } = await supabase
         .from('club_messages')
         .select(`
@@ -61,60 +165,36 @@ export function ClubChat({ clubId, canMessage }: ClubChatProps) {
         .order('created_at', { ascending: true })
         .limit(100);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching messages:', error);
+        return;
+      }
+
       setMessages(data || []);
     } catch (error) {
-      console.error('Error fetching club messages:', error);
+      console.error('Error fetching messages:', error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
-  };
-
-  const sendMessage = async () => {
-    if (!messageText.trim() || !canMessage) return;
-
-    try {
-      setSending(true);
-      const { error } = await supabase
-        .from('club_messages')
-        .insert({
-          club_id: clubId,
-          user_id: user?.id,
-          message: messageText.trim(),
-        });
-
-      if (error) throw error;
-      setMessageText('');
-      setTimeout(() => {
-        flatListRef.current?.scrollToEnd({ animated: true });
-      }, 100);
-    } catch (error) {
-      console.error('Error sending message:', error);
-    } finally {
-      setSending(false);
-    }
-  };
+  }, [clubId]);
 
   useEffect(() => {
     fetchMessages();
 
-    // Set up realtime subscription
-    const setupRealtimeSubscription = async () => {
-      if (channelRef.current?.state === 'subscribed') return;
-
-      const channel = supabase.channel(`club:${clubId}:messages`, {
-        config: { private: true },
-      });
-
-      channelRef.current = channel;
-
-      // Set auth before subscribing
-      await supabase.realtime.setAuth();
-
-      channel
-        .on('broadcast', { event: 'INSERT' }, async (payload) => {
-          console.log('New club message:', payload);
-          // Fetch the full message with profile data
+    // Set up real-time subscription
+    const channel = supabase
+      .channel(`club_messages:${clubId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'club_messages',
+          filter: `club_id=eq.${clubId}`,
+        },
+        async (payload) => {
+          console.log('New message received:', payload);
+          // Fetch the complete message with profile data
           const { data } = await supabase
             .from('club_messages')
             .select(`
@@ -131,66 +211,91 @@ export function ClubChat({ clubId, canMessage }: ClubChatProps) {
           if (data) {
             setMessages((prev) => [...prev, data]);
           }
-        })
-        .subscribe();
-    };
+        }
+      )
+      .subscribe();
 
-    setupRealtimeSubscription();
+    channelRef.current = channel;
 
     return () => {
       if (channelRef.current) {
         supabase.removeChannel(channelRef.current);
-        channelRef.current = null;
       }
     };
-  }, [clubId]);
+  }, [clubId, fetchMessages]);
+
+  const sendMessage = async () => {
+    if (!newMessage.trim() || !user || !canMessage || isSending) {
+      return;
+    }
+
+    try {
+      setIsSending(true);
+      const { error } = await supabase.from('club_messages').insert({
+        club_id: clubId,
+        user_id: user.id,
+        message: newMessage.trim(),
+      });
+
+      if (error) {
+        console.error('Error sending message:', error);
+        return;
+      }
+
+      setNewMessage('');
+      // Scroll to bottom after sending
+      setTimeout(() => {
+        flatListRef.current?.scrollToEnd({ animated: true });
+      }, 100);
+    } catch (error) {
+      console.error('Error sending message:', error);
+    } finally {
+      setIsSending(false);
+    }
+  };
 
   const renderMessage = ({ item }: { item: ClubMessage }) => {
     const isOwnMessage = item.user_id === user?.id;
+    const messageTime = new Date(item.created_at).toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
 
     return (
       <View
         style={[
           styles.messageContainer,
-          isOwnMessage ? styles.ownMessageContainer : styles.otherMessageContainer,
+          isOwnMessage ? styles.ownMessage : styles.otherMessage,
         ]}
       >
         {!isOwnMessage && (
-          <Text style={styles.senderName}>
-            {item.profiles?.display_name || item.profiles?.username || 'Unknown'}
-          </Text>
+          <View style={styles.messageHeader}>
+            <Text style={styles.username}>
+              {item.profiles?.display_name || item.profiles?.username || 'Unknown User'}
+            </Text>
+          </View>
         )}
-        <View
+        <Text
           style={[
-            styles.messageBubble,
-            isOwnMessage ? styles.ownMessageBubble : styles.otherMessageBubble,
+            styles.messageText,
+            isOwnMessage && styles.ownMessageText,
           ]}
         >
-          <Text
-            style={[
-              styles.messageText,
-              isOwnMessage ? styles.ownMessageText : styles.otherMessageText,
-            ]}
-          >
-            {item.message}
-          </Text>
-          <Text
-            style={[
-              styles.messageTime,
-              isOwnMessage ? styles.ownMessageTime : styles.otherMessageTime,
-            ]}
-          >
-            {new Date(item.created_at).toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </Text>
-        </View>
+          {item.message}
+        </Text>
+        <Text
+          style={[
+            styles.timestamp,
+            isOwnMessage && styles.ownTimestamp,
+          ]}
+        >
+          {messageTime}
+        </Text>
       </View>
     );
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color={colors.primary} />
@@ -204,183 +309,62 @@ export function ClubChat({ clubId, canMessage }: ClubChatProps) {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
     >
-      <FlatList
-        ref={flatListRef}
-        data={messages}
-        renderItem={renderMessage}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.messagesList}
-        onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: false })}
-        ListEmptyComponent={
-          <View style={styles.emptyState}>
-            <IconSymbol
-              ios_icon_name="message"
-              android_material_icon_name="message"
-              size={64}
-              color={colors.textSecondary}
-            />
-            <Text style={styles.emptyStateText}>No messages yet</Text>
-            <Text style={styles.emptyStateSubtext}>Start the conversation!</Text>
-          </View>
-        }
-      />
+      {messages.length === 0 ? (
+        <View style={styles.emptyContainer}>
+          <IconSymbol
+            ios_icon_name="message"
+            android_material_icon_name="message"
+            size={64}
+            color={colors.textSecondary}
+          />
+          <Text style={styles.emptyText}>
+            No messages yet. Start the conversation!
+          </Text>
+        </View>
+      ) : (
+        <FlatList
+          ref={flatListRef}
+          data={messages}
+          renderItem={renderMessage}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.messagesList}
+          onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: false })}
+        />
+      )}
 
-      {canMessage ? (
+      {canMessage && (
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            value={messageText}
-            onChangeText={setMessageText}
+            value={newMessage}
+            onChangeText={setNewMessage}
             placeholder="Type a message..."
             placeholderTextColor={colors.textSecondary}
             multiline
-            maxLength={2000}
-            editable={!sending}
+            maxLength={500}
+            editable={!isSending}
           />
-
           <TouchableOpacity
-            style={[styles.sendButton, (!messageText.trim() || sending) && styles.sendButtonDisabled]}
+            style={[
+              styles.sendButton,
+              (!newMessage.trim() || isSending) && styles.sendButtonDisabled,
+            ]}
             onPress={sendMessage}
-            disabled={!messageText.trim() || sending}
+            disabled={!newMessage.trim() || isSending}
           >
-            {sending ? (
+            {isSending ? (
               <ActivityIndicator size="small" color="#FFFFFF" />
             ) : (
               <IconSymbol
                 ios_icon_name="arrow.up"
                 android_material_icon_name="send"
-                size={24}
+                size={20}
                 color="#FFFFFF"
               />
             )}
           </TouchableOpacity>
         </View>
-      ) : (
-        <View style={styles.disabledInputContainer}>
-          <Text style={styles.disabledText}>Only admins can send messages in this club</Text>
-        </View>
       )}
     </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  messagesList: {
-    padding: 16,
-    flexGrow: 1,
-  },
-  messageContainer: {
-    marginBottom: 12,
-    maxWidth: '80%',
-  },
-  ownMessageContainer: {
-    alignSelf: 'flex-end',
-  },
-  otherMessageContainer: {
-    alignSelf: 'flex-start',
-  },
-  senderName: {
-    fontSize: 12,
-    color: colors.textSecondary,
-    marginBottom: 4,
-    marginLeft: 12,
-  },
-  messageBubble: {
-    borderRadius: 16,
-    padding: 12,
-  },
-  ownMessageBubble: {
-    backgroundColor: colors.primary,
-  },
-  otherMessageBubble: {
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  messageText: {
-    fontSize: 16,
-    lineHeight: 20,
-  },
-  ownMessageText: {
-    color: '#FFFFFF',
-  },
-  otherMessageText: {
-    color: colors.text,
-  },
-  messageTime: {
-    fontSize: 11,
-    marginTop: 4,
-  },
-  ownMessageTime: {
-    color: 'rgba(255, 255, 255, 0.7)',
-  },
-  otherMessageTime: {
-    color: colors.textSecondary,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    padding: 12,
-    backgroundColor: colors.surface,
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
-  },
-  input: {
-    flex: 1,
-    backgroundColor: colors.background,
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    fontSize: 16,
-    color: colors.text,
-    maxHeight: 100,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  sendButton: {
-    backgroundColor: colors.primary,
-    borderRadius: 20,
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 8,
-  },
-  sendButtonDisabled: {
-    opacity: 0.5,
-  },
-  disabledInputContainer: {
-    padding: 16,
-    backgroundColor: colors.surface,
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
-    alignItems: 'center',
-  },
-  disabledText: {
-    color: colors.textSecondary,
-    fontSize: 14,
-  },
-  emptyState: {
-    alignItems: 'center',
-    paddingVertical: 60,
-  },
-  emptyStateText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: colors.text,
-    marginTop: 16,
-  },
-  emptyStateSubtext: {
-    fontSize: 14,
-    color: colors.textSecondary,
-    marginTop: 8,
-  },
-});

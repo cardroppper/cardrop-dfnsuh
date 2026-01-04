@@ -5,6 +5,8 @@ import { colors, buttonStyles } from '@/styles/commonStyles';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState, useEffect } from 'react';
+// FIXED: Changed require() to ES6 import
+import premiumImage from '../assets/images/natively-dark.png';
 
 interface PaywallScreenProps {
   feature: string;

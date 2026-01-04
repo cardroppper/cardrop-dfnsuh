@@ -2,7 +2,7 @@
 {
   "expo": {
     "name": "CarDrop",
-    "slug": "cardrop",
+    "slug": "CarDrop",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/b7c66c53-8dea-43bf-bc60-3e5e66ecb613.png",
@@ -25,7 +25,9 @@
         "NSBluetoothPeripheralUsageDescription": "CarDrop uses Bluetooth to broadcast your vehicle's presence.",
         "NSCameraUsageDescription": "CarDrop needs camera access to take photos of your vehicle and at car meets.",
         "NSPhotoLibraryUsageDescription": "CarDrop needs photo library access to upload vehicle photos and meet galleries.",
-        "NSPhotoLibraryAddUsageDescription": "CarDrop needs permission to save photos to your library."
+        "NSPhotoLibraryAddUsageDescription": "CarDrop needs permission to save photos to your library.",
+        "CFBundleAllowMixedLocalizations": true,
+        "CFBundleLocalizations": ["en"]
       },
       "config": {
         "usesNonExemptEncryption": false
@@ -75,6 +77,13 @@
             "minSdkVersion": 26
           }
         }
+      ],
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "merchant.com.cardrop.app",
+          "enableGooglePay": true
+        }
       ]
     ],
     "scheme": "cardrop",
@@ -91,5 +100,6 @@
     "privacy": "unlisted",
     "description": "CarDrop - The automotive social network for real car enthusiasts. Connect with nearby vehicles, join clubs, and showcase your build.",
     "primaryColor": "#FF8C42"
-  }
+  },
+  "scheme": "CarDrop"
 }

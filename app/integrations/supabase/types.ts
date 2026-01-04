@@ -1,267 +1,331 @@
 
-export interface Profile {
-  id: string;
-  username: string;
-  display_name: string;
-  bio: string | null;
-  avatar_url: string | null;
-  instagram_handle: string | null;
-  x_handle: string | null;
-  tiktok_handle: string | null;
-  youtube_handle: string | null;
-  is_private: boolean;
-  ghost_mode: boolean;
-  free_premium: boolean;
-  always_searching_enabled: boolean;
-  attendance_mode: 'manual' | 'automatic';
-  notification_preferences: {
-    detection_type: 'silent' | 'vibration' | 'sound';
-    vibration: boolean;
-    sound: 'none' | 'vroom' | 'default';
-  };
-  created_at: string;
-  updated_at: string;
-  cover_photo_url: string | null;
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
+export interface Database {
+  public: {
+    Tables: {
+      profiles: {
+        Row: {
+          id: string
+          user_id: string
+          username: string
+          display_name: string
+          bio: string | null
+          location: string | null
+          avatar_url: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          username: string
+          display_name: string
+          bio?: string | null
+          location?: string | null
+          avatar_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          username?: string
+          display_name?: string
+          bio?: string | null
+          location?: string | null
+          avatar_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      vehicles: {
+        Row: {
+          id: string
+          owner_id: string
+          make: string
+          model: string
+          year: number
+          color: string | null
+          vin: string | null
+          license_plate: string | null
+          description: string | null
+          image_url: string | null
+          is_public: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          owner_id: string
+          make: string
+          model: string
+          year: number
+          color?: string | null
+          vin?: string | null
+          license_plate?: string | null
+          description?: string | null
+          image_url?: string | null
+          is_public?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          owner_id?: string
+          make?: string
+          model?: string
+          year?: number
+          color?: string | null
+          vin?: string | null
+          license_plate?: string | null
+          description?: string | null
+          image_url?: string | null
+          is_public?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      clubs: {
+        Row: {
+          id: string
+          name: string
+          description: string | null
+          owner_id: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          description?: string | null
+          owner_id: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          description?: string | null
+          owner_id?: string
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      club_members: {
+        Row: {
+          id: string
+          club_id: string
+          user_id: string
+          role: string
+          joined_at: string
+        }
+        Insert: {
+          id?: string
+          club_id: string
+          user_id: string
+          role?: string
+          joined_at?: string
+        }
+        Update: {
+          id?: string
+          club_id?: string
+          user_id?: string
+          role?: string
+          joined_at?: string
+        }
+      }
+      stripe_customers: {
+        Row: {
+          id: string
+          user_id: string
+          stripe_customer_id: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          stripe_customer_id: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          stripe_customer_id?: string
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      stripe_subscriptions: {
+        Row: {
+          id: string
+          user_id: string
+          stripe_subscription_id: string
+          stripe_customer_id: string
+          status: string
+          price_id: string
+          current_period_start: string
+          current_period_end: string
+          cancel_at_period_end: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          stripe_subscription_id: string
+          stripe_customer_id: string
+          status: string
+          price_id: string
+          current_period_start: string
+          current_period_end: string
+          cancel_at_period_end?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          stripe_subscription_id?: string
+          stripe_customer_id?: string
+          status?: string
+          price_id?: string
+          current_period_start?: string
+          current_period_end?: string
+          cancel_at_period_end?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      stripe_club_subscriptions: {
+        Row: {
+          id: string
+          club_id: string
+          stripe_subscription_id: string
+          stripe_customer_id: string
+          status: string
+          price_id: string
+          current_period_start: string
+          current_period_end: string
+          cancel_at_period_end: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          club_id: string
+          stripe_subscription_id: string
+          stripe_customer_id: string
+          status: string
+          price_id: string
+          current_period_start: string
+          current_period_end: string
+          cancel_at_period_end?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          club_id?: string
+          stripe_subscription_id?: string
+          stripe_customer_id?: string
+          status?: string
+          price_id?: string
+          current_period_start?: string
+          current_period_end?: string
+          cancel_at_period_end?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      stripe_payment_intents: {
+        Row: {
+          id: string
+          user_id: string
+          stripe_payment_intent_id: string
+          amount: number
+          currency: string
+          status: string
+          metadata: Json | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          stripe_payment_intent_id: string
+          amount: number
+          currency?: string
+          status: string
+          metadata?: Json | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          stripe_payment_intent_id?: string
+          amount?: number
+          currency?: string
+          status?: string
+          metadata?: Json | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      registered_beacons: {
+        Row: {
+          id: string
+          beacon_id: string
+          name: string | null
+          manufacturer_data: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          beacon_id: string
+          name?: string | null
+          manufacturer_data?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          beacon_id?: string
+          name?: string | null
+          manufacturer_data?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
+    }
+  }
 }
 
-export interface Vehicle {
-  id: string;
-  user_id: string;
-  manufacturer: string;
-  model: string;
-  year: number;
-  body_style: string | null;
-  fuel_type: string | null;
-  drivetrain: string | null;
-  engine_configuration: string | null;
-  induction_type: string | null;
-  transmission_type: string | null;
-  power_output: string | null;
-  torque_output: string | null;
-  primary_image_url: string | null;
-  is_public: boolean;
-  is_featured: boolean;
-  latitude: number | null;
-  longitude: number | null;
-  location_updated_at: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface VehicleBeacon {
-  id: string;
-  vehicle_id: string;
-  beacon_uuid: string;
-  beacon_major: number | null;
-  beacon_minor: number | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface BeaconDetection {
-  id: string;
-  detector_user_id: string;
-  detected_vehicle_id: string;
-  detected_user_id: string;
-  rssi: number;
-  location: string | null;
-  detected_at: string;
-}
-
-export interface Club {
-  id: string;
-  name: string;
-  description: string | null;
-  location: string | null;
-  is_public: boolean;
-  owner_id: string;
-  logo_url: string | null;
-  banner_url: string | null;
-  member_limit: number | null;
-  pricing_tier: 'free' | 'tier_50' | 'tier_100' | 'tier_200' | 'tier_500' | 'custom';
-  monthly_price: number;
-  allow_member_invites: boolean;
-  require_approval: boolean;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface ClubMember {
-  id: string;
-  club_id: string;
-  user_id: string;
-  role: 'owner' | 'admin' | 'member';
-  joined_at: string;
-}
-
-export interface ClubSubscription {
-  id: string;
-  club_id: string;
-  paid_by_user_id: string;
-  subscription_status: 'active' | 'cancelled' | 'past_due';
-  current_period_start: string | null;
-  current_period_end: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface ClubInvite {
-  id: string;
-  club_id: string;
-  invited_by_user_id: string;
-  invite_code: string;
-  max_uses: number;
-  uses_count: number;
-  expires_at: string | null;
-  created_at: string;
-}
-
-export interface DetectionHighlight {
-  id: string;
-  user_id: string;
-  vehicle_id: string;
-  detected_at: string;
-  expires_at: string;
-}
-
-export interface Event {
-  id: string;
-  club_id: string;
-  name: string;
-  description: string | null;
-  location: string;
-  event_date: string;
-  created_by: string;
-  beacon_uuid: string | null;
-  auto_checkin_enabled: boolean;
-  latitude: number | null;
-  longitude: number | null;
-  geofence_radius_meters: number;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface EventRSVP {
-  id: string;
-  event_id: string;
-  user_id: string;
-  status: 'going' | 'maybe' | 'not_going';
-  rsvp_at: string;
-}
-
-export interface EventCheckin {
-  id: string;
-  event_id: string;
-  user_id: string;
-  vehicle_id: string | null;
-  checked_in_at: string;
-}
-
-export interface VehicleModification {
-  id: string;
-  vehicle_id: string;
-  category: 'Engine' | 'Intake' | 'Exhaust' | 'Suspension' | 'Wheels & Tyres' | 'Brakes' | 'Aero' | 'Electronics' | 'Interior';
-  brand_name: string | null;
-  part_name: string | null;
-  description: string | null;
-  install_date: string | null;
-  cost: number | null;
-  image_url: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface VehicleImage {
-  id: string;
-  vehicle_id: string;
-  image_url: string;
-  display_order: number;
-  created_at: string;
-}
-
-export interface VehicleTimeline {
-  id: string;
-  vehicle_id: string;
-  title: string;
-  description: string | null;
-  entry_date: string;
-  media_type: 'image' | 'video';
-  image_url: string | null;
-  video_url: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface VehiclePerformance {
-  id: string;
-  vehicle_id: string;
-  zero_to_sixty: number | null;
-  quarter_mile_time: number | null;
-  quarter_mile_speed: number | null;
-  horsepower: number | null;
-  torque: number | null;
-  weight_lbs: number | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface ClubHub {
-  id: string;
-  club_id: string;
-  name: string;
-  location: string;
-  latitude: number | null;
-  longitude: number | null;
-  is_active: boolean;
-  sync_interval_minutes: number;
-  created_by: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface HubDetection {
-  id: string;
-  hub_id: string;
-  vehicle_id: string;
-  user_id: string;
-  rssi: number;
-  detected_at: string;
-}
-
-export interface UserSubscription {
-  id: string;
-  user_id: string;
-  subscription_status: 'free' | 'premium';
-  subscription_start_date: string | null;
-  subscription_end_date: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface RegisteredBeacon {
-  id: string;
-  beacon_uuid: string;
-  beacon_mac_address: string | null;
-  device_model: string;
-  manufacturer: string;
-  is_configured: boolean;
-  is_assigned: boolean;
-  assigned_to_user_id: string | null;
-  registered_by: string | null;
-  registered_at: string;
-  configured_at: string | null;
-  assigned_at: string | null;
-  notes: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface EventMeetDetection {
-  id: string;
-  event_id: string;
-  vehicle_id: string;
-  detected_by_user_id: string;
-  rssi: number;
-  detected_at: string;
-  expires_at: string;
-}
+export type Profile = Database['public']['Tables']['profiles']['Row']
+export type Vehicle = Database['public']['Tables']['vehicles']['Row']
+export type Club = Database['public']['Tables']['clubs']['Row']
+export type ClubMember = Database['public']['Tables']['club_members']['Row']
+export type StripeCustomer = Database['public']['Tables']['stripe_customers']['Row']
+export type StripeSubscription = Database['public']['Tables']['stripe_subscriptions']['Row']
+export type StripeClubSubscription = Database['public']['Tables']['stripe_club_subscriptions']['Row']
+export type StripePaymentIntent = Database['public']['Tables']['stripe_payment_intents']['Row']
+export type RegisteredBeacon = Database['public']['Tables']['registered_beacons']['Row']
