@@ -47,11 +47,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     console.log('[AuthContext] Initializing auth...');
     
     try {
+      // Check network connectivity first
+      const networkState = await Network.getNetworkStateAsync();
+      console.log('[AuthContext] Network state:', networkState);
+      
+      if (!networkState.isConnected) {
+        console.warn('[AuthContext] No network connection, skipping session check');
+        setIsLoading(false);
+        autoDebugger.markSuccess(operationId);
+        return;
+      }
+
       const { data: { session: currentSession }, error: sessionError } = await supabase.auth.getSession();
       
       if (sessionError) {
         console.error('[AuthContext] Session error:', sessionError);
         autoDebugger.markFailure(operationId, sessionError.message);
+        
+        // Don't throw on network errors, just log and continue
+        if (sessionError.message?.includes('network') || sessionError.message?.includes('fetch')) {
+          console.warn('[AuthContext] Network error during session check, continuing...');
+          setIsLoading(false);
+          return;
+        }
+        
         throw sessionError;
       }
 
@@ -67,7 +86,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } catch (err: any) {
       console.error('[AuthContext] Initialize error:', err);
       autoDebugger.markFailure(operationId, err.message);
-      setError(err.message);
+      
+      // Don't set error for network issues, just log
+      if (err.message?.includes('Network request failed') || err.message?.includes('fetch')) {
+        console.warn('[AuthContext] Network error, continuing without session');
+      } else {
+        setError(err.message);
+      }
     } finally {
       setIsLoading(false);
     }

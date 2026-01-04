@@ -6,15 +6,21 @@ import { CARDROP_BEACON_UUID, BeaconData, calculateDistance } from '@/types/ble'
 let BleManager: any = null;
 let Device: any = null;
 let State: any = null;
+let bleModuleLoaded = false;
 
 if (Platform.OS !== 'web') {
   import('react-native-ble-plx').then((BleModule) => {
     BleManager = BleModule.BleManager;
     Device = BleModule.Device;
     State = BleModule.State;
+    bleModuleLoaded = true;
+    console.log('[BLEService] BLE module loaded successfully');
   }).catch((error) => {
-    console.warn('react-native-ble-plx not available:', error);
+    console.warn('[BLEService] react-native-ble-plx not available:', error);
+    bleModuleLoaded = false;
   });
+} else {
+  console.log('[BLEService] Web platform detected, BLE not available');
 }
 
 class BLEService {
@@ -26,20 +32,23 @@ class BLEService {
   private isSupported: boolean = false;
 
   constructor() {
-    // Only initialize BleManager on native platforms
-    if (Platform.OS !== 'web' && BleManager) {
-      try {
-        this.manager = new BleManager();
-        this.isSupported = true;
-        console.log('BLEService initialized successfully');
-      } catch (error) {
-        console.error('Failed to initialize BleManager:', error);
+    // Delay initialization to ensure BLE module is loaded
+    setTimeout(() => {
+      // Only initialize BleManager on native platforms
+      if (Platform.OS !== 'web' && bleModuleLoaded && BleManager) {
+        try {
+          this.manager = new BleManager();
+          this.isSupported = true;
+          console.log('[BLEService] BLEService initialized successfully');
+        } catch (error) {
+          console.error('[BLEService] Failed to initialize BleManager:', error);
+          this.isSupported = false;
+        }
+      } else {
+        console.log('[BLEService] BLE not supported on this platform or module not loaded');
         this.isSupported = false;
       }
-    } else {
-      console.log('BLE not supported on this platform');
-      this.isSupported = false;
-    }
+    }, 100);
   }
 
   isBluetoothSupported(): boolean {

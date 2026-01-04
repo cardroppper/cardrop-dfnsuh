@@ -1,12 +1,16 @@
 {
   "expo": {
     "name": "CarDrop",
-    "slug": "CarDrop",
-    "version": "1.0.0",
+    "slug": "cardrop-dfnsuh",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/6a39751f-03b5-4411-acbb-1e92f6a5988e.png",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
+    "extra": {
+      "supabaseUrl": "https://pukpbqbxmuipnwtywrmm.supabase.co",
+      "supabaseAnonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB1a3BicWJ4bXVpcG53dHl3cm1tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY0MTE0MjksImV4cCI6MjA4MTk4NzQyOX0.-r4L3mqitNyhFKEfqq7llQC09f3Qd_APTDaET4FCEiI"
+    },
     "splash": {
       "image": "./assets/images/6a39751f-03b5-4411-acbb-1e92f6a5988e.png",
       "resizeMode": "contain",
@@ -29,7 +33,7 @@
         "backgroundColor": "#1A1A1A"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.cardrop.app",
+      "package": "com.CARDROP.CARDROP",
       "permissions": [
         "BLUETOOTH",
         "BLUETOOTH_ADMIN",
@@ -37,7 +41,10 @@
         "BLUETOOTH_CONNECT",
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
-        "ACCESS_BACKGROUND_LOCATION"
+        "ACCESS_BACKGROUND_LOCATION",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
       ]
     },
     "web": {
