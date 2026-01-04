@@ -1,79 +1,94 @@
 
-import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle, useColorScheme } from 'react-native';
 
-export const colors = {
-  // CarDrop Brand Colors
-  background: '#1A1A1A',
-  backgroundDark: '#0D0D0D',
-  surface: '#252525',
-  text: '#FFFFFF',
-  textSecondary: '#A0A0A0',
-  primary: '#FF9933', // CarDrop Orange
-  primaryDark: '#E67E22',
-  secondary: '#FF9933',
-  accent: '#FF9933',
-  card: '#252525',
-  cardDark: '#1F1F1F',
-  highlight: '#2F2F2F',
+// Color schemes based on user's design
+export const lightColors = {
+  primary: '#FF8C42',      // Orange - major color in light mode
+  secondary: '#FF6B1A',    // Darker orange
+  accent: '#2A2A2A',       // Grey - minor color in light mode
+  background: '#FFFFFF',
+  backgroundAlt: '#F5F5F5',
+  text: '#2A2A2A',
+  textSecondary: '#666666',
+  grey: '#E0E0E0',
+  card: '#FFFFFF',
+  border: '#E0E0E0',
   success: '#4CAF50',
   warning: '#FFC107',
   error: '#F44336',
-  gold: '#FFD700',
-  border: '#3A3A3A',
+  shadow: 'rgba(0, 0, 0, 0.1)',
 };
+
+export const darkColors = {
+  primary: '#2A2A2A',      // Grey - major color in dark mode
+  secondary: '#1A1A1A',    // Darker grey
+  accent: '#FF8C42',       // Orange - minor color in dark mode
+  background: '#121212',
+  backgroundAlt: '#1E1E1E',
+  text: '#FFFFFF',
+  textSecondary: '#B0B0B0',
+  grey: '#3A3A3A',
+  card: '#1E1E1E',
+  border: '#3A3A3A',
+  success: '#4CAF50',
+  warning: '#FFC107',
+  error: '#F44336',
+  shadow: 'rgba(0, 0, 0, 0.3)',
+};
+
+// Hook to get current theme colors
+export const useThemeColors = () => {
+  const colorScheme = useColorScheme();
+  return colorScheme === 'dark' ? darkColors : lightColors;
+};
+
+// Legacy export for backwards compatibility
+export const colors = darkColors;
 
 export const buttonStyles = StyleSheet.create({
   primary: {
-    backgroundColor: colors.primary,
-    paddingVertical: 16,
-    paddingHorizontal: 32,
+    paddingVertical: 14,
+    paddingHorizontal: 24,
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
+    minHeight: 50,
   },
   secondary: {
-    backgroundColor: 'transparent',
-    paddingVertical: 16,
-    paddingHorizontal: 32,
+    paddingVertical: 14,
+    paddingHorizontal: 24,
     borderRadius: 12,
-    borderWidth: 2,
-    borderColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  outline: {
-    backgroundColor: 'transparent',
-    paddingVertical: 16,
-    paddingHorizontal: 32,
-    borderRadius: 12,
+    minHeight: 50,
     borderWidth: 2,
-    borderColor: colors.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   text: {
-    color: '#000000',
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '600',
+    letterSpacing: 0.5,
   },
-  textOutline: {
-    color: colors.primary,
-    fontSize: 16,
-    fontWeight: '700',
+  instructionsButton: {
+    alignSelf: 'center',
+    width: '100%',
+  },
+  backButton: {
+    alignSelf: 'center',
+    width: '100%',
   },
 });
 
 export const commonStyles = StyleSheet.create({
   wrapper: {
-    backgroundColor: colors.background,
     width: '100%',
     height: '100%',
   },
   container: {
     flex: 1,
-    backgroundColor: colors.background,
     width: '100%',
     height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   content: {
     flex: 1,
@@ -83,75 +98,61 @@ export const commonStyles = StyleSheet.create({
     width: '100%',
   },
   title: {
-    fontSize: 32,
-    fontWeight: '900',
+    fontSize: 28,
+    fontWeight: '800',
     textAlign: 'center',
-    color: colors.text,
-    marginBottom: 10,
-    letterSpacing: -0.5,
+    marginBottom: 12,
+    letterSpacing: 0.5,
   },
   subtitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: colors.text,
-    marginBottom: 8,
+    marginBottom: 10,
   },
   text: {
     fontSize: 16,
-    fontWeight: '400',
-    color: colors.text,
+    fontWeight: '500',
     marginBottom: 8,
     lineHeight: 24,
-  },
-  textSecondary: {
-    fontSize: 14,
-    fontWeight: '400',
-    color: colors.textSecondary,
-    lineHeight: 20,
+    textAlign: 'center',
   },
   section: {
     width: '100%',
+    alignItems: 'center',
     paddingHorizontal: 20,
-    marginBottom: 24,
+    marginBottom: 20,
+  },
+  buttonContainer: {
+    width: '100%',
+    alignItems: 'center',
+    paddingHorizontal: 20,
   },
   card: {
-    backgroundColor: colors.card,
     borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.3)',
-    elevation: 4,
-    borderWidth: 1,
-    borderColor: colors.border,
+    padding: 16,
+    marginVertical: 8,
+    width: '100%',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  icon: {
+    width: 60,
+    height: 60,
   },
   input: {
-    backgroundColor: colors.highlight,
+    width: '100%',
+    paddingVertical: 14,
+    paddingHorizontal: 16,
     borderRadius: 12,
-    padding: 16,
     fontSize: 16,
-    color: colors.text,
     borderWidth: 1,
-    borderColor: colors.border,
-    marginBottom: 16,
+    marginBottom: 12,
   },
-  inputFocused: {
-    borderColor: colors.primary,
-  },
-  centerContent: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  emptyState: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 40,
-  },
-  emptyStateText: {
-    fontSize: 18,
-    color: colors.textSecondary,
-    textAlign: 'center',
-    marginTop: 16,
+  divider: {
+    height: 1,
+    width: '100%',
+    marginVertical: 16,
   },
 });

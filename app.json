@@ -5,28 +5,27 @@
     "slug": "cardrop",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/cardrop-icon.png",
-    "userInterfaceStyle": "dark",
+    "icon": "./assets/images/b7c66c53-8dea-43bf-bc60-3e5e66ecb613.png",
+    "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/images/cardrop-splash.png",
+      "image": "./assets/images/1c867cde-aadb-4f1e-8906-868c43a7f0fa.png",
       "resizeMode": "contain",
-      "backgroundColor": "#000000"
+      "backgroundColor": "#121212"
     },
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.cardrop.app",
-      "buildNumber": "1.0.0",
+      "buildNumber": "1",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSLocationWhenInUseUsageDescription": "CarDrop needs your location to show nearby vehicles and car meets.",
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "CarDrop needs your location to detect nearby vehicles via Bluetooth.",
-        "NSBluetoothAlwaysUsageDescription": "CarDrop uses Bluetooth to detect nearby vehicles and enable proximity features.",
-        "NSBluetoothPeripheralUsageDescription": "CarDrop uses Bluetooth to broadcast your vehicle's presence to nearby users.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "CarDrop needs your location to detect nearby vehicles using Bluetooth beacons.",
+        "NSBluetoothAlwaysUsageDescription": "CarDrop uses Bluetooth to detect nearby vehicles at car meets.",
+        "NSBluetoothPeripheralUsageDescription": "CarDrop uses Bluetooth to broadcast your vehicle's presence.",
         "NSCameraUsageDescription": "CarDrop needs camera access to take photos of your vehicle and at car meets.",
         "NSPhotoLibraryUsageDescription": "CarDrop needs photo library access to upload vehicle photos and meet galleries.",
-        "NSMicrophoneUsageDescription": "CarDrop needs microphone access to record videos for your vehicle timeline.",
-        "UIBackgroundModes": ["location", "bluetooth-central", "bluetooth-peripheral"]
+        "NSPhotoLibraryAddUsageDescription": "CarDrop needs permission to save photos to your library."
       },
       "config": {
         "usesNonExemptEncryption": false
@@ -34,15 +33,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/cardrop-icon.png",
-        "backgroundColor": "#000000"
+        "foregroundImage": "./assets/images/8b4b7908-f6d2-4b0f-ad18-5b6444964a08.png",
+        "backgroundColor": "#121212"
       },
-      "package": "com.cardrop.app",
-      "versionCode": 1,
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
-        "ACCESS_BACKGROUND_LOCATION",
         "BLUETOOTH",
         "BLUETOOTH_ADMIN",
         "BLUETOOTH_SCAN",
@@ -52,27 +48,31 @@
         "READ_EXTERNAL_STORAGE",
         "WRITE_EXTERNAL_STORAGE",
         "READ_MEDIA_IMAGES",
-        "READ_MEDIA_VIDEO",
-        "RECORD_AUDIO",
-        "INTERNET",
-        "ACCESS_NETWORK_STATE"
-      ]
+        "READ_MEDIA_VIDEO"
+      ],
+      "package": "com.cardrop.app",
+      "versionCode": 1
+    },
+    "web": {
+      "favicon": "./assets/images/8b4b7908-f6d2-4b0f-ad18-5b6444964a08.png",
+      "bundler": "metro"
     },
     "plugins": [
       "expo-font",
       "expo-router",
+      "expo-web-browser",
       "expo-location",
       "expo-image-picker",
       [
         "expo-build-properties",
         {
-          "android": {
-            "minSdkVersion": 23,
-            "targetSdkVersion": 34,
-            "compileSdkVersion": 34
-          },
           "ios": {
-            "deploymentTarget": "13.4"
+            "deploymentTarget": "15.0"
+          },
+          "android": {
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "minSdkVersion": 26
           }
         }
       ]
@@ -82,19 +82,14 @@
       "typedRoutes": true
     },
     "extra": {
-      "router": {
-        "origin": false
-      },
+      "router": {},
       "eas": {
-        "projectId": "your-project-id-here"
+        "projectId": "YOUR_EAS_PROJECT_ID"
       }
     },
-    "updates": {
-      "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/your-project-id-here"
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    }
+    "owner": "YOUR_EXPO_USERNAME",
+    "privacy": "unlisted",
+    "description": "CarDrop - The automotive social network for real car enthusiasts. Connect with nearby vehicles, join clubs, and showcase your build.",
+    "primaryColor": "#FF8C42"
   }
 }
