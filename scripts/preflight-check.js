@@ -1,6 +1,4 @@
 
-#!/usr/bin/env node
-
 /**
  * Preflight Dependency Check
  * Validates all imports can be resolved before building
