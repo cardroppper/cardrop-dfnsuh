@@ -1,14 +1,15 @@
+
 {
   "name": "Natively",
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "dev": "EXPO_NO_TELEMETRY=1 expo start --tunnel",
-    "android": "EXPO_NO_TELEMETRY=1 expo start --android",
-    "ios": "EXPO_NO_TELEMETRY=1 expo start --ios",
-    "web": "EXPO_NO_TELEMETRY=1 expo start --web",
-    "build:web": "expo export -p web && npx workbox generateSW workbox-config.js",
-    "build:android": "eas build -p android --profile production",
+    "dev": "EXPO_NO_TELEMETRY=1 npx expo start --tunnel",
+    "android": "EXPO_NO_TELEMETRY=1 npx expo start --android",
+    "ios": "EXPO_NO_TELEMETRY=1 npx expo start --ios",
+    "web": "EXPO_NO_TELEMETRY=1 npx expo start --web",
+    "build:web": "npx expo export -p web && npx workbox generateSW workbox-config.js",
+    "build:android": "npx expo prebuild -p android",
     "lint": "eslint ."
   },
   "dependencies": {
@@ -51,7 +52,7 @@
     "react-native-edge-to-edge": "^1.7.0",
     "react-native-gesture-handler": "^2.24.0",
     "react-native-maps": "^1.20.1",
-    "react-native-reanimated": "~4.1.6",
+    "react-native-reanimated": "~4.1.0",
     "react-native-safe-area-context": "^5.4.0",
     "react-native-screens": "~4.16.0",
     "react-native-url-polyfill": "^2.0.0",
