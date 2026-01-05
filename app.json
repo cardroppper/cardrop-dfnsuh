@@ -1,12 +1,12 @@
 
 {
   "expo": {
-    "name": "CarDrop",
-    "slug": "CarDrop",
+    "name": "Natively",
+    "slug": "Natively",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/natively-dark.png",
-    "scheme": "cardrop",
+    "scheme": "natively",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
@@ -18,14 +18,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.Natively",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false,
-        "NSLocationWhenInUseUsageDescription": "CarDrop needs your location to show nearby vehicles and events.",
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "CarDrop needs your location to show nearby vehicles and events.",
-        "NSBluetoothAlwaysUsageDescription": "CarDrop uses Bluetooth to detect nearby vehicles.",
-        "NSBluetoothPeripheralUsageDescription": "CarDrop uses Bluetooth to detect nearby vehicles.",
-        "NSCameraUsageDescription": "CarDrop needs camera access to take photos of your vehicles.",
-        "NSPhotoLibraryUsageDescription": "CarDrop needs photo library access to select vehicle photos.",
-        "NSPhotoLibraryAddUsageDescription": "CarDrop needs permission to save photos to your library."
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -34,18 +27,7 @@
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.CARDROP.CarDrop",
-      "permissions": [
-        "ACCESS_FINE_LOCATION",
-        "ACCESS_COARSE_LOCATION",
-        "BLUETOOTH",
-        "BLUETOOTH_ADMIN",
-        "BLUETOOTH_CONNECT",
-        "BLUETOOTH_SCAN",
-        "CAMERA",
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE"
-      ]
+      "package": "com.anonymous.Natively"
     },
     "web": {
       "favicon": "./assets/images/final_quest_240x240.png",
@@ -54,54 +36,13 @@
     "plugins": [
       "expo-font",
       "expo-router",
-      "expo-web-browser",
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "minSdkVersion": 24,
-            "compileSdkVersion": 34,
-            "targetSdkVersion": 34,
-            "buildToolsVersion": "34.0.0"
-          },
-          "ios": {
-            "deploymentTarget": "13.4"
-          }
-        }
-      ],
-      [
-        "expo-location",
-        {
-          "locationAlwaysAndWhenInUsePermission": "CarDrop needs your location to show nearby vehicles and events."
-        }
-      ],
-      [
-        "react-native-ble-plx",
-        {
-          "isBackgroundEnabled": true,
-          "modes": [
-            "peripheral",
-            "central"
-          ],
-          "bluetoothAlwaysPermission": "CarDrop uses Bluetooth to detect nearby vehicles."
-        }
-      ],
-      [
-        "@stripe/stripe-react-native",
-        {
-          "merchantIdentifier": "merchant.com.anonymous.Natively",
-          "enableGooglePay": true
-        }
-      ]
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
-      "router": {},
-      "eas": {
-        "projectId": "your-project-id-here"
-      }
+      "router": {}
     }
   }
 }
