@@ -26,8 +26,7 @@
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.Natively",
-      "minSdkVersion": 24
+      "package": "com.anonymous.Natively"
     },
     "web": {
       "favicon": "./assets/images/final_quest_240x240.png",
@@ -42,6 +41,9 @@
         {
           "android": {
             "minSdkVersion": 24
+          },
+          "ios": {
+            "deploymentTarget": "13.4"
           }
         }
       ]

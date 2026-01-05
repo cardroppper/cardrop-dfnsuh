@@ -6,6 +6,8 @@ import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+
+// Import reanimated to ensure it's included in the bundle
 import 'react-native-reanimated';
 
 SplashScreen.preventAutoHideAsync();
