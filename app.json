@@ -1,8 +1,7 @@
-
 {
   "expo": {
     "name": "CarDrop",
-    "slug": "CarDrop",
+    "slug": "cardrop-dfnsuh",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/natively-dark.png",
@@ -34,7 +33,7 @@
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.Natively",
+      "package": "com.CARDROP.CarDrop",
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
@@ -79,7 +78,10 @@
         "react-native-ble-plx",
         {
           "isBackgroundEnabled": true,
-          "modes": ["peripheral", "central"],
+          "modes": [
+            "peripheral",
+            "central"
+          ],
           "bluetoothAlwaysPermission": "CarDrop uses Bluetooth to detect nearby vehicles."
         }
       ],
@@ -100,5 +102,6 @@
         "projectId": "your-project-id-here"
       }
     }
-  }
+  },
+  "scheme": "CarDrop"
 }
