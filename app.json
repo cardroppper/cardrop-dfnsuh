@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Natively",
-    "slug": "cardrop-dfnsuh",
+    "name": "CarDrop",
+    "slug": "CarDrop",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/natively-dark.png",
@@ -42,5 +42,6 @@
     "extra": {
       "router": {}
     }
-  }
+  },
+  "scheme": "CarDrop"
 }

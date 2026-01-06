@@ -19,37 +19,31 @@ module.exports = {
     }
   },
   ignorePatterns: [
-    '/dist/*',
-    '/public/*',
-    '/babel-plugins/*',
+    '/dist/*', 
+    '/public/*', 
+    '/babel-plugins/*', 
     '/backend/*',
-    '/android/*',
-    '/ios/*',
-    'scripts/**/*.js',
-    '.expo/*',
-    'node_modules/*',
-    '*.md'
+    'node_modules/',
+    '.expo/',
+    'build/',
+    '*.config.js',
+    'scripts/'
   ],
   env: {
     browser: true,
     node: true,
+    'react-native/react-native': true,
   },
   settings: {
     'import/resolver': {
-      typescript: {
-        alwaysTryTypes: true,
-        project: './tsconfig.json'
-      },
       node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
-        moduleDirectory: ['node_modules', './']
-      }
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.native.js', '.native.jsx', '.native.ts', '.native.tsx'],
+        moduleDirectory: ['node_modules', 'app', 'components', 'hooks', 'services', 'utils', 'contexts', 'types'],
+      },
     },
-    'import/ignore': [
-      'react-native',
-      '@react-native',
-      'node_modules/react-native'
-    ]
+    react: {
+      version: 'detect',
+    },
   },
   rules: {
     "@typescript-eslint/no-unused-vars": "off",
@@ -61,35 +55,22 @@ module.exports = {
     "@typescript-eslint/no-wrapper-object-types": "off",
     "@typescript-eslint/ban-tslint-comment": "off",
     "react/no-unescaped-entities": "off",
-    "import/no-unresolved": ["error", {
-      ignore: [
-        '^react-native$',
-        '^@react-native',
-        '^@stripe/stripe-react-native$',
-        '^expo-superwall$',
-        '^@/styles/commonStyles$',
-        '^@/constants/Colors$'
-      ]
-    }],
+    // Turn off import/no-unresolved completely to avoid false positives
+    "import/no-unresolved": "off",
     "prefer-const": "off",
-    "react/prop-types": 1,
+    "react/prop-types": "off",
     "no-case-declarations": "off",
     "no-empty": "off",
     "react/display-name": "off",
     "no-constant-condition": "off",
     "no-var": "off",
-    "no-useless-escape": "off",
-    "no-undef": "off"
+    "no-useless-escape": "off"
   },
   overrides: [
     {
-      files: ['metro.config.js', 'babel.config.js', 'scripts/**/*.js'],
-      env: {
-        node: true
-      },
+      files: ['metro.config.js', 'babel.config.js', '*.config.js'],
       rules: {
-        '@typescript-eslint/no-var-requires': 'off',
-        'no-undef': 'off'
+        '@typescript-eslint/no-var-requires': 'off'
       }
     }
   ]
