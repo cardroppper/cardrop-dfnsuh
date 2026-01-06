@@ -1,12 +1,14 @@
+
 {
   "expo": {
-    "name": "CarDrop",
-    "slug": "CarDrop",
+    "name": "Natively",
+    "slug": "Natively",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/natively-dark.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "scheme": "natively",
     "splash": {
       "image": "./assets/images/natively-dark.png",
       "resizeMode": "contain",
@@ -31,18 +33,9 @@
       "favicon": "./assets/images/final_quest_240x240.png",
       "bundler": "metro"
     },
-    "scheme": "natively",
     "plugins": [
       "expo-font",
-      "expo-router",
-      "expo-web-browser",
-      [
-        "@stripe/stripe-react-native",
-        {
-          "merchantIdentifier": "merchant.com.anonymous.Natively",
-          "enableGooglePay": true
-        }
-      ]
+      "expo-router"
     ],
     "experiments": {
       "typedRoutes": true
@@ -50,6 +43,5 @@
     "extra": {
       "router": {}
     }
-  },
-  "scheme": "CarDrop"
+  }
 }
