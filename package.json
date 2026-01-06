@@ -11,8 +11,9 @@
     "build:web": "expo export -p web && npx workbox generateSW workbox-config.js",
     "build:android": "expo prebuild -p android",
     "lint": "eslint .",
-    "clean": "rm -rf node_modules package-lock.json pnpm-lock.yaml yarn.lock && npm cache clean --force",
-    "reinstall": "npm run clean && npm install"
+    "clean": "rm -rf node_modules package-lock.json pnpm-lock.yaml yarn.lock bun.lockb .expo android/.gradle android/app/build ios/Pods ios/build && npm cache clean --force",
+    "clean:pnpm": "rm -rf /root/.local/share/pnpm ~/.pnpm-store node_modules/.pnpm node_modules/.ignored",
+    "reinstall": "npm run clean && npm run clean:pnpm && npm install"
   },
   "dependencies": {
     "@babel/plugin-transform-export-namespace-from": "^7.27.1",
