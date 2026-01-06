@@ -18,18 +18,19 @@ module.exports = {
       jsx: true
     }
   },
-  ignorePatterns: ['/dist/*', '/public/*', '/babel-plugins/*', '/backend/*'],
+  ignorePatterns: ['/dist/*', '/public/*', '/babel-plugins/*', '/backend/*', '/android/*', '/ios/*'],
   env: {
     browser: true,
   },
   settings: {
     'import/resolver': {
-      node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        moduleDirectory: ['node_modules', './']
-      },
       typescript: {
-        alwaysTryTypes: true
+        alwaysTryTypes: true,
+        project: './tsconfig.json'
+      },
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+        moduleDirectory: ['node_modules', './']
       }
     },
     'import/ignore': [
@@ -49,7 +50,12 @@ module.exports = {
     "@typescript-eslint/ban-tslint-comment": "off",
     "react/no-unescaped-entities": "off",
     "import/no-unresolved": ["error", {
-      ignore: ['^react-native$', '^@react-native', '^@stripe/stripe-react-native$']
+      ignore: [
+        '^react-native$',
+        '^@react-native',
+        '^@stripe/stripe-react-native$',
+        '^expo-superwall$'
+      ]
     }],
     "prefer-const": "off",
     "react/prop-types": 1,
@@ -62,7 +68,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['metro.config.js', 'babel.config.js'],
+      files: ['metro.config.js', 'babel.config.js', 'scripts/**/*.js'],
       rules: {
         '@typescript-eslint/no-var-requires': 'off'
       }
