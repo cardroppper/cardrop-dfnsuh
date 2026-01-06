@@ -9,13 +9,10 @@
     "ios": "EXPO_NO_TELEMETRY=1 expo start --ios",
     "web": "EXPO_NO_TELEMETRY=1 expo start --web",
     "build:web": "expo export -p web && npx workbox generateSW workbox-config.js",
-    "prebuild:android": "node scripts/validate-build.js",
-    "build:android": "node scripts/build-android-safe.js",
-    "build:android:full": "node scripts/full-build-apk.js",
-    "build:android:quick": "npm run prebuild:android && npx expo prebuild -p android",
-    "postinstall": "node scripts/post-install-check.js",
-    "lint": "eslint .",
-    "validate": "node scripts/validate-build.js"
+    "validate": "node scripts/validate-build.js",
+    "build:android": "npm run validate && expo prebuild -p android && cd android && ./gradlew assembleRelease",
+    "build:android:full": "npm run validate && expo prebuild -p android --clean && cd android && ./gradlew clean assembleRelease",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
