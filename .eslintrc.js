@@ -23,16 +23,8 @@ module.exports = {
     browser: true,
   },
   settings: {
-    'import/resolver': {
-      'node': {
-        'extensions': ['.js', '.jsx', '.ts', '.tsx', '.json']
-      }
-    },
     'import/ignore': [
-      'react-native',
-      '@react-native',
-      'node_modules',
-      '\\.(native|ios|android)\\.(js|jsx|ts|tsx)$'
+      '@stripe/stripe-react-native'
     ]
   },
   rules: {
@@ -46,15 +38,8 @@ module.exports = {
     "@typescript-eslint/ban-tslint-comment": "off",
     "react/no-unescaped-entities": "off",
     "import/no-unresolved": ["error", {
-      "ignore": [
-        "^react-native$",
-        "^@react-native",
-        "^expo",
-        "^@expo",
-        "^@/"
-      ]
+      "ignore": ["^@stripe/stripe-react-native$"]
     }],
-    "import/namespace": "off",
     "prefer-const": "off",
     "react/prop-types": 1,
     "no-case-declarations": "off",
