@@ -23,9 +23,13 @@ module.exports = {
     browser: true,
   },
   settings: {
-    'import/ignore': [
-      '@stripe/stripe-react-native'
-    ]
+    'import/resolver': {
+      'node': {
+        'extensions': ['.js', '.jsx', '.ts', '.tsx']
+      },
+      'typescript': {}
+    },
+    'import/ignore': ['react-native', '@stripe/stripe-react-native', 'expo-superwall']
   },
   rules: {
     "@typescript-eslint/no-unused-vars": "off",
@@ -37,9 +41,10 @@ module.exports = {
     "@typescript-eslint/no-wrapper-object-types": "off",
     "@typescript-eslint/ban-tslint-comment": "off",
     "react/no-unescaped-entities": "off",
-    "import/no-unresolved": ["error", {
-      "ignore": ["^@stripe/stripe-react-native$"]
+    "import/no-unresolved": ["error", { 
+      "ignore": ["^react-native$", "^expo-superwall$", "^@stripe/stripe-react-native$"]
     }],
+    "import/namespace": "off", // Disable namespace validation for React Native modules
     "prefer-const": "off",
     "react/prop-types": 1,
     "no-case-declarations": "off",

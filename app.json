@@ -58,6 +58,5 @@
     "extra": {
       "router": {}
     }
-  },
-  "scheme": "CarDrop"
+  }
 }
