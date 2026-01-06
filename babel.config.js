@@ -41,7 +41,8 @@ module.exports = function (api) {
         },
       ],
       ...EDITABLE_COMPONENTS,
-      "@babel/plugin-transform-export-namespace-from",
+      "@babel/plugin-proposal-export-namespace-from",
+      "react-native-reanimated/plugin",
     ],
   };
 };
