@@ -1,38 +1,22 @@
 
 const { getDefaultConfig } = require('expo/metro-config');
-const path = require('path');
 
+/** @type {import('expo/metro-config').MetroConfig} */
 const config = getDefaultConfig(__dirname);
 
-config.resolver.unstable_enablePackageExports = true;
+// Enable CSS support
+config.transformer = {
+  ...config.transformer,
+  babelTransformerPath: require.resolve('react-native-css-interop/metro'),
+};
 
-// pnpm-compatible cache configuration
-// Avoid importing FileStore directly - use simple in-memory cache instead
-config.cacheStores = [
-  {
-    get: async () => null,
-    set: async () => {},
-  }
-];
-
-// Ensure Metro can resolve all necessary modules with pnpm
-config.resolver.nodeModulesPaths = [
-  path.resolve(__dirname, 'node_modules'),
-];
-
-// Explicitly define source extensions
-config.resolver.sourceExts = [
-  'expo.ts',
-  'expo.tsx',
-  'expo.js',
-  'expo.jsx',
-  'ts',
-  'tsx',
-  'js',
-  'jsx',
-  'json',
-  'wasm',
-  'svg',
-];
+// Add support for additional file extensions
+config.resolver = {
+  ...config.resolver,
+  sourceExts: [
+    ...config.resolver.sourceExts,
+    'css',
+  ],
+};
 
 module.exports = config;

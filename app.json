@@ -17,7 +17,13 @@
       "bundleIdentifier": "com.anonymous.Natively",
       "scheme": "cardrop",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSBluetoothAlwaysUsageDescription": "CarDrop uses Bluetooth to detect nearby vehicles and enable proximity-based features.",
+        "NSBluetoothPeripheralUsageDescription": "CarDrop uses Bluetooth to detect nearby vehicles and enable proximity-based features.",
+        "NSLocationWhenInUseUsageDescription": "CarDrop uses your location to show nearby vehicles and events.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "CarDrop uses your location to show nearby vehicles and events.",
+        "NSCameraUsageDescription": "CarDrop needs camera access to take photos of your vehicle.",
+        "NSPhotoLibraryUsageDescription": "CarDrop needs photo library access to select vehicle photos."
       }
     },
     "android": {
@@ -27,6 +33,14 @@
       },
       "edgeToEdgeEnabled": true,
       "package": "com.CARDROP.CarDrop",
+      "permissions": [
+        "BLUETOOTH",
+        "BLUETOOTH_ADMIN",
+        "BLUETOOTH_SCAN",
+        "BLUETOOTH_CONNECT",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ],
       "intentFilters": [
         {
           "action": "VIEW",
@@ -50,7 +64,17 @@
     "plugins": [
       "expo-font",
       "expo-router",
-      "expo-web-browser"
+      "expo-web-browser",
+      "@stripe/stripe-react-native",
+      "expo-secure-store",
+      "expo-location",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "CarDrop needs access to your photos to select vehicle images.",
+          "cameraPermission": "CarDrop needs camera access to take photos of your vehicle."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

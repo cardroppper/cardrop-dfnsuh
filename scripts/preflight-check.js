@@ -17,12 +17,14 @@ const requiredDependencies = [
   'babel-preset-expo',
   'metro',
   'metro-cache',
-  'metro-config',
-  'metro-resolver',
-  '@expo/metro-config',
   '@babel/core',
   '@babel/runtime',
   'expo',
+  '@supabase/supabase-js',
+  '@react-native-async-storage/async-storage',
+  'react-native-ble-manager',
+  'expo-crypto',
+  '@stripe/stripe-react-native',
 ];
 
 // Production-only dependencies (only checked when NODE_ENV=production)

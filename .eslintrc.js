@@ -18,9 +18,21 @@ module.exports = {
       jsx: true
     }
   },
-  ignorePatterns: ['/dist/*', '/public/*', '/babel-plugins/*', '/backend/*', '/android/*', '/ios/*'],
+  ignorePatterns: [
+    '/dist/*',
+    '/public/*',
+    '/babel-plugins/*',
+    '/backend/*',
+    '/android/*',
+    '/ios/*',
+    'scripts/**/*.js',
+    '.expo/*',
+    'node_modules/*',
+    '*.md'
+  ],
   env: {
     browser: true,
+    node: true,
   },
   settings: {
     'import/resolver': {
@@ -54,7 +66,9 @@ module.exports = {
         '^react-native$',
         '^@react-native',
         '^@stripe/stripe-react-native$',
-        '^expo-superwall$'
+        '^expo-superwall$',
+        '^@/styles/commonStyles$',
+        '^@/constants/Colors$'
       ]
     }],
     "prefer-const": "off",
@@ -64,13 +78,18 @@ module.exports = {
     "react/display-name": "off",
     "no-constant-condition": "off",
     "no-var": "off",
-    "no-useless-escape": "off"
+    "no-useless-escape": "off",
+    "no-undef": "off"
   },
   overrides: [
     {
       files: ['metro.config.js', 'babel.config.js', 'scripts/**/*.js'],
+      env: {
+        node: true
+      },
       rules: {
-        '@typescript-eslint/no-var-requires': 'off'
+        '@typescript-eslint/no-var-requires': 'off',
+        'no-undef': 'off'
       }
     }
   ]

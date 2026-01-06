@@ -16,7 +16,7 @@ module.exports = function (api) {
   const productionPlugins = isProduction
     ? [
         [
-          "transform-remove-console",
+          "babel-plugin-transform-remove-console",
           {
             exclude: ["error", "warn"],
           },
