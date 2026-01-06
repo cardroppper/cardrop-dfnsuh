@@ -54,7 +54,7 @@ module.exports = function (api) {
         },
       ],
       ...EDITABLE_COMPONENTS,
-      "@babel/plugin-proposal-export-namespace-from",
+      "@babel/plugin-transform-export-namespace-from",
       ...productionPlugins,
       "react-native-worklets/plugin",
     ],
