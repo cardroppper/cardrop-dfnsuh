@@ -1,0 +1,1324 @@
+2026-01-06T16:09:44.070Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-06T16:09:44.071Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-06T16:09:44.071Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-06T16:09:44.071Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+2026-01-06T16:09:44.285Z expo:utils:fileNotifier Observing /expo-project/babel.config.js
+2026-01-06T16:09:44.519Z expo:start:server:devServer Stopping dev server (bundler: metro)
+2026-01-06T16:09:44.519Z expo:start:server:devServer Stopped dev server (bundler: metro)
+2026-01-06T16:09:44.544Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:09:45.136Z expo:metro:config react-native-reanimated package.json: /expo-project/node_modules/react-native-reanimated/package.json
+2026-01-06T16:09:45.138Z expo:metro:config react-native-worklets package.json: /expo-project/node_modules/react-native-worklets/package.json
+
+2026-01-06T16:09:45.146Z expo:metro:config react-native-reanimated package.json: /expo-project/node_modules/react-native-reanimated/package.json
+2026-01-06T16:09:45.147Z expo:metro:config react-native-worklets package.json: /expo-project/node_modules/react-native-worklets/package.json
+Expo Metro config:
+- Version: 54.0.12
+- Extensions: ts, tsx, mjs, js, jsx, json, cjs, scss, sass, css
+- React Native: /expo-project/node_modules/react-native
+- Watch Folders: 
+- Node Module Paths: 
+- Sass: null
+- Reanimated: 4.1.6
+- Worklets: 0.5.1
+- Babel Runtime: null
+
+
+Expo Metro config:
+- Version: 54.0.12
+- Extensions: ts, tsx, mjs, js, jsx, json, cjs, scss, sass, css
+- React Native: /expo-project/node_modules/react-native
+- Watch Folders: 
+- Node Module Paths: 
+- Sass: null
+- Reanimated: 4.1.6
+- Worklets: 0.5.1
+- Babel Runtime: null
+
+2026-01-06T16:09:45.455Z expo:metro:withMetroResolvers Appending 8 custom resolvers to Metro config. (has custom resolver: false)
+2026-01-06T16:09:45.455Z expo:metro:withMetroSupervisingTransformWorker Detected customized "transformer.babelTransformerPath"
+2026-01-06T16:09:45.455Z expo:metro:withMetroSupervisingTransformWorker Applying transform worker supervisor to "transformerPath"
+2026-01-06T16:09:45.560Z expo:start:server:urlCreator URL: http://127.0.0.1:8081
+Starting Metro Bundler
+2026-01-06T16:09:45.684Z expo:start:server:middleware:serveStatic Serving static files from: /expo-project/public
+2026-01-06T16:09:45.684Z expo:start:server:devServer [tunnel] connect to port: 8081
+2026-01-06T16:09:45.931Z expo:start:platforms:android:adbServer /usr/lib/android-sdk/platform-tools/adb devices -l
+2026-01-06T16:09:45.949Z expo:start:server:ngrok Stopping Tunnel
+2026-01-06T16:09:45.951Z expo:start:server:ngrok Global config path: /root/.expo/ngrok.yml
+2026-01-06T16:09:45.956Z expo:start:server:ngrok Resetting project randomness: CBEBiIA
+2026-01-06T16:09:45.958Z expo:start:server:ngrok Hostname: CBEBiIA-anonymous-8081.exp.direct
+Tunnel connected.
+2026-01-06T16:09:46.556Z expo:start:server:ngrok Tunnel URL: https://cbebiia-anonymous-8081.exp.direct
+Tunnel ready.
+2026-01-06T16:09:46.556Z expo:start:server:urlCreator URL: exp://cbebiia-anonymous-8081.exp.direct
+2026-01-06T16:09:46.565Z expo:start:server:developmentSession Development session will not ping because the user is not authenticated and there are no devices.
+2026-01-06T16:09:46.566Z expo:utils:fileNotifier Observing /expo-project/metro.config.js
+2026-01-06T16:09:46.567Z expo:start:server:metro:waitForTypescript Watching file changes: [
+  '/expo-project/.env.development.local',
+  '/expo-project/.env.local',
+  '/expo-project/.env.development',
+  '/expo-project/.env'
+]
+2026-01-06T16:09:46.567Z expo:doctor:typescriptSupport Ensuring TypeScript support is setup
+2026-01-06T16:09:46.575Z expo:doctor:dependencies:getMissingPackages Required package "typescript" found (no version constraint specified).
+2026-01-06T16:09:46.575Z expo:doctor:dependencies:getMissingPackages Required package "@types/react" found (no version constraint specified).
+2026-01-06T16:09:46.579Z expo:typed-routes Ensuring typed routes side-effects are setup (experiments.typedRoutes: true, typesDirectory: /expo-project/.expo/types)
+2026-01-06T16:09:46.582Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:09:46.610Z expo:start:server:metro:metroWatchTypeScriptFiles Waiting for TypeScript files to be added to the project...
+2026-01-06T16:09:46.611Z expo:doctor:dependencies:bundledNativeModules Fetching bundled native modules from the server...
+2026-01-06T16:09:47.002Z expo:doctor:dependencies:validate Checking dependencies for 54.0.0: {
+  '@babel/plugin-proposal-export-namespace-from': '^7.18.9',
+  '@babel/runtime': '^7.26.9',
+  '@bacons/apple-targets': '^3.0.2',
+  '@better-auth/expo': '^1.3.34',
+  '@expo/metro-runtime': '~6.1.1',
+  '@expo/ngrok': '^4.1.3',
+  '@expo/vector-icons': '^15.0.2',
+  '@react-native-community/datetimepicker': '^8.3.0',
+  '@react-navigation/drawer': '^7.1.1',
+  '@react-navigation/native': '^7.0.14',
+  '@react-navigation/native-stack': '^7.2.0',
+  '@supabase/supabase-js': '^2.89.0',
+  '@types/difflib': '^0.2.7',
+  'better-auth': '^1.3.34',
+  difflib: '^0.2.4',
+  eas: '^0.1.0',
+  expo: '~54.0.1',
+  'expo-blur': '^15.0.6',
+  'expo-constants': '~18.0.8',
+  'expo-crypto': '^15.0.8',
+  'expo-font': '^14.0.7',
+  'expo-glass-effect': '^0.1.1',
+  'expo-haptics': '^15.0.6',
+  'expo-image-picker': '^17.0.7',
+  'expo-linear-gradient': '^15.0.6',
+  'expo-linking': '^8.0.7',
+  'expo-location': '^19.0.8',
+  'expo-network': '^8.0.7',
+  'expo-router': '^6.0.0',
+  'expo-secure-store': '^15.0.7',
+  'expo-splash-screen': '^31.0.8',
+  'expo-status-bar': '~3.0.7',
+  'expo-symbols': '^1.0.6',
+  'expo-system-ui': '^6.0.7',
+  'expo-web-browser': '^15.0.6',
+  react: '19.1.0',
+  'react-dom': '19.1.0',
+  'react-native': '0.81.4',
+  'react-native-ble-manager': '^12.4.2',
+  'react-native-css-interop': '^0.1.22',
+  'react-native-edge-to-edge': '^1.7.0',
+  'react-native-gesture-handler': '^2.24.0',
+  'react-native-maps': '^1.20.1',
+  'react-native-reanimated': '~4.1.0',
+  'react-native-safe-area-context': '^5.4.0',
+  'react-native-screens': '~4.16.0',
+  'react-native-url-polyfill': '^2.0.0',
+  'react-native-web': '~0.21.1',
+  'react-native-webview': '^13.15.0',
+  'react-native-worklets': '0.5.1',
+  'react-router-dom': '^7.1.3',
+  'workbox-cli': '^7.3.0',
+  'workbox-precaching': '^7.3.0',
+  'workbox-webpack-plugin': '^7.3.0',
+  '@babel/core': '^7.20.0',
+  '@eslint/js': '^9.19.0',
+  '@types/react': '~19.1.12',
+  '@typescript-eslint/eslint-plugin': '^6.21.0',
+  '@typescript-eslint/parser': '^6.21.0',
+  'babel-plugin-module-resolver': '^5.0.2',
+  eslint: '^8.57.0',
+  'eslint-config-expo': '~10.0.0',
+  'eslint-plugin-import': '^2.31.0',
+  'eslint-plugin-react': '^7.37.4',
+  globals: '^15.14.0',
+  typescript: '^5.9.3',
+  'webpack-cli': '^6.0.1'
+}
+2026-01-06T16:09:47.002Z expo:doctor:dependencies:validate Comparing known versions: [
+  '@expo/metro-runtime',
+  '@expo/vector-icons',
+  '@react-native-community/datetimepicker',
+  'expo',
+  'expo-blur',
+  'expo-constants',
+  'expo-crypto',
+  'expo-font',
+  'expo-glass-effect',
+  'expo-haptics',
+  'expo-image-picker',
+  'expo-linear-gradient',
+  'expo-linking',
+  'expo-location',
+  'expo-network',
+  'expo-router',
+  'expo-secure-store',
+  'expo-splash-screen',
+  'expo-status-bar',
+  'expo-symbols',
+  'expo-system-ui',
+  'expo-web-browser',
+  'react',
+  'react-dom',
+  'react-native',
+  'react-native-gesture-handler',
+  'react-native-maps',
+  'react-native-reanimated',
+  'react-native-safe-area-context',
+  'react-native-screens',
+  'react-native-web',
+  'react-native-webview',
+  'react-native-worklets',
+  '@babel/core',
+  '@types/react',
+  'eslint-config-expo',
+  'typescript'
+]
+2026-01-06T16:09:47.003Z expo:doctor:dependencies:validate Skipping packages that cannot be versioned automatically: [
+  '@babel/plugin-proposal-export-namespace-from',
+  '@babel/runtime',
+  '@bacons/apple-targets',
+  '@better-auth/expo',
+  '@expo/ngrok',
+  '@react-navigation/drawer',
+  '@react-navigation/native',
+  '@react-navigation/native-stack',
+  '@supabase/supabase-js',
+  '@types/difflib',
+  'better-auth',
+  'difflib',
+  'eas',
+  'react-native-ble-manager',
+  'react-native-css-interop',
+  'react-native-edge-to-edge',
+  'react-native-url-polyfill',
+  'react-router-dom',
+  'workbox-cli',
+  'workbox-precaching',
+  'workbox-webpack-plugin',
+  '@eslint/js',
+  '@typescript-eslint/eslint-plugin',
+  '@typescript-eslint/parser',
+  'babel-plugin-module-resolver',
+  'eslint',
+  'eslint-plugin-import',
+  'eslint-plugin-react',
+  'globals',
+  'webpack-cli'
+]
+2026-01-06T16:09:47.038Z expo:doctor:dependencies:validate Package versions: {
+  '@expo/metro-runtime': '6.1.2',
+  '@expo/vector-icons': '15.0.3',
+  '@react-native-community/datetimepicker': '8.5.1',
+  expo: '54.0.30',
+  'expo-blur': '15.0.8',
+  'expo-constants': '18.0.12',
+  'expo-crypto': '15.0.8',
+  'expo-font': '14.0.10',
+  'expo-glass-effect': '0.1.8',
+  'expo-haptics': '15.0.8',
+  'expo-image-picker': '17.0.10',
+  'expo-linear-gradient': '15.0.8',
+  'expo-linking': '8.0.11',
+  'expo-location': '19.0.8',
+  'expo-network': '8.0.8',
+  'expo-router': '6.0.21',
+  'expo-secure-store': '15.0.8',
+  'expo-splash-screen': '31.0.13',
+  'expo-status-bar': '3.0.9',
+  'expo-symbols': '1.0.8',
+  'expo-system-ui': '6.0.9',
+  'expo-web-browser': '15.0.10',
+  react: '19.1.0',
+  'react-dom': '19.1.0',
+  'react-native': '0.81.4',
+  'react-native-gesture-handler': '2.30.0',
+  'react-native-maps': '1.26.20',
+  'react-native-reanimated': '4.1.6',
+  'react-native-safe-area-context': '5.6.2',
+  'react-native-screens': '4.16.0',
+  'react-native-web': '0.21.2',
+  'react-native-webview': '13.16.0',
+  'react-native-worklets': '0.5.1',
+  '@babel/core': '7.28.5',
+  '@types/react': '19.1.17',
+  'eslint-config-expo': '10.0.0',
+  typescript: '5.9.3'
+}
+2026-01-06T16:09:47.042Z expo:doctor:dependencies:validate Incorrect dependencies: [
+  {
+    packageName: '@react-native-community/datetimepicker',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '8.4.4',
+    actualVersion: '8.5.1'
+  },
+  {
+    packageName: 'react-native',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '0.81.5',
+    actualVersion: '0.81.4'
+  },
+  {
+    packageName: 'react-native-gesture-handler',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '~2.28.0',
+    actualVersion: '2.30.0'
+  },
+  {
+    packageName: 'react-native-maps',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '1.20.1',
+    actualVersion: '1.26.20'
+  },
+  {
+    packageName: 'react-native-webview',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '13.15.0',
+    actualVersion: '13.16.0'
+  }
+]
+The following packages should be updated for best compatibility with the installed expo version:
+  @react-native-community/datetimepicker@8.5.1 - expected version: 8.4.4
+  react-native@0.81.4 - expected version: 0.81.5
+  react-native-gesture-handler@2.30.0 - expected version: ~2.28.0
+  react-native-maps@1.26.20 - expected version: 1.20.1
+  react-native-webview@13.16.0 - expected version: 13.15.0
+Your project may not work correctly until you install the expected versions of the packages.
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+2026-01-06T16:09:47.520Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:09:47.520Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:09:47.748Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:09:47.748Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:09:49.475Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:09:49.475Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:09:49.917Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:09:49.917Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:09:53.326Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:09:53.326Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:00.610Z expo:start:server:metro:multi-platform Enabling alias: react-native-vector-icons -> @expo/vector-icons
+2026-01-06T16:10:00.618Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:00.618Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+Web ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Web Bundling failed 479ms index.ts (1 module)
+ ERROR  TypeError: transformer.transform is not a function
+    at transformJSWithBabel (/expo-project/node_modules/@expo/metro-config/build/transform-worker/metro-transform-worker.js:468:47)
+    at Object.transform (/expo-project/node_modules/@expo/metro-config/build/transform-worker/metro-transform-worker.js:583:12)
+    at Object.transform (/expo-project/node_modules/@expo/metro-config/build/transform-worker/transform-worker.js:178:19)
+    at Object.transform (/expo-project/node_modules/@expo/metro-config/build/transform-worker/supervising-transform-worker.js:94:25)
+    at transformFile (/expo-project/node_modules/metro/src/DeltaBundler/Worker.flow.js:67:36)
+    at Object.transform (/expo-project/node_modules/metro/src/DeltaBundler/Worker.flow.js:42:10)
+    at execFunction (/expo-project/node_modules/jest-worker/build/workers/processChild.js:149:17)
+    at execHelper (/expo-project/node_modules/jest-worker/build/workers/processChild.js:137:5)
+    at execMethod (/expo-project/node_modules/jest-worker/build/workers/processChild.js:140:5)
+2026-01-06T16:10:02.779Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:02.779Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:04.924Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:04.924Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:07.076Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:07.076Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:09.239Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:09.239Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:11.395Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:11.395Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:13.736Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:13.736Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:15.954Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:15.955Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:18.086Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:18.086Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:20.252Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:20.253Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:22.448Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:22.448Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:24.619Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:24.619Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:26.776Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:26.777Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:28.913Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:28.913Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:31.122Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:31.122Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:33.394Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:33.394Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:35.594Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:35.595Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:37.752Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:37.752Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:39.965Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:39.965Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:42.115Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:42.115Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:44.548Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:44.548Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:46.680Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:46.680Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:48.862Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:48.862Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:51.150Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:51.150Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:53.342Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:53.342Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:55.501Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:55.501Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:57.685Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:57.685Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:10:59.845Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:10:59.845Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:02.006Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:02.006Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:04.165Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:04.165Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:06.343Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:06.343Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:08.513Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:08.513Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:10.722Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:10.722Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:12.871Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:12.871Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:15.156Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:15.156Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:17.305Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:17.305Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:19.458Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:19.458Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:21.601Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:21.601Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:23.739Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:23.739Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:25.981Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:25.981Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:28.139Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:28.139Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:30.316Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:30.316Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:32.470Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:32.470Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:34.700Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:34.700Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:36.874Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:36.874Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:39.054Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:39.055Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:41.232Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:41.233Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:43.400Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:43.400Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:45.593Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:45.593Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:47.778Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:47.778Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:50.051Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:50.051Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:52.277Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:52.277Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:54.493Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:54.493Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:56.678Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:56.679Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:11:58.860Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:11:58.860Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:01.125Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:01.125Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:03.424Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:03.424Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:05.588Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:05.588Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:07.770Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:07.770Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:09.938Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:09.938Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:12.134Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:12.134Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:14.302Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:14.302Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:16.459Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:16.460Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:18.622Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:18.622Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:20.809Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:20.809Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:23.077Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:23.078Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:25.377Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:25.378Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:27.617Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:27.617Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:29.882Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:29.882Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:32.039Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:32.039Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:34.200Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:34.200Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:36.351Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:36.351Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:38.515Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:38.515Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:40.678Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:40.678Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:42.870Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:42.870Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:45.090Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:45.090Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:47.321Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:47.322Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:49.680Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:49.680Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:51.884Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:51.885Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:54.043Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:54.044Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:56.241Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:56.241Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:12:58.457Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:12:58.458Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:00.615Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:00.615Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:02.785Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:02.785Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:04.942Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:04.942Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:07.094Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:07.094Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:09.465Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:09.466Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:11.741Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:11.758Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:13.969Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:13.969Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:16.118Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:16.118Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:18.329Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:18.329Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:20.618Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:20.619Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:22.823Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:22.823Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:24.999Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:24.999Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:27.131Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:27.132Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:29.291Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:29.291Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:31.444Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:31.444Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:33.646Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:33.647Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:36.162Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:36.162Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:38.458Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:38.458Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:40.703Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:40.703Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:42.887Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:42.887Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:45.074Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:45.074Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:47.374Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:47.375Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:49.542Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:49.543Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:51.695Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:51.695Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:53.846Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:53.846Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:56.012Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:56.012Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:13:58.241Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:13:58.241Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:00.624Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:00.624Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:02.938Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:02.938Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:05.194Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:05.194Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:07.396Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:07.397Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:09.654Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:09.654Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:11.935Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:11.935Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:14.219Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:14.219Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:16.431Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:16.431Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:18.680Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:18.680Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:20.851Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:20.851Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:22.996Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:22.996Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:25.212Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:25.212Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:27.404Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:27.404Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:29.634Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:29.634Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:31.809Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:31.809Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:34.076Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:34.076Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:36.237Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:36.237Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:38.433Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:38.434Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:40.667Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:40.667Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:42.927Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:42.927Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:45.069Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:45.069Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:47.327Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:47.327Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:49.512Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:49.512Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:51.740Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:51.740Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:54.164Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:54.164Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:56.325Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:56.326Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:14:58.526Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:14:58.538Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:00.743Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:00.744Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:03.511Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:03.511Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:05.721Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:05.722Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:07.961Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:07.962Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:10.124Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:10.124Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:12.275Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:12.276Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:14.444Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:14.444Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:16.587Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:16.587Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:18.707Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:18.708Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:20.869Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:20.869Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:23.012Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:23.012Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:25.171Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:25.171Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:27.345Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:27.345Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:29.658Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:29.659Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:31.821Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:31.822Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:33.948Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:33.948Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:36.088Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:36.088Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:38.235Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:38.235Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:40.393Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:40.393Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:42.527Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:42.527Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:44.675Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:44.676Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:46.900Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:46.900Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:49.075Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:49.075Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:51.211Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:51.211Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:53.398Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:53.398Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:55.522Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:55.522Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:57.701Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:57.701Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:15:59.840Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:15:59.840Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:01.996Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:01.996Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:04.146Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:04.146Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:06.310Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:06.310Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:08.493Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:08.493Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:10.629Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:10.629Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:12.812Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:12.812Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:14.996Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:14.996Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:17.192Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:17.193Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:19.349Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:19.349Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:21.490Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:21.490Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:23.650Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:23.654Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:25.809Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:25.810Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:27.953Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:27.953Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:30.212Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:30.212Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:32.406Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:32.406Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:34.630Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:34.635Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:36.974Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:36.974Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:39.134Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:39.134Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:41.280Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:41.280Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:43.430Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:43.430Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:45.579Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:45.579Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:47.745Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:47.745Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:49.929Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:49.930Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:52.101Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:52.102Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:54.282Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:54.282Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:56.439Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:56.439Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:16:58.592Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:16:58.592Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:00.710Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:00.710Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:02.873Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:02.873Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:05.001Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:05.002Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:07.139Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:07.139Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:09.300Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:09.300Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:11.462Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:11.462Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:13.850Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:13.851Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:16.059Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:16.059Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:18.193Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:18.193Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:20.334Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:20.334Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:22.480Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:22.480Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:24.600Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:24.600Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:26.765Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:26.765Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:29.016Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:29.016Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:31.160Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:31.161Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:33.310Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:33.311Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:35.467Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:35.467Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:37.626Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:37.626Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:39.776Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:39.776Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:41.918Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:41.918Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:44.055Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:44.055Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:46.196Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:46.196Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:48.322Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:48.323Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:50.463Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:50.464Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:52.607Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:52.607Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:54.749Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:54.749Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:56.874Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:56.874Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:17:58.992Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:17:58.992Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:01.143Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:01.143Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:03.292Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:03.293Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:05.459Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:05.459Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:07.611Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:07.611Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:09.730Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:09.731Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:11.871Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:11.872Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:14.019Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:14.019Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:16.174Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:16.177Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:18.359Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:18.359Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:20.507Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:20.507Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:22.650Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:22.650Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:24.790Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:24.790Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:26.939Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:26.939Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:29.069Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:29.069Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:31.216Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:31.216Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:33.352Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:33.353Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:35.486Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:35.487Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:37.626Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:37.626Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:39.761Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:39.761Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:41.914Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:41.914Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:44.056Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:44.057Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:46.203Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:46.203Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:48.351Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:48.351Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:50.499Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:50.499Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:52.667Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:52.667Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:54.825Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:54.825Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:56.969Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:56.969Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:18:59.113Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:18:59.113Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:01.260Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:01.261Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:03.417Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:03.417Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:05.574Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:05.574Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:07.722Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:07.722Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:09.865Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:09.865Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:12.016Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:12.017Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:14.172Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:14.172Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:16.341Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:16.341Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:18.464Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:18.464Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:20.603Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:20.603Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:22.781Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:22.781Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:24.963Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:24.963Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:27.126Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:27.126Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:29.431Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:29.431Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:31.608Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:31.608Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:33.801Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:33.801Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:35.971Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:35.971Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:38.157Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:38.159Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:40.501Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:40.501Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:42.657Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:42.657Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:44.820Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:44.820Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:46.982Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:46.982Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:49.134Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:49.134Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:51.292Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:51.293Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:53.455Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:53.455Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:55.609Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:55.609Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:19:57.785Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:19:57.786Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:00.033Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:00.033Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:02.230Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:02.230Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:04.474Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:04.474Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:06.664Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:06.664Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:08.867Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:08.868Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:11.300Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:11.301Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:13.572Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:13.573Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:15.771Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:15.771Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:18.321Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:18.321Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:20.574Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:20.574Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:22.744Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:22.744Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:25.115Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:25.116Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:27.309Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:27.309Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:29.490Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:29.490Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:31.695Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:31.695Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:33.858Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:33.858Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:36.003Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:36.003Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:38.167Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:38.167Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:40.318Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:40.318Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:42.481Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:42.482Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:44.651Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:44.652Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:46.829Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:46.829Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:49.005Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:49.005Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:51.193Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:51.193Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:53.436Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:53.436Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:56.022Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:56.022Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:20:58.168Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:20:58.169Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:00.344Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:00.345Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:02.501Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:02.501Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:05.065Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:05.065Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:07.223Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:07.223Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:09.367Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:09.367Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:11.531Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:11.531Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:13.692Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:13.693Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:15.861Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:15.861Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:18.013Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:18.013Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:20.152Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:20.152Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:22.302Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:22.302Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:24.420Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:24.420Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:26.557Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:26.557Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:28.697Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:28.697Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:30.857Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:30.858Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:33.015Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:33.016Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:35.153Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:35.153Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:37.290Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:37.290Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:39.427Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:39.427Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:41.570Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:41.570Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:43.719Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:43.719Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:45.880Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:45.880Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:48.032Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:48.032Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:50.180Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:50.180Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:52.335Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:52.335Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:54.454Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:54.454Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:56.627Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:56.627Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:21:58.791Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:21:58.792Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:01.062Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:01.062Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:03.206Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:03.206Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:05.350Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:05.350Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:07.488Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:07.488Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:09.618Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:09.618Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:11.765Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:11.765Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:13.936Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:13.936Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:16.062Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:16.062Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:18.202Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:18.202Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:20.345Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:20.345Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:22.459Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:22.459Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:24.605Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:24.605Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:26.750Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:26.751Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:28.900Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:28.900Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:31.063Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:31.064Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:33.217Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:33.217Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:35.367Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:35.367Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:37.512Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:37.512Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:39.657Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:39.658Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:41.802Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:41.802Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:43.992Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:43.992Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:46.141Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:46.141Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:48.263Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:48.264Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:50.414Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:50.415Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:52.562Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:52.562Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:54.725Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:54.725Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:56.870Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:56.870Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:22:58.987Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:22:58.988Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:01.128Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:01.128Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:03.249Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:03.251Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:05.406Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:05.406Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:07.614Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:07.614Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:10.058Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:10.058Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:12.241Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:12.241Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:14.419Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:14.419Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:16.572Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:16.572Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:18.739Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:18.739Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:20.995Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:20.998Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:23.672Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:23.672Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:26.249Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:26.249Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:28.434Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:28.434Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:30.729Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:30.729Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:33.061Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:33.062Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:35.415Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:35.415Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:37.670Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:37.670Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:40.025Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:40.027Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:42.383Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:42.383Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:44.591Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:44.592Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:46.831Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:46.832Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:49.030Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:49.030Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:51.525Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:51.525Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:54.122Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:54.122Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:56.363Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:56.363Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:23:58.602Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:23:58.606Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:00.941Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:00.941Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:03.146Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:03.146Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:05.437Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:05.437Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:07.767Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:07.767Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:10.029Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:10.029Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:12.202Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:12.202Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:14.486Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:14.486Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:16.687Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:16.687Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:18.997Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:18.997Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:21.351Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:21.351Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:23.591Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:23.591Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:25.778Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:25.778Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:28.346Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:28.347Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:30.504Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:30.505Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:32.883Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:32.883Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:35.260Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:35.260Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+› Detected a change in metro.config.js. Restart the server to see the new results.
+2026-01-06T16:24:37.538Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:37.538Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:39.726Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:39.726Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:41.908Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:41.917Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:44.176Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:44.177Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:46.417Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:46.425Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:48.658Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:48.659Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:51.064Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:51.064Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:53.337Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:53.337Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:55.584Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:55.585Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:24:57.773Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:24:57.773Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:00.093Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:00.093Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:02.287Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:02.290Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:04.528Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:04.528Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:06.671Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:06.671Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:08.956Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:08.956Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:11.166Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:11.166Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:13.325Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:13.326Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:15.562Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:15.562Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:17.728Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:17.728Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:19.879Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:19.879Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:22.086Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:22.086Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:24.368Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:24.368Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:26.722Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:26.722Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+› Detected a change in metro.config.js. Restart the server to see the new results.
+2026-01-06T16:25:29.023Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:29.023Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:31.208Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:31.208Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:33.380Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:33.380Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:35.681Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:35.681Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:37.848Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:37.848Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:39.991Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:39.991Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:42.192Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:42.192Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:44.354Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:44.354Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:46.521Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:46.522Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:48.674Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:48.675Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:50.792Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:50.792Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:52.939Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:52.939Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:55.098Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:55.099Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:57.266Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:57.266Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:25:59.655Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:25:59.655Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:01.877Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:01.877Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:04.063Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:04.063Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:06.336Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:06.337Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:08.733Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:08.733Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:10.936Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:10.936Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:13.348Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:13.348Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:15.495Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:15.495Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:17.665Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:17.707Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:19.880Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:19.880Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:22.114Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:22.114Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:24.279Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:24.279Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:26.470Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:26.470Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:28.625Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:28.625Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:30.836Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:30.836Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:33.100Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:33.100Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:35.305Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:35.305Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:37.494Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:37.495Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:39.699Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:39.699Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:41.948Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:41.948Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:44.109Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:44.109Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:46.375Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:46.376Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:49.045Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:49.045Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:51.293Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:51.293Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:53.551Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:53.551Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:55.783Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:55.783Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:26:57.977Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:26:57.977Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:00.313Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:00.313Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:02.485Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:02.485Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:04.693Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:04.693Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:06.910Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:06.910Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:09.118Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:09.118Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:11.270Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:11.270Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:13.529Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:13.529Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:15.763Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:15.763Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:17.963Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:17.968Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:20.217Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:20.218Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:22.500Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:22.500Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:24.973Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:24.973Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:27.181Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:27.181Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:29.394Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:29.395Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:31.672Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:31.672Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:33.872Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:33.872Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:36.145Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:36.155Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:38.375Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:38.375Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:40.584Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:40.584Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:42.705Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:42.705Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:45.063Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:45.063Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:47.223Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:47.223Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:49.412Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:49.412Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:51.620Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:51.627Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:53.922Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:53.922Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:56.403Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:56.403Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:27:58.608Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:27:58.608Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:28:00.795Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:28:00.796Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:28:03.008Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:28:03.008Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:28:05.207Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:28:05.207Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:28:07.406Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:28:07.406Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+› Detected a change in metro.config.js. Restart the server to see the new results.
+2026-01-06T16:28:09.565Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:28:09.565Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:28:12.134Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:28:12.134Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:28:14.389Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:28:14.389Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:28:16.547Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:28:16.547Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:28:18.714Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:28:18.714Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:28:20.960Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:28:20.960Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:28:23.142Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:28:23.142Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:28:25.402Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:28:25.402Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:28:27.588Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:28:27.588Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-06T16:28:29.768Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-06T16:28:29.768Z expo:start:server:metro:router Using app as the root directory for Expo Router.
