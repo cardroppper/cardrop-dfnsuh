@@ -4,15 +4,16 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
+    "preflight": "node scripts/preflight-check.js",
+    "validate": "node scripts/validate-build.js",
+    "predev": "pnpm preflight",
     "dev": "EXPO_NO_TELEMETRY=1 expo start --tunnel",
     "android": "EXPO_NO_TELEMETRY=1 expo start --android",
     "ios": "EXPO_NO_TELEMETRY=1 expo start --ios",
     "web": "EXPO_NO_TELEMETRY=1 expo start --web",
     "build:web": "expo export -p web && npx workbox generateSW workbox-config.js",
-    "build:android": "pnpm run validate:build && expo prebuild -p android",
-    "build:android:release": "pnpm run validate:build && eas build --platform android --profile production",
-    "validate:build": "node scripts/validate-build.js",
-    "prebuild:clean": "rm -rf android ios",
+    "prebuild:android": "pnpm validate",
+    "build:android": "expo prebuild -p android",
     "lint": "eslint ."
   },
   "dependencies": {
