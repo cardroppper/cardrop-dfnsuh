@@ -1,4 +1,3 @@
-
 {
   "expo": {
     "name": "CarDrop",
@@ -37,7 +36,10 @@
               "scheme": "cardrop"
             }
           ],
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ]
     },
@@ -56,5 +58,6 @@
     "extra": {
       "router": {}
     }
-  }
+  },
+  "scheme": "CarDrop"
 }

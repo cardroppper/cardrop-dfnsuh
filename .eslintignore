@@ -3,6 +3,7 @@
 _expo/
 dist/
 web-build/
+.expo/
 
 # Ignore node modules
 node_modules/
@@ -11,5 +12,16 @@ node_modules/
 *.bundle.js
 *.bundle.js.map
 
-# Ignore scripts directory
+# Ignore config files
+babel.config.js
+metro.config.js
+babel-plugins/
+
+# Ignore backend
+backend/
+
+# Ignore scripts
 scripts/
+
+# Ignore assets
+assets/
