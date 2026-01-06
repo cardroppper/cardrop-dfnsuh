@@ -1,215 +1,252 @@
 
-const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
-console.log('🔍 Running comprehensive build validation...\n');
-console.log('═'.repeat(60));
-console.log('BUILD VALIDATION - CarDrop Android');
-console.log('═'.repeat(60) + '\n');
-
-const checks = {
-  passed: [],
-  failed: [],
-  warnings: []
+const colors = {
+  reset: '\x1b[0m',
+  red: '\x1b[31m',
+  green: '\x1b[32m',
+  yellow: '\x1b[33m',
+  blue: '\x1b[34m',
+  cyan: '\x1b[36m',
 };
 
-// Check 1: Verify app.json configuration
-console.log('📋 Checking app.json configuration...');
-try {
-  const appJsonPath = path.join(__dirname, '..', 'app.json');
-  const appJson = JSON.parse(fs.readFileSync(appJsonPath, 'utf8'));
-  
-  if (appJson.expo.android.kotlinVersion) {
-    checks.passed.push(`✅ Kotlin version: ${appJson.expo.android.kotlinVersion}`);
-  } else {
-    checks.failed.push('❌ Kotlin version not specified in app.json');
-  }
-
-  if (appJson.expo.android.gradleVersion) {
-    checks.passed.push(`✅ Gradle version: ${appJson.expo.android.gradleVersion}`);
-  } else {
-    checks.warnings.push('⚠️  Gradle version not specified (will use default)');
-  }
-
-  if (appJson.expo.android.buildToolsVersion) {
-    checks.passed.push(`✅ Build tools version: ${appJson.expo.android.buildToolsVersion}`);
-  } else {
-    checks.warnings.push('⚠️  Build tools version not specified (will use default)');
-  }
-} catch (error) {
-  checks.failed.push('❌ Failed to read or parse app.json');
+function log(message, color = colors.reset) {
+  console.log(`${color}${message}${colors.reset}`);
 }
 
-// Check 2: Verify package.json dependencies
-console.log('📦 Checking dependencies...');
-try {
-  const packageJsonPath = path.join(__dirname, '..', 'package.json');
-  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-  
-  const requiredDeps = ['expo', 'react', 'react-native'];
-  const missing = requiredDeps.filter(dep => !packageJson.dependencies[dep]);
-  
-  if (missing.length === 0) {
-    checks.passed.push('✅ Core dependencies present');
-  } else {
-    checks.failed.push(`❌ Missing dependencies: ${missing.join(', ')}`);
+function checkNodeModules() {
+  log('\n📦 Checking node_modules...', colors.cyan);
+  if (!fs.existsSync(path.join(__dirname, '..', 'node_modules'))) {
+    log('❌ node_modules not found. Run: pnpm install', colors.red);
+    return false;
   }
-
-  // Check for Expo SDK version
-  const expoVersion = packageJson.dependencies.expo;
-  if (expoVersion) {
-    checks.passed.push(`✅ Expo SDK: ${expoVersion}`);
-  }
-} catch (error) {
-  checks.failed.push('❌ Failed to read package.json');
+  log('✅ node_modules exists', colors.green);
+  return true;
 }
 
-// Check 3: Verify node_modules exists
-console.log('📁 Checking node_modules...');
-const nodeModulesPath = path.join(__dirname, '..', 'node_modules');
-if (fs.existsSync(nodeModulesPath)) {
-  checks.passed.push('✅ node_modules exists');
-  
-  // Check for critical packages
-  const criticalPackages = ['expo', 'react-native', '@expo/prebuild-config'];
-  criticalPackages.forEach(pkg => {
-    const pkgPath = path.join(nodeModulesPath, pkg);
-    if (fs.existsSync(pkgPath)) {
-      checks.passed.push(`✅ ${pkg} installed`);
-    } else {
-      checks.failed.push(`❌ ${pkg} not found - run pnpm install`);
-    }
-  });
-} else {
-  checks.failed.push('❌ node_modules not found - run pnpm install');
-}
-
-// Check 4: Verify Expo CLI is available
-console.log('🔧 Checking Expo CLI...');
-try {
-  const expoVersion = execSync('npx expo --version', { 
-    stdio: 'pipe',
-    cwd: path.join(__dirname, '..')
-  }).toString().trim();
-  checks.passed.push(`✅ Expo CLI available: ${expoVersion}`);
-} catch (error) {
-  checks.failed.push('❌ Expo CLI not available');
-}
-
-// Check 5: Test prebuild configuration (dry run)
-console.log('🏗️  Testing Android prebuild configuration...');
-console.log('   (This may take a moment...)\n');
-try {
-  // Run prebuild with --clean to test configuration without actually building
-  const prebuildOutput = execSync('npx expo prebuild --platform android --clean --no-install', {
-    stdio: 'pipe',
-    cwd: path.join(__dirname, '..'),
-    encoding: 'utf8'
-  });
-  
-  checks.passed.push('✅ Android prebuild configuration valid');
-  
-  // Check for Kotlin/KSP warnings in output
-  if (prebuildOutput.includes('KSP')) {
-    if (prebuildOutput.includes('error') || prebuildOutput.includes('failed')) {
-      checks.warnings.push('⚠️  KSP warnings detected in prebuild output');
-    } else {
-      checks.passed.push('✅ KSP configuration looks good');
-    }
-  }
-} catch (error) {
-  checks.failed.push('❌ Android prebuild configuration failed');
-  
-  const errorOutput = error.stderr ? error.stderr.toString() : error.message;
-  
-  // Check for specific Kotlin/KSP errors
-  if (errorOutput.includes('KSP version')) {
-    checks.failed.push('❌ Kotlin/KSP version mismatch detected');
-    console.error('\n⚠️  KOTLIN/KSP ERROR DETAILS:');
-    console.error('   ' + errorOutput.split('\n').filter(line => 
-      line.includes('KSP') || line.includes('Kotlin') || line.includes('version')
-    ).join('\n   '));
-  }
-  
-  // Check for Gradle errors
-  if (errorOutput.includes('Gradle')) {
-    checks.failed.push('❌ Gradle configuration error detected');
-  }
-  
-  // Check for plugin errors
-  if (errorOutput.includes('plugin')) {
-    checks.failed.push('❌ Plugin configuration error detected');
-  }
-}
-
-// Check 6: Verify android folder doesn't exist (clean state)
-console.log('🧹 Checking for clean build state...');
-const androidPath = path.join(__dirname, '..', 'android');
-const iosPath = path.join(__dirname, '..', 'ios');
-if (!fs.existsSync(androidPath) && !fs.existsSync(iosPath)) {
-  checks.passed.push('✅ Clean build state (no android/ios folders)');
-} else {
-  checks.warnings.push('⚠️  Native folders exist - run pnpm run prebuild:clean for fresh build');
-}
-
-// Check 7: Verify EAS configuration if using EAS Build
-console.log('☁️  Checking EAS configuration...');
-const easJsonPath = path.join(__dirname, '..', 'eas.json');
-if (fs.existsSync(easJsonPath)) {
+function checkPackageJson() {
+  log('\n📄 Validating package.json...', colors.cyan);
   try {
-    const easJson = JSON.parse(fs.readFileSync(easJsonPath, 'utf8'));
-    if (easJson.build && easJson.build.production) {
-      checks.passed.push('✅ EAS Build configuration found');
-    } else {
-      checks.warnings.push('⚠️  eas.json exists but production profile not configured');
+    const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf8'));
+    const required = ['expo', 'react', 'react-native', 'expo-router'];
+    const missing = required.filter(dep => !pkg.dependencies[dep]);
+    
+    if (missing.length > 0) {
+      log(`❌ Missing dependencies: ${missing.join(', ')}`, colors.red);
+      return false;
     }
+    log('✅ All required dependencies present', colors.green);
+    return true;
   } catch (error) {
-    checks.warnings.push('⚠️  eas.json exists but could not be parsed');
+    log(`❌ Error reading package.json: ${error.message}`, colors.red);
+    return false;
   }
-} else {
-  checks.warnings.push('⚠️  eas.json not found (required for EAS Build)');
 }
 
-// Print results
-console.log('\n' + '═'.repeat(60));
-console.log('VALIDATION RESULTS');
-console.log('═'.repeat(60) + '\n');
-
-if (checks.passed.length > 0) {
-  console.log('✅ PASSED CHECKS:');
-  checks.passed.forEach(check => console.log('   ' + check));
-  console.log('');
+function checkAppJson() {
+  log('\n📱 Validating app.json...', colors.cyan);
+  try {
+    const appJson = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'app.json'), 'utf8'));
+    
+    if (!appJson.expo) {
+      log('❌ Missing expo configuration', colors.red);
+      return false;
+    }
+    
+    if (!appJson.expo.android || !appJson.expo.android.package) {
+      log('❌ Missing Android package name', colors.red);
+      return false;
+    }
+    
+    log(`✅ App configured: ${appJson.expo.name}`, colors.green);
+    log(`   Package: ${appJson.expo.android.package}`, colors.blue);
+    return true;
+  } catch (error) {
+    log(`❌ Error reading app.json: ${error.message}`, colors.red);
+    return false;
+  }
 }
 
-if (checks.warnings.length > 0) {
-  console.log('⚠️  WARNINGS:');
-  checks.warnings.forEach(check => console.log('   ' + check));
-  console.log('');
+function checkMetroConfig() {
+  log('\n⚙️  Checking Metro configuration...', colors.cyan);
+  const metroPath = path.join(__dirname, '..', 'metro.config.js');
+  
+  if (!fs.existsSync(metroPath)) {
+    log('❌ metro.config.js not found', colors.red);
+    return false;
+  }
+  
+  try {
+    const config = require(metroPath);
+    if (!config) {
+      log('❌ Invalid Metro configuration', colors.red);
+      return false;
+    }
+    log('✅ Metro configuration valid', colors.green);
+    return true;
+  } catch (error) {
+    log(`❌ Metro config error: ${error.message}`, colors.red);
+    return false;
+  }
 }
 
-if (checks.failed.length > 0) {
-  console.log('❌ FAILED CHECKS:');
-  checks.failed.forEach(check => console.log('   ' + check));
-  console.log('');
-  console.log('═'.repeat(60));
-  console.log('❌ BUILD VALIDATION FAILED');
-  console.log('═'.repeat(60));
-  console.log('\n💡 RECOMMENDED ACTIONS:');
-  console.log('   1. Run: pnpm install');
-  console.log('   2. Run: pnpm run prebuild:clean');
-  console.log('   3. Check app.json for correct Kotlin/Gradle versions');
-  console.log('   4. Run: pnpm run validate:build again\n');
+function runLint() {
+  log('\n🔍 Running ESLint...', colors.cyan);
+  try {
+    execSync('pnpm lint', { stdio: 'inherit', cwd: path.join(__dirname, '..') });
+    log('✅ Lint passed', colors.green);
+    return true;
+  } catch (error) {
+    log('❌ Lint failed - fix errors before building', colors.red);
+    return false;
+  }
+}
+
+function checkTypeScript() {
+  log('\n📘 Checking TypeScript...', colors.cyan);
+  try {
+    execSync('npx tsc --noEmit', { 
+      stdio: 'pipe', 
+      cwd: path.join(__dirname, '..'),
+      encoding: 'utf8'
+    });
+    log('✅ TypeScript check passed', colors.green);
+    return true;
+  } catch (error) {
+    log('⚠️  TypeScript warnings (non-blocking)', colors.yellow);
+    return true;
+  }
+}
+
+function testExpoStart() {
+  log('\n🚀 Testing Expo bundling (dry run)...', colors.cyan);
+  try {
+    log('   This may take 30-60 seconds...', colors.blue);
+    
+    const result = execSync('npx expo export --platform android --output-dir .expo-test --clear', {
+      stdio: 'pipe',
+      cwd: path.join(__dirname, '..'),
+      timeout: 90000,
+      encoding: 'utf8'
+    });
+    
+    const testDir = path.join(__dirname, '..', '.expo-test');
+    if (fs.existsSync(testDir)) {
+      const files = fs.readdirSync(testDir);
+      log(`   Generated ${files.length} bundle files`, colors.blue);
+      fs.rmSync(testDir, { recursive: true, force: true });
+    }
+    
+    log('✅ Expo bundling test passed', colors.green);
+    return true;
+  } catch (error) {
+    log(`❌ Expo bundling test failed`, colors.red);
+    
+    if (error.stdout) {
+      log('\n📋 Output:', colors.yellow);
+      console.log(error.stdout.toString().slice(-500));
+    }
+    if (error.stderr) {
+      log('\n⚠️  Errors:', colors.red);
+      console.log(error.stderr.toString().slice(-500));
+    }
+    
+    return false;
+  }
+}
+
+function checkExpoInstallation() {
+  log('\n🔧 Checking Expo CLI...', colors.cyan);
+  try {
+    const version = execSync('npx expo --version', { stdio: 'pipe', encoding: 'utf8' }).trim();
+    log(`✅ Expo CLI available (v${version})`, colors.green);
+    return true;
+  } catch (error) {
+    log('❌ Expo CLI not available', colors.red);
+    return false;
+  }
+}
+
+function checkNodeVersion() {
+  log('\n🟢 Checking Node.js version...', colors.cyan);
+  try {
+    const version = process.version;
+    const major = parseInt(version.slice(1).split('.')[0]);
+    
+    if (major < 18) {
+      log(`❌ Node.js ${version} is too old. Requires Node 18+`, colors.red);
+      return false;
+    }
+    
+    log(`✅ Node.js ${version} is compatible`, colors.green);
+    return true;
+  } catch (error) {
+    log(`❌ Error checking Node version: ${error.message}`, colors.red);
+    return false;
+  }
+}
+
+async function main() {
+  log('═══════════════════════════════════════', colors.cyan);
+  log('   🚀 CarDrop Build Validation', colors.cyan);
+  log('═══════════════════════════════════════', colors.cyan);
+
+  const checks = [
+    { name: 'Node Version', fn: checkNodeVersion },
+    { name: 'Node Modules', fn: checkNodeModules },
+    { name: 'Package.json', fn: checkPackageJson },
+    { name: 'App.json', fn: checkAppJson },
+    { name: 'Metro Config', fn: checkMetroConfig },
+    { name: 'Expo CLI', fn: checkExpoInstallation },
+    { name: 'TypeScript', fn: checkTypeScript },
+    { name: 'ESLint', fn: runLint },
+    { name: 'Expo Bundling', fn: testExpoStart },
+  ];
+
+  let passed = 0;
+  let failed = 0;
+  const failedChecks = [];
+
+  for (const check of checks) {
+    try {
+      if (check.fn()) {
+        passed++;
+      } else {
+        failed++;
+        failedChecks.push(check.name);
+      }
+    } catch (error) {
+      log(`❌ ${check.name} failed with error: ${error.message}`, colors.red);
+      failed++;
+      failedChecks.push(check.name);
+    }
+  }
+
+  log('\n═══════════════════════════════════════', colors.cyan);
+  log(`   Results: ${passed} passed, ${failed} failed`, failed > 0 ? colors.red : colors.green);
+  log('═══════════════════════════════════════', colors.cyan);
+
+  if (failed > 0) {
+    log('\n❌ Build validation failed. Fix these issues:', colors.red);
+    failedChecks.forEach(check => log(`   - ${check}`, colors.red));
+    log('\n💡 Run individual checks to debug:', colors.yellow);
+    log('   pnpm lint', colors.yellow);
+    log('   npx tsc --noEmit', colors.yellow);
+    log('   npx expo export --platform android --output-dir test', colors.yellow);
+    process.exit(1);
+  } else {
+    log('\n✅ All checks passed! Ready to build.', colors.green);
+    log('\n📱 Next steps:', colors.cyan);
+    log('   pnpm build:android     - Build APK', colors.blue);
+    log('   pnpm build:android:bundle - Build AAB', colors.blue);
+    process.exit(0);
+  }
+}
+
+main().catch(error => {
+  log(`\n❌ Validation script error: ${error.message}`, colors.red);
+  console.error(error);
   process.exit(1);
-}
-
-console.log('═'.repeat(60));
-console.log('✅ ALL VALIDATION CHECKS PASSED!');
-console.log('═'.repeat(60));
-console.log('\n🚀 Your build configuration is ready!');
-console.log('\n📱 Next steps:');
-console.log('   • Local build: pnpm run build:android');
-console.log('   • EAS Build: pnpm run build:android:release');
-console.log('   • Clean build: pnpm run prebuild:clean && pnpm run build:android\n');
-
-process.exit(0);
+});

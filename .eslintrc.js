@@ -1,5 +1,5 @@
 
-// https://docs.expo.dev/guides/using-eslint/
+// https://docs.expo.dev/eslint/
 module.exports = {
   extends: [
     'expo',
@@ -9,7 +9,7 @@ module.exports = {
     'plugin:react/jsx-runtime'
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'react', 'import'],
+  plugins: ['@typescript-eslint', 'react'],
   root: true,
   parserOptions: {
     ecmaVersion: 'latest',
@@ -23,27 +23,14 @@ module.exports = {
     '/public/*', 
     '/babel-plugins/*', 
     '/backend/*',
-    'node_modules/',
-    '.expo/',
-    'build/',
-    '*.config.js',
-    'scripts/'
+    '/android/*',
+    '/ios/*',
+    '/.expo/*',
+    '/node_modules/*'
   ],
   env: {
     browser: true,
-    node: true,
     'react-native/react-native': true,
-  },
-  settings: {
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.native.js', '.native.jsx', '.native.ts', '.native.tsx'],
-        moduleDirectory: ['node_modules', 'app', 'components', 'hooks', 'services', 'utils', 'contexts', 'types'],
-      },
-    },
-    react: {
-      version: 'detect',
-    },
   },
   rules: {
     "@typescript-eslint/no-unused-vars": "off",
@@ -55,10 +42,8 @@ module.exports = {
     "@typescript-eslint/no-wrapper-object-types": "off",
     "@typescript-eslint/ban-tslint-comment": "off",
     "react/no-unescaped-entities": "off",
-    // Turn off import/no-unresolved completely to avoid false positives
-    "import/no-unresolved": "off",
     "prefer-const": "off",
-    "react/prop-types": "off",
+    "react/prop-types": 1,
     "no-case-declarations": "off",
     "no-empty": "off",
     "react/display-name": "off",
@@ -68,7 +53,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['metro.config.js', 'babel.config.js', '*.config.js'],
+      files: ['metro.config.js', 'scripts/**/*.js'],
       rules: {
         '@typescript-eslint/no-var-requires': 'off'
       }
