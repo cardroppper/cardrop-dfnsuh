@@ -8,6 +8,7 @@
     "icon": "./assets/images/natively-dark.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "scheme": "natively",
     "splash": {
       "image": "./assets/images/natively-dark.png",
       "resizeMode": "contain",
@@ -26,10 +27,7 @@
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.Natively",
-      "kotlinVersion": "2.0.0",
-      "gradleVersion": "8.10.2",
-      "buildToolsVersion": "35.0.0"
+      "package": "com.anonymous.Natively"
     },
     "web": {
       "favicon": "./assets/images/final_quest_240x240.png",
@@ -37,10 +35,8 @@
     },
     "plugins": [
       "expo-font",
-      "expo-router",
-      "expo-web-browser"
+      "expo-router"
     ],
-    "scheme": "natively",
     "experiments": {
       "typedRoutes": true
     },
