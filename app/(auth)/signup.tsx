@@ -9,6 +9,7 @@ import { useRouter } from 'expo-router';
 import { isOnline, showOfflineAlert } from '@/utils/networkUtils';
 import { useAuth } from '@/contexts/AuthContext';
 import { IconSymbol } from '@/components/IconSymbol';
+import { Logo } from '@/components/Logo';
 import {
   View,
   Text,
@@ -35,6 +36,10 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     padding: 24,
+  },
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 32,
   },
   title: {
     fontSize: 32,
@@ -305,6 +310,10 @@ export default function SignupScreen() {
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled"
       >
+        <View style={styles.logoContainer}>
+          <Logo size={120} />
+        </View>
+
         <Text style={styles.title}>Create Account</Text>
         <Text style={styles.subtitle}>Join the CarDrop community</Text>
 
