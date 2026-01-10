@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/images/d8bffe89-911e-4284-81e6-c7ce7f30e2f1.png",
         "backgroundColor": "#1a1a1a"
       },
-      "package": "com.cardrop.app"
+      "package": "com.CARDROP.CarDrop"
     },
     "plugins": [
       "expo-router",

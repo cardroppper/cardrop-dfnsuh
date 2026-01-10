@@ -1,0 +1,69 @@
+
+═══════════════════════════════════════════════════════════════
+  ANDROID RELEASE BUILD FIX - QUICK REFERENCE
+═══════════════════════════════════════════════════════════════
+
+PROBLEM: Task :app:createBundleReleaseJsAndAssets FAILED
+
+SOLUTION: Cache + dependency issues fixed
+
+═══════════════════════════════════════════════════════════════
+  QUICK FIX (Try this first)
+═══════════════════════════════════════════════════════════════
+
+npm run clean:metro
+cd android && ./gradlew clean && ./gradlew assembleRelease
+
+═══════════════════════════════════════════════════════════════
+  FULL FIX (If quick fix doesn't work)
+═══════════════════════════════════════════════════════════════
+
+npm run clean
+npm install
+npm run clean:gradle
+npx expo prebuild --clean
+cd android && ./gradlew assembleRelease
+
+═══════════════════════════════════════════════════════════════
+  NUCLEAR OPTION (If all else fails)
+═══════════════════════════════════════════════════════════════
+
+npm run build:android:clean
+cd android && ./gradlew assembleRelease
+
+═══════════════════════════════════════════════════════════════
+  WHAT WAS FIXED
+═══════════════════════════════════════════════════════════════
+
+✅ Added babel-plugin-transform-remove-console
+✅ Improved Metro config with safe minifier resolution
+✅ Created comprehensive clean script (scripts/clean-all.js)
+✅ Added new npm scripts for cleaning
+
+═══════════════════════════════════════════════════════════════
+  NEW SCRIPTS AVAILABLE
+═══════════════════════════════════════════════════════════════
+
+npm run clean              → Full clean (all caches)
+npm run clean:metro        → Clear Metro cache only
+npm run clean:gradle       → Clear Gradle cache only
+npm run build:android:clean → Clean + prebuild + ready to build
+
+═══════════════════════════════════════════════════════════════
+  VERIFICATION
+═══════════════════════════════════════════════════════════════
+
+After fix, verify:
+1. npm list metro-minify-terser
+2. npm list babel-plugin-transform-remove-console
+3. npx expo export --platform android
+4. cd android && ./gradlew assembleRelease
+
+═══════════════════════════════════════════════════════════════
+  OUTPUT LOCATION
+═══════════════════════════════════════════════════════════════
+
+APK: android/app/build/outputs/apk/release/app-release.apk
+AAB: android/app/build/outputs/bundle/release/app-release.aab
+
+═══════════════════════════════════════════════════════════════
