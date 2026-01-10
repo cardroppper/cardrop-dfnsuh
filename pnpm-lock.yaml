@@ -109,7 +109,7 @@ importers:
         version: 15.0.10(expo@54.0.30)(react-native@0.81.4(@babel/core@7.28.5)(@types/react@19.1.17)(react@19.1.0))
       metro-minify-terser:
         specifier: ^0.83.0
-        version: 0.83.0
+        version: 0.83.3
       react:
         specifier: 19.1.0
         version: 19.1.0
@@ -4321,10 +4321,6 @@ packages:
   metro-file-map@0.83.3:
     resolution: {integrity: sha512-jg5AcyE0Q9Xbbu/4NAwwZkmQn7doJCKGW0SLeSJmzNB9Z24jBe0AL2PHNMy4eu0JiKtNWHz9IiONGZWq7hjVTA==}
     engines: {node: '>=20.19.4'}
-
-  metro-minify-terser@0.83.0:
-    resolution: {integrity: sha512-jsVzWnkl43Kb18iQvEn0Keq0n5WQwAiAHn9vCFE6roM6E4fVLDKlzDNoWyFzs9GyodlVYkbjAuz9PCpEzBfq5Q==}
-    engines: {node: '>=22.14'}
 
   metro-minify-terser@0.83.3:
     resolution: {integrity: sha512-O2BmfWj6FSfzBLrNCXt/rr2VYZdX5i6444QJU0fFoc7Ljg+Q+iqebwE3K0eTvkI6TRjELsXk1cjU+fXwAR4OjQ==}
@@ -11049,11 +11045,6 @@ snapshots:
       walker: 1.0.8
     transitivePeerDependencies:
       - supports-color
-
-  metro-minify-terser@0.83.0:
-    dependencies:
-      flow-enums-runtime: 0.0.6
-      terser: 5.44.1
 
   metro-minify-terser@0.83.3:
     dependencies:
