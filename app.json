@@ -1,8 +1,7 @@
-
 {
   "expo": {
     "name": "CarDrop",
-    "slug": "cardrop",
+    "slug": "CarDrop",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/d8bffe89-911e-4284-81e6-c7ce7f30e2f1.png",
@@ -29,5 +28,6 @@
       "expo-router",
       "expo-secure-store"
     ]
-  }
+  },
+  "scheme": "CarDrop"
 }
