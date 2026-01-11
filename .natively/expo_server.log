@@ -7447,3 +7447,383 @@ PluginError: Failed to resolve plugin for module "expo-location" relative to "/e
     at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
     at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
     at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:11:22.469Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:11:22.470Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:11:22.470Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:11:22.470Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:11:37.016Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:11:37.017Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:11:37.017Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:11:37.017Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:12:13.176Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:12:13.177Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:12:13.177Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:12:13.177Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:12:48.854Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:12:48.854Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:12:48.855Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:12:48.855Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:13:24.791Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:13:24.793Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:13:24.793Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:13:24.793Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:14:00.593Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:14:00.594Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:14:00.594Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:14:00.594Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:14:36.589Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:14:36.591Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:14:36.592Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:14:36.592Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:15:12.451Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:15:12.452Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:15:12.452Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:15:12.452Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:15:48.281Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:15:48.282Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:15:48.283Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:15:48.283Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:16:24.173Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:16:24.174Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:16:24.174Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:16:24.175Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:16:59.964Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:16:59.965Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:16:59.965Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:16:59.965Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:17:36.179Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:17:36.180Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:17:36.180Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:17:36.180Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:18:12.103Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:18:12.104Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:18:12.104Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:18:12.104Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:18:47.657Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:18:47.658Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:18:47.658Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:18:47.658Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:19:23.640Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:19:23.641Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:19:23.641Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:19:23.641Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:19:59.878Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:19:59.879Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:19:59.879Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:19:59.879Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:20:35.403Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:20:35.403Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:20:35.404Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:20:35.404Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:21:11.949Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:21:11.950Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:21:11.950Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:21:11.950Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)
+2026-01-11T16:21:47.756Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-11T16:21:47.757Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-11T16:21:47.757Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-11T16:21:47.757Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+[33m[1mWarning: [22mRoot-level [1m"expo"[22m object found. Ignoring extra key in Expo config: "scheme"
+[90mLearn more: https://expo.fyi/root-expo-object[0m[0m
+Could not find plugin "expo-location"
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "expo-location" relative to "/expo-project". Do you have node modules installed?
+    at resolvePluginForModule (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:96:9)
+    at resolveConfigPluginFunctionWithInfo (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:145:7)
+    at resolveConfigPluginFunction (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:136:7)
+    at withStaticPlugin (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:85:70)
+    at /expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:84
+    at Array.reduce (<anonymous>)
+    at withPlugins (/expo-project/node_modules/.pnpm/@expo+config-plugins@54.0.4/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:30:18)
+    at withConfigPlugins (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/plugins/withConfigPlugins.js:35:47)
+    at fillAndReturnConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:236:78)
+    at getConfig (/expo-project/node_modules/.pnpm/@expo+config@12.0.13/node_modules/@expo/config/build/Config.js:293:10)

@@ -1,3 +1,4 @@
+
 {
   "name": "Natively",
   "version": "1.0.0",
@@ -9,7 +10,9 @@
     "web": "EXPO_NO_TELEMETRY=1 expo start --web",
     "build:web": "expo export -p web && npx workbox generateSW workbox-config.js",
     "build:android": "expo prebuild -p android",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "check:deploy": "node scripts/deployment-check.js",
+    "prebuild": "node scripts/deployment-check.js"
   },
   "dependencies": {
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
