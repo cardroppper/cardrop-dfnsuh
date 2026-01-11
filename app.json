@@ -1,33 +1,47 @@
 {
   "expo": {
     "name": "CarDrop",
-    "slug": "cardrop-dfnsuh",
+    "slug": "CarDrop",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/d8bffe89-911e-4284-81e6-c7ce7f30e2f1.png",
-    "scheme": "cardrop",
+    "icon": "./assets/images/natively-dark.png",
     "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "scheme": "natively",
     "splash": {
-      "image": "./assets/images/d8bffe89-911e-4284-81e6-c7ce7f30e2f1.png",
+      "image": "./assets/images/natively-dark.png",
       "resizeMode": "contain",
-      "backgroundColor": "#1a1a1a"
+      "backgroundColor": "#000000"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.cardrop.app",
-      "icon": "./assets/images/d8bffe89-911e-4284-81e6-c7ce7f30e2f1.png"
+      "bundleIdentifier": "com.anonymous.Natively",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/d8bffe89-911e-4284-81e6-c7ce7f30e2f1.png",
-        "backgroundColor": "#1a1a1a"
+        "foregroundImage": "./assets/images/natively-dark.png",
+        "backgroundColor": "#000000"
       },
+      "edgeToEdgeEnabled": true,
       "package": "com.CARDROP.CarDrop"
     },
+    "web": {
+      "favicon": "./assets/images/final_quest_240x240.png",
+      "bundler": "metro"
+    },
     "plugins": [
-      "expo-router",
-      "expo-secure-store"
-    ]
+      "expo-font",
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {}
+    }
   },
   "scheme": "CarDrop"
 }

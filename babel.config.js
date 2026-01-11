@@ -18,7 +18,7 @@ module.exports = function (api) {
         [
           "babel-plugin-transform-remove-console",
           {
-            exclude: ["error", "warn", "log"],
+            exclude: ["error", "warn"],
           },
         ],
       ]
@@ -34,11 +34,9 @@ module.exports = function (api) {
           extensions: [
             ".ios.ts",
             ".android.ts",
-            ".native.ts",
             ".ts",
             ".ios.tsx",
             ".android.tsx",
-            ".native.tsx",
             ".tsx",
             ".jsx",
             ".js",
@@ -57,8 +55,8 @@ module.exports = function (api) {
       ],
       ...EDITABLE_COMPONENTS,
       "@babel/plugin-transform-export-namespace-from",
-      "react-native-worklets/plugin",
       ...productionPlugins,
+      "react-native-worklets/plugin",
     ],
   };
 };

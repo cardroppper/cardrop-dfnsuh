@@ -7,10 +7,6 @@ console.log('\n╔════════════════════�
 console.log('║      🏗️  COMPLETE ANDROID APK BUILD AUTOMATION        ║');
 console.log('╚════════════════════════════════════════════════════════╝\n');
 
-// Set NODE_ENV to production for release builds
-process.env.NODE_ENV = 'production';
-console.log('🔧 Environment: NODE_ENV=production\n');
-
 const steps = [
   {
     name: 'Clean Environment',
@@ -56,16 +52,13 @@ for (const step of steps) {
       execSync(command, { 
         stdio: 'inherit',
         cwd: path.join(__dirname, '..'),
-        timeout: 600000, // 10 minutes
-        env: { ...process.env, NODE_ENV: 'production' }
+        timeout: 600000 // 10 minutes
       });
       console.log(`   ✅ Success`);
     } catch (error) {
       console.error(`   ❌ Failed: ${command}`);
       if (step.critical) {
         console.error('\n🚫 Critical step failed. Build aborted.\n');
-        console.error('💡 For more details, run:');
-        console.error('   cd android && ./gradlew assembleRelease --stacktrace --info\n');
         process.exit(1);
       } else {
         console.log('   ⚠️  Non-critical failure, continuing...');
