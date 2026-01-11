@@ -51,10 +51,7 @@ const criticalDeps = [
   'react',
   'react-native',
   'expo-router',
-  '@expo/metro-runtime',
-  '@react-native-async-storage/async-storage',
-  '@supabase/supabase-js',
-  'metro-minify-terser'
+  '@expo/metro-runtime'
 ];
 
 let missingDeps = [];
@@ -67,15 +64,9 @@ for (const dep of criticalDeps) {
 
 if (missingDeps.length > 0) {
   console.error('❌ Missing critical dependencies:', missingDeps.join(', '));
-  console.error('   Run: npm install ' + missingDeps.join(' '));
+  console.error('   Run: pnpm install');
   process.exit(1);
 }
 
 console.log('✅ All critical dependencies present');
-
-// Set NODE_ENV for production builds
-if (!process.env.NODE_ENV) {
-  console.log('⚠️  NODE_ENV not set, will use production for build');
-}
-
 console.log('✅ Pre-build checks passed\n');

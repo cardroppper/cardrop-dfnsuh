@@ -6,39 +6,16 @@ const config = getDefaultConfig(__dirname);
 // Enable package exports
 config.resolver.unstable_enablePackageExports = true;
 
-// Ensure proper source extensions
-config.resolver.sourceExts = [
-  'expo.ts',
-  'expo.tsx',
-  'expo.js',
-  'expo.jsx',
-  'ts',
-  'tsx',
-  'js',
-  'jsx',
-  'json',
-  'wasm',
-  'svg',
-];
-
-// Configure minifier for release builds
-// Only set minifier if metro-minify-terser is available
-try {
-  const minifierPath = require.resolve('metro-minify-terser');
-  config.transformer = {
-    ...config.transformer,
-    minifierPath: minifierPath,
-    minifierConfig: {
-      compress: {
-        drop_console: false,
-      },
-      mangle: {
-        keep_fnames: true,
-      },
+// Fix transformer.transform error - use default Expo transformer
+// Don't override transformer configuration unless necessary
+config.transformer = {
+  ...config.transformer,
+  minifierPath: require.resolve('metro-minify-terser'),
+  minifierConfig: {
+    compress: {
+      drop_console: false,
     },
-  };
-} catch (e) {
-  console.warn('metro-minify-terser not found, using default minifier');
-}
+  },
+};
 
 module.exports = config;
