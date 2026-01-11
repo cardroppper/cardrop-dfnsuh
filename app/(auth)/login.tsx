@@ -16,6 +16,7 @@ import { useRouter } from 'expo-router';
 import { colors, commonStyles, buttonStyles } from '@/styles/commonStyles';
 import { useAuth } from '@/contexts/AuthContext';
 import { IconSymbol } from '@/components/IconSymbol';
+import { Logo } from '@/components/Logo';
 import { validateEmail } from '@/utils/validation';
 import { isOnline, showOfflineAlert } from '@/utils/networkUtils';
 import * as Haptics from 'expo-haptics';
@@ -93,7 +94,7 @@ export default function LoginScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.header}>
-          <Text style={styles.logo}>🚗</Text>
+          <Logo size={140} style={styles.logoImage} />
           <Text style={styles.title}>Welcome Back</Text>
           <Text style={styles.subtitle}>Log in to CarDrop</Text>
         </View>
@@ -193,8 +194,7 @@ const styles = StyleSheet.create({
     paddingBottom: 48,
     alignItems: 'center',
   },
-  logo: {
-    fontSize: 80,
+  logoImage: {
     marginBottom: 24,
   },
   title: {
