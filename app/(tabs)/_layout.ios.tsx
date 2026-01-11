@@ -54,6 +54,11 @@ export default function TabLayout() {
         <Icon sf="person.3.fill" />
       </NativeTabs.Trigger>
       
+      <NativeTabs.Trigger name="messages">
+        <Label>Messages</Label>
+        <Icon sf="message.fill" />
+      </NativeTabs.Trigger>
+      
       <NativeTabs.Trigger name="settings">
         <Label>Settings</Label>
         <Icon sf="gearshape.fill" />

@@ -1,3 +1,4 @@
+
 {
   "expo": {
     "name": "CarDrop",
@@ -7,7 +8,7 @@
     "icon": "./assets/images/natively-dark.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "scheme": "natively",
+    "scheme": "cardrop",
     "splash": {
       "image": "./assets/images/natively-dark.png",
       "resizeMode": "contain",
@@ -15,9 +16,16 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.Natively",
+      "bundleIdentifier": "com.cardrop.CarDrop",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSLocationWhenInUseUsageDescription": "CarDrop needs your location to show nearby vehicles and events.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "CarDrop needs your location to detect nearby vehicles via Bluetooth beacons.",
+        "NSBluetoothAlwaysUsageDescription": "CarDrop uses Bluetooth to detect nearby vehicles with beacons.",
+        "NSBluetoothPeripheralUsageDescription": "CarDrop uses Bluetooth to detect nearby vehicles with beacons.",
+        "NSCameraUsageDescription": "CarDrop needs camera access to take photos of your vehicles.",
+        "NSPhotoLibraryUsageDescription": "CarDrop needs photo library access to select vehicle photos.",
+        "NSPhotoLibraryAddUsageDescription": "CarDrop needs permission to save photos to your library."
       }
     },
     "android": {
@@ -26,7 +34,18 @@
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.CARDROP.CarDrop"
+      "package": "com.cardrop.CarDrop",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "BLUETOOTH",
+        "BLUETOOTH_ADMIN",
+        "BLUETOOTH_SCAN",
+        "BLUETOOTH_CONNECT",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./assets/images/final_quest_240x240.png",
@@ -34,14 +53,29 @@
     },
     "plugins": [
       "expo-font",
-      "expo-router"
+      "expo-router",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "CarDrop needs your location to show nearby vehicles and events."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "CarDrop needs access to your photos to upload vehicle images.",
+          "cameraPermission": "CarDrop needs camera access to take photos of your vehicles."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
-      "router": {}
+      "router": {},
+      "eas": {
+        "projectId": "your-project-id-here"
+      }
     }
-  },
-  "scheme": "CarDrop"
+  }
 }

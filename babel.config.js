@@ -14,14 +14,7 @@ module.exports = function (api) {
       : [];
 
   const productionPlugins = isProduction
-    ? [
-        [
-          "babel-plugin-transform-remove-console",
-          {
-            exclude: ["error", "warn"],
-          },
-        ],
-      ]
+    ? []
     : [];
 
   return {

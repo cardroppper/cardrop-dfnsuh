@@ -94,7 +94,7 @@ export default function TabLayout() {
             tabBarIcon: ({ color, size }) => (
               <IconSymbol
                 ios_icon_name="location.fill"
-                android_material_icon_name="near-me"
+                android_material_icon_name="location-on"
                 size={size}
                 color={color}
               />
@@ -122,7 +122,7 @@ export default function TabLayout() {
             tabBarIcon: ({ color, size }) => (
               <IconSymbol
                 ios_icon_name="person.3.fill"
-                android_material_icon_name="groups"
+                android_material_icon_name="group"
                 size={size}
                 color={color}
               />

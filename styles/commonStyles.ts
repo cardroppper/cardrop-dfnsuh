@@ -11,6 +11,7 @@ export const colors = {
   // Background colors
   background: '#000000',   // Pure black for dark mode
   card: '#1A1A1A',        // Dark gray for cards
+  cardBackground: '#1A1A1A', // Alias for card (consistency)
   
   // Text colors
   text: '#FFFFFF',         // White for primary text
@@ -38,7 +39,10 @@ export const commonStyles = StyleSheet.create({
     borderRadius: 16,
     padding: 16,
     marginBottom: 12,
-    boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.2)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
     elevation: 2,
   },
   
@@ -123,7 +127,10 @@ export const buttonStyles = StyleSheet.create({
     padding: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    boxShadow: '0px 4px 12px rgba(255, 69, 0, 0.3)',
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
     elevation: 4,
   },
   
