@@ -1,0 +1,54 @@
+
+═══════════════════════════════════════════════════════════════
+  ANDROID RELEASE BUILD FIX - QUICK REFERENCE
+═══════════════════════════════════════════════════════════════
+
+PROBLEM FIXED:
+✅ Missing @react-native-async-storage/async-storage dependency
+✅ Missing @supabase/supabase-js dependency  
+✅ Metro bundler configuration optimized
+✅ NODE_ENV properly set for production builds
+
+═══════════════════════════════════════════════════════════════
+  BUILD THE APK NOW
+═══════════════════════════════════════════════════════════════
+
+🚀 RECOMMENDED - Full Automated Build:
+   node scripts/full-build-apk.js
+
+⚡ QUICK BUILD (if android folder exists):
+   npm run build:android:apk
+
+🔧 MANUAL BUILD:
+   1. node scripts/clean-all.js
+   2. npm install
+   3. npx expo prebuild -p android --clean
+   4. cd android && ./gradlew assembleRelease
+
+═══════════════════════════════════════════════════════════════
+  IF BUILD FAILS
+═══════════════════════════════════════════════════════════════
+
+1. Check dependencies:
+   node scripts/prebuild-check.js
+
+2. Build with detailed logs:
+   cd android
+   ./gradlew assembleRelease --stacktrace --info
+
+3. Nuclear option (clean everything):
+   node scripts/clean-all.js
+   rm -rf android
+   npm install
+   node scripts/full-build-apk.js
+
+═══════════════════════════════════════════════════════════════
+  APK LOCATION AFTER BUILD
+═══════════════════════════════════════════════════════════════
+
+📱 android/app/build/outputs/apk/release/app-release.apk
+
+Install on device:
+   adb install android/app/build/outputs/apk/release/app-release.apk
+
+═══════════════════════════════════════════════════════════════
