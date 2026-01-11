@@ -4,21 +4,22 @@ module.exports = function (api) {
 
   const isProduction = process.env.NODE_ENV === 'production';
 
+  // Disable editable components in production
   const EDITABLE_COMPONENTS =
-    process.env.EXPO_PUBLIC_ENABLE_EDIT_MODE === "TRUE" &&
-    !isProduction
+    process.env.EXPO_PUBLIC_ENABLE_EDIT_MODE === "TRUE" && !isProduction
       ? [
           ["./babel-plugins/editable-elements.js", {}],
           ["./babel-plugins/inject-source-location.js", {}],
         ]
       : [];
 
-  const productionPlugins = isProduction
-    ? []
-    : [];
-
   return {
-    presets: ["babel-preset-expo"],
+    presets: [
+      ["babel-preset-expo", { 
+        jsxRuntime: "automatic",
+        lazyImports: true
+      }]
+    ],
     plugins: [
       [
         "module-resolver",
@@ -48,8 +49,7 @@ module.exports = function (api) {
       ],
       ...EDITABLE_COMPONENTS,
       "@babel/plugin-transform-export-namespace-from",
-      ...productionPlugins,
-      "react-native-worklets/plugin",
+      "react-native-reanimated/plugin",
     ],
   };
 };

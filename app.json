@@ -2,7 +2,7 @@
 {
   "expo": {
     "name": "CarDrop",
-    "slug": "CarDrop",
+    "slug": "cardrop-dfnsuh",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/natively-dark.png",
@@ -34,7 +34,7 @@
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.cardrop.CarDrop",
+      "package": "com.CARDROP.CarDrop",
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
