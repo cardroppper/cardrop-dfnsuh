@@ -31088,3 +31088,123 @@ Import stack:
 2026-01-16T17:18:48.701Z expo:start:server:metro:router Using app as the root directory for Expo Router.
 2026-01-16T17:18:50.804Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
 2026-01-16T17:18:50.804Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T17:18:52.900Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T17:18:52.901Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T17:18:54.991Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T17:18:54.991Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T17:18:57.088Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T17:18:57.088Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T17:18:59.185Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T17:18:59.185Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T17:19:01.313Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T17:19:01.313Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T17:19:03.405Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T17:19:03.405Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T17:19:05.496Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T17:19:05.496Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T17:19:07.583Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T17:19:07.583Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T17:19:09.672Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T17:19:09.672Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T17:19:09.915Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T17:19:09.916Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+Web ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+2026-01-16T17:19:10.201Z expo:start:server:metro:multi-platform Skipping production module: ./cjs/react-jsx-dev-runtime.production.min.js
+2026-01-16T17:19:10.203Z expo:start:server:metro:multi-platform Skipping production module: ./cjs/react.production.min.js
+2026-01-16T17:19:10.210Z expo:start:server:metro:multi-platform Redirecting module "/expo-project/node_modules/.pnpm/react-native-web@0.21.2_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/react-native-web/dist/exports/BackHandler/index.js" to shim
+2026-01-16T17:19:10.395Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolveNameError. (module: expo-superwall, platform: web, env: undefined, origin: /expo-project/app/subscription-management.tsx)
+2026-01-16T17:19:10.395Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolveNameError. (module: expo-superwall, platform: web, env: undefined, origin: /expo-project/app/subscription-management.tsx)
+2026-01-16T17:19:10.402Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-16T17:19:10.402Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/subscription-management.tsx",
+      "request": "expo-superwall"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/subscription-management.tsx"
+    }
+  ]
+}
+2026-01-16T17:19:10.481Z expo:start:server:metro:multi-platform Redirecting module "/expo-project/node_modules/.pnpm/react-native-web@0.21.2_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/react-native-web/dist/exports/AppRegistry/AppContainer.js" to shim
+2026-01-16T17:19:10.581Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolveNameError. (module: react-native-ble-manager, platform: web, env: undefined, origin: /expo-project/services/BLEService.ts)
+2026-01-16T17:19:10.582Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolveNameError. (module: react-native-ble-manager, platform: web, env: undefined, origin: /expo-project/services/BLEService.ts)
+2026-01-16T17:19:10.585Z expo:metro:withMetroResolvers Number of explored stacks: 2
+2026-01-16T17:19:10.585Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/services/BLEService.ts",
+      "request": "react-native-ble-manager"
+    },
+    {
+      "origin": "/expo-project/hooks/useBeaconPairing.ts",
+      "request": "../services/BLEService"
+    },
+    {
+      "origin": "/expo-project/app/(tabs)/_layout.tsx",
+      "request": "../../hooks/useBeaconPairing"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/(tabs)/_layout.tsx"
+    }
+  ],
+  "serverRoot": true
+}
+2026-01-16T17:19:10.590Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolveNameError. (module: expo-superwall, platform: web, env: undefined, origin: /expo-project/components/PaywallScreen.tsx)
+2026-01-16T17:19:10.590Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolveNameError. (module: expo-superwall, platform: web, env: undefined, origin: /expo-project/components/PaywallScreen.tsx)
+2026-01-16T17:19:10.591Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-16T17:19:10.591Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/components/PaywallScreen.tsx",
+      "request": "expo-superwall"
+    },
+    {
+      "origin": "/expo-project/app/subscription-management.tsx",
+      "request": "../components/PaywallScreen"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/subscription-management.tsx"
+    }
+  ]
+}
+2026-01-16T17:19:10.596Z expo:start:server:metro:multi-platform Skipping production module: ./cjs/react-jsx-runtime.production.min.js
+2026-01-16T17:19:10.627Z expo:start:server:metro:multi-platform Skipping production module: ./cjs/react-dom.production.min.js
+2026-01-16T17:19:10.664Z expo:start:server:metro:multi-platform Using React Navigation's web modal implementation.
+2026-01-16T17:19:10.710Z expo:start:server:metro:multi-platform Skipping production module: ./cjs/react-is.production.js
+2026-01-16T17:19:11.003Z expo:start:server:metro:multi-platform Skipping production module: ./cjs/react-refresh-runtime.production.min.js
+2026-01-16T17:19:11.022Z expo:start:server:metro:multi-platform Skipping production module: ./cjs/scheduler.production.min.js
+2026-01-16T17:19:11.104Z expo:start:server:metro:multi-platform Skipping production module: ./cjs/react-is.production.min.js
+2026-01-16T17:19:11.112Z expo:start:server:metro:multi-platform Redirecting module "/expo-project/node_modules/.pnpm/react-native-web@0.21.2_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/react-native-web/dist/exports/BackHandler/index.js" to shim
+Web Bundling failed 1002ms index.ts (1175 modules)
+Unable to resolve "react-native-ble-manager" from "services/BLEService.ts"
+[0m [90m 10 |[39m
+ [90m 11 |[39m [36mif[39m ([33mPlatform[39m[33m.[39m[33mOS[39m [33m!==[39m [32m'web'[39m) {
+[31m[1m>[22m[39m[90m 12 |[39m   [36mimport[39m([32m'react-native-ble-manager'[39m)[33m.[39mthen(([33mBleModule[39m) [33m=>[39m {
+ [90m    |[39m           [31m[1m^[22m[39m
+ [90m 13 |[39m     [33mBleManager[39m [33m=[39m [33mBleModule[39m[33m.[39m[36mdefault[39m[33m;[39m
+ [90m 14 |[39m     
+ [90m 15 |[39m     [90m// Set up event emitter for BLE events[39m[0m
+
+Import stack:
+
+ services/BLEService.ts
+ | import "react-native-ble-manager"
+
+ hooks/useBeaconPairing.ts
+ | import "../services/BLEService"
+
+ app/(tabs)/_layout.tsx
+ | import "../../hooks/useBeaconPairing"
+
+ app (require.context)
+
+2026-01-16T17:19:11.750Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T17:19:11.750Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T17:19:13.841Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T17:19:13.841Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T17:19:15.930Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T17:19:15.930Z expo:start:server:metro:router Using app as the root directory for Expo Router.
