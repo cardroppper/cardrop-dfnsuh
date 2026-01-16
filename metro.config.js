@@ -1,14 +1,24 @@
 
+// Ensure NODE_ENV is set BEFORE any Metro operations
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = 'development';
+  console.log('[Metro] NODE_ENV was not set, defaulting to development');
+} else {
+  console.log(`[Metro] NODE_ENV is set to: ${process.env.NODE_ENV}`);
+}
+
 const { getDefaultConfig } = require('expo/metro-config');
 const path = require('path');
 const fs = require('fs');
 
 const config = getDefaultConfig(__dirname);
 
+// Enable package exports for better module resolution
 config.resolver.unstable_enablePackageExports = true;
 
-// Metro has built-in caching - no need to manually configure FileStore
-// The cache will be stored in node_modules/.cache/metro automatically
+// Metro has built-in caching - it automatically uses node_modules/.cache/metro
+// No need to manually configure FileStore or metro-cache
+// The cache is managed internally by Metro
 
 // Custom server middleware to receive console.log messages from the app
 const LOG_FILE_PATH = path.join(__dirname, '.natively', 'app_console.log');

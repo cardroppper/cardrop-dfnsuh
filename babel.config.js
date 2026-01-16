@@ -1,8 +1,13 @@
 
+// Ensure NODE_ENV is set BEFORE Babel processes anything
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = 'development';
+  console.log('[Babel] NODE_ENV was not set, defaulting to development');
+}
+
 module.exports = function (api) {
   api.cache(true);
 
-  // Ensure NODE_ENV is set
   const nodeEnv = process.env.NODE_ENV || 'development';
   const isProduction = nodeEnv === 'production';
 
