@@ -3,81 +3,12 @@ const { getDefaultConfig } = require('expo/metro-config');
 const path = require('path');
 const fs = require('fs');
 
-// Ensure NODE_ENV is set
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-
 const config = getDefaultConfig(__dirname);
 
-// Disable package exports to use main field instead
-config.resolver.unstable_enablePackageExports = false;
+config.resolver.unstable_enablePackageExports = true;
 
-// Configure resolver for better compatibility
-config.resolver.resolverMainFields = ['react-native', 'browser', 'main'];
-
-// Ensure proper source extensions - ADD .mjs and .cjs for Supabase compatibility
-config.resolver.sourceExts = [
-  'expo.ts',
-  'expo.tsx',
-  'expo.js',
-  'expo.jsx',
-  'ts',
-  'tsx',
-  'js',
-  'jsx',
-  'mjs',  // Added for ES modules like @supabase/supabase-js
-  'cjs',  // Added for CommonJS modules
-  'json',
-  'wasm',
-  'svg',
-];
-
-// Add asset extensions
-config.resolver.assetExts = [
-  ...(config.resolver.assetExts || []),
-  'png',
-  'jpg',
-  'jpeg',
-  'gif',
-  'webp',
-  'svg',
-];
-
-// Add platform-specific extensions for better resolution
-config.resolver.platforms = ['ios', 'android', 'native', 'web'];
-
-// Blacklist/blocklist problematic modules on web
-config.resolver.blockList = [
-  // Block native-only Stripe imports on web
-  /node_modules\/@stripe\/stripe-react-native\/.*\.native\.js$/,
-];
-
-// Metro will use its default file-based cache automatically
-// No need to manually configure cacheStores
-
-// Configure minifier for production builds
-const isProduction = process.env.NODE_ENV === 'production';
-if (isProduction) {
-  console.log('[Metro] Configuring production build with minification');
-  
-  config.transformer = {
-    ...config.transformer,
-    minifierPath: 'metro-minify-terser',
-    minifierConfig: {
-      compress: {
-        drop_console: false, // Keep console logs for debugging
-        reduce_funcs: true,
-        passes: 3,
-      },
-      mangle: {
-        keep_fnames: false,
-      },
-      output: {
-        comments: false,
-        ascii_only: true,
-      },
-    },
-  };
-}
+// Metro has built-in caching - no need to manually configure FileStore
+// The cache will be stored in node_modules/.cache/metro automatically
 
 // Custom server middleware to receive console.log messages from the app
 const LOG_FILE_PATH = path.join(__dirname, '.natively', 'app_console.log');
@@ -97,6 +28,7 @@ config.server.enhanceMiddleware = (middleware) => {
 
     // Handle log receiving endpoint
     if (pathname === '/natively-logs' && req.method === 'POST') {
+      console.log('[NATIVELY-LOGS] Received POST request');
       let body = '';
       req.on('data', chunk => {
         body += chunk.toString();
@@ -113,6 +45,8 @@ config.server.enhanceMiddleware = (middleware) => {
           const platformInfo = platform ? `[${platform}] ` : '';
           const sourceInfo = source ? `[${source}] ` : '';
           const logLine = `[${timestamp}] ${platformInfo}[${level}] ${sourceInfo}${message}\n`;
+
+          console.log('[NATIVELY-LOGS] Writing log:', logLine.trim());
 
           // Rotate log file if too large
           try {
@@ -133,7 +67,7 @@ config.server.enhanceMiddleware = (middleware) => {
           });
           res.end('{"status":"ok"}');
         } catch (e) {
-          console.error('[Metro] Error processing log:', e.message);
+          console.error('[NATIVELY-LOGS] Error processing log:', e.message);
           res.writeHead(500, {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
@@ -146,6 +80,7 @@ config.server.enhanceMiddleware = (middleware) => {
 
     // Handle CORS preflight for log endpoint
     if (pathname === '/natively-logs' && req.method === 'OPTIONS') {
+      console.log('[NATIVELY-LOGS] Received OPTIONS preflight request');
       res.writeHead(200, {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
