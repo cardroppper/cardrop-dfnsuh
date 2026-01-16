@@ -48,7 +48,9 @@ module.exports = function (api) {
         },
       ],
       ...EDITABLE_COMPONENTS,
-      "@babel/plugin-transform-export-namespace-from",
+      // Export namespace transform plugin (fixes the missing plugin error)
+      ["@babel/plugin-proposal-export-namespace-from", {}],
+      // Reanimated plugin must be last
       "react-native-reanimated/plugin",
     ],
   };
