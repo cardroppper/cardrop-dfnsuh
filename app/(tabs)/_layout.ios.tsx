@@ -5,16 +5,21 @@ import { Redirect } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
 import { colors } from '@/styles/commonStyles';
 
-// Only import NativeTabs on iOS to avoid web build issues
-let NativeTabs: any;
-let Icon: any;
-let Label: any;
+// Dynamically import NativeTabs only on iOS to prevent web build errors
+let NativeTabs: any = null;
+let Icon: any = null;
+let Label: any = null;
 
+// Only load native tabs on iOS platform
 if (Platform.OS === 'ios') {
-  const nativeTabs = require('expo-router/unstable-native-tabs');
-  NativeTabs = nativeTabs.NativeTabs;
-  Icon = nativeTabs.Icon;
-  Label = nativeTabs.Label;
+  try {
+    const nativeTabsModule = require('expo-router/unstable-native-tabs');
+    NativeTabs = nativeTabsModule.NativeTabs;
+    Icon = nativeTabsModule.Icon;
+    Label = nativeTabsModule.Label;
+  } catch (error) {
+    console.warn('[TabLayout iOS] Failed to load native tabs:', error);
+  }
 }
 
 export default function TabLayout() {
@@ -37,9 +42,9 @@ export default function TabLayout() {
     return <Redirect href="/(auth)/login" />;
   }
 
-  // This should never render on web since _layout.web.tsx takes precedence
-  // But just in case, return null if NativeTabs is not available
-  if (!NativeTabs) {
+  // Fallback to null if NativeTabs is not available (shouldn't happen on iOS, but safety check)
+  if (!NativeTabs || Platform.OS !== 'ios') {
+    console.warn('[TabLayout iOS] NativeTabs not available, this should not happen on iOS');
     return null;
   }
 

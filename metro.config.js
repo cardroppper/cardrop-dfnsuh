@@ -42,6 +42,15 @@ config.resolver.assetExts = [
   'svg',
 ];
 
+// Add platform-specific extensions for better resolution
+config.resolver.platforms = ['ios', 'android', 'native', 'web'];
+
+// Blacklist/blocklist problematic modules on web
+config.resolver.blockList = [
+  // Block native-only Stripe imports on web
+  /node_modules\/@stripe\/stripe-react-native\/.*\.native\.js$/,
+];
+
 // Metro will use its default file-based cache automatically
 // No need to manually configure cacheStores
 
