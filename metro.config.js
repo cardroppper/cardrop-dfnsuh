@@ -1,6 +1,5 @@
 
 const { getDefaultConfig } = require('expo/metro-config');
-const { FileStore } = require('metro-cache');
 const path = require('path');
 const fs = require('fs');
 
@@ -30,12 +29,8 @@ config.resolver.sourceExts = [
   'svg',
 ];
 
-// Use file-based cache for faster rebuilds
-config.cacheStores = [
-  new FileStore({ 
-    root: path.join(__dirname, 'node_modules', '.cache', 'metro') 
-  }),
-];
+// Metro will use its default file-based cache automatically
+// No need to manually configure cacheStores
 
 // Configure minifier for production builds
 const isProduction = process.env.NODE_ENV === 'production';
