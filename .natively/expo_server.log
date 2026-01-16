@@ -19411,3 +19411,1167 @@ Import stack:
 2026-01-16T16:03:22.152Z expo:start:server:metro:router Using app as the root directory for Expo Router.
 2026-01-16T16:03:24.539Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
 2026-01-16T16:03:24.539Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:03:26.711Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:03:26.711Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:03:29.086Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:03:29.086Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:03:31.353Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:03:31.353Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:03:33.596Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:03:33.596Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:03:36.429Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:03:36.429Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:03:38.725Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:03:38.725Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:03:41.002Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:03:41.002Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:03:43.175Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:03:43.175Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:03:45.392Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:03:45.392Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:03:48.153Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:03:48.215Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:03:50.376Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:03:50.376Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:03:52.659Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:03:52.662Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:03:54.800Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:03:54.801Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:03:57.028Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:03:57.028Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:03:59.310Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:03:59.310Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:01.646Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:01.647Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:03.888Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:03.889Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:06.545Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:06.545Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:08.749Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:08.750Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:11.227Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:11.227Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:13.464Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:13.464Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:15.594Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:15.595Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:17.752Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:17.753Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:19.897Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:19.897Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:22.070Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:22.071Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:24.211Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:24.211Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:26.426Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:26.426Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:28.785Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:28.785Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:30.971Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:30.971Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:33.170Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:33.170Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:35.304Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:35.304Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:37.580Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:37.580Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:39.819Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:39.820Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:42.070Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:42.070Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:44.403Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:44.404Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:46.675Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:46.675Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:48.812Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:48.812Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:50.958Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:50.958Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:53.234Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:53.235Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:55.431Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:55.431Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:57.611Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:57.611Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:04:59.745Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:04:59.746Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:01.916Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:01.916Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:04.129Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:04.129Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:06.274Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:06.274Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:08.550Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:08.550Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:10.707Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:10.707Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:13.272Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:13.272Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:15.437Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:15.438Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:17.587Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:17.588Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:19.944Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:19.945Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:22.172Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:22.185Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:24.511Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:24.517Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:26.724Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:26.725Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:28.874Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:28.874Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:31.794Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:31.794Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:34.002Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:34.003Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:36.344Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:36.345Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+/expo-project/node_modules/.pnpm/@expo+cli@54.0.20_expo-router@6.0.21_expo@54.0.30_react-native@0.81.4_@babel+core@7.28._2e361c54b4d3c954c68ef32f99f5e38e/node_modules/@expo/cli/build/src/utils/errors.js:130
+    throw error;
+    ^
+
+Error: ENOENT: no such file or directory, watch '/expo-project/node_modules/.pnpm/@react-native-async-storage+async-storage@2.2.0_react-native@0.81.5_@babel+core@7.28.5__7c67dab6148ddde9f2844929ffc913a4/node_modules/@react-native-async-storage/async-storage_tmp_5130/macos/RNCAsyncStorage.xcodeproj/xcshareddata/xcschemes'
+    at FSWatcher.<computed> (node:internal/fs/watchers:254:19)
+    at Object.watch (node:fs:2549:36)
+    at FallbackWatcher._watchdir (/expo-project/node_modules/.pnpm/metro-file-map@0.83.3/node_modules/metro-file-map/src/watchers/FallbackWatcher.js:119:33)
+    at /expo-project/node_modules/.pnpm/metro-file-map@0.83.3/node_modules/metro-file-map/src/watchers/FallbackWatcher.js:219:22
+    at Walker.<anonymous> (/expo-project/node_modules/.pnpm/metro-file-map@0.83.3/node_modules/metro-file-map/src/watchers/FallbackWatcher.js:358:5)
+    at Walker.emit (node:events:519:28)
+    at /expo-project/node_modules/.pnpm/walker@1.0.8/node_modules/walker/lib/walker.js:69:16
+    at FSReqCallback.oncomplete (node:fs:187:23) {
+  errno: -2,
+  syscall: 'watch',
+  code: 'ENOENT',
+  path: '/expo-project/node_modules/.pnpm/@react-native-async-storage+async-storage@2.2.0_react-native@0.81.5_@babel+core@7.28.5__7c67dab6148ddde9f2844929ffc913a4/node_modules/@react-native-async-storage/async-storage_tmp_5130/macos/RNCAsyncStorage.xcodeproj/xcshareddata/xcschemes',
+  filename: '/expo-project/node_modules/.pnpm/@react-native-async-storage+async-storage@2.2.0_react-native@0.81.5_@babel+core@7.28.5__7c67dab6148ddde9f2844929ffc913a4/node_modules/@react-native-async-storage/async-storage_tmp_5130/macos/RNCAsyncStorage.xcodeproj/xcshareddata/xcschemes'
+}
+
+Node.js v22.21.0
+2026-01-16T16:05:46.051Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-16T16:05:46.053Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-16T16:05:46.053Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-16T16:05:46.053Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+2026-01-16T16:05:46.475Z expo:utils:fileNotifier Observing /expo-project/babel.config.js
+2026-01-16T16:05:46.876Z expo:start:server:devServer Stopping dev server (bundler: metro)
+2026-01-16T16:05:46.876Z expo:start:server:devServer Stopped dev server (bundler: metro)
+2026-01-16T16:05:46.959Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:48.462Z expo:metro:config react-native-reanimated package.json: /expo-project/node_modules/.pnpm/react-native-reanimated@4.1.6_@babel+core@7.28.5_react-native-worklets@0.5.1_@babel+cor_80868b4b21a0d54b977cecf2b45c13b8/node_modules/react-native-reanimated/package.json
+2026-01-16T16:05:48.464Z expo:metro:config react-native-worklets package.json: /expo-project/node_modules/.pnpm/react-native-worklets@0.5.1_@babel+core@7.28.5_react-native@0.81.5_@babel+core@7.28.5_@_7d4ef51c58f7c714765e4099434df510/node_modules/react-native-worklets/package.json
+
+2026-01-16T16:05:48.479Z expo:metro:config react-native-reanimated package.json: /expo-project/node_modules/.pnpm/react-native-reanimated@4.1.6_@babel+core@7.28.5_react-native-worklets@0.5.1_@babel+cor_80868b4b21a0d54b977cecf2b45c13b8/node_modules/react-native-reanimated/package.json
+2026-01-16T16:05:48.480Z expo:metro:config react-native-worklets package.json: /expo-project/node_modules/.pnpm/react-native-worklets@0.5.1_@babel+core@7.28.5_react-native@0.81.5_@babel+core@7.28.5_@_7d4ef51c58f7c714765e4099434df510/node_modules/react-native-worklets/package.json
+Expo Metro config:
+- Version: 54.0.12
+- Extensions: ts, tsx, mjs, js, jsx, json, cjs, scss, sass, css
+- React Native: /expo-project/node_modules/.pnpm/react-native@0.81.5_@babel+core@7.28.5_@types+react@18.3.27_react@18.3.1/node_modules/react-native
+- Watch Folders: 
+- Node Module Paths: 
+- Sass: null
+- Reanimated: 4.1.6
+- Worklets: 0.5.1
+- Babel Runtime: null
+
+
+Expo Metro config:
+- Version: 54.0.12
+- Extensions: ts, tsx, mjs, js, jsx, json, cjs, scss, sass, css
+- React Native: /expo-project/node_modules/.pnpm/react-native@0.81.5_@babel+core@7.28.5_@types+react@18.3.27_react@18.3.1/node_modules/react-native
+- Watch Folders: 
+- Node Module Paths: 
+- Sass: null
+- Reanimated: 4.1.6
+- Worklets: 0.5.1
+- Babel Runtime: null
+
+2026-01-16T16:05:48.998Z expo:metro:withMetroResolvers Appending 8 custom resolvers to Metro config. (has custom resolver: false)
+2026-01-16T16:05:49.227Z expo:start:server:urlCreator URL: http://127.0.0.1:8081
+Starting Metro Bundler
+2026-01-16T16:05:49.497Z expo:start:server:middleware:serveStatic Serving static files from: /expo-project/public
+2026-01-16T16:05:49.497Z expo:start:server:devServer [tunnel] connect to port: 8081
+2026-01-16T16:05:49.971Z expo:start:platforms:android:adbServer /usr/lib/android-sdk/platform-tools/adb devices -l
+2026-01-16T16:05:50.015Z expo:start:server:ngrok Stopping Tunnel
+2026-01-16T16:05:50.017Z expo:start:server:ngrok Global config path: /root/.expo/ngrok.yml
+2026-01-16T16:05:50.066Z expo:start:server:ngrok Hostname: op2jmrU-anonymous-8081.exp.direct
+Tunnel connected.
+2026-01-16T16:05:50.907Z expo:start:server:ngrok Tunnel URL: https://op2jmru-anonymous-8081.exp.direct
+Tunnel ready.
+2026-01-16T16:05:50.907Z expo:start:server:urlCreator URL: exp://op2jmru-anonymous-8081.exp.direct
+2026-01-16T16:05:50.928Z expo:start:server:developmentSession Development session will not ping because the user is not authenticated and there are no devices.
+2026-01-16T16:05:50.928Z expo:utils:fileNotifier Observing /expo-project/metro.config.js
+2026-01-16T16:05:50.930Z expo:start:server:metro:waitForTypescript Watching file changes: [
+  '/expo-project/.env.development.local',
+  '/expo-project/.env.local',
+  '/expo-project/.env.development',
+  '/expo-project/.env'
+]
+2026-01-16T16:05:50.933Z expo:doctor:typescriptSupport Ensuring TypeScript support is setup
+2026-01-16T16:05:50.950Z expo:doctor:dependencies:getMissingPackages Required package "typescript" found (no version constraint specified).
+2026-01-16T16:05:50.951Z expo:doctor:dependencies:getMissingPackages Required package "@types/react" found (no version constraint specified).
+2026-01-16T16:05:50.958Z expo:typed-routes Ensuring typed routes side-effects are setup (experiments.typedRoutes: true, typesDirectory: /expo-project/.expo/types)
+2026-01-16T16:05:50.976Z expo:doctor:dependencies:bundledNativeModules Fetching bundled native modules from the server...
+2026-01-16T16:05:50.981Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:51.032Z expo:start:server:metro:metroWatchTypeScriptFiles Waiting for TypeScript files to be added to the project...
+2026-01-16T16:05:51.925Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:05:51.925Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:05:53.962Z expo:doctor:dependencies:validate Checking dependencies for 54.0.0: {
+  '@babel/runtime': '^7.26.9',
+  '@bacons/apple-targets': '^3.0.2',
+  '@better-auth/expo': '^1.3.34',
+  '@expo/metro-runtime': '~6.1.1',
+  '@expo/ngrok': '^4.1.3',
+  '@expo/vector-icons': '^15.0.2',
+  '@react-native-async-storage/async-storage': '^2.2.0',
+  '@react-native-community/datetimepicker': '^8.3.0',
+  '@react-navigation/drawer': '^7.1.1',
+  '@react-navigation/native': '^7.0.14',
+  '@react-navigation/native-stack': '^7.2.0',
+  '@stripe/stripe-react-native': '^0.57.2',
+  '@supabase/supabase-js': '^2.90.1',
+  '@types/difflib': '^0.2.7',
+  'babel-preset-expo': '~54.0.9',
+  'better-auth': '^1.3.34',
+  difflib: '^0.2.4',
+  expo: '~54.0.1',
+  'expo-blur': '^15.0.6',
+  'expo-constants': '~18.0.8',
+  'expo-crypto': '~15.0.7',
+  'expo-font': '^14.0.7',
+  'expo-glass-effect': '^0.1.1',
+  'expo-haptics': '^15.0.6',
+  'expo-image-picker': '^17.0.7',
+  'expo-linear-gradient': '^15.0.6',
+  'expo-linking': '^8.0.7',
+  'expo-location': '^19.0.8',
+  'expo-network': '^8.0.7',
+  'expo-router': '^6.0.0',
+  'expo-secure-store': '^15.0.7',
+  'expo-splash-screen': '^31.0.8',
+  'expo-status-bar': '~3.0.7',
+  'expo-symbols': '^1.0.6',
+  'expo-system-ui': '^6.0.7',
+  'expo-web-browser': '^15.0.6',
+  'metro-minify-terser': '^0.83.0',
+  react: '18.3.1',
+  'react-dom': '18.3.1',
+  'react-native': '0.81.5',
+  'react-native-css-interop': '^0.1.22',
+  'react-native-edge-to-edge': '^1.7.0',
+  'react-native-gesture-handler': '^2.24.0',
+  'react-native-maps': '^1.20.1',
+  'react-native-reanimated': '~4.1.0',
+  'react-native-safe-area-context': '^5.4.0',
+  'react-native-screens': '~4.16.0',
+  'react-native-url-polyfill': '^2.0.0',
+  'react-native-web': '~0.21.1',
+  'react-native-webview': '^13.15.0',
+  'react-native-worklets': '0.5.1',
+  'react-router-dom': '^7.1.3',
+  'workbox-cli': '^7.3.0',
+  'workbox-precaching': '^7.3.0',
+  'workbox-webpack-plugin': '^7.3.0',
+  '@babel/core': '^7.26.0',
+  '@babel/plugin-proposal-export-namespace-from': '^7.18.9',
+  '@eslint/js': '^9.19.0',
+  '@types/react': '~18.3.12',
+  '@typescript-eslint/eslint-plugin': '^6.21.0',
+  '@typescript-eslint/parser': '^6.21.0',
+  'babel-plugin-module-resolver': '^5.0.2',
+  eslint: '^8.57.0',
+  'eslint-config-expo': '~10.0.0',
+  'eslint-plugin-import': '^2.31.0',
+  'eslint-plugin-react': '^7.37.4',
+  globals: '^15.14.0',
+  typescript: '^5.9.3',
+  'webpack-cli': '^6.0.1'
+}
+2026-01-16T16:05:53.962Z expo:doctor:dependencies:validate Comparing known versions: [
+  '@expo/metro-runtime',
+  '@expo/vector-icons',
+  '@react-native-async-storage/async-storage',
+  '@react-native-community/datetimepicker',
+  '@stripe/stripe-react-native',
+  'babel-preset-expo',
+  'expo',
+  'expo-blur',
+  'expo-constants',
+  'expo-crypto',
+  'expo-font',
+  'expo-glass-effect',
+  'expo-haptics',
+  'expo-image-picker',
+  'expo-linear-gradient',
+  'expo-linking',
+  'expo-location',
+  'expo-network',
+  'expo-router',
+  'expo-secure-store',
+  'expo-splash-screen',
+  'expo-status-bar',
+  'expo-symbols',
+  'expo-system-ui',
+  'expo-web-browser',
+  'react',
+  'react-dom',
+  'react-native',
+  'react-native-gesture-handler',
+  'react-native-maps',
+  'react-native-reanimated',
+  'react-native-safe-area-context',
+  'react-native-screens',
+  'react-native-web',
+  'react-native-webview',
+  'react-native-worklets',
+  '@babel/core',
+  '@types/react',
+  'eslint-config-expo',
+  'typescript'
+]
+2026-01-16T16:05:53.963Z expo:doctor:dependencies:validate Skipping packages that cannot be versioned automatically: [
+  '@babel/runtime',
+  '@bacons/apple-targets',
+  '@better-auth/expo',
+  '@expo/ngrok',
+  '@react-navigation/drawer',
+  '@react-navigation/native',
+  '@react-navigation/native-stack',
+  '@supabase/supabase-js',
+  '@types/difflib',
+  'better-auth',
+  'difflib',
+  'metro-minify-terser',
+  'react-native-css-interop',
+  'react-native-edge-to-edge',
+  'react-native-url-polyfill',
+  'react-router-dom',
+  'workbox-cli',
+  'workbox-precaching',
+  'workbox-webpack-plugin',
+  '@babel/plugin-proposal-export-namespace-from',
+  '@eslint/js',
+  '@typescript-eslint/eslint-plugin',
+  '@typescript-eslint/parser',
+  'babel-plugin-module-resolver',
+  'eslint',
+  'eslint-plugin-import',
+  'eslint-plugin-react',
+  'globals',
+  'webpack-cli'
+]
+2026-01-16T16:05:54.024Z expo:doctor:dependencies:validate Package versions: {
+  '@expo/metro-runtime': '6.1.2',
+  '@expo/vector-icons': '15.0.3',
+  '@react-native-async-storage/async-storage': '2.2.0',
+  '@react-native-community/datetimepicker': '8.5.1',
+  '@stripe/stripe-react-native': '0.57.2',
+  'babel-preset-expo': '54.0.9',
+  expo: '54.0.30',
+  'expo-blur': '15.0.8',
+  'expo-constants': '18.0.12',
+  'expo-crypto': '15.0.8',
+  'expo-font': '14.0.10',
+  'expo-glass-effect': '0.1.8',
+  'expo-haptics': '15.0.8',
+  'expo-image-picker': '17.0.10',
+  'expo-linear-gradient': '15.0.8',
+  'expo-linking': '8.0.11',
+  'expo-location': '19.0.8',
+  'expo-network': '8.0.8',
+  'expo-router': '6.0.21',
+  'expo-secure-store': '15.0.8',
+  'expo-splash-screen': '31.0.13',
+  'expo-status-bar': '3.0.9',
+  'expo-symbols': '1.0.8',
+  'expo-system-ui': '6.0.9',
+  'expo-web-browser': '15.0.10',
+  react: '18.3.1',
+  'react-dom': '18.3.1',
+  'react-native': '0.81.5',
+  'react-native-gesture-handler': '2.30.0',
+  'react-native-maps': '1.26.20',
+  'react-native-reanimated': '4.1.6',
+  'react-native-safe-area-context': '5.6.2',
+  'react-native-screens': '4.16.0',
+  'react-native-web': '0.21.2',
+  'react-native-webview': '13.16.0',
+  'react-native-worklets': '0.5.1',
+  '@babel/core': '7.28.5',
+  '@types/react': '18.3.27',
+  'eslint-config-expo': '10.0.0',
+  typescript: '5.9.3'
+}
+2026-01-16T16:05:54.033Z expo:doctor:dependencies:validate Incorrect dependencies: [
+  {
+    packageName: '@react-native-community/datetimepicker',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '8.4.4',
+    actualVersion: '8.5.1'
+  },
+  {
+    packageName: '@stripe/stripe-react-native',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '0.50.3',
+    actualVersion: '0.57.2'
+  },
+  {
+    packageName: 'expo',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '~54.0.31',
+    actualVersion: '54.0.30'
+  },
+  {
+    packageName: 'expo-constants',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '~18.0.13',
+    actualVersion: '18.0.12'
+  },
+  {
+    packageName: 'react',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '19.1.0',
+    actualVersion: '18.3.1'
+  },
+  {
+    packageName: 'react-dom',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '19.1.0',
+    actualVersion: '18.3.1'
+  },
+  {
+    packageName: 'react-native-gesture-handler',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '~2.28.0',
+    actualVersion: '2.30.0'
+  },
+  {
+    packageName: 'react-native-maps',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '1.20.1',
+    actualVersion: '1.26.20'
+  },
+  {
+    packageName: 'react-native-webview',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '13.15.0',
+    actualVersion: '13.16.0'
+  },
+  {
+    packageName: '@types/react',
+    packageType: 'devDependencies',
+    expectedVersionOrRange: '~19.1.10',
+    actualVersion: '18.3.27'
+  }
+]
+The following packages should be updated for best compatibility with the installed expo version:
+  @react-native-community/datetimepicker@8.5.1 - expected version: 8.4.4
+  @stripe/stripe-react-native@0.57.2 - expected version: 0.50.3
+  expo@54.0.30 - expected version: ~54.0.31
+  expo-constants@18.0.12 - expected version: ~18.0.13
+  react@18.3.1 - expected version: 19.1.0
+  react-dom@18.3.1 - expected version: 19.1.0
+  react-native-gesture-handler@2.30.0 - expected version: ~2.28.0
+  react-native-maps@1.26.20 - expected version: 1.20.1
+  react-native-webview@13.16.0 - expected version: 13.15.0
+  @types/react@18.3.27 - expected version: ~19.1.10
+Your project may not work correctly until you install the expected versions of the packages.
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+› Detected a change in metro.config.js. Restart the server to see the new results.
+2026-01-16T16:06:02.453Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:06:02.453Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:06:07.176Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:06:07.187Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:06:07.735Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:06:07.736Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:06:21.177Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-16T16:06:21.178Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-16T16:06:21.178Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-16T16:06:21.178Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+2026-01-16T16:06:21.626Z expo:utils:fileNotifier Observing /expo-project/babel.config.js
+2026-01-16T16:06:21.895Z expo:start:server:devServer Stopping dev server (bundler: metro)
+2026-01-16T16:06:21.895Z expo:start:server:devServer Stopped dev server (bundler: metro)
+2026-01-16T16:06:21.979Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:06:22.611Z expo:metro:config react-native-reanimated package.json: /expo-project/node_modules/.pnpm/react-native-reanimated@4.1.6_@babel+core@7.28.5_react-native-worklets@0.5.1_@babel+cor_80868b4b21a0d54b977cecf2b45c13b8/node_modules/react-native-reanimated/package.json
+2026-01-16T16:06:22.613Z expo:metro:config react-native-worklets package.json: /expo-project/node_modules/.pnpm/react-native-worklets@0.5.1_@babel+core@7.28.5_react-native@0.81.5_@babel+core@7.28.5_@_7d4ef51c58f7c714765e4099434df510/node_modules/react-native-worklets/package.json
+
+2026-01-16T16:06:22.631Z expo:metro:config react-native-reanimated package.json: /expo-project/node_modules/.pnpm/react-native-reanimated@4.1.6_@babel+core@7.28.5_react-native-worklets@0.5.1_@babel+cor_80868b4b21a0d54b977cecf2b45c13b8/node_modules/react-native-reanimated/package.json
+2026-01-16T16:06:22.632Z expo:metro:config react-native-worklets package.json: /expo-project/node_modules/.pnpm/react-native-worklets@0.5.1_@babel+core@7.28.5_react-native@0.81.5_@babel+core@7.28.5_@_7d4ef51c58f7c714765e4099434df510/node_modules/react-native-worklets/package.json
+Expo Metro config:
+- Version: 54.0.12
+- Extensions: ts, tsx, mjs, js, jsx, json, cjs, scss, sass, css
+- React Native: /expo-project/node_modules/.pnpm/react-native@0.81.5_@babel+core@7.28.5_@types+react@18.3.27_react@18.3.1/node_modules/react-native
+- Watch Folders: 
+- Node Module Paths: 
+- Sass: null
+- Reanimated: 4.1.6
+- Worklets: 0.5.1
+- Babel Runtime: null
+
+
+Expo Metro config:
+- Version: 54.0.12
+- Extensions: ts, tsx, mjs, js, jsx, json, cjs, scss, sass, css
+- React Native: /expo-project/node_modules/.pnpm/react-native@0.81.5_@babel+core@7.28.5_@types+react@18.3.27_react@18.3.1/node_modules/react-native
+- Watch Folders: 
+- Node Module Paths: 
+- Sass: null
+- Reanimated: 4.1.6
+- Worklets: 0.5.1
+- Babel Runtime: null
+
+2026-01-16T16:06:23.200Z expo:metro:withMetroResolvers Appending 8 custom resolvers to Metro config. (has custom resolver: true)
+2026-01-16T16:06:23.376Z expo:start:server:urlCreator URL: http://127.0.0.1:8081
+Starting Metro Bundler
+2026-01-16T16:06:23.682Z expo:start:server:middleware:serveStatic Serving static files from: /expo-project/public
+2026-01-16T16:06:23.684Z expo:start:server:devServer [tunnel] connect to port: 8081
+2026-01-16T16:06:23.939Z expo:start:platforms:android:adbServer /usr/lib/android-sdk/platform-tools/adb devices -l
+2026-01-16T16:06:24.001Z expo:start:server:ngrok Stopping Tunnel
+2026-01-16T16:06:24.003Z expo:start:server:ngrok Global config path: /root/.expo/ngrok.yml
+2026-01-16T16:06:24.057Z expo:start:server:ngrok Hostname: op2jmrU-anonymous-8081.exp.direct
+Tunnel connected.
+2026-01-16T16:06:24.940Z expo:start:server:ngrok Tunnel URL: https://op2jmru-anonymous-8081.exp.direct
+Tunnel ready.
+2026-01-16T16:06:24.941Z expo:start:server:urlCreator URL: exp://op2jmru-anonymous-8081.exp.direct
+2026-01-16T16:06:24.994Z expo:start:server:developmentSession Development session will not ping because the user is not authenticated and there are no devices.
+2026-01-16T16:06:24.997Z expo:utils:fileNotifier Observing /expo-project/metro.config.js
+2026-01-16T16:06:25.000Z expo:start:server:metro:waitForTypescript Watching file changes: [
+  '/expo-project/.env.development.local',
+  '/expo-project/.env.local',
+  '/expo-project/.env.development',
+  '/expo-project/.env'
+]
+2026-01-16T16:06:25.001Z expo:doctor:typescriptSupport Ensuring TypeScript support is setup
+2026-01-16T16:06:25.021Z expo:doctor:dependencies:getMissingPackages Required package "typescript" found (no version constraint specified).
+2026-01-16T16:06:25.021Z expo:doctor:dependencies:getMissingPackages Required package "@types/react" found (no version constraint specified).
+2026-01-16T16:06:25.047Z expo:typed-routes Ensuring typed routes side-effects are setup (experiments.typedRoutes: true, typesDirectory: /expo-project/.expo/types)
+2026-01-16T16:06:25.068Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:06:25.090Z expo:start:server:metro:metroWatchTypeScriptFiles Waiting for TypeScript files to be added to the project...
+2026-01-16T16:06:25.107Z expo:doctor:dependencies:bundledNativeModules Fetching bundled native modules from the server...
+2026-01-16T16:06:25.631Z expo:doctor:dependencies:validate Checking dependencies for 54.0.0: {
+  '@babel/runtime': '^7.26.9',
+  '@bacons/apple-targets': '^3.0.2',
+  '@better-auth/expo': '^1.3.34',
+  '@expo/metro-runtime': '~6.1.1',
+  '@expo/ngrok': '^4.1.3',
+  '@expo/vector-icons': '^15.0.2',
+  '@react-native-async-storage/async-storage': '^2.2.0',
+  '@react-native-community/datetimepicker': '^8.3.0',
+  '@react-navigation/drawer': '^7.1.1',
+  '@react-navigation/native': '^7.0.14',
+  '@react-navigation/native-stack': '^7.2.0',
+  '@stripe/stripe-react-native': '^0.57.2',
+  '@supabase/supabase-js': '^2.90.1',
+  '@types/difflib': '^0.2.7',
+  'babel-preset-expo': '~54.0.9',
+  'better-auth': '^1.3.34',
+  difflib: '^0.2.4',
+  expo: '~54.0.1',
+  'expo-blur': '^15.0.6',
+  'expo-constants': '~18.0.8',
+  'expo-crypto': '~15.0.7',
+  'expo-font': '^14.0.7',
+  'expo-glass-effect': '^0.1.1',
+  'expo-haptics': '^15.0.6',
+  'expo-image-picker': '^17.0.7',
+  'expo-linear-gradient': '^15.0.6',
+  'expo-linking': '^8.0.7',
+  'expo-location': '^19.0.8',
+  'expo-network': '^8.0.7',
+  'expo-router': '^6.0.0',
+  'expo-secure-store': '^15.0.7',
+  'expo-splash-screen': '^31.0.8',
+  'expo-status-bar': '~3.0.7',
+  'expo-symbols': '^1.0.6',
+  'expo-system-ui': '^6.0.7',
+  'expo-web-browser': '^15.0.6',
+  'metro-minify-terser': '^0.83.0',
+  react: '18.3.1',
+  'react-dom': '18.3.1',
+  'react-native': '0.81.5',
+  'react-native-css-interop': '^0.1.22',
+  'react-native-edge-to-edge': '^1.7.0',
+  'react-native-gesture-handler': '^2.24.0',
+  'react-native-maps': '^1.20.1',
+  'react-native-reanimated': '~4.1.0',
+  'react-native-safe-area-context': '^5.4.0',
+  'react-native-screens': '~4.16.0',
+  'react-native-url-polyfill': '^2.0.0',
+  'react-native-web': '~0.21.1',
+  'react-native-webview': '^13.15.0',
+  'react-native-worklets': '0.5.1',
+  'react-router-dom': '^7.1.3',
+  'workbox-cli': '^7.3.0',
+  'workbox-precaching': '^7.3.0',
+  'workbox-webpack-plugin': '^7.3.0',
+  '@babel/core': '^7.26.0',
+  '@babel/plugin-proposal-export-namespace-from': '^7.18.9',
+  '@eslint/js': '^9.19.0',
+  '@types/react': '~18.3.12',
+  '@typescript-eslint/eslint-plugin': '^6.21.0',
+  '@typescript-eslint/parser': '^6.21.0',
+  'babel-plugin-module-resolver': '^5.0.2',
+  eslint: '^8.57.0',
+  'eslint-config-expo': '~10.0.0',
+  'eslint-plugin-import': '^2.31.0',
+  'eslint-plugin-react': '^7.37.4',
+  globals: '^15.14.0',
+  typescript: '^5.9.3',
+  'webpack-cli': '^6.0.1'
+}
+2026-01-16T16:06:25.632Z expo:doctor:dependencies:validate Comparing known versions: [
+  '@expo/metro-runtime',
+  '@expo/vector-icons',
+  '@react-native-async-storage/async-storage',
+  '@react-native-community/datetimepicker',
+  '@stripe/stripe-react-native',
+  'babel-preset-expo',
+  'expo',
+  'expo-blur',
+  'expo-constants',
+  'expo-crypto',
+  'expo-font',
+  'expo-glass-effect',
+  'expo-haptics',
+  'expo-image-picker',
+  'expo-linear-gradient',
+  'expo-linking',
+  'expo-location',
+  'expo-network',
+  'expo-router',
+  'expo-secure-store',
+  'expo-splash-screen',
+  'expo-status-bar',
+  'expo-symbols',
+  'expo-system-ui',
+  'expo-web-browser',
+  'react',
+  'react-dom',
+  'react-native',
+  'react-native-gesture-handler',
+  'react-native-maps',
+  'react-native-reanimated',
+  'react-native-safe-area-context',
+  'react-native-screens',
+  'react-native-web',
+  'react-native-webview',
+  'react-native-worklets',
+  '@babel/core',
+  '@types/react',
+  'eslint-config-expo',
+  'typescript'
+]
+2026-01-16T16:06:25.632Z expo:doctor:dependencies:validate Skipping packages that cannot be versioned automatically: [
+  '@babel/runtime',
+  '@bacons/apple-targets',
+  '@better-auth/expo',
+  '@expo/ngrok',
+  '@react-navigation/drawer',
+  '@react-navigation/native',
+  '@react-navigation/native-stack',
+  '@supabase/supabase-js',
+  '@types/difflib',
+  'better-auth',
+  'difflib',
+  'metro-minify-terser',
+  'react-native-css-interop',
+  'react-native-edge-to-edge',
+  'react-native-url-polyfill',
+  'react-router-dom',
+  'workbox-cli',
+  'workbox-precaching',
+  'workbox-webpack-plugin',
+  '@babel/plugin-proposal-export-namespace-from',
+  '@eslint/js',
+  '@typescript-eslint/eslint-plugin',
+  '@typescript-eslint/parser',
+  'babel-plugin-module-resolver',
+  'eslint',
+  'eslint-plugin-import',
+  'eslint-plugin-react',
+  'globals',
+  'webpack-cli'
+]
+2026-01-16T16:06:25.741Z expo:doctor:dependencies:validate Package versions: {
+  '@expo/metro-runtime': '6.1.2',
+  '@expo/vector-icons': '15.0.3',
+  '@react-native-async-storage/async-storage': '2.2.0',
+  '@react-native-community/datetimepicker': '8.5.1',
+  '@stripe/stripe-react-native': '0.57.2',
+  'babel-preset-expo': '54.0.9',
+  expo: '54.0.30',
+  'expo-blur': '15.0.8',
+  'expo-constants': '18.0.12',
+  'expo-crypto': '15.0.8',
+  'expo-font': '14.0.10',
+  'expo-glass-effect': '0.1.8',
+  'expo-haptics': '15.0.8',
+  'expo-image-picker': '17.0.10',
+  'expo-linear-gradient': '15.0.8',
+  'expo-linking': '8.0.11',
+  'expo-location': '19.0.8',
+  'expo-network': '8.0.8',
+  'expo-router': '6.0.21',
+  'expo-secure-store': '15.0.8',
+  'expo-splash-screen': '31.0.13',
+  'expo-status-bar': '3.0.9',
+  'expo-symbols': '1.0.8',
+  'expo-system-ui': '6.0.9',
+  'expo-web-browser': '15.0.10',
+  react: '18.3.1',
+  'react-dom': '18.3.1',
+  'react-native': '0.81.5',
+  'react-native-gesture-handler': '2.30.0',
+  'react-native-maps': '1.26.20',
+  'react-native-reanimated': '4.1.6',
+  'react-native-safe-area-context': '5.6.2',
+  'react-native-screens': '4.16.0',
+  'react-native-web': '0.21.2',
+  'react-native-webview': '13.16.0',
+  'react-native-worklets': '0.5.1',
+  '@babel/core': '7.28.5',
+  '@types/react': '18.3.27',
+  'eslint-config-expo': '10.0.0',
+  typescript: '5.9.3'
+}
+2026-01-16T16:06:25.766Z expo:doctor:dependencies:validate Incorrect dependencies: [
+  {
+    packageName: '@react-native-community/datetimepicker',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '8.4.4',
+    actualVersion: '8.5.1'
+  },
+  {
+    packageName: '@stripe/stripe-react-native',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '0.50.3',
+    actualVersion: '0.57.2'
+  },
+  {
+    packageName: 'expo',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '~54.0.31',
+    actualVersion: '54.0.30'
+  },
+  {
+    packageName: 'expo-constants',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '~18.0.13',
+    actualVersion: '18.0.12'
+  },
+  {
+    packageName: 'react',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '19.1.0',
+    actualVersion: '18.3.1'
+  },
+  {
+    packageName: 'react-dom',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '19.1.0',
+    actualVersion: '18.3.1'
+  },
+  {
+    packageName: 'react-native-gesture-handler',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '~2.28.0',
+    actualVersion: '2.30.0'
+  },
+  {
+    packageName: 'react-native-maps',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '1.20.1',
+    actualVersion: '1.26.20'
+  },
+  {
+    packageName: 'react-native-webview',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '13.15.0',
+    actualVersion: '13.16.0'
+  },
+  {
+    packageName: '@types/react',
+    packageType: 'devDependencies',
+    expectedVersionOrRange: '~19.1.10',
+    actualVersion: '18.3.27'
+  }
+]
+The following packages should be updated for best compatibility with the installed expo version:
+  @react-native-community/datetimepicker@8.5.1 - expected version: 8.4.4
+  @stripe/stripe-react-native@0.57.2 - expected version: 0.50.3
+  expo@54.0.30 - expected version: ~54.0.31
+  expo-constants@18.0.12 - expected version: ~18.0.13
+  react@18.3.1 - expected version: 19.1.0
+  react-dom@18.3.1 - expected version: 19.1.0
+  react-native-gesture-handler@2.30.0 - expected version: ~2.28.0
+  react-native-maps@1.26.20 - expected version: 1.20.1
+  react-native-webview@13.16.0 - expected version: 13.15.0
+  @types/react@18.3.27 - expected version: ~19.1.10
+Your project may not work correctly until you install the expected versions of the packages.
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+2026-01-16T16:06:26.252Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:06:26.256Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:06:37.481Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:06:37.481Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+› Detected a change in metro.config.js. Restart the server to see the new results.
+2026-01-16T16:06:50.256Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:06:50.257Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+› Detected a change in metro.config.js. Restart the server to see the new results.
+2026-01-16T16:06:56.093Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:06:56.093Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:07:01.243Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-16T16:07:01.247Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-16T16:07:01.248Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-16T16:07:01.248Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+2026-01-16T16:07:01.728Z expo:utils:fileNotifier Observing /expo-project/babel.config.js
+2026-01-16T16:07:02.224Z expo:start:server:devServer Stopping dev server (bundler: metro)
+2026-01-16T16:07:02.226Z expo:start:server:devServer Stopped dev server (bundler: metro)
+2026-01-16T16:07:02.282Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:07:04.735Z expo:metro:config react-native-reanimated package.json: /expo-project/node_modules/.pnpm/react-native-reanimated@4.1.6_@babel+core@7.28.5_react-native-worklets@0.5.1_@babel+cor_80868b4b21a0d54b977cecf2b45c13b8/node_modules/react-native-reanimated/package.json
+2026-01-16T16:07:04.748Z expo:metro:config react-native-worklets package.json: /expo-project/node_modules/.pnpm/react-native-worklets@0.5.1_@babel+core@7.28.5_react-native@0.81.5_@babel+core@7.28.5_@_7d4ef51c58f7c714765e4099434df510/node_modules/react-native-worklets/package.json
+
+2026-01-16T16:07:04.927Z expo:metro:config react-native-reanimated package.json: /expo-project/node_modules/.pnpm/react-native-reanimated@4.1.6_@babel+core@7.28.5_react-native-worklets@0.5.1_@babel+cor_80868b4b21a0d54b977cecf2b45c13b8/node_modules/react-native-reanimated/package.json
+2026-01-16T16:07:04.928Z expo:metro:config react-native-worklets package.json: /expo-project/node_modules/.pnpm/react-native-worklets@0.5.1_@babel+core@7.28.5_react-native@0.81.5_@babel+core@7.28.5_@_7d4ef51c58f7c714765e4099434df510/node_modules/react-native-worklets/package.json
+Expo Metro config:
+- Version: 54.0.12
+- Extensions: ts, tsx, mjs, js, jsx, json, cjs, scss, sass, css
+- React Native: /expo-project/node_modules/.pnpm/react-native@0.81.5_@babel+core@7.28.5_@types+react@18.3.27_react@18.3.1/node_modules/react-native
+- Watch Folders: 
+- Node Module Paths: 
+- Sass: null
+- Reanimated: 4.1.6
+- Worklets: 0.5.1
+- Babel Runtime: null
+
+
+Expo Metro config:
+- Version: 54.0.12
+- Extensions: ts, tsx, mjs, js, jsx, json, cjs, scss, sass, css
+- React Native: /expo-project/node_modules/.pnpm/react-native@0.81.5_@babel+core@7.28.5_@types+react@18.3.27_react@18.3.1/node_modules/react-native
+- Watch Folders: 
+- Node Module Paths: 
+- Sass: null
+- Reanimated: 4.1.6
+- Worklets: 0.5.1
+- Babel Runtime: null
+
+2026-01-16T16:07:06.125Z expo:metro:withMetroResolvers Appending 8 custom resolvers to Metro config. (has custom resolver: false)
+2026-01-16T16:07:06.406Z expo:start:server:urlCreator URL: http://127.0.0.1:8081
+Starting Metro Bundler
+2026-01-16T16:07:06.596Z expo:start:server:middleware:serveStatic Serving static files from: /expo-project/public
+2026-01-16T16:07:06.596Z expo:start:server:devServer [tunnel] connect to port: 8081
+2026-01-16T16:07:06.800Z expo:start:platforms:android:adbServer /usr/lib/android-sdk/platform-tools/adb devices -l
+2026-01-16T16:07:06.900Z expo:start:server:ngrok Stopping Tunnel
+2026-01-16T16:07:06.934Z expo:start:server:ngrok Global config path: /root/.expo/ngrok.yml
+Error while reading cache, falling back to a full crawl:
+ Error: Unable to deserialize cloned data.
+    at deserialize (node:v8:436:14)
+    at DiskCacheManager.read (/expo-project/node_modules/.pnpm/metro-file-map@0.83.3/node_modules/metro-file-map/src/cache/DiskCacheManager.js:60:33)
+    at FileMap.read (/expo-project/node_modules/.pnpm/metro-file-map@0.83.3/node_modules/metro-file-map/src/index.js:284:14)
+    at /expo-project/node_modules/.pnpm/metro-file-map@0.83.3/node_modules/metro-file-map/src/index.js:202:25
+    at DependencyGraph.ready (/expo-project/node_modules/.pnpm/metro@0.83.3/node_modules/metro/src/node-haste/DependencyGraph.js:88:5)
+    at Bundler.ready (/expo-project/node_modules/.pnpm/metro@0.83.3/node_modules/metro/src/Bundler.js:62:5)
+    at IncrementalBundler.ready (/expo-project/node_modules/.pnpm/metro@0.83.3/node_modules/metro/src/IncrementalBundler.js:302:5)
+    at Server.ready (/expo-project/node_modules/.pnpm/metro@0.83.3/node_modules/metro/src/Server.js:1305:5)
+2026-01-16T16:07:07.033Z expo:start:server:ngrok Hostname: op2jmrU-anonymous-8081.exp.direct
+Tunnel connected.
+2026-01-16T16:07:08.038Z expo:start:server:ngrok Tunnel URL: https://op2jmru-anonymous-8081.exp.direct
+Tunnel ready.
+2026-01-16T16:07:08.045Z expo:start:server:urlCreator URL: exp://op2jmru-anonymous-8081.exp.direct
+2026-01-16T16:07:08.075Z expo:start:server:developmentSession Development session will not ping because the user is not authenticated and there are no devices.
+2026-01-16T16:07:08.076Z expo:utils:fileNotifier Observing /expo-project/metro.config.js
+2026-01-16T16:07:08.077Z expo:start:server:metro:waitForTypescript Watching file changes: [
+  '/expo-project/.env.development.local',
+  '/expo-project/.env.local',
+  '/expo-project/.env.development',
+  '/expo-project/.env'
+]
+2026-01-16T16:07:08.078Z expo:doctor:typescriptSupport Ensuring TypeScript support is setup
+2026-01-16T16:07:08.112Z expo:doctor:dependencies:getMissingPackages Required package "typescript" found (no version constraint specified).
+2026-01-16T16:07:08.114Z expo:doctor:dependencies:getMissingPackages Required package "@types/react" found (no version constraint specified).
+2026-01-16T16:07:08.227Z expo:typed-routes Ensuring typed routes side-effects are setup (experiments.typedRoutes: true, typesDirectory: /expo-project/.expo/types)
+2026-01-16T16:07:08.238Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:07:08.291Z expo:start:server:metro:metroWatchTypeScriptFiles Waiting for TypeScript files to be added to the project...
+2026-01-16T16:07:08.297Z expo:doctor:dependencies:bundledNativeModules Fetching bundled native modules from the server...
+2026-01-16T16:07:08.961Z expo:doctor:dependencies:validate Checking dependencies for 54.0.0: {
+  '@babel/runtime': '^7.26.9',
+  '@bacons/apple-targets': '^3.0.2',
+  '@better-auth/expo': '^1.3.34',
+  '@expo/metro-runtime': '~6.1.1',
+  '@expo/ngrok': '^4.1.3',
+  '@expo/vector-icons': '^15.0.2',
+  '@react-native-async-storage/async-storage': '^2.2.0',
+  '@react-native-community/datetimepicker': '^8.3.0',
+  '@react-navigation/drawer': '^7.1.1',
+  '@react-navigation/native': '^7.0.14',
+  '@react-navigation/native-stack': '^7.2.0',
+  '@stripe/stripe-react-native': '^0.57.2',
+  '@supabase/supabase-js': '^2.90.1',
+  '@types/difflib': '^0.2.7',
+  'babel-preset-expo': '~54.0.9',
+  'better-auth': '^1.3.34',
+  difflib: '^0.2.4',
+  expo: '~54.0.1',
+  'expo-blur': '^15.0.6',
+  'expo-constants': '~18.0.8',
+  'expo-crypto': '~15.0.7',
+  'expo-font': '^14.0.7',
+  'expo-glass-effect': '^0.1.1',
+  'expo-haptics': '^15.0.6',
+  'expo-image-picker': '^17.0.7',
+  'expo-linear-gradient': '^15.0.6',
+  'expo-linking': '^8.0.7',
+  'expo-location': '^19.0.8',
+  'expo-network': '^8.0.7',
+  'expo-router': '^6.0.0',
+  'expo-secure-store': '^15.0.7',
+  'expo-splash-screen': '^31.0.8',
+  'expo-status-bar': '~3.0.7',
+  'expo-symbols': '^1.0.6',
+  'expo-system-ui': '^6.0.7',
+  'expo-web-browser': '^15.0.6',
+  'metro-minify-terser': '^0.83.0',
+  react: '18.3.1',
+  'react-dom': '18.3.1',
+  'react-native': '0.81.5',
+  'react-native-css-interop': '^0.1.22',
+  'react-native-edge-to-edge': '^1.7.0',
+  'react-native-gesture-handler': '^2.24.0',
+  'react-native-maps': '^1.20.1',
+  'react-native-reanimated': '~4.1.0',
+  'react-native-safe-area-context': '^5.4.0',
+  'react-native-screens': '~4.16.0',
+  'react-native-url-polyfill': '^2.0.0',
+  'react-native-web': '~0.21.1',
+  'react-native-webview': '^13.15.0',
+  'react-native-worklets': '0.5.1',
+  'react-router-dom': '^7.1.3',
+  'workbox-cli': '^7.3.0',
+  'workbox-precaching': '^7.3.0',
+  'workbox-webpack-plugin': '^7.3.0',
+  '@babel/core': '^7.26.0',
+  '@babel/plugin-proposal-export-namespace-from': '^7.18.9',
+  '@eslint/js': '^9.19.0',
+  '@types/react': '~18.3.12',
+  '@typescript-eslint/eslint-plugin': '^6.21.0',
+  '@typescript-eslint/parser': '^6.21.0',
+  'babel-plugin-module-resolver': '^5.0.2',
+  eslint: '^8.57.0',
+  'eslint-config-expo': '~10.0.0',
+  'eslint-plugin-import': '^2.31.0',
+  'eslint-plugin-react': '^7.37.4',
+  globals: '^15.14.0',
+  typescript: '^5.9.3',
+  'webpack-cli': '^6.0.1'
+}
+2026-01-16T16:07:08.961Z expo:doctor:dependencies:validate Comparing known versions: [
+  '@expo/metro-runtime',
+  '@expo/vector-icons',
+  '@react-native-async-storage/async-storage',
+  '@react-native-community/datetimepicker',
+  '@stripe/stripe-react-native',
+  'babel-preset-expo',
+  'expo',
+  'expo-blur',
+  'expo-constants',
+  'expo-crypto',
+  'expo-font',
+  'expo-glass-effect',
+  'expo-haptics',
+  'expo-image-picker',
+  'expo-linear-gradient',
+  'expo-linking',
+  'expo-location',
+  'expo-network',
+  'expo-router',
+  'expo-secure-store',
+  'expo-splash-screen',
+  'expo-status-bar',
+  'expo-symbols',
+  'expo-system-ui',
+  'expo-web-browser',
+  'react',
+  'react-dom',
+  'react-native',
+  'react-native-gesture-handler',
+  'react-native-maps',
+  'react-native-reanimated',
+  'react-native-safe-area-context',
+  'react-native-screens',
+  'react-native-web',
+  'react-native-webview',
+  'react-native-worklets',
+  '@babel/core',
+  '@types/react',
+  'eslint-config-expo',
+  'typescript'
+]
+2026-01-16T16:07:08.964Z expo:doctor:dependencies:validate Skipping packages that cannot be versioned automatically: [
+  '@babel/runtime',
+  '@bacons/apple-targets',
+  '@better-auth/expo',
+  '@expo/ngrok',
+  '@react-navigation/drawer',
+  '@react-navigation/native',
+  '@react-navigation/native-stack',
+  '@supabase/supabase-js',
+  '@types/difflib',
+  'better-auth',
+  'difflib',
+  'metro-minify-terser',
+  'react-native-css-interop',
+  'react-native-edge-to-edge',
+  'react-native-url-polyfill',
+  'react-router-dom',
+  'workbox-cli',
+  'workbox-precaching',
+  'workbox-webpack-plugin',
+  '@babel/plugin-proposal-export-namespace-from',
+  '@eslint/js',
+  '@typescript-eslint/eslint-plugin',
+  '@typescript-eslint/parser',
+  'babel-plugin-module-resolver',
+  'eslint',
+  'eslint-plugin-import',
+  'eslint-plugin-react',
+  'globals',
+  'webpack-cli'
+]
+2026-01-16T16:07:09.041Z expo:doctor:dependencies:validate Package versions: {
+  '@expo/metro-runtime': '6.1.2',
+  '@expo/vector-icons': '15.0.3',
+  '@react-native-async-storage/async-storage': '2.2.0',
+  '@react-native-community/datetimepicker': '8.5.1',
+  '@stripe/stripe-react-native': '0.57.2',
+  'babel-preset-expo': '54.0.9',
+  expo: '54.0.30',
+  'expo-blur': '15.0.8',
+  'expo-constants': '18.0.12',
+  'expo-crypto': '15.0.8',
+  'expo-font': '14.0.10',
+  'expo-glass-effect': '0.1.8',
+  'expo-haptics': '15.0.8',
+  'expo-image-picker': '17.0.10',
+  'expo-linear-gradient': '15.0.8',
+  'expo-linking': '8.0.11',
+  'expo-location': '19.0.8',
+  'expo-network': '8.0.8',
+  'expo-router': '6.0.21',
+  'expo-secure-store': '15.0.8',
+  'expo-splash-screen': '31.0.13',
+  'expo-status-bar': '3.0.9',
+  'expo-symbols': '1.0.8',
+  'expo-system-ui': '6.0.9',
+  'expo-web-browser': '15.0.10',
+  react: '18.3.1',
+  'react-dom': '18.3.1',
+  'react-native': '0.81.5',
+  'react-native-gesture-handler': '2.30.0',
+  'react-native-maps': '1.26.20',
+  'react-native-reanimated': '4.1.6',
+  'react-native-safe-area-context': '5.6.2',
+  'react-native-screens': '4.16.0',
+  'react-native-web': '0.21.2',
+  'react-native-webview': '13.16.0',
+  'react-native-worklets': '0.5.1',
+  '@babel/core': '7.28.5',
+  '@types/react': '18.3.27',
+  'eslint-config-expo': '10.0.0',
+  typescript: '5.9.3'
+}
+2026-01-16T16:07:09.047Z expo:doctor:dependencies:validate Incorrect dependencies: [
+  {
+    packageName: '@react-native-community/datetimepicker',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '8.4.4',
+    actualVersion: '8.5.1'
+  },
+  {
+    packageName: '@stripe/stripe-react-native',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '0.50.3',
+    actualVersion: '0.57.2'
+  },
+  {
+    packageName: 'expo',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '~54.0.31',
+    actualVersion: '54.0.30'
+  },
+  {
+    packageName: 'expo-constants',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '~18.0.13',
+    actualVersion: '18.0.12'
+  },
+  {
+    packageName: 'react',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '19.1.0',
+    actualVersion: '18.3.1'
+  },
+  {
+    packageName: 'react-dom',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '19.1.0',
+    actualVersion: '18.3.1'
+  },
+  {
+    packageName: 'react-native-gesture-handler',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '~2.28.0',
+    actualVersion: '2.30.0'
+  },
+  {
+    packageName: 'react-native-maps',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '1.20.1',
+    actualVersion: '1.26.20'
+  },
+  {
+    packageName: 'react-native-webview',
+    packageType: 'dependencies',
+    expectedVersionOrRange: '13.15.0',
+    actualVersion: '13.16.0'
+  },
+  {
+    packageName: '@types/react',
+    packageType: 'devDependencies',
+    expectedVersionOrRange: '~19.1.10',
+    actualVersion: '18.3.27'
+  }
+]
+The following packages should be updated for best compatibility with the installed expo version:
+  @react-native-community/datetimepicker@8.5.1 - expected version: 8.4.4
+  @stripe/stripe-react-native@0.57.2 - expected version: 0.50.3
+  expo@54.0.30 - expected version: ~54.0.31
+  expo-constants@18.0.12 - expected version: ~18.0.13
+  react@18.3.1 - expected version: 19.1.0
+  react-dom@18.3.1 - expected version: 19.1.0
+  react-native-gesture-handler@2.30.0 - expected version: ~2.28.0
+  react-native-maps@1.26.20 - expected version: 1.20.1
+  react-native-webview@13.16.0 - expected version: 13.15.0
+  @types/react@18.3.27 - expected version: ~19.1.10
+Your project may not work correctly until you install the expected versions of the packages.
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+2026-01-16T16:07:09.116Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:07:09.116Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:07:19.541Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:07:19.541Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:07:22.882Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:07:22.883Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:07:26.003Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:07:26.004Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:07:41.202Z expo:env /expo-project/.env does not exist, skipping this env file
+2026-01-16T16:07:41.203Z expo:env /expo-project/.env.development does not exist, skipping this env file
+2026-01-16T16:07:41.203Z expo:env /expo-project/.env.local does not exist, skipping this env file
+2026-01-16T16:07:41.203Z expo:env /expo-project/.env.development.local does not exist, skipping this env file
+Starting project at /expo-project
+2026-01-16T16:07:42.493Z expo:utils:fileNotifier Observing /expo-project/babel.config.js
+2026-01-16T16:07:43.572Z expo:start:server:devServer Stopping dev server (bundler: metro)
+2026-01-16T16:07:43.572Z expo:start:server:devServer Stopped dev server (bundler: metro)
+2026-01-16T16:07:43.737Z expo:start:server:metro:router Using app as the root directory for Expo Router.

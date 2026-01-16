@@ -7,6 +7,9 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
+// Import URL polyfill for Supabase (must be before any Supabase imports)
+import 'react-native-url-polyfill/auto';
+
 // Import reanimated to ensure it's included in the bundle
 import 'react-native-reanimated';
 

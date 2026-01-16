@@ -9,8 +9,11 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 const config = getDefaultConfig(__dirname);
 
-// Enable package exports for better module resolution
-config.resolver.unstable_enablePackageExports = true;
+// Disable package exports to use main field instead
+config.resolver.unstable_enablePackageExports = false;
+
+// Configure resolver for better compatibility
+config.resolver.resolverMainFields = ['react-native', 'browser', 'main'];
 
 // Ensure proper source extensions
 config.resolver.sourceExts = [
