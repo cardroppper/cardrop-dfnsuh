@@ -1,10 +1,21 @@
 
 import React, { useEffect } from 'react';
-import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, ActivityIndicator, StyleSheet, Platform } from 'react-native';
 import { Redirect } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
 import { colors } from '@/styles/commonStyles';
-import { NativeTabs, Icon, Label } from 'expo-router/unstable-native-tabs';
+
+// Only import NativeTabs on iOS to avoid web build issues
+let NativeTabs: any;
+let Icon: any;
+let Label: any;
+
+if (Platform.OS === 'ios') {
+  const nativeTabs = require('expo-router/unstable-native-tabs');
+  NativeTabs = nativeTabs.NativeTabs;
+  Icon = nativeTabs.Icon;
+  Label = nativeTabs.Label;
+}
 
 export default function TabLayout() {
   const { isLoading, isAuthenticated, user, profile } = useAuth();
@@ -24,6 +35,12 @@ export default function TabLayout() {
   if (!isAuthenticated) {
     console.log('[TabLayout iOS] Not authenticated, redirecting to auth');
     return <Redirect href="/(auth)/login" />;
+  }
+
+  // This should never render on web since _layout.web.tsx takes precedence
+  // But just in case, return null if NativeTabs is not available
+  if (!NativeTabs) {
+    return null;
   }
 
   return (
