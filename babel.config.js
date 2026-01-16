@@ -2,7 +2,11 @@
 module.exports = function (api) {
   api.cache(true);
 
-  const isProduction = process.env.NODE_ENV === 'production';
+  // Ensure NODE_ENV is set
+  const nodeEnv = process.env.NODE_ENV || 'development';
+  const isProduction = nodeEnv === 'production';
+
+  console.log(`[Babel] Building for ${nodeEnv} environment`);
 
   // Disable editable components in production
   const EDITABLE_COMPONENTS =
@@ -15,12 +19,18 @@ module.exports = function (api) {
 
   return {
     presets: [
-      ["babel-preset-expo", { 
-        jsxRuntime: "automatic",
-        lazyImports: true
-      }]
+      [
+        "babel-preset-expo",
+        {
+          jsxRuntime: "automatic",
+          lazyImports: true,
+          // Ensure proper module resolution
+          useTransformReactJSXExperimental: false,
+        }
+      ]
     ],
     plugins: [
+      // Module resolver must come first
       [
         "module-resolver",
         {
@@ -47,11 +57,20 @@ module.exports = function (api) {
           },
         },
       ],
+      // Export namespace transform plugin
+      "@babel/plugin-proposal-export-namespace-from",
+      // Editable components (dev only)
       ...EDITABLE_COMPONENTS,
-      // Export namespace transform plugin (fixes the missing plugin error)
-      ["@babel/plugin-proposal-export-namespace-from", {}],
       // Reanimated plugin must be last
       "react-native-reanimated/plugin",
     ],
+    env: {
+      production: {
+        plugins: [
+          // Additional production optimizations
+          ["transform-remove-console", { "exclude": ["error", "warn"] }]
+        ]
+      }
+    }
   };
 };

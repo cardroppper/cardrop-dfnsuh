@@ -4,18 +4,41 @@ const { FileStore } = require('metro-cache');
 const path = require('path');
 const fs = require('fs');
 
+// Ensure NODE_ENV is set
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 const config = getDefaultConfig(__dirname);
 
+// Enable package exports for better module resolution
 config.resolver.unstable_enablePackageExports = true;
 
-// Use turborepo to restore the cache when possible
+// Ensure proper source extensions
+config.resolver.sourceExts = [
+  'expo.ts',
+  'expo.tsx',
+  'expo.js',
+  'expo.jsx',
+  'ts',
+  'tsx',
+  'js',
+  'jsx',
+  'json',
+  'wasm',
+  'svg',
+];
+
+// Use file-based cache for faster rebuilds
 config.cacheStores = [
-  new FileStore({ root: path.join(__dirname, 'node_modules', '.cache', 'metro') }),
+  new FileStore({ 
+    root: path.join(__dirname, 'node_modules', '.cache', 'metro') 
+  }),
 ];
 
 // Configure minifier for production builds
 const isProduction = process.env.NODE_ENV === 'production';
 if (isProduction) {
+  console.log('[Metro] Configuring production build with minification');
+  
   config.transformer = {
     ...config.transformer,
     minifierPath: 'metro-minify-terser',
@@ -54,7 +77,6 @@ config.server.enhanceMiddleware = (middleware) => {
 
     // Handle log receiving endpoint
     if (pathname === '/natively-logs' && req.method === 'POST') {
-      console.log('[NATIVELY-LOGS] Received POST request');
       let body = '';
       req.on('data', chunk => {
         body += chunk.toString();
@@ -71,8 +93,6 @@ config.server.enhanceMiddleware = (middleware) => {
           const platformInfo = platform ? `[${platform}] ` : '';
           const sourceInfo = source ? `[${source}] ` : '';
           const logLine = `[${timestamp}] ${platformInfo}[${level}] ${sourceInfo}${message}\n`;
-
-          console.log('[NATIVELY-LOGS] Writing log:', logLine.trim());
 
           // Rotate log file if too large
           try {
@@ -93,7 +113,7 @@ config.server.enhanceMiddleware = (middleware) => {
           });
           res.end('{"status":"ok"}');
         } catch (e) {
-          console.error('[NATIVELY-LOGS] Error processing log:', e.message);
+          console.error('[Metro] Error processing log:', e.message);
           res.writeHead(500, {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
@@ -106,7 +126,6 @@ config.server.enhanceMiddleware = (middleware) => {
 
     // Handle CORS preflight for log endpoint
     if (pathname === '/natively-logs' && req.method === 'OPTIONS') {
-      console.log('[NATIVELY-LOGS] Received OPTIONS preflight request');
       res.writeHead(200, {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
