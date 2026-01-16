@@ -14,7 +14,7 @@ config.resolver.unstable_enablePackageExports = false;
 // Configure resolver for better compatibility
 config.resolver.resolverMainFields = ['react-native', 'browser', 'main'];
 
-// Ensure proper source extensions
+// Ensure proper source extensions - ADD .mjs and .cjs for Supabase compatibility
 config.resolver.sourceExts = [
   'expo.ts',
   'expo.tsx',
@@ -24,8 +24,21 @@ config.resolver.sourceExts = [
   'tsx',
   'js',
   'jsx',
+  'mjs',  // Added for ES modules like @supabase/supabase-js
+  'cjs',  // Added for CommonJS modules
   'json',
   'wasm',
+  'svg',
+];
+
+// Add asset extensions
+config.resolver.assetExts = [
+  ...(config.resolver.assetExts || []),
+  'png',
+  'jpg',
+  'jpeg',
+  'gif',
+  'webp',
   'svg',
 ];
 

@@ -42,6 +42,8 @@ module.exports = function (api) {
             ".tsx",
             ".jsx",
             ".js",
+            ".mjs",
+            ".cjs",
             ".json",
           ],
           alias: {
