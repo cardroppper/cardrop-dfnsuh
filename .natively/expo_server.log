@@ -26540,3 +26540,13 @@ Web Bundling failed 863ms index.ts (1 module)
 2026-01-16T16:23:29.715Z expo:start:server:metro:router Using app as the root directory for Expo Router.
 2026-01-16T16:23:31.909Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
 2026-01-16T16:23:31.909Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:23:34.055Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:23:34.055Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:23:36.183Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:23:36.183Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:23:38.520Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:23:38.520Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:23:40.698Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:23:40.698Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T16:23:43.214Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T16:23:43.214Z expo:start:server:metro:router Using app as the root directory for Expo Router.
