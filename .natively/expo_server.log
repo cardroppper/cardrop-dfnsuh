@@ -33010,3 +33010,9 @@ Import stack:
 2026-01-16T17:40:36.818Z expo:start:server:metro:router Using app as the root directory for Expo Router.
 2026-01-16T17:40:38.916Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
 2026-01-16T17:40:38.916Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T17:40:41.009Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T17:40:41.009Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T17:40:43.092Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T17:40:43.093Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-16T17:40:45.186Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-16T17:40:45.186Z expo:start:server:metro:router Using app as the root directory for Expo Router.
