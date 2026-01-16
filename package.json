@@ -13,6 +13,7 @@
     "build:android": "npm run prebuild:android && cd android && export NODE_ENV=production && ./gradlew assembleRelease",
     "build:android:bundle": "npm run prebuild:android && cd android && export NODE_ENV=production && ./gradlew bundleRelease",
     "build:android:fix": "node scripts/complete-android-fix.js",
+    "diagnose": "node scripts/diagnose-build.js",
     "clean:cache": "rm -rf node_modules/.cache .expo android/.gradle android/app/build android/build",
     "clean:all": "rm -rf node_modules package-lock.json .expo android/.gradle android/app/build android/build",
     "reinstall": "npm run clean:all && npm install --legacy-peer-deps",
