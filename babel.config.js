@@ -1,8 +1,27 @@
 
-// Ensure NODE_ENV is set BEFORE Babel processes anything
+// ═══════════════════════════════════════════════════════════════════════════
+// CRITICAL: NODE_ENV MUST BE SET BEFORE BABEL CONFIG IS EVALUATED
+// ═══════════════════════════════════════════════════════════════════════════
+// This check MUST be at the very top of this file, before any other code.
+// Expo and Metro require NODE_ENV to be set for proper plugin resolution.
+// Without this, the build will fail during the bundling phase.
+// ═══════════════════════════════════════════════════════════════════════════
+
 if (!process.env.NODE_ENV) {
+  // Default to development if not set
   process.env.NODE_ENV = 'development';
-  console.log('[Babel] NODE_ENV was not set, defaulting to development');
+  console.warn('⚠️  [Babel Config] NODE_ENV was not set! Defaulting to development.');
+  console.warn('⚠️  [Babel Config] For production builds, ensure NODE_ENV=production is set BEFORE running Gradle.');
+} else {
+  console.log(`✅ [Babel Config] NODE_ENV is correctly set to: ${process.env.NODE_ENV}`);
+}
+
+// Validate that we're in a known environment
+const validEnvironments = ['development', 'production', 'test'];
+if (!validEnvironments.includes(process.env.NODE_ENV)) {
+  console.error(`❌ [Babel Config] Invalid NODE_ENV: ${process.env.NODE_ENV}`);
+  console.error(`❌ [Babel Config] Must be one of: ${validEnvironments.join(', ')}`);
+  process.exit(1);
 }
 
 module.exports = function (api) {

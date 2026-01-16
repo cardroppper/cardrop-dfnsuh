@@ -1,4 +1,3 @@
-
 {
   "name": "cardrop-dfnsuh",
   "version": "1.0.0",
@@ -10,18 +9,21 @@
     "web": "cross-env NODE_ENV=development EXPO_NO_TELEMETRY=1 expo start --web",
     "build:web": "cross-env NODE_ENV=production expo export -p web && npx workbox generateSW workbox-config.js",
     "prebuild:clean": "rm -rf android ios && npm run clean:cache",
-    "prebuild:android": "cross-env NODE_ENV=production npm run prebuild:clean && cross-env NODE_ENV=production expo prebuild -p android --clean",
-    "build:android": "cross-env NODE_ENV=production npm run prebuild:android && cd android && cross-env NODE_ENV=production GRADLE_OPTS=\"-Dorg.gradle.jvmargs=-Xmx4096m\" ./gradlew assembleRelease --no-daemon --stacktrace",
-    "build:android:bundle": "cross-env NODE_ENV=production npm run prebuild:android && cd android && cross-env NODE_ENV=production GRADLE_OPTS=\"-Dorg.gradle.jvmargs=-Xmx4096m\" ./gradlew bundleRelease --no-daemon --stacktrace",
-    "build:android:safe": "node scripts/pre-build-android.js && npm run build:android",
+    "prebuild:android": "node scripts/ensure-node-env.js && cross-env NODE_ENV=production npm run prebuild:clean && cross-env NODE_ENV=production expo prebuild -p android --clean",
+    "build:android": "node scripts/ensure-node-env.js && cross-env NODE_ENV=production npm run prebuild:android && node scripts/gradle-build-wrapper.js assembleRelease",
+    "build:android:bundle": "node scripts/ensure-node-env.js && cross-env NODE_ENV=production npm run prebuild:android && node scripts/gradle-build-wrapper.js bundleRelease",
+    "build:android:safe": "node scripts/ensure-node-env.js && node scripts/pre-build-android.js && npm run build:android",
     "clean:cache": "rm -rf node_modules/.cache .expo android/.gradle android/app/build android/build",
     "clean:all": "rm -rf node_modules package-lock.json .expo android/.gradle android/app/build android/build",
     "reinstall": "npm run clean:all && npm install --legacy-peer-deps",
     "validate": "node scripts/validate-environment.js",
     "validate:final": "node scripts/final-validation.js",
+    "validate:build": "node scripts/validate-build-environment.js",
+    "check:build": "node scripts/final-build-check.js",
     "lint": "eslint .",
     "test:bundle": "cross-env NODE_ENV=production npx react-native bundle --platform android --dev false --entry-file index.ts --bundle-output /tmp/test-bundle.js --assets-dest /tmp/test-assets",
-    "postinstall": "node -e \"console.log('✅ Dependencies installed successfully')\""
+    "postinstall": "node scripts/make-executable.js && node -e \"console.log('\\u2705 Dependencies installed successfully')\"",
+    "prepare": "node scripts/ensure-node-env.js"
   },
   "dependencies": {
     "@babel/runtime": "^7.26.9",

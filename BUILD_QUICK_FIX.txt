@@ -1,0 +1,79 @@
+
+═══════════════════════════════════════════════════════════════════════════
+ANDROID BUILD FIX - QUICK REFERENCE
+═══════════════════════════════════════════════════════════════════════════
+
+PROBLEM:
+Build fails at :app:createBundleReleaseJsAndAssets with:
+"The NODE_ENV environment variable is required but was not specified."
+
+SOLUTION:
+NODE_ENV must be set to "production" BEFORE Metro bundler runs.
+
+═══════════════════════════════════════════════════════════════════════════
+HOW TO BUILD (SIMPLE)
+═══════════════════════════════════════════════════════════════════════════
+
+Just run:
+    npm run build:android
+
+That's it! The scripts will handle everything.
+
+═══════════════════════════════════════════════════════════════════════════
+WHAT THE SCRIPTS DO
+═══════════════════════════════════════════════════════════════════════════
+
+1. ensure-node-env.js
+   - Sets NODE_ENV=production
+   - Creates .env.production
+   - Validates configs
+
+2. gradle-build-wrapper.js
+   - Wraps Gradle execution
+   - Passes NODE_ENV to Gradle
+   - Ensures Metro gets the environment
+
+3. validate-build-environment.js
+   - Checks everything is ready
+   - Catches issues early
+
+═══════════════════════════════════════════════════════════════════════════
+IF BUILD FAILS
+═══════════════════════════════════════════════════════════════════════════
+
+1. Validate environment:
+   node scripts/validate-build-environment.js
+
+2. Clean and rebuild:
+   npm run clean:all
+   npm install
+   npm run build:android
+
+3. Check logs for:
+   ✅ [Metro Config] NODE_ENV is correctly set to: production
+   ✅ [Babel Config] NODE_ENV is correctly set to: production
+   ✅ NODE_ENV: production (from Gradle wrapper)
+
+═══════════════════════════════════════════════════════════════════════════
+KEY CHANGES
+═══════════════════════════════════════════════════════════════════════════
+
+✅ metro.config.js - Validates NODE_ENV at startup
+✅ babel.config.js - Validates NODE_ENV at startup
+✅ package.json - Uses wrapper scripts for builds
+✅ New scripts ensure NODE_ENV is always set
+
+═══════════════════════════════════════════════════════════════════════════
+SUCCESS INDICATORS
+═══════════════════════════════════════════════════════════════════════════
+
+You should see:
+✅ [ensure-node-env] Set NODE_ENV=production
+✅ [Metro Config] NODE_ENV is correctly set to: production
+✅ [Babel Config] NODE_ENV is correctly set to: production
+✅ Gradle build completed successfully!
+
+APK location:
+android/app/build/outputs/apk/release/app-release.apk
+
+═══════════════════════════════════════════════════════════════════════════

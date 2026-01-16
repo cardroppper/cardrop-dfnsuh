@@ -1,10 +1,28 @@
 
-// Ensure NODE_ENV is set BEFORE any Metro operations
+// ═══════════════════════════════════════════════════════════════════════════
+// CRITICAL: NODE_ENV MUST BE SET BEFORE METRO CONFIG IS EVALUATED
+// ═══════════════════════════════════════════════════════════════════════════
+// This check MUST be at the very top of this file, before any other imports.
+// Expo requires NODE_ENV to be set for proper configuration resolution.
+// Without this, the build will fail with:
+// "The NODE_ENV environment variable is required but was not specified."
+// ═══════════════════════════════════════════════════════════════════════════
+
 if (!process.env.NODE_ENV) {
+  // Default to development if not set
   process.env.NODE_ENV = 'development';
-  console.log('[Metro] NODE_ENV was not set, defaulting to development');
+  console.warn('⚠️  [Metro Config] NODE_ENV was not set! Defaulting to development.');
+  console.warn('⚠️  [Metro Config] For production builds, ensure NODE_ENV=production is set BEFORE running Gradle.');
 } else {
-  console.log(`[Metro] NODE_ENV is set to: ${process.env.NODE_ENV}`);
+  console.log(`✅ [Metro Config] NODE_ENV is correctly set to: ${process.env.NODE_ENV}`);
+}
+
+// Validate that we're in a known environment
+const validEnvironments = ['development', 'production', 'test'];
+if (!validEnvironments.includes(process.env.NODE_ENV)) {
+  console.error(`❌ [Metro Config] Invalid NODE_ENV: ${process.env.NODE_ENV}`);
+  console.error(`❌ [Metro Config] Must be one of: ${validEnvironments.join(', ')}`);
+  process.exit(1);
 }
 
 const { getDefaultConfig } = require('expo/metro-config');
