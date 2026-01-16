@@ -1,6 +1,9 @@
 
-// Web version - Stripe React Native is not supported on web
+// Native version (iOS/Android) - Uses Stripe React Native SDK
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { StripeProvider as StripeProviderNative } from '@stripe/stripe-react-native';
+import Constants from 'expo-constants';
+import * as Linking from 'expo-linking';
 
 interface StripeContextType {
   isInitialized: boolean;
@@ -26,10 +29,25 @@ export function StripeProvider({ children }: { children: React.ReactNode }) {
     setIsInitialized(true);
   }, []);
 
-  // Stripe React Native doesn't support web, so we just provide context
+  if (!publishableKey) {
+    return null;
+  }
+
+  // Create proper URL scheme for redirects
+  const urlScheme =
+    Constants.appOwnership === 'expo'
+      ? Linking.createURL('/--/')
+      : Linking.createURL('');
+
   return (
-    <StripeContext.Provider value={{ isInitialized, publishableKey }}>
-      {children}
-    </StripeContext.Provider>
+    <StripeProviderNative
+      publishableKey={publishableKey}
+      urlScheme={urlScheme}
+      merchantIdentifier="merchant.com.cardrop.app" // TODO: Replace with your Apple merchant ID
+    >
+      <StripeContext.Provider value={{ isInitialized, publishableKey }}>
+        {children}
+      </StripeContext.Provider>
+    </StripeProviderNative>
   );
 }

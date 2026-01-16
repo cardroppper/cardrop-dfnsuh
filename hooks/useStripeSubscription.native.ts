@@ -1,9 +1,10 @@
 
-// Web version - Stripe React Native is not supported on web
+// Native version (iOS/Android) - Uses Stripe React Native SDK
 import { useState, useEffect, useCallback } from 'react';
 import { Alert } from 'react-native';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/app/integrations/supabase/client';
+import { usePaymentSheet } from '@stripe/stripe-react-native';
 
 export interface SubscriptionStatus {
   isPremium: boolean;
@@ -14,6 +15,7 @@ export interface SubscriptionStatus {
 
 export function useStripeSubscription() {
   const { user } = useAuth();
+  const { initPaymentSheet, presentPaymentSheet } = usePaymentSheet();
   const [subscriptionStatus, setSubscriptionStatus] = useState<SubscriptionStatus>({
     isPremium: false,
     status: null,
@@ -74,10 +76,77 @@ export function useStripeSubscription() {
     fetchSubscriptionStatus();
   }, [fetchSubscriptionStatus]);
 
-  // Subscribe (web not supported)
+  // Initialize payment sheet for subscription
+  const initializePaymentSheet = async (priceId: string) => {
+    if (!user) {
+      Alert.alert('Error', 'You must be logged in to subscribe.');
+      return false;
+    }
+
+    try {
+      setIsLoading(true);
+
+      // TODO: Backend Integration - Call backend to create subscription payment intent
+      // This should call your Edge Function that creates a Stripe subscription
+      console.log('Creating subscription payment intent for price:', priceId);
+      
+      // Placeholder response - replace with actual backend call
+      const response = {
+        paymentIntent: 'pi_placeholder',
+        ephemeralKey: 'ek_placeholder',
+        customer: 'cus_placeholder',
+      };
+
+      const { error } = await initPaymentSheet({
+        merchantDisplayName: 'CarDrop',
+        customerId: response.customer,
+        customerEphemeralKeySecret: response.ephemeralKey,
+        paymentIntentClientSecret: response.paymentIntent,
+        allowsDelayedPaymentMethods: true,
+        returnURL: 'cardrop://stripe-redirect',
+      });
+
+      if (error) {
+        console.error('Error initializing payment sheet:', error);
+        Alert.alert('Error', error.message);
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Error initializing payment sheet:', error);
+      Alert.alert('Error', 'Failed to initialize payment. Please try again.');
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Present payment sheet
   const subscribe = async (priceId: string) => {
-    Alert.alert('Not Available', 'Stripe payments are not available on web. Please use the mobile app.');
-    return false;
+    const initialized = await initializePaymentSheet(priceId);
+    if (!initialized) {
+      return false;
+    }
+
+    try {
+      const { error } = await presentPaymentSheet();
+
+      if (error) {
+        if (error.code !== 'Canceled') {
+          Alert.alert('Payment Failed', error.message);
+        }
+        return false;
+      }
+
+      Alert.alert('Success', 'Your subscription is now active!');
+      await fetchSubscriptionStatus();
+      return true;
+    } catch (error) {
+      console.error('Error presenting payment sheet:', error);
+      Alert.alert('Error', 'Failed to process payment. Please try again.');
+      return false;
+    }
   };
 
   // Cancel subscription
