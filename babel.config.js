@@ -24,8 +24,6 @@ module.exports = function (api) {
         {
           jsxRuntime: "automatic",
           lazyImports: true,
-          // Ensure proper module resolution
-          useTransformReactJSXExperimental: false,
         }
       ]
     ],
