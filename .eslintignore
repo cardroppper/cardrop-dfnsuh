@@ -17,10 +17,14 @@ node_modules/
 # Backend
 backend/
 
+# Scripts directory
+scripts/
+
 # Config files
 babel-plugins/
 metro.config.js
 workbox-config.js
+babel.config.js
 
 # Public assets
 public/

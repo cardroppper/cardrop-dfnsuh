@@ -1,62 +1,45 @@
 
-// https://docs.expo.dev/eslint/
 module.exports = {
-  extends: [
-    'expo',
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'plugin:react/jsx-runtime'
-  ],
+  extends: ['expo', 'plugin:@typescript-eslint/recommended'],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'react'],
-  root: true,
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true
-    }
-  },
+  plugins: ['@typescript-eslint', 'react', 'import'],
   ignorePatterns: [
-    '/dist/*', 
-    '/public/*', 
-    '/babel-plugins/*', 
+    '/dist/*',
+    '/public/*',
+    '/babel-plugins/*',
     '/backend/*',
-    '/android/*',
-    '/ios/*',
-    '/.expo/*',
-    '/node_modules/*'
+    '/scripts/*',
+    'scripts/**/*',
+    'metro.config.js',
+    'babel.config.js',
+    'workbox-config.js',
+    '*.config.js',
+    'node_modules/',
+    '.expo/',
+    'android/',
+    'ios/'
   ],
-  env: {
-    browser: true,
-    'react-native/react-native': true,
-  },
-  rules: {
-    "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/prefer-as-const": "off",
-    "@typescript-eslint/no-var-requires": "off",
-    "react/react-in-jsx-scope": "off",
-    "@typescript-eslint/no-empty-object-type": "off",
-    "@typescript-eslint/no-wrapper-object-types": "off",
-    "@typescript-eslint/ban-tslint-comment": "off",
-    "react/no-unescaped-entities": "off",
-    "prefer-const": "off",
-    "react/prop-types": 1,
-    "no-case-declarations": "off",
-    "no-empty": "off",
-    "react/display-name": "off",
-    "no-constant-condition": "off",
-    "no-var": "off",
-    "no-useless-escape": "off"
-  },
   overrides: [
     {
-      files: ['metro.config.js', 'scripts/**/*.js'],
+      files: ['metro.config.js', 'babel.config.js', 'workbox-config.js'],
       rules: {
         '@typescript-eslint/no-var-requires': 'off'
+      },
+      parserOptions: {
+        sourceType: 'script'
       }
     }
-  ]
+  ],
+  rules: {
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-explicit-any': 'warn',
+    'react/prop-types': 'off',
+    'import/order': [
+      'warn',
+      {
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+        'newlines-between': 'never'
+      }
+    ]
+  }
 };

@@ -85,5 +85,6 @@
         "projectId": "your-project-id-here"
       }
     }
-  }
+  },
+  "scheme": "CarDrop"
 }

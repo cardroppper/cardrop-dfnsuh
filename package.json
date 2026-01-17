@@ -1,3 +1,4 @@
+
 {
   "name": "cardrop-dfnsuh",
   "version": "1.0.0",
@@ -21,9 +22,7 @@
     "validate:build": "node scripts/validate-build-environment.js",
     "check:build": "node scripts/final-build-check.js",
     "lint": "eslint .",
-    "test:bundle": "cross-env NODE_ENV=production npx react-native bundle --platform android --dev false --entry-file index.ts --bundle-output /tmp/test-bundle.js --assets-dest /tmp/test-assets",
-    "postinstall": "node scripts/make-executable.js && node -e \"console.log('\\u2705 Dependencies installed successfully')\"",
-    "prepare": "node scripts/ensure-node-env.js"
+    "test:bundle": "cross-env NODE_ENV=production npx react-native bundle --platform android --dev false --entry-file index.ts --bundle-output /tmp/test-bundle.js --assets-dest /tmp/test-assets"
   },
   "dependencies": {
     "@babel/runtime": "^7.26.9",
