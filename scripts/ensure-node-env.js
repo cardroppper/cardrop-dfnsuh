@@ -1,5 +1,4 @@
 
-#!/usr/bin/env node
 
 /**
  * CRITICAL BUILD FIX: Ensure NODE_ENV is set before any build operations

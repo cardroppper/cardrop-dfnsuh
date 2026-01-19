@@ -1,5 +1,4 @@
 
-#!/usr/bin/env node
 
 /**
  * Final Build Check

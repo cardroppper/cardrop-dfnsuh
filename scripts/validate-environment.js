@@ -1,6 +1,4 @@
 
-#!/usr/bin/env node
-
 /**
  * Environment Validation Script
  * Validates that all required environment variables and configurations are set

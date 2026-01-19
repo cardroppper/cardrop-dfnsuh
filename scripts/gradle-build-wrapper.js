@@ -1,6 +1,4 @@
 
-#!/usr/bin/env node
-
 /**
  * Gradle Build Wrapper with NODE_ENV enforcement
  * 

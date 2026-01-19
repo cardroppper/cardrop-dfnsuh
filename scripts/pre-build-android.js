@@ -1,6 +1,4 @@
 
-#!/usr/bin/env node
-
 /**
  * Pre-Build Android Script
  * Ensures environment is properly configured before starting Android build

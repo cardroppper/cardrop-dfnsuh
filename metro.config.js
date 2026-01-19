@@ -1,5 +1,5 @@
-
 const { getDefaultConfig } = require('expo/metro-config');
+const { FileStore } = require('metro-cache');
 const path = require('path');
 const fs = require('fs');
 
@@ -7,8 +7,10 @@ const config = getDefaultConfig(__dirname);
 
 config.resolver.unstable_enablePackageExports = true;
 
-// Metro handles caching automatically in Expo 54+
-// No need to manually configure FileStore
+// Use turborepo to restore the cache when possible
+config.cacheStores = [
+    new FileStore({ root: path.join(__dirname, 'node_modules', '.cache', 'metro') }),
+  ];
 
 // Custom server middleware to receive console.log messages from the app
 const LOG_FILE_PATH = path.join(__dirname, '.natively', 'app_console.log');
@@ -23,6 +25,12 @@ if (!fs.existsSync(logDir)) {
 config.server = config.server || {};
 config.server.enhanceMiddleware = (middleware) => {
   return (req, res, next) => {
+
+    // DEBUG: log all metro bundle requests
+    if (req.url.includes('index.bundle') || req.url.includes('.bundle')) {
+      console.log('[METRO] Request:', req.method, req.url);
+    }
+
     // Extract pathname without query params for matching
     const pathname = req.url.split('?')[0];
 

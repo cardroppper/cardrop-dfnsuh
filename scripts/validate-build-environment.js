@@ -1,6 +1,4 @@
 
-#!/usr/bin/env node
-
 /**
  * Build Environment Validation Script
  * 
