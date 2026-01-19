@@ -39460,3 +39460,994 @@ Import stack:
 2026-01-19T23:46:54.817Z expo:start:server:metro:router Using app as the root directory for Expo Router.
 2026-01-19T23:46:54.818Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
 2026-01-19T23:46:54.818Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:46:56.932Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:46:56.932Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:46:56.933Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:46:56.933Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:46:59.024Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:46:59.025Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:46:59.025Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:46:59.025Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:01.126Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:01.126Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:01.126Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:01.126Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:03.231Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:03.231Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:03.231Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:03.231Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:05.339Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:05.339Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:05.340Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:05.340Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:07.456Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:07.456Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:07.456Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:07.456Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:09.560Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:09.560Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:09.560Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:09.560Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:11.668Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:11.668Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:11.669Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:11.669Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:13.779Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:13.779Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:13.780Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:13.780Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:15.878Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:15.878Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:15.879Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:15.879Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:17.975Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:17.975Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:17.975Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:17.975Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:20.077Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:20.077Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:20.078Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:20.078Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:22.173Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:22.173Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:22.174Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:22.174Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:24.260Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:24.260Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:24.261Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:24.261Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:26.350Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:26.351Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:26.351Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:26.351Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:28.452Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:28.452Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:28.453Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:28.453Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:30.555Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:30.555Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:30.556Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:30.556Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:32.658Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:32.659Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:32.659Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:32.659Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:34.766Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:34.766Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:34.767Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:34.767Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:36.857Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:36.857Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:36.857Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:36.857Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:38.960Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:38.960Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:38.961Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:38.961Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:41.062Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:41.062Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:41.063Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:41.063Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:43.152Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:43.152Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:43.152Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:43.152Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:45.258Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:45.258Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:45.258Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:45.258Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:47.365Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:47.365Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:47.365Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:47.365Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:49.468Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:49.468Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:49.469Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:49.469Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:51.570Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:51.570Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:51.570Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:51.570Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:53.677Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:53.677Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:53.678Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:53.678Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:55.767Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:55.768Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:55.768Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:55.768Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:57.872Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:57.872Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:57.873Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:57.873Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:47:59.984Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:47:59.985Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:47:59.985Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:47:59.985Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:02.106Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:02.106Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:02.107Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:02.108Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:04.219Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:04.220Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:04.220Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:04.220Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:06.408Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:06.408Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:06.416Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:06.416Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:08.610Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:08.610Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:08.611Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:08.616Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:10.773Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:10.773Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:10.774Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:10.774Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:12.912Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:12.912Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:12.913Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:12.913Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:15.001Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:15.001Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:15.002Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:15.002Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:17.126Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:17.126Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:17.127Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:17.127Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:19.239Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:19.239Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:19.240Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:19.240Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:21.354Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:21.354Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:21.355Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:21.355Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:23.461Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:23.461Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:23.462Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:23.462Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:25.575Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:25.575Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:25.575Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:25.576Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:27.701Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:27.701Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:27.702Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:27.702Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:29.907Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:29.907Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:29.908Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:29.908Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:32.031Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:32.031Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:32.032Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:32.032Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:34.163Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:34.163Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:34.182Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:34.184Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:36.318Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:36.318Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:36.319Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:36.319Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:38.461Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:38.461Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:38.461Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:38.462Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:40.567Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:40.567Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:40.568Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:40.568Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:42.695Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:42.695Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:42.696Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:42.696Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:44.838Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:44.838Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:44.839Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:44.839Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:46.952Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:46.953Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:46.953Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:46.954Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:49.047Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:49.047Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:49.047Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:49.048Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:51.161Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:51.162Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:51.162Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:51.163Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:53.301Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:53.301Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:53.302Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:53.302Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:55.434Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:55.436Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:55.437Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:55.437Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:57.548Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:57.549Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:57.549Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:57.549Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:48:59.662Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:48:59.675Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:48:59.676Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:48:59.676Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:01.789Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:01.789Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:01.790Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:01.790Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:03.907Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:03.907Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:03.908Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:03.908Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:06.034Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:06.035Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:06.035Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:06.035Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:08.199Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:08.199Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:08.200Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:08.200Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:10.375Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:10.376Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:10.381Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:10.381Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:12.565Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:12.565Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:12.571Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:12.572Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:14.748Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:14.748Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:14.748Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:14.748Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:16.916Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:16.916Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:16.917Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:16.917Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:19.060Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:19.061Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:19.065Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:19.065Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:21.183Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:21.185Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:21.193Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:21.195Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:23.357Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:23.357Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:23.358Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:23.358Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:25.503Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:25.504Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:25.506Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:25.507Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:27.660Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:27.661Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:27.661Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:27.662Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:29.771Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:29.771Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:29.771Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:29.771Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:31.888Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:31.888Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:31.889Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:31.889Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:34.058Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:34.058Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:34.059Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:34.059Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:36.208Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:36.208Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:36.216Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:36.217Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:38.357Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:38.357Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:38.359Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:38.359Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:40.515Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:40.515Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:40.527Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:40.529Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:42.677Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:42.677Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:42.678Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:42.678Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:44.809Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:44.809Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:44.827Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:44.828Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:46.949Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:46.950Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:46.950Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:46.951Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:49.091Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:49.095Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:49.099Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:49.099Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:51.220Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:51.220Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:51.221Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:51.221Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:53.368Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:53.368Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:53.368Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:53.368Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:55.511Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:55.511Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:55.512Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:55.512Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:57.659Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:57.659Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:57.660Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:57.660Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:49:59.874Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:49:59.874Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:49:59.875Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:49:59.875Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:01.981Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:01.982Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:01.982Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:01.982Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:04.108Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:04.108Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:04.109Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:04.109Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:06.234Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:06.235Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:06.235Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:06.236Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:08.350Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:08.350Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:08.350Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:08.350Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:10.480Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:10.480Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:10.481Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:10.481Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:12.623Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:12.623Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:12.624Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:12.624Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:14.774Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:14.776Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:14.781Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:14.782Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:16.939Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:16.939Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:16.941Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:16.941Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:19.110Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:19.111Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:19.112Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:19.112Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:21.223Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:21.223Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:21.224Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:21.225Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:23.385Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:23.389Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:23.395Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:23.396Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:25.562Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:25.562Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:25.563Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:25.563Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:27.693Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:27.694Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:27.695Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:27.695Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:29.842Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:29.842Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:29.844Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:29.844Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:32.010Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:32.011Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:32.012Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:32.012Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:34.205Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:34.206Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:34.207Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:34.207Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:36.347Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:36.349Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:36.349Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:36.349Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:38.507Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:38.507Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:38.509Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:38.509Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:40.679Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:40.679Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:40.684Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:40.684Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:42.820Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:42.821Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:42.821Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:42.821Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:44.958Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:44.958Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:44.959Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:44.959Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:47.117Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:47.117Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:47.118Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:47.118Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:49.256Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:49.257Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:49.258Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:49.259Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:51.419Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:51.419Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:51.420Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:51.420Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:53.552Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:53.552Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:53.553Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:53.554Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:55.712Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:55.712Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:55.713Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:55.713Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:57.851Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:57.852Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:57.852Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:57.852Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:50:59.968Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:50:59.969Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:50:59.969Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:50:59.969Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:51:02.088Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:51:02.088Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:51:02.089Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:51:02.089Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:51:04.211Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:51:04.211Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:51:04.212Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:51:04.212Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:51:06.349Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:51:06.349Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:51:06.351Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:51:06.351Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:51:08.474Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:51:08.474Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:51:08.475Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:51:08.475Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:51:10.591Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:51:10.591Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:51:10.592Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:51:10.592Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:51:12.739Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:51:12.739Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:51:12.740Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:51:12.740Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:51:14.853Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:51:14.854Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:51:14.855Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:51:14.855Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:51:16.968Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:51:16.968Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:51:16.970Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:51:16.971Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:51:19.102Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:51:19.103Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:51:19.104Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:51:19.104Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:51:21.245Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:51:21.245Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:51:21.246Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:51:21.246Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:51:23.385Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:51:23.385Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:51:23.387Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:51:23.387Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:51:25.507Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:51:25.508Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:51:25.508Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:51:25.508Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:51:26.642Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:51:26.642Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:51:26.642Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:51:26.643Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+[METRO] Request: GET /index.ts.bundle?platform=web&dev=true&hot=false&lazy=true&transform.engine=hermes&transform.routerRoot=app&unstable_transformProfile=hermes-stable
+Web ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+2026-01-19T23:51:26.848Z expo:start:server:metro:multi-platform Skipping production module: ./cjs/react-jsx-dev-runtime.production.min.js
+2026-01-19T23:51:26.862Z expo:start:server:metro:multi-platform Skipping production module: ./cjs/react.production.min.js
+2026-01-19T23:51:26.870Z expo:start:server:metro:multi-platform Redirecting module "/expo-project/node_modules/.pnpm/react-native-web@0.21.2_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/react-native-web/dist/exports/BackHandler/index.js" to shim
+2026-01-19T23:51:27.232Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../utils/validation, platform: web, env: undefined, origin: /expo-project/app/(auth)/signup.tsx)
+2026-01-19T23:51:27.232Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../utils/validation, platform: web, env: undefined, origin: /expo-project/app/(auth)/signup.tsx)
+2026-01-19T23:51:27.236Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.236Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/(auth)/signup.tsx",
+      "request": "../../utils/validation"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/(auth)/signup.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.264Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/(auth)/login.tsx)
+2026-01-19T23:51:27.264Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/(auth)/login.tsx)
+2026-01-19T23:51:27.265Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.266Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/(auth)/login.tsx",
+      "request": "../../styles/commonStyles"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/(auth)/login.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.270Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../../components/homeData, platform: web, env: undefined, origin: /expo-project/app/(tabs)/(home)/index.tsx)
+2026-01-19T23:51:27.270Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../../components/homeData, platform: web, env: undefined, origin: /expo-project/app/(tabs)/(home)/index.tsx)
+2026-01-19T23:51:27.271Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.271Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/(tabs)/(home)/index.tsx",
+      "request": "../../../components/homeData"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/(tabs)/(home)/index.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.274Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../contexts/AuthContext, platform: web, env: undefined, origin: /expo-project/app/(tabs)/_layout.ios.tsx)
+2026-01-19T23:51:27.274Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../contexts/AuthContext, platform: web, env: undefined, origin: /expo-project/app/(tabs)/_layout.ios.tsx)
+2026-01-19T23:51:27.275Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.275Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/(tabs)/_layout.ios.tsx",
+      "request": "../../contexts/AuthContext"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/(tabs)/_layout.ios.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.277Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../contexts/AuthContext, platform: web, env: undefined, origin: /expo-project/app/(tabs)/_layout.tsx)
+2026-01-19T23:51:27.278Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../contexts/AuthContext, platform: web, env: undefined, origin: /expo-project/app/(tabs)/_layout.tsx)
+2026-01-19T23:51:27.279Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.279Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/(tabs)/_layout.tsx",
+      "request": "../../contexts/AuthContext"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/(tabs)/_layout.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.282Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../contexts/AuthContext, platform: web, env: undefined, origin: /expo-project/app/(tabs)/_layout.web.tsx)
+2026-01-19T23:51:27.282Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../contexts/AuthContext, platform: web, env: undefined, origin: /expo-project/app/(tabs)/_layout.web.tsx)
+2026-01-19T23:51:27.284Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.284Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/(tabs)/_layout.web.tsx",
+      "request": "../../contexts/AuthContext"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/(tabs)/_layout.web.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.289Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../components/IconSymbol, platform: web, env: undefined, origin: /expo-project/app/(tabs)/clubs.tsx)
+2026-01-19T23:51:27.289Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../components/IconSymbol, platform: web, env: undefined, origin: /expo-project/app/(tabs)/clubs.tsx)
+2026-01-19T23:51:27.290Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.290Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/(tabs)/clubs.tsx",
+      "request": "../../components/IconSymbol"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/(tabs)/clubs.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.295Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../../components/homeData, platform: web, env: undefined, origin: /expo-project/app/(tabs)/(home)/index.ios.tsx)
+2026-01-19T23:51:27.295Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../../components/homeData, platform: web, env: undefined, origin: /expo-project/app/(tabs)/(home)/index.ios.tsx)
+2026-01-19T23:51:27.296Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.296Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/(tabs)/(home)/index.ios.tsx",
+      "request": "../../../components/homeData"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/(tabs)/(home)/index.ios.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.303Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/(tabs)/garage.tsx)
+2026-01-19T23:51:27.303Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/(tabs)/garage.tsx)
+2026-01-19T23:51:27.304Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.304Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/(tabs)/garage.tsx",
+      "request": "../../styles/commonStyles"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/(tabs)/garage.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.308Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../contexts/AuthContext, platform: web, env: undefined, origin: /expo-project/app/(tabs)/discover.tsx)
+2026-01-19T23:51:27.308Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../contexts/AuthContext, platform: web, env: undefined, origin: /expo-project/app/(tabs)/discover.tsx)
+2026-01-19T23:51:27.309Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.309Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/(tabs)/discover.tsx",
+      "request": "../../contexts/AuthContext"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/(tabs)/discover.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.312Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/(tabs)/messages.tsx)
+2026-01-19T23:51:27.312Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/(tabs)/messages.tsx)
+2026-01-19T23:51:27.312Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.312Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/(tabs)/messages.tsx",
+      "request": "../../styles/commonStyles"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/(tabs)/messages.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.315Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../components/IconSymbol, platform: web, env: undefined, origin: /expo-project/app/(tabs)/profile.ios.tsx)
+2026-01-19T23:51:27.316Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../components/IconSymbol, platform: web, env: undefined, origin: /expo-project/app/(tabs)/profile.ios.tsx)
+2026-01-19T23:51:27.316Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.316Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/(tabs)/profile.ios.tsx",
+      "request": "../../components/IconSymbol"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/(tabs)/profile.ios.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.318Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../components/IconSymbol, platform: web, env: undefined, origin: /expo-project/app/(tabs)/profile.tsx)
+2026-01-19T23:51:27.318Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../components/IconSymbol, platform: web, env: undefined, origin: /expo-project/app/(tabs)/profile.tsx)
+2026-01-19T23:51:27.319Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.319Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/(tabs)/profile.tsx",
+      "request": "../../components/IconSymbol"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/(tabs)/profile.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.327Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/(tabs)/nearby.tsx)
+2026-01-19T23:51:27.328Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/(tabs)/nearby.tsx)
+2026-01-19T23:51:27.328Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.329Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/(tabs)/nearby.tsx",
+      "request": "../../styles/commonStyles"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/(tabs)/nearby.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.344Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../contexts/AuthContext, platform: web, env: undefined, origin: /expo-project/app/(tabs)/settings.tsx)
+2026-01-19T23:51:27.345Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../contexts/AuthContext, platform: web, env: undefined, origin: /expo-project/app/(tabs)/settings.tsx)
+2026-01-19T23:51:27.346Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.346Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/(tabs)/settings.tsx",
+      "request": "../../contexts/AuthContext"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/(tabs)/settings.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.355Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../contexts/AuthContext, platform: web, env: undefined, origin: /expo-project/app/_layout.tsx)
+2026-01-19T23:51:27.356Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../contexts/AuthContext, platform: web, env: undefined, origin: /expo-project/app/_layout.tsx)
+2026-01-19T23:51:27.357Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.357Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/_layout.tsx",
+      "request": "../contexts/AuthContext"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/_layout.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.359Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/dev/_layout.tsx)
+2026-01-19T23:51:27.359Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/dev/_layout.tsx)
+2026-01-19T23:51:27.360Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.360Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/dev/_layout.tsx",
+      "request": "../../styles/commonStyles"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/dev/_layout.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.366Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/clubs/[clubId].tsx)
+2026-01-19T23:51:27.366Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/clubs/[clubId].tsx)
+2026-01-19T23:51:27.367Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.367Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/clubs/[clubId].tsx",
+      "request": "../../styles/commonStyles"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/clubs/[clubId].tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.375Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/dev/beacon-registration.tsx)
+2026-01-19T23:51:27.375Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/dev/beacon-registration.tsx)
+2026-01-19T23:51:27.376Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.376Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/dev/beacon-registration.tsx",
+      "request": "../../styles/commonStyles"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/dev/beacon-registration.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.381Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../contexts/AuthContext, platform: web, env: undefined, origin: /expo-project/app/index.tsx)
+2026-01-19T23:51:27.382Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../contexts/AuthContext, platform: web, env: undefined, origin: /expo-project/app/index.tsx)
+2026-01-19T23:51:27.382Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.382Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/index.tsx",
+      "request": "../contexts/AuthContext"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/index.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.402Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/messages/[conversationId].tsx)
+2026-01-19T23:51:27.402Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/messages/[conversationId].tsx)
+2026-01-19T23:51:27.402Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.403Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/messages/[conversationId].tsx",
+      "request": "../../styles/commonStyles"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/messages/[conversationId].tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.407Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../components/IconSymbol, platform: web, env: undefined, origin: /expo-project/app/subscription-management.tsx)
+2026-01-19T23:51:27.407Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../components/IconSymbol, platform: web, env: undefined, origin: /expo-project/app/subscription-management.tsx)
+2026-01-19T23:51:27.408Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.408Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/subscription-management.tsx",
+      "request": "../components/IconSymbol"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/subscription-management.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.412Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../components/IconSymbol, platform: web, env: undefined, origin: /expo-project/app/subscription/premium.tsx)
+2026-01-19T23:51:27.413Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../components/IconSymbol, platform: web, env: undefined, origin: /expo-project/app/subscription/premium.tsx)
+2026-01-19T23:51:27.413Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.413Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/subscription/premium.tsx",
+      "request": "../../components/IconSymbol"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/subscription/premium.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.420Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/vehicles/[vehicleId].tsx)
+2026-01-19T23:51:27.420Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/vehicles/[vehicleId].tsx)
+2026-01-19T23:51:27.421Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.421Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/vehicles/[vehicleId].tsx",
+      "request": "../../styles/commonStyles"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/vehicles/[vehicleId].tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.428Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/vehicles/[vehicleId]/timeline.tsx)
+2026-01-19T23:51:27.428Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/vehicles/[vehicleId]/timeline.tsx)
+2026-01-19T23:51:27.429Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.429Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/vehicles/[vehicleId]/timeline.tsx",
+      "request": "../../../styles/commonStyles"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/vehicles/[vehicleId]/timeline.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.438Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/vehicles/_layout.tsx)
+2026-01-19T23:51:27.438Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/vehicles/_layout.tsx)
+2026-01-19T23:51:27.439Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.439Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/vehicles/_layout.tsx",
+      "request": "../../styles/commonStyles"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/vehicles/_layout.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.443Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/vehicles/add.tsx)
+2026-01-19T23:51:27.443Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/vehicles/add.tsx)
+2026-01-19T23:51:27.443Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.443Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/vehicles/add.tsx",
+      "request": "../../styles/commonStyles"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/vehicles/add.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.450Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/vehicles/beacon-assign/[vehicleId].tsx)
+2026-01-19T23:51:27.450Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/vehicles/beacon-assign/[vehicleId].tsx)
+2026-01-19T23:51:27.451Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.451Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/vehicles/beacon-assign/[vehicleId].tsx",
+      "request": "../../../styles/commonStyles"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/vehicles/beacon-assign/[vehicleId].tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.454Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/vehicles/modifications/_layout.tsx)
+2026-01-19T23:51:27.454Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/vehicles/modifications/_layout.tsx)
+2026-01-19T23:51:27.454Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.454Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/vehicles/modifications/_layout.tsx",
+      "request": "../../../styles/commonStyles"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/vehicles/modifications/_layout.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.460Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/vehicles/edit/[vehicleId].tsx)
+2026-01-19T23:51:27.460Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/vehicles/edit/[vehicleId].tsx)
+2026-01-19T23:51:27.460Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.460Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/vehicles/edit/[vehicleId].tsx",
+      "request": "../../../styles/commonStyles"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/vehicles/edit/[vehicleId].tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.472Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/vehicles/modifications/add.tsx)
+2026-01-19T23:51:27.472Z expo:metro:withMetroResolvers Custom resolver (requestPostRewrites) threw: FailedToResolvePathError. (module: ../../../styles/commonStyles, platform: web, env: undefined, origin: /expo-project/app/vehicles/modifications/add.tsx)
+2026-01-19T23:51:27.473Z expo:metro:withMetroResolvers Number of explored stacks: 1
+2026-01-19T23:51:27.473Z expo:metro:withMetroResolvers Found inverse graph: {
+  "frames": [
+    {
+      "origin": "/expo-project/app/vehicles/modifications/add.tsx",
+      "request": "../../../styles/commonStyles"
+    },
+    {
+      "origin": "/expo-project/app?ctx=c9915d5ced2b656047aa496292a87964b21f4221",
+      "request": "/expo-project/app/vehicles/modifications/add.tsx"
+    }
+  ]
+}
+2026-01-19T23:51:27.519Z expo:start:server:metro:multi-platform Redirecting module "/expo-project/node_modules/.pnpm/react-native-web@0.21.2_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/react-native-web/dist/exports/AppRegistry/AppContainer.js" to shim
+2026-01-19T23:51:27.574Z expo:start:server:metro:multi-platform Skipping production module: ./cjs/react-jsx-runtime.production.min.js
+2026-01-19T23:51:27.630Z expo:start:server:metro:multi-platform Skipping production module: ./cjs/react-dom.production.min.js
+2026-01-19T23:51:27.671Z expo:start:server:middleware:manifest Resolved entry point: index.ts (project root: /expo-project)
+2026-01-19T23:51:27.671Z expo:start:server:metro:router Using app as the root directory for Expo Router.
+2026-01-19T23:51:27.672Z expo:customize:templates @expo/webpack-config template for "index.html" not found, falling back on @expo/cli
+2026-01-19T23:51:27.672Z expo:customize:templates Using @expo/cli template for "index.html": /expo-project/node_modules/.pnpm/@expo+cli@54.0.21_expo-router@6.0.21_expo@54.0.31_react-native@0.81.5_@babel+core@7.28._8dc194fd008e489db6149773cbc6cd2b/node_modules/@expo/cli/static/template/index.html
+2026-01-19T23:51:27.697Z expo:start:server:metro:multi-platform Skipping production module: ./cjs/react-is.production.js
+2026-01-19T23:51:27.725Z expo:start:server:metro:multi-platform Using React Navigation's web modal implementation.
