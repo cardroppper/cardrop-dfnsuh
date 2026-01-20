@@ -9,6 +9,7 @@
 <!-- Comments help maintain code clarity and understanding -->
 <!-- These comments can be used for future reference -->
 <!-- Documentation is key to project maintainability -->
+<!-- Another comment to further document the project -->
 
 This app was built using [Natively.dev](https://natively.dev) - a platform for creating mobile apps.
 
