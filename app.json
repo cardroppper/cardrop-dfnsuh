@@ -1,14 +1,15 @@
+
 {
   "expo": {
     "name": "CarDrop",
     "slug": "cardrop-dfnsuh",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/natively-dark.png",
+    "icon": "./assets/images/final_quest_240x240.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/images/natively-dark.png",
+      "image": "./assets/images/final_quest_240x240.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
@@ -35,7 +36,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/natively-dark.png",
+        "foregroundImage": "./assets/images/final_quest_240x240.png",
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
@@ -78,10 +79,6 @@
       "typedRoutes": true
     },
     "extra": {
-      "router": {
-        "origin": false
-      },
     }
-  },
-  "scheme": "CarDrop"
+  }
 }
