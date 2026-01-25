@@ -10,6 +10,11 @@ import 'react-native-url-polyfill/auto';
 // Import reanimated to ensure it's included in the bundle
 import 'react-native-reanimated';
 
+// Import providers directly (no lazy loading to avoid build issues)
+import { AuthProvider } from '@/contexts/AuthContext';
+import { StripeProvider } from '@/contexts/StripeContext';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
+
 console.log('[RootLayout] Module loaded');
 
 // Prevent splash screen from auto-hiding
@@ -17,16 +22,9 @@ SplashScreen.preventAutoHideAsync().catch((err) => {
   console.error('[RootLayout] SplashScreen error:', err);
 });
 
-// Lazy load heavy components to avoid blocking initial render
-let AuthProvider: any;
-let StripeProvider: any;
-let ErrorBoundary: any;
-
 export default function RootLayout() {
   console.log('[RootLayout] Component rendering');
   const [isReady, setIsReady] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [componentsLoaded, setComponentsLoaded] = useState(false);
 
   useEffect(() => {
     console.log('[RootLayout] Initializing app');
@@ -35,23 +33,8 @@ export default function RootLayout() {
       try {
         console.log('[RootLayout] Starting initialization...');
         
-        // Load components asynchronously
-        console.log('[RootLayout] Loading components...');
-        const [authModule, stripeModule, errorModule] = await Promise.all([
-          import('@/contexts/AuthContext'),
-          import('@/contexts/StripeContext'),
-          import('@/components/ErrorBoundary'),
-        ]);
-        
-        AuthProvider = authModule.AuthProvider;
-        StripeProvider = stripeModule.StripeProvider;
-        ErrorBoundary = errorModule.ErrorBoundary;
-        
-        console.log('[RootLayout] Components loaded');
-        setComponentsLoaded(true);
-        
         // Give the app a moment to initialize
-        await new Promise(resolve => setTimeout(resolve, 100));
+        await new Promise(resolve => setTimeout(resolve, 500));
         
         console.log('[RootLayout] Hiding splash screen');
         await SplashScreen.hideAsync();
@@ -61,7 +44,6 @@ export default function RootLayout() {
       } catch (err: any) {
         console.error('[RootLayout] Initialization error:', err);
         console.error('[RootLayout] Error stack:', err?.stack);
-        setError(err.message || 'Failed to initialize app');
         setIsReady(true); // Still set ready to show error
         
         // Try to hide splash screen even on error
@@ -76,23 +58,12 @@ export default function RootLayout() {
     initialize();
   }, []);
 
-  if (!isReady || !componentsLoaded) {
+  if (!isReady) {
     console.log('[RootLayout] Showing loading state');
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#FF6B35" />
         <Text style={styles.loadingText}>Loading CarDrop...</Text>
-      </View>
-    );
-  }
-
-  if (error) {
-    console.log('[RootLayout] Showing error state:', error);
-    return (
-      <View style={styles.errorContainer}>
-        <Text style={styles.errorTitle}>⚠️ Initialization Error</Text>
-        <Text style={styles.errorText}>{error}</Text>
-        <Text style={styles.errorDetail}>Check console for details</Text>
       </View>
     );
   }

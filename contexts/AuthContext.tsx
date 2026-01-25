@@ -72,22 +72,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         console.log('[AuthContext] Getting initial session...');
         
-        // Get initial session with shorter timeout
-        const sessionPromise = supabase.auth.getSession();
-        const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Session fetch timeout')), 5000)
-        );
-        
-        let session = null;
-        let sessionError = null;
-        
-        try {
-          const result = await Promise.race([sessionPromise, timeoutPromise]) as any;
-          session = result.data?.session;
-          sessionError = result.error;
-        } catch (timeoutErr) {
-          console.warn('[AuthContext] Session fetch timed out, continuing without session');
-        }
+        // Get initial session
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
         
         if (!mounted) {
           console.log('[AuthContext] Component unmounted, aborting');
