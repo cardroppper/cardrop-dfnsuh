@@ -3,10 +3,8 @@ import { Stack } from 'expo-router';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { StripeProvider } from '@/contexts/StripeContext';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
-import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
 
 // Import URL polyfill for Supabase (must be before any Supabase imports)
 import 'react-native-url-polyfill/auto';
@@ -23,31 +21,11 @@ SplashScreen.preventAutoHideAsync().catch((err) => {
 
 export default function RootLayout() {
   console.log('[RootLayout] Component rendering');
-  
-  const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
 
   useEffect(() => {
-    console.log('[RootLayout] Font loading state:', { loaded, error: !!error });
-    
-    if (error) {
-      console.error('[RootLayout] Font loading error:', error);
-      // Continue anyway - fonts are not critical
-      SplashScreen.hideAsync().catch(console.error);
-    }
-    
-    if (loaded) {
-      console.log('[RootLayout] Fonts loaded, hiding splash screen');
-      SplashScreen.hideAsync().catch(console.error);
-    }
-  }, [loaded, error]);
-
-  // Show nothing while fonts are loading (splash screen is visible)
-  if (!loaded && !error) {
-    console.log('[RootLayout] Waiting for fonts to load');
-    return null;
-  }
+    console.log('[RootLayout] Hiding splash screen');
+    SplashScreen.hideAsync().catch(console.error);
+  }, []);
 
   console.log('[RootLayout] Rendering app structure');
 
