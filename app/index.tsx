@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, ActivityIndicator, StyleSheet, Text } from 'react-native';
 import { Redirect } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
+
+console.log('[Index] Module loaded');
 
 const colors = {
   primary: '#FF6B35',
@@ -11,11 +13,19 @@ const colors = {
 };
 
 export default function Index() {
-  console.log('[Index] Rendering index screen');
+  console.log('[Index] Component rendering');
   
   const { isLoading, isAuthenticated, user, profile, error } = useAuth();
 
-  console.log('[Index] Auth state:', { isLoading, isAuthenticated, hasUser: !!user, hasProfile: !!profile, error });
+  useEffect(() => {
+    console.log('[Index] Auth state updated:', { 
+      isLoading, 
+      isAuthenticated, 
+      hasUser: !!user, 
+      hasProfile: !!profile, 
+      error 
+    });
+  }, [isLoading, isAuthenticated, user, profile, error]);
 
   // Show loading state while checking authentication
   if (isLoading) {

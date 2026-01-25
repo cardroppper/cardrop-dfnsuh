@@ -65,8 +65,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         console.log('[AuthContext] Initializing authentication...');
         
-        // Get initial session
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        // Get initial session with timeout
+        const sessionPromise = supabase.auth.getSession();
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Session fetch timeout')), 10000)
+        );
+        
+        const { data: { session }, error: sessionError } = await Promise.race([
+          sessionPromise,
+          timeoutPromise
+        ]) as any;
         
         if (!mounted) {
           console.log('[AuthContext] Component unmounted during session fetch');
@@ -76,6 +84,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (sessionError) {
           console.log('[AuthContext] Session error:', sessionError.message);
           setError(sessionError.message);
+          // Continue anyway - user can still use the app
         }
 
         console.log('[AuthContext] Session loaded:', session ? 'authenticated' : 'not authenticated');
@@ -84,7 +93,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         if (session?.user) {
           console.log('[AuthContext] Fetching user profile...');
-          await fetchProfile(session.user.id);
+          try {
+            await fetchProfile(session.user.id);
+          } catch (profileErr: any) {
+            console.error('[AuthContext] Profile fetch error:', profileErr);
+            // Don't block app initialization for profile errors
+          }
         }
         
         if (!mounted) {
@@ -96,29 +110,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         console.log('[AuthContext] Initialization complete');
 
         // Listen for auth changes
-        const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
-          async (event, session) => {
-            console.log('[AuthContext] Auth state changed:', event);
-            
-            if (!mounted) return;
-            
-            setSession(session);
-            setUser(session?.user ?? null);
+        try {
+          const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
+            async (event, session) => {
+              console.log('[AuthContext] Auth state changed:', event);
+              
+              if (!mounted) return;
+              
+              setSession(session);
+              setUser(session?.user ?? null);
 
-            if (session?.user) {
-              await fetchProfile(session.user.id);
-            } else {
-              setProfile(null);
+              if (session?.user) {
+                try {
+                  await fetchProfile(session.user.id);
+                } catch (err: any) {
+                  console.error('[AuthContext] Profile fetch error on auth change:', err);
+                }
+              } else {
+                setProfile(null);
+              }
             }
-          }
-        );
+          );
 
-        subscription = authSubscription;
+          subscription = authSubscription;
+        } catch (subscriptionErr: any) {
+          console.error('[AuthContext] Failed to set up auth subscription:', subscriptionErr);
+          // Continue anyway - app can still work without real-time updates
+        }
       } catch (err: any) {
         console.error('[AuthContext] Initialization error:', err);
         if (mounted) {
           setError(err.message || 'Failed to initialize authentication');
           setIsLoading(false);
+          // Don't throw - let the app continue
         }
       }
     };
@@ -129,7 +153,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.log('[AuthContext] Cleaning up...');
       mounted = false;
       if (subscription) {
-        subscription.unsubscribe();
+        try {
+          subscription.unsubscribe();
+        } catch (err) {
+          console.error('[AuthContext] Error unsubscribing:', err);
+        }
       }
     };
   }, []);
