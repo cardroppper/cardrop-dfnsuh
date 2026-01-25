@@ -64,12 +64,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const initAuth = async () => {
       try {
         // Get initial session with shorter timeout
+        const sessionPromise = supabase.auth.getSession();
+        const timeoutPromise = new Promise<any>((_, reject) => 
+          setTimeout(() => reject(new Error('Session fetch timeout')), 5000)
+        );
+
         const { data: { session }, error: sessionError } = await Promise.race([
-          supabase.auth.getSession(),
-          new Promise<any>((_, reject) => 
-            setTimeout(() => reject(new Error('Session fetch timeout')), 5000)
-          )
-        ]);
+          sessionPromise,
+          timeoutPromise
+        ]).catch((err) => {
+          console.warn('Session fetch failed:', err);
+          return { data: { session: null }, error: err };
+        });
         
         if (!mounted) return;
         
@@ -81,7 +87,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(session?.user ?? null);
 
         if (session?.user) {
-          await fetchProfile(session.user.id).catch(() => {});
+          await fetchProfile(session.user.id).catch((err) => {
+            console.warn('Profile fetch failed:', err);
+          });
         }
         
         if (!mounted) return;
@@ -89,22 +97,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setIsLoading(false);
 
         // Listen for auth changes
-        const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
-          async (event, session) => {
-            if (!mounted) return;
-            
-            setSession(session);
-            setUser(session?.user ?? null);
+        try {
+          const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
+            async (event, session) => {
+              if (!mounted) return;
+              
+              setSession(session);
+              setUser(session?.user ?? null);
 
-            if (session?.user) {
-              await fetchProfile(session.user.id).catch(() => {});
-            } else {
-              setProfile(null);
+              if (session?.user) {
+                await fetchProfile(session.user.id).catch((err) => {
+                  console.warn('Profile fetch failed:', err);
+                });
+              } else {
+                setProfile(null);
+              }
             }
-          }
-        );
+          );
 
-        subscription = authSubscription;
+          subscription = authSubscription;
+        } catch (err: any) {
+          console.warn('Auth state change listener failed:', err);
+        }
       } catch (err: any) {
         console.error('Auth initialization error:', err);
         if (mounted) {
@@ -118,7 +132,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     return () => {
       mounted = false;
-      subscription?.unsubscribe?.();
+      if (subscription?.unsubscribe) {
+        try {
+          subscription.unsubscribe();
+        } catch (err) {
+          console.warn('Failed to unsubscribe from auth changes:', err);
+        }
+      }
     };
   }, []);
 

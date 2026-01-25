@@ -8,13 +8,17 @@ import * as SplashScreen from 'expo-splash-screen';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 // Keep the splash screen visible while we load resources
-SplashScreen.preventAutoHideAsync().catch(() => {});
+SplashScreen.preventAutoHideAsync().catch((err) => {
+  console.warn('Failed to prevent splash screen auto-hide:', err);
+});
 
 export default function RootLayout() {
   useEffect(() => {
     // Hide splash screen after a short delay
     const timer = setTimeout(() => {
-      SplashScreen.hideAsync().catch(() => {});
+      SplashScreen.hideAsync().catch((err) => {
+        console.warn('Failed to hide splash screen:', err);
+      });
     }, 1000);
 
     return () => clearTimeout(timer);
