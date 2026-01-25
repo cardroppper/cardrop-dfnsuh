@@ -1,14 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-
-console.log('[AuthContext] Module loading...');
-
 import { supabase } from '@/app/integrations/supabase/client';
-
-console.log('[AuthContext] Supabase client imported');
-
 import type { User, Session } from '@supabase/supabase-js';
-
-console.log('[AuthContext] Types imported');
 
 interface Profile {
   id: string;
@@ -37,15 +29,11 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  console.log('[AuthContext] AuthProvider rendering...');
-  
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
-  console.log('[AuthContext] State initialized');
 
   // Fetch user profile from database
   const fetchProfile = async (userId: string) => {
@@ -75,86 +63,53 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const initAuth = async () => {
       try {
-        console.log('[AuthContext] Initializing authentication...');
-        
-        // Get initial session with timeout
-        const sessionPromise = supabase.auth.getSession();
-        const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Session fetch timeout')), 10000)
-        );
-        
+        // Get initial session with shorter timeout
         const { data: { session }, error: sessionError } = await Promise.race([
-          sessionPromise,
-          timeoutPromise
-        ]) as any;
+          supabase.auth.getSession(),
+          new Promise<any>((_, reject) => 
+            setTimeout(() => reject(new Error('Session fetch timeout')), 5000)
+          )
+        ]);
         
-        if (!mounted) {
-          console.log('[AuthContext] Component unmounted during session fetch');
-          return;
-        }
+        if (!mounted) return;
         
         if (sessionError) {
-          console.log('[AuthContext] Session error:', sessionError.message);
-          setError(sessionError.message);
-          // Continue anyway - user can still use the app
+          console.warn('Auth session error:', sessionError.message);
         }
 
-        console.log('[AuthContext] Session loaded:', session ? 'authenticated' : 'not authenticated');
         setSession(session);
         setUser(session?.user ?? null);
 
         if (session?.user) {
-          console.log('[AuthContext] Fetching user profile...');
-          try {
-            await fetchProfile(session.user.id);
-          } catch (profileErr: any) {
-            console.error('[AuthContext] Profile fetch error:', profileErr);
-            // Don't block app initialization for profile errors
-          }
+          await fetchProfile(session.user.id).catch(() => {});
         }
         
-        if (!mounted) {
-          console.log('[AuthContext] Component unmounted after profile fetch');
-          return;
-        }
+        if (!mounted) return;
         
         setIsLoading(false);
-        console.log('[AuthContext] Initialization complete');
 
         // Listen for auth changes
-        try {
-          const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
-            async (event, session) => {
-              console.log('[AuthContext] Auth state changed:', event);
-              
-              if (!mounted) return;
-              
-              setSession(session);
-              setUser(session?.user ?? null);
+        const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
+          async (event, session) => {
+            if (!mounted) return;
+            
+            setSession(session);
+            setUser(session?.user ?? null);
 
-              if (session?.user) {
-                try {
-                  await fetchProfile(session.user.id);
-                } catch (err: any) {
-                  console.error('[AuthContext] Profile fetch error on auth change:', err);
-                }
-              } else {
-                setProfile(null);
-              }
+            if (session?.user) {
+              await fetchProfile(session.user.id).catch(() => {});
+            } else {
+              setProfile(null);
             }
-          );
+          }
+        );
 
-          subscription = authSubscription;
-        } catch (subscriptionErr: any) {
-          console.error('[AuthContext] Failed to set up auth subscription:', subscriptionErr);
-          // Continue anyway - app can still work without real-time updates
-        }
+        subscription = authSubscription;
       } catch (err: any) {
-        console.error('[AuthContext] Initialization error:', err);
+        console.error('Auth initialization error:', err);
         if (mounted) {
           setError(err.message || 'Failed to initialize authentication');
           setIsLoading(false);
-          // Don't throw - let the app continue
         }
       }
     };
@@ -162,15 +117,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     initAuth();
 
     return () => {
-      console.log('[AuthContext] Cleaning up...');
       mounted = false;
-      if (subscription) {
-        try {
-          subscription.unsubscribe();
-        } catch (err) {
-          console.error('[AuthContext] Error unsubscribing:', err);
-        }
-      }
+      subscription?.unsubscribe?.();
     };
   }, []);
 
