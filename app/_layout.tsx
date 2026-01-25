@@ -1,3 +1,4 @@
+
 import 'react-native-url-polyfill/auto';
 import 'react-native-reanimated';
 import { Stack } from 'expo-router';
@@ -6,7 +7,7 @@ import { StripeProvider } from '@/contexts/StripeContext';
 import { useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
-import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, ActivityIndicator, StyleSheet, Text } from 'react-native';
 
 // Keep the splash screen visible while we load resources
 SplashScreen.preventAutoHideAsync().catch((err) => {
@@ -21,35 +22,43 @@ export default function RootLayout() {
     
     async function prepare() {
       try {
-        // Add any initialization logic here
-        console.log('RootLayout: App initialization complete');
+        console.log('RootLayout: Starting initialization...');
+        
+        // Minimal initialization - just set ready
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        console.log('RootLayout: Initialization complete');
         setIsReady(true);
         
-        // Hide splash screen after initialization
+        // Hide splash screen
         await SplashScreen.hideAsync();
+        console.log('RootLayout: Splash screen hidden');
       } catch (err) {
         console.error('RootLayout: Initialization error:', err);
-        setIsReady(true); // Still set ready to show error boundary
-        await SplashScreen.hideAsync();
+        // Still set ready to show the app
+        setIsReady(true);
+        SplashScreen.hideAsync().catch(() => {});
       }
     }
 
     prepare();
 
-    // Failsafe: Always set ready after 2 seconds
+    // Failsafe: Always set ready after 1 second
     const failsafeTimer = setTimeout(() => {
       console.warn('RootLayout: Failsafe timeout - forcing isReady to true');
       setIsReady(true);
       SplashScreen.hideAsync().catch(() => {});
-    }, 2000);
+    }, 1000);
 
     return () => clearTimeout(failsafeTimer);
   }, []);
 
   if (!isReady) {
+    console.log('RootLayout: Showing loading screen');
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#FF6B35" />
+        <Text style={styles.loadingText}>Loading CarDrop...</Text>
       </View>
     );
   }
@@ -112,5 +121,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#0A0A0A',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+    color: '#A0A0A0',
+    fontWeight: '500',
   },
 });

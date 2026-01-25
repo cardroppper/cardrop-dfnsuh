@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "CarDrop",
-    "slug": "CarDrop",
+    "slug": "cardrop-dfnsuh",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
@@ -51,7 +51,7 @@
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.cardrop.app",
+      "package": "com.CARDROP.CarDrop",
       "versionCode": 1,
       "icon": "./assets/icon-android.png",
       "permissions": [
@@ -95,5 +95,6 @@
       "supabaseUrl": "https://pukpbqbxmuipnwtywrmm.supabase.co",
       "supabaseAnonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB1a3BicWJ4bXVpcG53dHl3cm1tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY0MTE0MjksImV4cCI6MjA4MTk4NzQyOX0.-r4L3mqitNyhFKEfqq7llQC09f3Qd_APTDaET4FCEiI"
     }
-  }
+  },
+  "scheme": "CarDrop"
 }

@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '@/app/integrations/supabase/client';
 import type { User, Session } from '@supabase/supabase-js';
@@ -35,19 +36,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Failsafe: Always stop loading after 3 seconds
-  useEffect(() => {
-    const failsafeTimer = setTimeout(() => {
-      console.warn('AuthContext: Failsafe timeout triggered - forcing isLoading to false');
-      setIsLoading(false);
-    }, 3000);
-
-    return () => clearTimeout(failsafeTimer);
-  }, []);
-
   // Fetch user profile from database
   const fetchProfile = async (userId: string) => {
     try {
+      console.log('AuthContext: Fetching profile for user:', userId);
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -55,12 +47,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .single();
 
       if (error) {
+        console.error('AuthContext: Profile fetch error:', error);
         throw error;
       }
 
+      console.log('AuthContext: Profile fetched successfully');
       setProfile(data);
       return data;
     } catch (err: any) {
+      console.error('AuthContext: Failed to fetch profile:', err);
       setError(err.message);
       return null;
     }
@@ -74,12 +69,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const initAuth = async () => {
       try {
-        console.log('AuthContext: Fetching session...');
+        console.log('AuthContext: Checking for existing session...');
         
-        // Get initial session with very short timeout to prevent blocking
+        // Get initial session with timeout
         const sessionPromise = supabase.auth.getSession();
         const timeoutPromise = new Promise<any>((_, reject) => 
-          setTimeout(() => reject(new Error('Session fetch timeout')), 2000)
+          setTimeout(() => reject(new Error('Session fetch timeout')), 1500)
         );
 
         const result = await Promise.race([
@@ -91,7 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
         
         if (!mounted) {
-          console.log('AuthContext: Component unmounted, aborting');
+          console.log('AuthContext: Component unmounted during session check');
           return;
         }
 
@@ -102,11 +97,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
 
         if (session) {
-          console.log('AuthContext: Session found, user:', session.user.id);
+          console.log('AuthContext: Active session found');
           setSession(session);
           setUser(session.user);
 
-          // Fetch profile in background, don't block
+          // Fetch profile in background
           fetchProfile(session.user.id).catch((err) => {
             console.warn('AuthContext: Profile fetch failed:', err);
           });
@@ -117,41 +112,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setProfile(null);
         }
         
-        if (!mounted) {
-          console.log('AuthContext: Component unmounted after session check');
-          return;
-        }
+        if (!mounted) return;
         
-        console.log('AuthContext: Initialization complete, setting isLoading to false');
+        console.log('AuthContext: Setting isLoading to false');
         setIsLoading(false);
 
         // Listen for auth changes
-        try {
-          console.log('AuthContext: Setting up auth state listener...');
-          const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
-            async (event, session) => {
-              if (!mounted) return;
-              
-              console.log('AuthContext: Auth state changed:', event);
-              
-              setSession(session);
-              setUser(session?.user ?? null);
+        console.log('AuthContext: Setting up auth state listener...');
+        const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
+          async (event, session) => {
+            if (!mounted) return;
+            
+            console.log('AuthContext: Auth state changed:', event);
+            
+            setSession(session);
+            setUser(session?.user ?? null);
 
-              if (session?.user) {
-                await fetchProfile(session.user.id).catch((err) => {
-                  console.warn('AuthContext: Profile fetch failed on auth change:', err);
-                });
-              } else {
-                setProfile(null);
-              }
+            if (session?.user) {
+              await fetchProfile(session.user.id).catch((err) => {
+                console.warn('AuthContext: Profile fetch failed on auth change:', err);
+              });
+            } else {
+              setProfile(null);
             }
-          );
+          }
+        );
 
-          subscription = authSubscription;
-          console.log('AuthContext: Auth state listener active');
-        } catch (err: any) {
-          console.warn('AuthContext: Auth state change listener failed:', err);
-        }
+        subscription = authSubscription;
+        console.log('AuthContext: Auth state listener active');
       } catch (err: any) {
         console.error('AuthContext: Initialization error:', err);
         if (mounted) {
@@ -161,18 +149,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     };
 
-    // Start initialization but don't block rendering
+    // Start initialization
     initAuth();
+
+    // Failsafe: Always stop loading after 2 seconds
+    const failsafeTimer = setTimeout(() => {
+      if (isLoading) {
+        console.warn('AuthContext: Failsafe timeout - forcing isLoading to false');
+        setIsLoading(false);
+      }
+    }, 2000);
 
     return () => {
       console.log('AuthContext: Cleaning up...');
       mounted = false;
+      clearTimeout(failsafeTimer);
       if (subscription?.unsubscribe) {
         try {
           subscription.unsubscribe();
           console.log('AuthContext: Unsubscribed from auth changes');
         } catch (err) {
-          console.warn('AuthContext: Failed to unsubscribe from auth changes:', err);
+          console.warn('AuthContext: Failed to unsubscribe:', err);
         }
       }
     };
@@ -181,6 +178,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Login function
   const login = async (email: string, password: string) => {
     try {
+      console.log('AuthContext: Attempting login...');
       setError(null);
 
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -189,15 +187,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
 
       if (error) {
+        console.error('AuthContext: Login error:', error);
         return { success: false, error: error.message };
       }
 
       if (data.user) {
+        console.log('AuthContext: Login successful');
         await fetchProfile(data.user.id);
       }
 
       return { success: true };
     } catch (err: any) {
+      console.error('AuthContext: Login exception:', err);
       return { success: false, error: err.message };
     }
   };
@@ -205,6 +206,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Signup function
   const signup = async (email: string, password: string, username: string, displayName: string) => {
     try {
+      console.log('AuthContext: Attempting signup...');
       setError(null);
 
       // Create auth user
@@ -214,12 +216,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
 
       if (authError) {
+        console.error('AuthContext: Signup error:', authError);
         return { success: false, error: authError.message };
       }
 
       if (!authData.user) {
         return { success: false, error: 'Failed to create user account' };
       }
+
+      console.log('AuthContext: User created, creating profile...');
 
       // Create profile
       const { error: profileError } = await supabase
@@ -231,13 +236,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
 
       if (profileError) {
+        console.error('AuthContext: Profile creation error:', profileError);
         return { success: false, error: 'Failed to create user profile' };
       }
 
+      console.log('AuthContext: Signup successful');
       await fetchProfile(authData.user.id);
 
       return { success: true };
     } catch (err: any) {
+      console.error('AuthContext: Signup exception:', err);
       return { success: false, error: err.message };
     }
   };
@@ -245,11 +253,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Logout function
   const logout = async () => {
     try {
+      console.log('AuthContext: Logging out...');
       await supabase.auth.signOut();
       setUser(null);
       setProfile(null);
       setSession(null);
+      console.log('AuthContext: Logout successful');
     } catch (err: any) {
+      console.error('AuthContext: Logout error:', err);
       setError(err.message);
     }
   };
@@ -257,6 +268,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Refresh profile
   const refreshProfile = async () => {
     if (user) {
+      console.log('AuthContext: Refreshing profile...');
       await fetchProfile(user.id);
     }
   };

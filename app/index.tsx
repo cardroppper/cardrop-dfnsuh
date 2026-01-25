@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { View, ActivityIndicator, StyleSheet, Text } from 'react-native';
 import { Redirect } from 'expo-router';
@@ -15,6 +16,7 @@ export default function Index() {
   const [forceRedirect, setForceRedirect] = React.useState(false);
 
   useEffect(() => {
+    console.log('Index: Mounted');
     console.log('Index: Auth state:', {
       isLoading,
       isAuthenticated,
@@ -23,15 +25,18 @@ export default function Index() {
       error,
     });
 
-    // Failsafe: Force redirect after 5 seconds if still loading
+    // Failsafe: Force redirect after 3 seconds if still loading
     const failsafeTimer = setTimeout(() => {
       if (isLoading) {
         console.warn('Index: Failsafe timeout - forcing redirect to login');
         setForceRedirect(true);
       }
-    }, 5000);
+    }, 3000);
 
-    return () => clearTimeout(failsafeTimer);
+    return () => {
+      console.log('Index: Unmounting');
+      clearTimeout(failsafeTimer);
+    };
   }, [isLoading, isAuthenticated, user, profile, error]);
 
   // Force redirect if failsafe triggered
@@ -45,8 +50,9 @@ export default function Index() {
     console.log('Index: Showing loading screen');
     return (
       <View style={styles.container}>
+        <Text style={styles.logo}>🚗</Text>
         <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={styles.loadingText}>Loading...</Text>
+        <Text style={styles.loadingText}>Loading CarDrop...</Text>
       </View>
     );
   }
@@ -75,6 +81,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+  },
+  logo: {
+    fontSize: 80,
+    marginBottom: 24,
   },
   loadingText: {
     marginTop: 16,
