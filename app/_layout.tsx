@@ -35,6 +35,15 @@ export default function RootLayout() {
     }
 
     prepare();
+
+    // Failsafe: Always set ready after 2 seconds
+    const failsafeTimer = setTimeout(() => {
+      console.warn('RootLayout: Failsafe timeout - forcing isReady to true');
+      setIsReady(true);
+      SplashScreen.hideAsync().catch(() => {});
+    }, 2000);
+
+    return () => clearTimeout(failsafeTimer);
   }, []);
 
   if (!isReady) {

@@ -12,6 +12,7 @@ const colors = {
 
 export default function Index() {
   const { isLoading, isAuthenticated, user, profile, error } = useAuth();
+  const [forceRedirect, setForceRedirect] = React.useState(false);
 
   useEffect(() => {
     console.log('Index: Auth state:', {
@@ -21,7 +22,23 @@ export default function Index() {
       hasProfile: !!profile,
       error,
     });
+
+    // Failsafe: Force redirect after 5 seconds if still loading
+    const failsafeTimer = setTimeout(() => {
+      if (isLoading) {
+        console.warn('Index: Failsafe timeout - forcing redirect to login');
+        setForceRedirect(true);
+      }
+    }, 5000);
+
+    return () => clearTimeout(failsafeTimer);
   }, [isLoading, isAuthenticated, user, profile, error]);
+
+  // Force redirect if failsafe triggered
+  if (forceRedirect) {
+    console.log('Index: Forced redirect to login');
+    return <Redirect href="/(auth)/login" />;
+  }
 
   // Show loading state while checking authentication
   if (isLoading) {

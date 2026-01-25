@@ -35,6 +35,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Failsafe: Always stop loading after 3 seconds
+  useEffect(() => {
+    const failsafeTimer = setTimeout(() => {
+      console.warn('AuthContext: Failsafe timeout triggered - forcing isLoading to false');
+      setIsLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(failsafeTimer);
+  }, []);
+
   // Fetch user profile from database
   const fetchProfile = async (userId: string) => {
     try {
@@ -66,17 +76,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         console.log('AuthContext: Fetching session...');
         
-        // Get initial session with shorter timeout
+        // Get initial session with very short timeout to prevent blocking
         const sessionPromise = supabase.auth.getSession();
         const timeoutPromise = new Promise<any>((_, reject) => 
-          setTimeout(() => reject(new Error('Session fetch timeout')), 5000)
+          setTimeout(() => reject(new Error('Session fetch timeout')), 2000)
         );
 
-        const { data: { session }, error: sessionError } = await Promise.race([
+        const result = await Promise.race([
           sessionPromise,
           timeoutPromise
         ]).catch((err) => {
-          console.warn('AuthContext: Session fetch failed:', err);
+          console.warn('AuthContext: Session fetch failed or timed out:', err.message);
           return { data: { session: null }, error: err };
         });
         
@@ -84,6 +94,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           console.log('AuthContext: Component unmounted, aborting');
           return;
         }
+
+        const { data: { session } = { session: null }, error: sessionError } = result;
         
         if (sessionError) {
           console.warn('AuthContext: Session error:', sessionError.message);
@@ -91,26 +103,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         if (session) {
           console.log('AuthContext: Session found, user:', session.user.id);
-        } else {
-          console.log('AuthContext: No active session');
-        }
+          setSession(session);
+          setUser(session.user);
 
-        setSession(session);
-        setUser(session?.user ?? null);
-
-        if (session?.user) {
-          console.log('AuthContext: Fetching user profile...');
-          await fetchProfile(session.user.id).catch((err) => {
+          // Fetch profile in background, don't block
+          fetchProfile(session.user.id).catch((err) => {
             console.warn('AuthContext: Profile fetch failed:', err);
           });
+        } else {
+          console.log('AuthContext: No active session');
+          setSession(null);
+          setUser(null);
+          setProfile(null);
         }
         
         if (!mounted) {
-          console.log('AuthContext: Component unmounted after profile fetch');
+          console.log('AuthContext: Component unmounted after session check');
           return;
         }
         
-        console.log('AuthContext: Initialization complete');
+        console.log('AuthContext: Initialization complete, setting isLoading to false');
         setIsLoading(false);
 
         // Listen for auth changes
@@ -149,6 +161,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     };
 
+    // Start initialization but don't block rendering
     initAuth();
 
     return () => {
