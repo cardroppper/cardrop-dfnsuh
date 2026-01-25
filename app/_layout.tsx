@@ -3,9 +3,6 @@ import { Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
-import { AuthProvider } from '@/contexts/AuthContext';
-import { StripeProvider } from '@/contexts/StripeContext';
-import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 // Import URL polyfill for Supabase (must be before any Supabase imports)
 import 'react-native-url-polyfill/auto';
@@ -20,10 +17,16 @@ SplashScreen.preventAutoHideAsync().catch((err) => {
   console.error('[RootLayout] SplashScreen error:', err);
 });
 
+// Lazy load heavy components to avoid blocking initial render
+let AuthProvider: any;
+let StripeProvider: any;
+let ErrorBoundary: any;
+
 export default function RootLayout() {
   console.log('[RootLayout] Component rendering');
   const [isReady, setIsReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [componentsLoaded, setComponentsLoaded] = useState(false);
 
   useEffect(() => {
     console.log('[RootLayout] Initializing app');
@@ -31,6 +34,21 @@ export default function RootLayout() {
     const initialize = async () => {
       try {
         console.log('[RootLayout] Starting initialization...');
+        
+        // Load components asynchronously
+        console.log('[RootLayout] Loading components...');
+        const [authModule, stripeModule, errorModule] = await Promise.all([
+          import('@/contexts/AuthContext'),
+          import('@/contexts/StripeContext'),
+          import('@/components/ErrorBoundary'),
+        ]);
+        
+        AuthProvider = authModule.AuthProvider;
+        StripeProvider = stripeModule.StripeProvider;
+        ErrorBoundary = errorModule.ErrorBoundary;
+        
+        console.log('[RootLayout] Components loaded');
+        setComponentsLoaded(true);
         
         // Give the app a moment to initialize
         await new Promise(resolve => setTimeout(resolve, 100));
@@ -58,7 +76,7 @@ export default function RootLayout() {
     initialize();
   }, []);
 
-  if (!isReady) {
+  if (!isReady || !componentsLoaded) {
     console.log('[RootLayout] Showing loading state');
     return (
       <View style={styles.loadingContainer}>

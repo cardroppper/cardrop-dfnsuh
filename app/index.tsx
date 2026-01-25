@@ -3,9 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { View, ActivityIndicator, StyleSheet, Text } from 'react-native';
 import { Redirect } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
-import { colors } from '@/styles/commonStyles';
 
 console.log('[Index] Module loaded');
+
+const colors = {
+  primary: '#FF6B35',
+  background: '#0A0A0A',
+  text: '#FFFFFF',
+  textSecondary: '#A0A0A0',
+  error: '#FF4444',
+};
 
 export default function Index() {
   console.log('[Index] Component rendering');
