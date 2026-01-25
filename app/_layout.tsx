@@ -14,77 +14,83 @@ import 'react-native-url-polyfill/auto';
 // Import reanimated to ensure it's included in the bundle
 import 'react-native-reanimated';
 
-console.log('[RootLayout] Initializing app...');
+console.log('[RootLayout] Starting initialization');
 
+// Prevent splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync().catch((err) => {
   console.error('[RootLayout] SplashScreen error:', err);
 });
 
 export default function RootLayout() {
+  console.log('[RootLayout] Component rendering');
+  
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
   useEffect(() => {
+    console.log('[RootLayout] Font loading state:', { loaded, error: !!error });
+    
     if (error) {
       console.error('[RootLayout] Font loading error:', error);
+      // Continue anyway - fonts are not critical
+      SplashScreen.hideAsync().catch(console.error);
     }
+    
     if (loaded) {
-      SplashScreen.hideAsync();
+      console.log('[RootLayout] Fonts loaded, hiding splash screen');
+      SplashScreen.hideAsync().catch(console.error);
     }
   }, [loaded, error]);
 
+  // Show nothing while fonts are loading (splash screen is visible)
   if (!loaded && !error) {
+    console.log('[RootLayout] Waiting for fonts to load');
     return null;
   }
 
-  if (error) {
-    console.error('[RootLayout] Font failed to load, continuing anyway');
-    SplashScreen.hideAsync();
-  }
+  console.log('[RootLayout] Rendering app structure');
 
-  try {
-    return (
-      <ErrorBoundary>
-        <AuthProvider>
-          <StripeProvider>
-            <Stack screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="(auth)" />
-              <Stack.Screen name="(tabs)" />
-              <Stack.Screen name="index" />
-              <Stack.Screen name="subscription/premium" options={{ presentation: 'modal' }} />
-            </Stack>
-          </StripeProvider>
-        </AuthProvider>
-      </ErrorBoundary>
-    );
-  } catch (err: any) {
-    console.error('[RootLayout] Render error:', err);
-    return (
-      <View style={fallbackStyles.container}>
-        <Text style={fallbackStyles.text}>App initialization error</Text>
-        <Text style={fallbackStyles.error}>{err.message}</Text>
-      </View>
-    );
-  }
+  return (
+    <ErrorBoundary>
+      <AuthProvider>
+        <StripeProvider>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" />
+            <Stack.Screen name="(auth)" />
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="clubs" />
+            <Stack.Screen name="vehicles" />
+            <Stack.Screen name="messages" />
+            <Stack.Screen name="subscription" />
+            <Stack.Screen name="dev" />
+            <Stack.Screen 
+              name="modal" 
+              options={{ presentation: 'modal' }} 
+            />
+            <Stack.Screen 
+              name="formsheet" 
+              options={{ 
+                presentation: 'formSheet',
+                sheetGrabberVisible: true,
+                sheetAllowedDetents: [0.5, 0.8, 1.0],
+                sheetCornerRadius: 20
+              }} 
+            />
+            <Stack.Screen 
+              name="transparent-modal" 
+              options={{ 
+                presentation: 'transparentModal',
+                headerShown: false 
+              }} 
+            />
+            <Stack.Screen 
+              name="subscription-management" 
+              options={{ presentation: 'modal' }} 
+            />
+          </Stack>
+        </StripeProvider>
+      </AuthProvider>
+    </ErrorBoundary>
+  );
 }
-
-const fallbackStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#000',
-    padding: 20,
-  },
-  text: {
-    color: '#fff',
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  error: {
-    color: '#ff4444',
-    fontSize: 14,
-    textAlign: 'center',
-  },
-});

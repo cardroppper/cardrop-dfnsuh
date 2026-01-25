@@ -1,3 +1,4 @@
+
 module.exports = function (api) {
   api.cache(true);
 
@@ -31,7 +32,6 @@ module.exports = function (api) {
           alias: {
             "@": "./",
             "@components": "./components",
-            "@style": "./style",
             "@hooks": "./hooks",
             "@types": "./types",
             "@contexts": "./contexts",
@@ -39,9 +39,9 @@ module.exports = function (api) {
           },
         },
       ],
-      ...EDITABLE_COMPONENTS,
       "@babel/plugin-proposal-export-namespace-from",
-      "react-native-worklets/plugin", // react-native-worklets/plugin must be listed last!
+      ...EDITABLE_COMPONENTS,
+      "react-native-reanimated/plugin",
     ],
   };
 };
