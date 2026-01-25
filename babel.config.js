@@ -1,13 +1,17 @@
+
 module.exports = function (api) {
   api.cache(true);
 
-  console.log('Babel: Configuring transpilation...');
+  const EDITABLE_COMPONENTS =
+    process.env.EXPO_PUBLIC_ENABLE_EDIT_MODE === "TRUE" &&
+    process.env.NODE_ENV === "development"
+      ? [
+          ["./babel-plugins/editable-elements.js", {}],
+          ["./babel-plugins/inject-source-location.js", {}],
+        ]
+      : [];
 
-  // Temporarily disable editable components plugins to fix build loop
-  // These can be re-enabled once the build is stable
-  const EDITABLE_COMPONENTS = [];
-
-  const config = {
+  return {
     presets: ["babel-preset-expo"],
     plugins: [
       [
@@ -40,7 +44,4 @@ module.exports = function (api) {
       "react-native-reanimated/plugin",
     ],
   };
-
-  console.log('Babel: Configuration complete');
-  return config;
 };

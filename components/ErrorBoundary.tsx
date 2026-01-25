@@ -1,6 +1,7 @@
 
 import React, { Component, ReactNode, ErrorInfo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { colors } from '@/styles/commonStyles';
 
 interface Props {
   children: ReactNode;
@@ -22,27 +23,25 @@ export class ErrorBoundary extends Component<Props, State> {
     };
   }
 
-  static getDerivedStateFromError(error: Error): Partial<State> {
-    console.error('ErrorBoundary: getDerivedStateFromError:', error);
+  static getDerivedStateFromError(error: Error): State {
     return {
       hasError: true,
       error,
+      errorInfo: null,
     };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('ErrorBoundary: Caught error:', error);
-    console.error('ErrorBoundary: Error message:', error.message);
-    console.error('ErrorBoundary: Error stack:', error.stack);
-    console.error('ErrorBoundary: Component stack:', errorInfo.componentStack);
+    console.error('[ErrorBoundary] Caught error:', error);
+    console.error('[ErrorBoundary] Error info:', errorInfo);
     
     this.setState({
+      error,
       errorInfo,
     });
   }
 
   handleReset = () => {
-    console.log('ErrorBoundary: Resetting error state');
     this.setState({
       hasError: false,
       error: null,
@@ -52,31 +51,25 @@ export class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      const errorMessage = this.state.error?.message || 'An unexpected error occurred';
-      const errorStack = this.state.error?.stack || '';
-      
       return (
         <View style={styles.container}>
-          <ScrollView 
-            style={styles.scrollView}
-            contentContainerStyle={styles.scrollContent}
-            showsVerticalScrollIndicator={true}
-          >
-            <Text style={styles.emoji}>⚠️</Text>
-            <Text style={styles.title}>Something went wrong</Text>
-            <Text style={styles.message}>{errorMessage}</Text>
-            
-            {__DEV__ && errorStack && (
-              <View style={styles.debugContainer}>
-                <Text style={styles.debugTitle}>Debug Info:</Text>
-                <Text style={styles.debugText}>{errorStack}</Text>
-              </View>
-            )}
-            
-            <TouchableOpacity style={styles.button} onPress={this.handleReset}>
-              <Text style={styles.buttonText}>Try Again</Text>
-            </TouchableOpacity>
-          </ScrollView>
+          <Text style={styles.title}>⚠️ Something went wrong</Text>
+          <Text style={styles.message}>
+            {this.state.error?.message || 'An unexpected error occurred'}
+          </Text>
+          
+          {__DEV__ && this.state.errorInfo && (
+            <View style={styles.debugContainer}>
+              <Text style={styles.debugTitle}>Debug Info:</Text>
+              <Text style={styles.debugText}>
+                {this.state.errorInfo.componentStack}
+              </Text>
+            </View>
+          )}
+          
+          <TouchableOpacity style={styles.button} onPress={this.handleReset}>
+            <Text style={styles.buttonText}>Try Again</Text>
+          </TouchableOpacity>
         </View>
       );
     }
@@ -88,62 +81,48 @@ export class ErrorBoundary extends Component<Props, State> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0A0A0A',
-  },
-  scrollView: {
-    flex: 1,
-  },
-  scrollContent: {
-    flexGrow: 1,
+    backgroundColor: colors.background,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
-  emoji: {
-    fontSize: 64,
-    marginBottom: 16,
-  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: colors.text,
     marginBottom: 16,
     textAlign: 'center',
   },
   message: {
     fontSize: 16,
-    color: '#A0A0A0',
+    color: colors.textSecondary,
     marginBottom: 24,
     textAlign: 'center',
     lineHeight: 24,
   },
   debugContainer: {
-    backgroundColor: '#1A1A1A',
-    borderRadius: 8,
+    backgroundColor: colors.card,
     padding: 16,
+    borderRadius: 8,
     marginBottom: 24,
-    width: '100%',
-    maxHeight: 300,
+    maxWidth: '100%',
   },
   debugTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#FF6B35',
+    color: colors.text,
     marginBottom: 8,
   },
   debugText: {
     fontSize: 12,
-    color: '#A0A0A0',
+    color: colors.textSecondary,
     fontFamily: 'monospace',
-    lineHeight: 18,
   },
   button: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: colors.primary,
     paddingVertical: 16,
     paddingHorizontal: 32,
-    borderRadius: 12,
-    minWidth: 200,
-    alignItems: 'center',
+    borderRadius: 8,
   },
   buttonText: {
     color: '#000000',

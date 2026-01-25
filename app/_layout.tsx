@@ -1,60 +1,69 @@
 
-import 'react-native-url-polyfill/auto';
-import 'react-native-reanimated';
 import { Stack } from 'expo-router';
-import { AuthProvider } from '@/contexts/AuthContext';
-import { StripeProvider } from '@/contexts/StripeContext';
 import { useEffect, useState } from 'react';
+import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
-import { ErrorBoundary } from '@/components/ErrorBoundary';
-import { View, ActivityIndicator, StyleSheet, Text } from 'react-native';
 
-// Keep the splash screen visible while we load resources
+// Import URL polyfill for Supabase (must be before any Supabase imports)
+import 'react-native-url-polyfill/auto';
+
+// Import reanimated to ensure it's included in the bundle
+import 'react-native-reanimated';
+
+console.log('[RootLayout] Module loaded');
+
+// Prevent splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync().catch((err) => {
-  console.warn('Failed to prevent splash screen auto-hide:', err);
+  console.error('[RootLayout] SplashScreen error:', err);
 });
 
 export default function RootLayout() {
+  console.log('[RootLayout] Component rendering');
   const [isReady, setIsReady] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log('RootLayout: Initializing app...');
+    console.log('[RootLayout] Initializing app');
     
-    async function prepare() {
+    const initialize = async () => {
       try {
-        console.log('RootLayout: Starting initialization...');
+        console.log('[RootLayout] Loading contexts...');
         
-        // Minimal initialization - just set ready
+        // Dynamically import contexts to catch any initialization errors
+        const { AuthProvider } = await import('@/contexts/AuthContext');
+        const { StripeProvider } = await import('@/contexts/StripeContext');
+        const { ErrorBoundary } = await import('@/components/ErrorBoundary');
+        
+        console.log('[RootLayout] Contexts loaded successfully');
+        
+        // Give the app a moment to initialize
         await new Promise(resolve => setTimeout(resolve, 100));
         
-        console.log('RootLayout: Initialization complete');
-        setIsReady(true);
-        
-        // Hide splash screen
+        console.log('[RootLayout] Hiding splash screen');
         await SplashScreen.hideAsync();
-        console.log('RootLayout: Splash screen hidden');
-      } catch (err) {
-        console.error('RootLayout: Initialization error:', err);
-        // Still set ready to show the app
+        
+        console.log('[RootLayout] App ready');
         setIsReady(true);
-        SplashScreen.hideAsync().catch(() => {});
+      } catch (err: any) {
+        console.error('[RootLayout] Initialization error:', err);
+        console.error('[RootLayout] Error stack:', err?.stack);
+        setError(err.message || 'Failed to initialize app');
+        setIsReady(true); // Still set ready to show error
+        
+        // Try to hide splash screen even on error
+        try {
+          await SplashScreen.hideAsync();
+        } catch (e) {
+          console.error('[RootLayout] Failed to hide splash screen:', e);
+        }
       }
-    }
+    };
 
-    prepare();
-
-    // Failsafe: Always set ready after 1 second
-    const failsafeTimer = setTimeout(() => {
-      console.warn('RootLayout: Failsafe timeout - forcing isReady to true');
-      setIsReady(true);
-      SplashScreen.hideAsync().catch(() => {});
-    }, 1000);
-
-    return () => clearTimeout(failsafeTimer);
+    initialize();
   }, []);
 
   if (!isReady) {
-    console.log('RootLayout: Showing loading screen');
+    console.log('[RootLayout] Showing loading state');
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#FF6B35" />
@@ -63,7 +72,23 @@ export default function RootLayout() {
     );
   }
 
-  console.log('RootLayout: Rendering navigation stack');
+  if (error) {
+    console.log('[RootLayout] Showing error state:', error);
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorTitle}>⚠️ Initialization Error</Text>
+        <Text style={styles.errorText}>{error}</Text>
+        <Text style={styles.errorDetail}>Check console for details</Text>
+      </View>
+    );
+  }
+
+  console.log('[RootLayout] Rendering app structure');
+
+  // Lazy load providers
+  const { AuthProvider } = require('@/contexts/AuthContext');
+  const { StripeProvider } = require('@/contexts/StripeContext');
+  const { ErrorBoundary } = require('@/components/ErrorBoundary');
 
   return (
     <ErrorBoundary>
@@ -73,40 +98,34 @@ export default function RootLayout() {
             <Stack.Screen name="index" />
             <Stack.Screen name="(auth)" />
             <Stack.Screen name="(tabs)" />
-            <Stack.Screen name="vehicles" />
             <Stack.Screen name="clubs" />
+            <Stack.Screen name="vehicles" />
             <Stack.Screen name="messages" />
             <Stack.Screen name="subscription" />
             <Stack.Screen name="dev" />
             <Stack.Screen 
               name="modal" 
-              options={{ 
-                presentation: 'modal',
-                headerShown: true,
-                title: 'Modal'
-              }} 
+              options={{ presentation: 'modal' }} 
             />
             <Stack.Screen 
               name="formsheet" 
               options={{ 
                 presentation: 'formSheet',
-                headerShown: true,
-                title: 'Form Sheet'
+                sheetGrabberVisible: true,
+                sheetAllowedDetents: [0.5, 0.8, 1.0],
+                sheetCornerRadius: 20
               }} 
             />
             <Stack.Screen 
               name="transparent-modal" 
               options={{ 
                 presentation: 'transparentModal',
-                headerShown: false
+                headerShown: false 
               }} 
             />
             <Stack.Screen 
               name="subscription-management" 
-              options={{ 
-                headerShown: true,
-                title: 'Manage Subscription'
-              }} 
+              options={{ presentation: 'modal' }} 
             />
           </Stack>
         </StripeProvider>
@@ -127,5 +146,31 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#A0A0A0',
     fontWeight: '500',
+  },
+  errorContainer: {
+    flex: 1,
+    backgroundColor: '#0A0A0A',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  errorTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  errorText: {
+    fontSize: 16,
+    color: '#FF4444',
+    textAlign: 'center',
+    lineHeight: 24,
+    marginBottom: 12,
+  },
+  errorDetail: {
+    fontSize: 14,
+    color: '#A0A0A0',
+    textAlign: 'center',
   },
 });

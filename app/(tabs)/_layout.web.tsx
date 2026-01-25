@@ -73,13 +73,6 @@ export default function TabLayout() {
           },
         }}
       >
-        {/* Hide the (home) folder from tabs - it's just a redirect */}
-        <Tabs.Screen
-          name="(home)"
-          options={{
-            href: null,
-          }}
-        />
         <Tabs.Screen
           name="discover"
           options={{
@@ -162,13 +155,6 @@ export default function TabLayout() {
                 color={color}
               />
             ),
-          }}
-        />
-        {/* Hide profile from tabs - it's accessed from settings */}
-        <Tabs.Screen
-          name="profile"
-          options={{
-            href: null,
           }}
         />
       </Tabs>

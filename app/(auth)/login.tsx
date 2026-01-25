@@ -21,8 +21,6 @@ import { isOnline, showOfflineAlert } from '@/utils/networkUtils';
 import * as Haptics from 'expo-haptics';
 
 export default function LoginScreen() {
-  console.log('LoginScreen: Component rendered');
-  
   const router = useRouter();
   const { login } = useAuth();
 
@@ -34,57 +32,46 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     try {
-      console.log('LoginScreen: Login button pressed');
-      
       // Haptic feedback
       if (Platform.OS !== 'web') {
         await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       }
 
       // Check network connection
-      console.log('LoginScreen: Checking network connection...');
       if (!(await isOnline())) {
-        console.log('LoginScreen: No network connection');
         showOfflineAlert();
         return;
       }
 
       // Validate email
-      console.log('LoginScreen: Validating email...');
       const emailValidation = validateEmail(email);
       if (!emailValidation.isValid) {
-        console.log('LoginScreen: Email validation failed:', emailValidation.error);
         setEmailError(emailValidation.error || '');
         return;
       }
       setEmailError('');
 
       // Validate password
-      console.log('LoginScreen: Validating password...');
       if (!password || password.length === 0) {
-        console.log('LoginScreen: Password is empty');
         Alert.alert('Validation Error', 'Please enter your password');
         return;
       }
 
-      console.log('LoginScreen: Attempting login...');
       setLoading(true);
 
       const result = await login(email.trim(), password);
 
       if (result.success) {
-        console.log('LoginScreen: Login successful, navigating to discover');
         // Navigation will be handled by AuthContext
         router.replace('/(tabs)/discover');
       } else {
-        console.log('LoginScreen: Login failed:', result.error);
         Alert.alert(
           'Login Failed',
           result.error || 'Invalid email or password. Please try again.'
         );
       }
     } catch (error: any) {
-      console.error('LoginScreen: Login error:', error);
+      console.error('Login error:', error);
       Alert.alert(
         'Login Failed',
         error.message || 'An unexpected error occurred. Please try again.'

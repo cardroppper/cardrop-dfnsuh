@@ -1,77 +1,76 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, ActivityIndicator, StyleSheet, Text } from 'react-native';
 import { Redirect } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
+import { colors } from '@/styles/commonStyles';
 
-const colors = {
-  primary: '#FF6B35',
-  background: '#0A0A0A',
-  text: '#FFFFFF',
-  textSecondary: '#A0A0A0',
-};
+console.log('[Index] Module loaded');
 
 export default function Index() {
+  console.log('[Index] Component rendering');
+  
   const { isLoading, isAuthenticated, user, profile, error } = useAuth();
-  const [forceRedirect, setForceRedirect] = React.useState(false);
+  const [redirectPath, setRedirectPath] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log('Index: Mounted');
-    console.log('Index: Auth state:', {
-      isLoading,
-      isAuthenticated,
-      hasUser: !!user,
+    console.log('[Index] Auth state:', { 
+      isLoading, 
+      isAuthenticated, 
+      hasUser: !!user, 
       hasProfile: !!profile,
-      error,
+      error 
     });
 
-    // Failsafe: Force redirect after 3 seconds if still loading
-    const failsafeTimer = setTimeout(() => {
-      if (isLoading) {
-        console.warn('Index: Failsafe timeout - forcing redirect to login');
-        setForceRedirect(true);
+    // Only set redirect when loading is complete
+    if (!isLoading) {
+      if (isAuthenticated && user && profile) {
+        console.log('[Index] Setting redirect to discover (authenticated)');
+        setRedirectPath('/(tabs)/discover');
+      } else {
+        console.log('[Index] Setting redirect to login (not authenticated)');
+        setRedirectPath('/(auth)/login');
       }
-    }, 3000);
-
-    return () => {
-      console.log('Index: Unmounting');
-      clearTimeout(failsafeTimer);
-    };
+    }
   }, [isLoading, isAuthenticated, user, profile, error]);
-
-  // Force redirect if failsafe triggered
-  if (forceRedirect) {
-    console.log('Index: Forced redirect to login');
-    return <Redirect href="/(auth)/login" />;
-  }
 
   // Show loading state while checking authentication
   if (isLoading) {
-    console.log('Index: Showing loading screen');
+    console.log('[Index] Showing loading state');
     return (
       <View style={styles.container}>
-        <Text style={styles.logo}>🚗</Text>
         <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={styles.loadingText}>Loading CarDrop...</Text>
+        <Text style={styles.loadingText}>Checking authentication...</Text>
       </View>
     );
   }
 
-  // Show error if auth failed (but still redirect to login)
+  // Show error if auth failed
   if (error) {
-    console.log('Index: Auth error, redirecting to login:', error);
-    return <Redirect href="/(auth)/login" />;
+    console.log('[Index] Showing error state:', error);
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>⚠️ Authentication Error</Text>
+        <Text style={styles.errorDetail}>{error}</Text>
+        <Text style={styles.loadingText}>Redirecting to login...</Text>
+      </View>
+    );
   }
 
   // Redirect based on authentication state
-  if (isAuthenticated && user && profile) {
-    console.log('Index: User authenticated, redirecting to discover');
-    return <Redirect href="/(tabs)/discover" />;
+  if (redirectPath) {
+    console.log('[Index] Redirecting to:', redirectPath);
+    return <Redirect href={redirectPath as any} />;
   }
 
-  // Not authenticated, redirect to login
-  console.log('Index: User not authenticated, redirecting to login');
-  return <Redirect href="/(auth)/login" />;
+  // Fallback loading state
+  console.log('[Index] Waiting for redirect path...');
+  return (
+    <View style={styles.container}>
+      <ActivityIndicator size="large" color={colors.primary} />
+      <Text style={styles.loadingText}>Loading CarDrop...</Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -82,14 +81,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
-  logo: {
-    fontSize: 80,
-    marginBottom: 24,
-  },
   loadingText: {
     marginTop: 16,
     fontSize: 16,
     color: colors.textSecondary,
     fontWeight: '500',
+  },
+  errorText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: colors.error,
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  errorDetail: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    marginBottom: 24,
+    textAlign: 'center',
   },
 });

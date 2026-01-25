@@ -2,29 +2,18 @@
 {
   "expo": {
     "name": "CarDrop",
-    "slug": "cardrop-dfnsuh",
+    "slug": "CarDrop",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": false,
+    "newArchEnabled": true,
     "splash": {
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
-    "updates": {
-      "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/YOUR_PROJECT_ID"
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.cardrop.CarDrop",
-      "buildNumber": "1",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSLocationWhenInUseUsageDescription": "CarDrop needs your location to show nearby vehicles and events.",
@@ -48,8 +37,7 @@
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.CARDROP.CarDrop",
-      "versionCode": 1,
+      "package": "com.natively.nandish",
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",

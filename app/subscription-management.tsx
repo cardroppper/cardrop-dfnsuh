@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,33 +7,22 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Modal,
+  ActivityIndicator,
   Platform,
 } from 'react-native';
 import { router } from 'expo-router';
 import { IconSymbol } from '@/components/IconSymbol';
 import { colors, buttonStyles } from '@/styles/commonStyles';
 import { useSubscription } from '@/hooks/useSubscription';
+import { PaywallScreen } from '@/components/PaywallScreen';
+
 export default function SubscriptionManagementScreen() {
   const { subscription } = useSubscription();
+  const [showPaywall, setShowPaywall] = useState(false);
 
-  const handleUpgrade = async () => {
-    if (Platform.OS === 'web') {
-      Alert.alert(
-        'Mobile Only',
-        'Premium subscriptions are only available on the iOS and Android apps.',
-        [{ text: 'OK' }]
-      );
-      return;
-    }
-
-    try {
-      // Import Superwall dynamically for native platforms
-      const { presentPaywall } = await import('expo-superwall');
-      await presentPaywall('premium_subscription');
-    } catch (error) {
-      console.error('[SubscriptionManagement] Error showing paywall:', error);
-      Alert.alert('Error', 'Failed to load subscription options. Please try again.');
-    }
+  const handleUpgrade = () => {
+    setShowPaywall(true);
   };
 
   const handleManageSubscription = async () => {
@@ -228,6 +217,19 @@ export default function SubscriptionManagementScreen() {
           </View>
         </View>
       </ScrollView>
+
+      <Modal
+        visible={showPaywall}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={() => setShowPaywall(false)}
+      >
+        <PaywallScreen
+          feature="premium_subscription"
+          onDismiss={() => setShowPaywall(false)}
+          placementId="subscription_management"
+        />
+      </Modal>
     </View>
   );
 }
