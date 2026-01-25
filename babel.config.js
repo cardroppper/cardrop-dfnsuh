@@ -1,6 +1,7 @@
-
 module.exports = function (api) {
   api.cache(true);
+
+  console.log('[Babel] Configuring Babel...');
 
   const EDITABLE_COMPONENTS =
     process.env.EXPO_PUBLIC_ENABLE_EDIT_MODE === "TRUE" &&
@@ -10,6 +11,8 @@ module.exports = function (api) {
           ["./babel-plugins/inject-source-location.js", {}],
         ]
       : [];
+
+  console.log('[Babel] Editable components enabled:', EDITABLE_COMPONENTS.length > 0);
 
   return {
     presets: ["babel-preset-expo"],

@@ -10,6 +10,7 @@ import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 console.log('[RootLayout] Module loaded');
 
+// Prevent splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync().catch((err) => {
   console.error('[RootLayout] SplashScreen error:', err);
 });
@@ -24,12 +25,15 @@ export default function RootLayout() {
     const initialize = async () => {
       try {
         console.log('[RootLayout] Starting initialization...');
+        // Small delay to ensure everything is loaded
         await new Promise(resolve => setTimeout(resolve, 100));
+        console.log('[RootLayout] Hiding splash screen...');
         await SplashScreen.hideAsync();
         console.log('[RootLayout] App ready');
         setIsReady(true);
       } catch (err: any) {
         console.error('[RootLayout] Initialization error:', err);
+        // Set ready even on error to prevent infinite loading
         setIsReady(true);
         try {
           await SplashScreen.hideAsync();
@@ -42,6 +46,7 @@ export default function RootLayout() {
     initialize();
   }, []);
 
+  // Show loading screen while initializing
   if (!isReady) {
     return (
       <View style={styles.loadingContainer}>

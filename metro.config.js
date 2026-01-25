@@ -1,16 +1,13 @@
 const { getDefaultConfig } = require('expo/metro-config');
-const { FileStore } = require('metro-cache');
 const path = require('path');
 const fs = require('fs');
 
+console.log('[Metro] Initializing Metro bundler configuration...');
+
 const config = getDefaultConfig(__dirname);
 
+// Enable package exports for better module resolution
 config.resolver.unstable_enablePackageExports = true;
-
-// Use turborepo to restore the cache when possible
-config.cacheStores = [
-    new FileStore({ root: path.join(__dirname, 'node_modules', '.cache', 'metro') }),
-  ];
 
 // Custom server middleware to receive console.log messages from the app
 const LOG_FILE_PATH = path.join(__dirname, '.natively', 'app_console.log');
@@ -25,18 +22,11 @@ if (!fs.existsSync(logDir)) {
 config.server = config.server || {};
 config.server.enhanceMiddleware = (middleware) => {
   return (req, res, next) => {
-
-    // DEBUG: log all metro bundle requests
-    if (req.url.includes('index.bundle') || req.url.includes('.bundle')) {
-      console.log('[METRO] Request:', req.method, req.url);
-    }
-
     // Extract pathname without query params for matching
     const pathname = req.url.split('?')[0];
 
     // Handle log receiving endpoint
     if (pathname === '/natively-logs' && req.method === 'POST') {
-      console.log('[NATIVELY-LOGS] Received POST request');
       let body = '';
       req.on('data', chunk => {
         body += chunk.toString();
@@ -53,8 +43,6 @@ config.server.enhanceMiddleware = (middleware) => {
           const platformInfo = platform ? `[${platform}] ` : '';
           const sourceInfo = source ? `[${source}] ` : '';
           const logLine = `[${timestamp}] ${platformInfo}[${level}] ${sourceInfo}${message}\n`;
-
-          console.log('[NATIVELY-LOGS] Writing log:', logLine.trim());
 
           // Rotate log file if too large
           try {
@@ -88,7 +76,6 @@ config.server.enhanceMiddleware = (middleware) => {
 
     // Handle CORS preflight for log endpoint
     if (pathname === '/natively-logs' && req.method === 'OPTIONS') {
-      console.log('[NATIVELY-LOGS] Received OPTIONS preflight request');
       res.writeHead(200, {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -103,5 +90,7 @@ config.server.enhanceMiddleware = (middleware) => {
     return middleware(req, res, next);
   };
 };
+
+console.log('[Metro] Configuration complete');
 
 module.exports = config;

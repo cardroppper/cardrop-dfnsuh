@@ -1,7 +1,8 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from '@/app/integrations/supabase/client';
 import type { User, Session } from '@supabase/supabase-js';
+
+console.log('[AuthContext] Module loaded');
 
 interface Profile {
   id: string;
@@ -30,6 +31,8 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  console.log('[AuthProvider] Initializing...');
+  
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [session, setSession] = useState<Session | null>(null);
@@ -63,7 +66,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Initialize auth state
   useEffect(() => {
-    console.log('[AuthContext] Initializing auth state');
+    console.log('[AuthContext] Setting up auth state');
     
     let subscription: any = null;
     let mounted = true;
@@ -244,6 +247,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     logout,
     refreshProfile,
   };
+
+  console.log('[AuthProvider] Rendering with state:', { isLoading, isAuthenticated: value.isAuthenticated });
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

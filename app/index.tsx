@@ -1,5 +1,4 @@
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, ActivityIndicator, StyleSheet, Text } from 'react-native';
 import { Redirect } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
@@ -18,7 +17,6 @@ export default function Index() {
   console.log('[Index] Component rendering');
   
   const { isLoading, isAuthenticated, user, profile, error } = useAuth();
-  const [redirectPath, setRedirectPath] = useState<string | null>(null);
 
   useEffect(() => {
     console.log('[Index] Auth state:', { 
@@ -28,17 +26,6 @@ export default function Index() {
       hasProfile: !!profile,
       error 
     });
-
-    // Only set redirect when loading is complete
-    if (!isLoading) {
-      if (isAuthenticated && user && profile) {
-        console.log('[Index] Setting redirect to discover (authenticated)');
-        setRedirectPath('/(tabs)/discover');
-      } else {
-        console.log('[Index] Setting redirect to login (not authenticated)');
-        setRedirectPath('/(auth)/login');
-      }
-    }
   }, [isLoading, isAuthenticated, user, profile, error]);
 
   // Show loading state while checking authentication
@@ -52,32 +39,21 @@ export default function Index() {
     );
   }
 
-  // Show error if auth failed
+  // Show error if auth failed (but still redirect to login)
   if (error) {
-    console.log('[Index] Showing error state:', error);
-    return (
-      <View style={styles.container}>
-        <Text style={styles.errorText}>⚠️ Authentication Error</Text>
-        <Text style={styles.errorDetail}>{error}</Text>
-        <Text style={styles.loadingText}>Redirecting to login...</Text>
-      </View>
-    );
+    console.log('[Index] Auth error, redirecting to login:', error);
+    return <Redirect href="/(auth)/login" />;
   }
 
   // Redirect based on authentication state
-  if (redirectPath) {
-    console.log('[Index] Redirecting to:', redirectPath);
-    return <Redirect href={redirectPath as any} />;
+  if (isAuthenticated && user && profile) {
+    console.log('[Index] Redirecting to discover (authenticated)');
+    return <Redirect href="/(tabs)/discover" />;
   }
 
-  // Fallback loading state
-  console.log('[Index] Waiting for redirect path...');
-  return (
-    <View style={styles.container}>
-      <ActivityIndicator size="large" color={colors.primary} />
-      <Text style={styles.loadingText}>Loading CarDrop...</Text>
-    </View>
-  );
+  // Not authenticated, redirect to login
+  console.log('[Index] Redirecting to login (not authenticated)');
+  return <Redirect href="/(auth)/login" />;
 }
 
 const styles = StyleSheet.create({
@@ -93,18 +69,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.textSecondary,
     fontWeight: '500',
-  },
-  errorText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: colors.error,
-    marginBottom: 12,
-    textAlign: 'center',
-  },
-  errorDetail: {
-    fontSize: 14,
-    color: colors.textSecondary,
-    marginBottom: 24,
-    textAlign: 'center',
   },
 });
