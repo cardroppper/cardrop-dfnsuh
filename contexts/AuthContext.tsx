@@ -63,29 +63,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const initAuth = async () => {
       try {
+        console.log('[AuthContext] Initializing authentication...');
+        
         // Get initial session
         const { data: { session }, error: sessionError } = await supabase.auth.getSession();
         
-        if (!mounted) return;
+        if (!mounted) {
+          console.log('[AuthContext] Component unmounted during session fetch');
+          return;
+        }
         
         if (sessionError) {
+          console.log('[AuthContext] Session error:', sessionError.message);
           setError(sessionError.message);
         }
 
+        console.log('[AuthContext] Session loaded:', session ? 'authenticated' : 'not authenticated');
         setSession(session);
         setUser(session?.user ?? null);
 
         if (session?.user) {
+          console.log('[AuthContext] Fetching user profile...');
           await fetchProfile(session.user.id);
         }
         
-        if (!mounted) return;
+        if (!mounted) {
+          console.log('[AuthContext] Component unmounted after profile fetch');
+          return;
+        }
         
         setIsLoading(false);
+        console.log('[AuthContext] Initialization complete');
 
         // Listen for auth changes
         const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
           async (event, session) => {
+            console.log('[AuthContext] Auth state changed:', event);
+            
             if (!mounted) return;
             
             setSession(session);
@@ -101,6 +115,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         subscription = authSubscription;
       } catch (err: any) {
+        console.error('[AuthContext] Initialization error:', err);
         if (mounted) {
           setError(err.message || 'Failed to initialize authentication');
           setIsLoading(false);
@@ -111,6 +126,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     initAuth();
 
     return () => {
+      console.log('[AuthContext] Cleaning up...');
       mounted = false;
       if (subscription) {
         subscription.unsubscribe();

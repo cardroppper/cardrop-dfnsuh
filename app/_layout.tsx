@@ -1,8 +1,7 @@
 import 'react-native-url-polyfill/auto';
 import 'react-native-reanimated';
 import { Stack } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import { useEffect } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { StripeProvider } from '@/contexts/StripeContext';
@@ -10,42 +9,20 @@ import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 // Prevent splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync().catch(() => {
-  // Ignore errors
+  console.log('SplashScreen.preventAutoHideAsync failed');
 });
 
 export default function RootLayout() {
-  const [isReady, setIsReady] = useState(false);
-
   useEffect(() => {
-    const initialize = async () => {
-      try {
-        // Small delay to ensure everything is loaded
-        await new Promise(resolve => setTimeout(resolve, 100));
-        await SplashScreen.hideAsync();
-        setIsReady(true);
-      } catch (err) {
-        // Set ready even on error to prevent infinite loading
-        setIsReady(true);
-        try {
-          await SplashScreen.hideAsync();
-        } catch (e) {
-          // Ignore
-        }
-      }
-    };
+    // Hide splash screen after a short delay
+    const timer = setTimeout(() => {
+      SplashScreen.hideAsync().catch(() => {
+        console.log('SplashScreen.hideAsync failed');
+      });
+    }, 100);
 
-    initialize();
+    return () => clearTimeout(timer);
   }, []);
-
-  // Show loading screen while initializing
-  if (!isReady) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#FF6B35" />
-        <Text style={styles.loadingText}>Loading CarDrop...</Text>
-      </View>
-    );
-  }
 
   return (
     <ErrorBoundary>
@@ -90,18 +67,3 @@ export default function RootLayout() {
     </ErrorBoundary>
   );
 }
-
-const styles = StyleSheet.create({
-  loadingContainer: {
-    flex: 1,
-    backgroundColor: '#0A0A0A',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingText: {
-    marginTop: 16,
-    fontSize: 16,
-    color: '#A0A0A0',
-    fontWeight: '500',
-  },
-});
