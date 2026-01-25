@@ -9,9 +9,13 @@ interface StripeContextType {
 const StripeContext = createContext<StripeContextType | undefined>(undefined);
 
 export function StripeProvider({ children }: { children: ReactNode }) {
+  console.log('[StripeContext] Initializing...');
+  
   const value: StripeContextType = {
     initialized: true,
   };
+
+  console.log('[StripeContext] Initialized successfully');
 
   return <StripeContext.Provider value={value}>{children}</StripeContext.Provider>;
 }

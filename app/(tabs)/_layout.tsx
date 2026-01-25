@@ -1,35 +1,21 @@
 
 import React, { useEffect } from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
-import { Tabs, Redirect, router } from 'expo-router';
+import { Tabs, Redirect } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
 import { colors } from '@/styles/commonStyles';
 import { IconSymbol } from '@/components/IconSymbol';
-import { BeaconPairingModal } from '@/components/BeaconPairingModal';
-import { useBeaconPairing } from '@/hooks/useBeaconPairing';
 
 export default function TabLayout() {
   const { isLoading, isAuthenticated, user, profile } = useAuth();
-  const { pairingBeacon, startMonitoring, stopMonitoring, dismissPairing } = useBeaconPairing();
 
   useEffect(() => {
+    console.log('[TabLayout] Mounted');
     console.log('[TabLayout] Auth state:', { isLoading, isAuthenticated, hasUser: !!user, hasProfile: !!profile });
   }, [isLoading, isAuthenticated, user, profile]);
 
-  // Start monitoring for new beacons when authenticated
-  useEffect(() => {
-    if (isAuthenticated) {
-      console.log('[TabLayout] Starting beacon pairing monitoring');
-      startMonitoring();
-      
-      return () => {
-        console.log('[TabLayout] Stopping beacon pairing monitoring');
-        stopMonitoring();
-      };
-    }
-  }, [isAuthenticated, startMonitoring, stopMonitoring]);
-
   if (isLoading) {
+    console.log('[TabLayout] Loading...');
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color={colors.primary} />
@@ -42,19 +28,10 @@ export default function TabLayout() {
     return <Redirect href="/(auth)/login" />;
   }
 
-  const handlePairWithNewCar = () => {
-    dismissPairing();
-    router.push('/vehicles/add');
-  };
-
-  const handlePairWithExistingCar = () => {
-    dismissPairing();
-    router.push('/(tabs)/garage');
-  };
+  console.log('[TabLayout] Rendering tabs');
 
   return (
-    <>
-      <Tabs
+    <Tabs
         screenOptions={{
           headerShown: false,
           tabBarActiveTintColor: colors.primary,
@@ -158,15 +135,6 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-
-      <BeaconPairingModal
-        visible={!!pairingBeacon}
-        beaconId={pairingBeacon || ''}
-        onPairWithNewCar={handlePairWithNewCar}
-        onPairWithExistingCar={handlePairWithExistingCar}
-        onDismiss={dismissPairing}
-      />
-    </>
   );
 }
 

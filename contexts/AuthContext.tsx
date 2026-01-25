@@ -65,43 +65,59 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     console.log('[AuthContext] Initializing auth state');
     
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session }, error }) => {
-      if (error) {
-        console.error('[AuthContext] Error getting session:', error);
-        setError(error.message);
-        setIsLoading(false);
-        return;
-      }
+    let subscription: any = null;
 
-      console.log('[AuthContext] Initial session:', session ? 'Found' : 'None');
-      setSession(session);
-      setUser(session?.user ?? null);
+    const initAuth = async () => {
+      try {
+        // Get initial session
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error('[AuthContext] Error getting session:', error);
+          setError(error.message);
+          setIsLoading(false);
+          return;
+        }
 
-      if (session?.user) {
-        fetchProfile(session.user.id).finally(() => setIsLoading(false));
-      } else {
-        setIsLoading(false);
-      }
-    });
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        console.log('[AuthContext] Auth state changed:', event);
+        console.log('[AuthContext] Initial session:', session ? 'Found' : 'None');
         setSession(session);
         setUser(session?.user ?? null);
 
         if (session?.user) {
           await fetchProfile(session.user.id);
-        } else {
-          setProfile(null);
         }
+        
+        setIsLoading(false);
+
+        // Listen for auth changes
+        const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
+          async (event, session) => {
+            console.log('[AuthContext] Auth state changed:', event);
+            setSession(session);
+            setUser(session?.user ?? null);
+
+            if (session?.user) {
+              await fetchProfile(session.user.id);
+            } else {
+              setProfile(null);
+            }
+          }
+        );
+
+        subscription = authSubscription;
+      } catch (err: any) {
+        console.error('[AuthContext] Initialization error:', err);
+        setError(err.message || 'Failed to initialize authentication');
+        setIsLoading(false);
       }
-    );
+    };
+
+    initAuth();
 
     return () => {
-      subscription.unsubscribe();
+      if (subscription) {
+        subscription.unsubscribe();
+      }
     };
   }, []);
 
