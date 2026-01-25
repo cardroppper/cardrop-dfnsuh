@@ -1,21 +1,15 @@
-
 import React, { createContext, useContext, ReactNode } from 'react';
 
 interface StripeContextType {
-  // Placeholder for Stripe functionality
   initialized: boolean;
 }
 
 const StripeContext = createContext<StripeContextType | undefined>(undefined);
 
 export function StripeProvider({ children }: { children: ReactNode }) {
-  console.log('[StripeContext] Initializing...');
-  
   const value: StripeContextType = {
     initialized: true,
   };
-
-  console.log('[StripeContext] Initialized successfully');
 
   return <StripeContext.Provider value={value}>{children}</StripeContext.Provider>;
 }

@@ -8,37 +8,28 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { StripeProvider } from '@/contexts/StripeContext';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 
-console.log('[RootLayout] Module loaded');
-
 // Prevent splash screen from auto-hiding
-SplashScreen.preventAutoHideAsync().catch((err) => {
-  console.error('[RootLayout] SplashScreen error:', err);
+SplashScreen.preventAutoHideAsync().catch(() => {
+  // Ignore errors
 });
 
 export default function RootLayout() {
-  console.log('[RootLayout] Component rendering');
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    console.log('[RootLayout] Initializing app');
-    
     const initialize = async () => {
       try {
-        console.log('[RootLayout] Starting initialization...');
         // Small delay to ensure everything is loaded
         await new Promise(resolve => setTimeout(resolve, 100));
-        console.log('[RootLayout] Hiding splash screen...');
         await SplashScreen.hideAsync();
-        console.log('[RootLayout] App ready');
         setIsReady(true);
-      } catch (err: any) {
-        console.error('[RootLayout] Initialization error:', err);
+      } catch (err) {
         // Set ready even on error to prevent infinite loading
         setIsReady(true);
         try {
           await SplashScreen.hideAsync();
         } catch (e) {
-          console.error('[RootLayout] Failed to hide splash screen:', e);
+          // Ignore
         }
       }
     };
