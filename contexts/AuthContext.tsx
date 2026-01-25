@@ -58,11 +58,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Initialize auth state
   useEffect(() => {
+    console.log('AuthContext: Initializing authentication...');
     let subscription: any = null;
     let mounted = true;
 
     const initAuth = async () => {
       try {
+        console.log('AuthContext: Fetching session...');
+        
         // Get initial session with shorter timeout
         const sessionPromise = supabase.auth.getSession();
         const timeoutPromise = new Promise<any>((_, reject) => 
@@ -73,41 +76,58 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           sessionPromise,
           timeoutPromise
         ]).catch((err) => {
-          console.warn('Session fetch failed:', err);
+          console.warn('AuthContext: Session fetch failed:', err);
           return { data: { session: null }, error: err };
         });
         
-        if (!mounted) return;
+        if (!mounted) {
+          console.log('AuthContext: Component unmounted, aborting');
+          return;
+        }
         
         if (sessionError) {
-          console.warn('Auth session error:', sessionError.message);
+          console.warn('AuthContext: Session error:', sessionError.message);
+        }
+
+        if (session) {
+          console.log('AuthContext: Session found, user:', session.user.id);
+        } else {
+          console.log('AuthContext: No active session');
         }
 
         setSession(session);
         setUser(session?.user ?? null);
 
         if (session?.user) {
+          console.log('AuthContext: Fetching user profile...');
           await fetchProfile(session.user.id).catch((err) => {
-            console.warn('Profile fetch failed:', err);
+            console.warn('AuthContext: Profile fetch failed:', err);
           });
         }
         
-        if (!mounted) return;
+        if (!mounted) {
+          console.log('AuthContext: Component unmounted after profile fetch');
+          return;
+        }
         
+        console.log('AuthContext: Initialization complete');
         setIsLoading(false);
 
         // Listen for auth changes
         try {
+          console.log('AuthContext: Setting up auth state listener...');
           const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
             async (event, session) => {
               if (!mounted) return;
+              
+              console.log('AuthContext: Auth state changed:', event);
               
               setSession(session);
               setUser(session?.user ?? null);
 
               if (session?.user) {
                 await fetchProfile(session.user.id).catch((err) => {
-                  console.warn('Profile fetch failed:', err);
+                  console.warn('AuthContext: Profile fetch failed on auth change:', err);
                 });
               } else {
                 setProfile(null);
@@ -116,11 +136,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           );
 
           subscription = authSubscription;
+          console.log('AuthContext: Auth state listener active');
         } catch (err: any) {
-          console.warn('Auth state change listener failed:', err);
+          console.warn('AuthContext: Auth state change listener failed:', err);
         }
       } catch (err: any) {
-        console.error('Auth initialization error:', err);
+        console.error('AuthContext: Initialization error:', err);
         if (mounted) {
           setError(err.message || 'Failed to initialize authentication');
           setIsLoading(false);
@@ -131,12 +152,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     initAuth();
 
     return () => {
+      console.log('AuthContext: Cleaning up...');
       mounted = false;
       if (subscription?.unsubscribe) {
         try {
           subscription.unsubscribe();
+          console.log('AuthContext: Unsubscribed from auth changes');
         } catch (err) {
-          console.warn('Failed to unsubscribe from auth changes:', err);
+          console.warn('AuthContext: Failed to unsubscribe from auth changes:', err);
         }
       }
     };

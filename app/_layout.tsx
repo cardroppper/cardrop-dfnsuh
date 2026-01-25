@@ -3,9 +3,10 @@ import 'react-native-reanimated';
 import { Stack } from 'expo-router';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { StripeProvider } from '@/contexts/StripeContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { View, ActivityIndicator, StyleSheet } from 'react-native';
 
 // Keep the splash screen visible while we load resources
 SplashScreen.preventAutoHideAsync().catch((err) => {
@@ -13,16 +14,38 @@ SplashScreen.preventAutoHideAsync().catch((err) => {
 });
 
 export default function RootLayout() {
-  useEffect(() => {
-    // Hide splash screen after a short delay
-    const timer = setTimeout(() => {
-      SplashScreen.hideAsync().catch((err) => {
-        console.warn('Failed to hide splash screen:', err);
-      });
-    }, 1000);
+  const [isReady, setIsReady] = useState(false);
 
-    return () => clearTimeout(timer);
+  useEffect(() => {
+    console.log('RootLayout: Initializing app...');
+    
+    async function prepare() {
+      try {
+        // Add any initialization logic here
+        console.log('RootLayout: App initialization complete');
+        setIsReady(true);
+        
+        // Hide splash screen after initialization
+        await SplashScreen.hideAsync();
+      } catch (err) {
+        console.error('RootLayout: Initialization error:', err);
+        setIsReady(true); // Still set ready to show error boundary
+        await SplashScreen.hideAsync();
+      }
+    }
+
+    prepare();
   }, []);
+
+  if (!isReady) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#FF6B35" />
+      </View>
+    );
+  }
+
+  console.log('RootLayout: Rendering navigation stack');
 
   return (
     <ErrorBoundary>
@@ -73,3 +96,12 @@ export default function RootLayout() {
     </ErrorBoundary>
   );
 }
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: '#0A0A0A',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

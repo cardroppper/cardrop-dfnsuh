@@ -17,9 +17,19 @@ import { IconSymbol } from '@/components/IconSymbol';
 import { useDiscover } from '@/hooks/useDiscover';
 
 export default function DiscoverScreen() {
+  console.log('DiscoverScreen: Component rendered');
+  
   const { profile } = useAuth();
   const router = useRouter();
   const { vehicles, loading, refreshing, error, refresh } = useDiscover();
+  
+  console.log('DiscoverScreen: State:', {
+    vehicleCount: vehicles.length,
+    loading,
+    refreshing,
+    error,
+    hasProfile: !!profile,
+  });
 
   const renderVehicleCard = (vehicle: any, index: number) => {
     const specs = [];
