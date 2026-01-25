@@ -1,6 +1,14 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+
+console.log('[AuthContext] Module loading...');
+
 import { supabase } from '@/app/integrations/supabase/client';
+
+console.log('[AuthContext] Supabase client imported');
+
 import type { User, Session } from '@supabase/supabase-js';
+
+console.log('[AuthContext] Types imported');
 
 interface Profile {
   id: string;
@@ -29,11 +37,15 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  console.log('[AuthContext] AuthProvider rendering...');
+  
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
+  console.log('[AuthContext] State initialized');
 
   // Fetch user profile from database
   const fetchProfile = async (userId: string) => {

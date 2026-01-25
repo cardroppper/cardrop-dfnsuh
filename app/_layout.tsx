@@ -1,113 +1,22 @@
 import 'react-native-url-polyfill/auto';
 import 'react-native-reanimated';
 import { Stack } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
-import * as SplashScreen from 'expo-splash-screen';
-import { AuthProvider } from '@/contexts/AuthContext';
-import { StripeProvider } from '@/contexts/StripeContext';
-import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { View, Text, StyleSheet } from 'react-native';
 
-console.log('[RootLayout] Module loaded');
-
-// Prevent splash screen from auto-hiding
-SplashScreen.preventAutoHideAsync().catch((error) => {
-  console.log('[RootLayout] SplashScreen.preventAutoHideAsync failed:', error);
-});
+console.log('[RootLayout] Module loaded - simplified version');
 
 export default function RootLayout() {
-  const [isReady, setIsReady] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    console.log('[RootLayout] Initializing app...');
-    
-    const initializeApp = async () => {
-      try {
-        // Add a small delay to ensure everything is loaded
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
-        console.log('[RootLayout] App initialized successfully');
-        setIsReady(true);
-        
-        // Hide splash screen
-        await SplashScreen.hideAsync();
-        console.log('[RootLayout] Splash screen hidden');
-      } catch (err: any) {
-        console.error('[RootLayout] Initialization error:', err);
-        setError(err.message || 'Failed to initialize app');
-        setIsReady(true); // Still set ready to show error
-      }
-    };
-
-    initializeApp();
-  }, []);
-
-  // Show loading state
-  if (!isReady) {
-    console.log('[RootLayout] Showing loading state');
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#FF6B35" />
-        <Text style={styles.loadingText}>Loading CarDrop...</Text>
-      </View>
-    );
-  }
-
-  // Show error if initialization failed
-  if (error) {
-    console.log('[RootLayout] Showing error state:', error);
-    return (
-      <View style={styles.errorContainer}>
-        <Text style={styles.errorTitle}>⚠️ Initialization Error</Text>
-        <Text style={styles.errorText}>{error}</Text>
-      </View>
-    );
-  }
-
-  console.log('[RootLayout] Rendering main app');
+  console.log('[RootLayout] Rendering');
   
   return (
-    <ErrorBoundary>
-      <AuthProvider>
-        <StripeProvider>
-          <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="index" />
-            <Stack.Screen name="(auth)" />
-            <Stack.Screen name="(tabs)" />
-            <Stack.Screen name="clubs" />
-            <Stack.Screen name="vehicles" />
-            <Stack.Screen name="messages" />
-            <Stack.Screen name="subscription" />
-            <Stack.Screen name="dev" />
-            <Stack.Screen 
-              name="modal" 
-              options={{ presentation: 'modal' }} 
-            />
-            <Stack.Screen 
-              name="formsheet" 
-              options={{ 
-                presentation: 'formSheet',
-                sheetGrabberVisible: true,
-                sheetAllowedDetents: [0.5, 0.8, 1.0],
-                sheetCornerRadius: 20
-              }} 
-            />
-            <Stack.Screen 
-              name="transparent-modal" 
-              options={{ 
-                presentation: 'transparentModal',
-                headerShown: false 
-              }} 
-            />
-            <Stack.Screen 
-              name="subscription-management" 
-              options={{ presentation: 'modal' }} 
-            />
-          </Stack>
-        </StripeProvider>
-      </AuthProvider>
-    </ErrorBoundary>
+    <View style={styles.container}>
+      <Text style={styles.text}>CarDrop Loading...</Text>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(tabs)" />
+      </Stack>
+    </View>
   );
 }
 

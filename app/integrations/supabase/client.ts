@@ -15,11 +15,14 @@ if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
 }
 
 console.log('[Supabase] Configuration validated');
+console.log('[Supabase] URL:', SUPABASE_URL);
+console.log('[Supabase] Key length:', SUPABASE_PUBLISHABLE_KEY.length);
 
 // Create Supabase client with error handling
 let supabase: ReturnType<typeof createClient<Database>>;
 
 try {
+  console.log('[Supabase] Creating client with AsyncStorage...');
   supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
     auth: {
       storage: AsyncStorage,
@@ -31,6 +34,7 @@ try {
   console.log('[Supabase] Client created successfully');
 } catch (error: any) {
   console.error('[Supabase] Failed to create client:', error);
+  console.error('[Supabase] Error details:', error.message, error.stack);
   throw error;
 }
 
