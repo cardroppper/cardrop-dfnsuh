@@ -66,11 +66,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     console.log('[AuthContext] Initializing auth state');
     
     let subscription: any = null;
+    let mounted = true;
 
     const initAuth = async () => {
       try {
-        // Get initial session
-        const { data: { session }, error } = await supabase.auth.getSession();
+        console.log('[AuthContext] Getting initial session...');
+        
+        // Get initial session with timeout
+        const sessionPromise = supabase.auth.getSession();
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Session fetch timeout')), 10000)
+        );
+        
+        const { data: { session }, error } = await Promise.race([
+          sessionPromise,
+          timeoutPromise
+        ]) as any;
+        
+        if (!mounted) {
+          console.log('[AuthContext] Component unmounted, aborting');
+          return;
+        }
         
         if (error) {
           console.error('[AuthContext] Error getting session:', error);
@@ -84,15 +100,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(session?.user ?? null);
 
         if (session?.user) {
+          console.log('[AuthContext] Fetching user profile...');
           await fetchProfile(session.user.id);
         }
         
+        if (!mounted) return;
+        
+        console.log('[AuthContext] Setting up auth listener...');
         setIsLoading(false);
 
         // Listen for auth changes
         const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange(
           async (event, session) => {
             console.log('[AuthContext] Auth state changed:', event);
+            if (!mounted) return;
+            
             setSession(session);
             setUser(session?.user ?? null);
 
@@ -105,16 +127,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         );
 
         subscription = authSubscription;
+        console.log('[AuthContext] Initialization complete');
       } catch (err: any) {
         console.error('[AuthContext] Initialization error:', err);
-        setError(err.message || 'Failed to initialize authentication');
-        setIsLoading(false);
+        if (mounted) {
+          setError(err.message || 'Failed to initialize authentication');
+          setIsLoading(false);
+        }
       }
     };
 
     initAuth();
 
     return () => {
+      console.log('[AuthContext] Cleaning up...');
+      mounted = false;
       if (subscription) {
         subscription.unsubscribe();
       }
