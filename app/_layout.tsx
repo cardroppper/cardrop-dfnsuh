@@ -3,6 +3,9 @@ import { Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
+import { AuthProvider } from '@/contexts/AuthContext';
+import { StripeProvider } from '@/contexts/StripeContext';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 // Import URL polyfill for Supabase (must be before any Supabase imports)
 import 'react-native-url-polyfill/auto';
@@ -27,14 +30,7 @@ export default function RootLayout() {
     
     const initialize = async () => {
       try {
-        console.log('[RootLayout] Loading contexts...');
-        
-        // Dynamically import contexts to catch any initialization errors
-        const { AuthProvider } = await import('@/contexts/AuthContext');
-        const { StripeProvider } = await import('@/contexts/StripeContext');
-        const { ErrorBoundary } = await import('@/components/ErrorBoundary');
-        
-        console.log('[RootLayout] Contexts loaded successfully');
+        console.log('[RootLayout] Starting initialization...');
         
         // Give the app a moment to initialize
         await new Promise(resolve => setTimeout(resolve, 100));
@@ -84,11 +80,6 @@ export default function RootLayout() {
   }
 
   console.log('[RootLayout] Rendering app structure');
-
-  // Lazy load providers
-  const { AuthProvider } = require('@/contexts/AuthContext');
-  const { StripeProvider } = require('@/contexts/StripeContext');
-  const { ErrorBoundary } = require('@/components/ErrorBoundary');
 
   return (
     <ErrorBoundary>
