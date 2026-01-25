@@ -313,3 +313,24 @@ Performance optimizations: OFF.
 [2026-01-25T11:52:18.696Z] [Web] [LOG] RootLayout: Rendering navigation stack
 [2026-01-25T11:52:19.590Z] [Web] [WARN] RootLayout: Failsafe timeout - forcing isReady to true
 [2026-01-25T11:52:20.722Z] [Web] [WARN] AuthContext: Failsafe timeout - forcing isLoading to false
+[2026-01-25T11:55:02.858Z] [Web] [ERROR] [index.ts.bundle?platform=web&dev=true&hot=false&lazy=true&transform.engine=hermes&transform.routerRoot=app&unstable_transformProfile=hermes-stable:73591:5] RUNTIME ERROR: Uncaught Error: InternalError Metro has encountered an error: Got unexpected undefined: /expo-project/node_modules/.pnpm/nullthrows@1.1.1/node_modules/nullthrows/nullthrows.js (7:15)
+
+[0m [90m  5 |[39m     [36mreturn[39m x[33m;[39m
+ [90m  6 |[39m   }
+[31m[1m>[22m[39m[90m  7 |[39m   [36mvar[39m error [33m=[39m [36mnew[39m [33mError[39m(message [33m!==[39m undefined [33m?[39m message [33m:[39m [32m'Got unexpected '[39m [33m+[39m x)[33m;[39m
+ [90m    |[39m               [31m[1m^[22m[39m
+ [90m  8 |[39m   error[33m.[39mframesToPop [33m=[39m [35m1[39m[33m;[39m [90m// Skip nullthrows's own stack frame.[39m
+ [90m  9 |[39m   [36mthrow[39m error[33m;[39m
+ [90m 10 |[39m }[0m at index.ts.bundle?platform=web&dev=true&hot=false&lazy=true&transform.engine=hermes&transform.routerRoot=app&unstable_transformProfile=hermes-stable:73591:5
+[2026-01-25T11:55:04.398Z] [Web] [ERROR] [index.ts.bundle?platform=web&dev=true&hot=false&lazy=true&transform.engine=hermes&transform.routerRoot=app&unstable_transformProfile=hermes-stable:73591:5] RUNTIME ERROR: Uncaught Error: UnableToResolveError Unable to resolve module ../components/PaywallScreen from /expo-project/app/subscription-management.tsx: 
+
+None of these files exist:
+  * components/PaywallScreen(.web.ts|.ts|.web.tsx|.tsx|.web.mjs|.mjs|.web.js|.js|.web.jsx|.jsx|.web.json|.json|.web.cjs|.cjs|.web.scss|.scss|.web.sass|.sass|.web.css|.css)
+  * components/PaywallScreen
+[0m [90m 16 |[39m [36mimport[39m { colors[33m,[39m buttonStyles } [36mfrom[39m [32m'@/styles/commonStyles'[39m[33m;[39m
+ [90m 17 |[39m [36mimport[39m { useSubscription } [36mfrom[39m [32m'@/hooks/useSubscription'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 18 |[39m [36mimport[39m { [33mPaywallScreen[39m } [36mfrom[39m [32m'@/components/PaywallScreen'[39m[33m;[39m
+ [90m    |[39m [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 19 |[39m
+ [90m 20 |[39m [36mexport[39m [36mdefault[39m [36mfunction[39m [33mSubscriptionManagementScreen[39m() {
+ [90m 21 |[39m   [36mconst[39m { subscription } [33m=[39m useSubscription()[33m;[39m[0m at index.ts.bundle?platform=web&dev=true&hot=false&lazy=true&transform.engine=hermes&transform.routerRoot=app&unstable_transformProfile=hermes-stable:73591:5
