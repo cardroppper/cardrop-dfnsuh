@@ -1,8 +1,7 @@
-
 {
   "expo": {
     "name": "CarDrop",
-    "slug": "cardrop-dfnsuh",
+    "slug": "CarDrop",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
@@ -75,5 +74,6 @@
       "typedRoutes": true
     },
     "extra": {}
-  }
+  },
+  "scheme": "CarDrop"
 }
