@@ -17,14 +17,22 @@ if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
 
 console.log('[Supabase] Configuration validated, creating client...');
 
-// Create Supabase client
-export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-  auth: {
-    storage: AsyncStorage,
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: false,
-  },
-});
+// Create Supabase client with error handling
+let supabaseClient: ReturnType<typeof createClient<Database>>;
 
-console.log('[Supabase] Client created successfully');
+try {
+  supabaseClient = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+    auth: {
+      storage: AsyncStorage,
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: false,
+    },
+  });
+  console.log('[Supabase] Client created successfully');
+} catch (error: any) {
+  console.error('[Supabase] Failed to create client:', error);
+  throw new Error(`Failed to initialize Supabase: ${error?.message || 'Unknown error'}`);
+}
+
+export const supabase = supabaseClient;

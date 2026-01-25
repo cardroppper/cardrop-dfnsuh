@@ -3,6 +3,15 @@ import React, { Component, ReactNode, ErrorInfo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors } from '@/styles/commonStyles';
 
+// Safely check if we're in dev mode
+const isDevMode = (): boolean => {
+  try {
+    return typeof __DEV__ !== 'undefined' && __DEV__ === true;
+  } catch {
+    return false;
+  }
+};
+
 interface Props {
   children: ReactNode;
 }
@@ -58,7 +67,7 @@ export class ErrorBoundary extends Component<Props, State> {
             {this.state.error?.message || 'An unexpected error occurred'}
           </Text>
           
-          {__DEV__ && this.state.errorInfo && (
+          {isDevMode() && this.state.errorInfo && (
             <View style={styles.debugContainer}>
               <Text style={styles.debugTitle}>Debug Info:</Text>
               <Text style={styles.debugText}>

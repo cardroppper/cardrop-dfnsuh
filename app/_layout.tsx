@@ -1,21 +1,56 @@
-
 import { Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 
+console.log('[RootLayout] Starting module load...');
+
 // Import URL polyfill for Supabase (must be before any Supabase imports)
-import 'react-native-url-polyfill/auto';
+try {
+  require('react-native-url-polyfill/auto');
+  console.log('[RootLayout] URL polyfill loaded');
+} catch (error) {
+  console.error('[RootLayout] Failed to load URL polyfill:', error);
+}
 
 // Import reanimated to ensure it's included in the bundle
-import 'react-native-reanimated';
+try {
+  require('react-native-reanimated');
+  console.log('[RootLayout] Reanimated loaded');
+} catch (error) {
+  console.error('[RootLayout] Failed to load reanimated:', error);
+}
 
 // Import providers directly (no lazy loading to avoid build issues)
-import { AuthProvider } from '@/contexts/AuthContext';
-import { StripeProvider } from '@/contexts/StripeContext';
-import { ErrorBoundary } from '@/components/ErrorBoundary';
+let AuthProvider: any;
+let StripeProvider: any;
+let ErrorBoundary: any;
 
-console.log('[RootLayout] Module loaded');
+try {
+  const authModule = require('@/contexts/AuthContext');
+  AuthProvider = authModule.AuthProvider;
+  console.log('[RootLayout] AuthProvider loaded');
+} catch (error) {
+  console.error('[RootLayout] Failed to load AuthProvider:', error);
+}
+
+try {
+  const stripeModule = require('@/contexts/StripeContext');
+  StripeProvider = stripeModule.StripeProvider;
+  console.log('[RootLayout] StripeProvider loaded');
+} catch (error) {
+  console.error('[RootLayout] Failed to load StripeProvider:', error);
+}
+
+try {
+  const errorBoundaryModule = require('@/components/ErrorBoundary');
+  ErrorBoundary = errorBoundaryModule.ErrorBoundary;
+  console.log('[RootLayout] ErrorBoundary loaded');
+} catch (error) {
+  console.error('[RootLayout] Failed to load ErrorBoundary:', error);
+}
+
+console.log('[RootLayout] Module loaded successfully');
 
 // Prevent splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync().catch((err) => {
@@ -70,48 +105,76 @@ export default function RootLayout() {
 
   console.log('[RootLayout] Rendering app structure');
 
-  return (
-    <ErrorBoundary>
-      <AuthProvider>
-        <StripeProvider>
-          <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="index" />
-            <Stack.Screen name="(auth)" />
-            <Stack.Screen name="(tabs)" />
-            <Stack.Screen name="clubs" />
-            <Stack.Screen name="vehicles" />
-            <Stack.Screen name="messages" />
-            <Stack.Screen name="subscription" />
-            <Stack.Screen name="dev" />
-            <Stack.Screen 
-              name="modal" 
-              options={{ presentation: 'modal' }} 
-            />
-            <Stack.Screen 
-              name="formsheet" 
-              options={{ 
-                presentation: 'formSheet',
-                sheetGrabberVisible: true,
-                sheetAllowedDetents: [0.5, 0.8, 1.0],
-                sheetCornerRadius: 20
-              }} 
-            />
-            <Stack.Screen 
-              name="transparent-modal" 
-              options={{ 
-                presentation: 'transparentModal',
-                headerShown: false 
-              }} 
-            />
-            <Stack.Screen 
-              name="subscription-management" 
-              options={{ presentation: 'modal' }} 
-            />
-          </Stack>
-        </StripeProvider>
-      </AuthProvider>
-    </ErrorBoundary>
-  );
+  // Check if providers loaded successfully
+  if (!AuthProvider || !StripeProvider || !ErrorBoundary) {
+    console.error('[RootLayout] Missing required providers');
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorTitle}>⚠️ App Failed to Initialize</Text>
+        <Text style={styles.errorText}>Required components failed to load</Text>
+        <Text style={styles.errorDetail}>
+          {!AuthProvider && 'AuthProvider missing. '}
+          {!StripeProvider && 'StripeProvider missing. '}
+          {!ErrorBoundary && 'ErrorBoundary missing.'}
+        </Text>
+      </View>
+    );
+  }
+
+  try {
+    return (
+      <ErrorBoundary>
+        <AuthProvider>
+          <StripeProvider>
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="index" />
+              <Stack.Screen name="(auth)" />
+              <Stack.Screen name="(tabs)" />
+              <Stack.Screen name="clubs" />
+              <Stack.Screen name="vehicles" />
+              <Stack.Screen name="messages" />
+              <Stack.Screen name="subscription" />
+              <Stack.Screen name="dev" />
+              <Stack.Screen 
+                name="modal" 
+                options={{ presentation: 'modal' }} 
+              />
+              <Stack.Screen 
+                name="formsheet" 
+                options={{ 
+                  presentation: 'formSheet',
+                  sheetGrabberVisible: true,
+                  sheetAllowedDetents: [0.5, 0.8, 1.0],
+                  sheetCornerRadius: 20
+                }} 
+              />
+              <Stack.Screen 
+                name="transparent-modal" 
+                options={{ 
+                  presentation: 'transparentModal',
+                  headerShown: false 
+                }} 
+              />
+              <Stack.Screen 
+                name="subscription-management" 
+                options={{ presentation: 'modal' }} 
+              />
+            </Stack>
+          </StripeProvider>
+        </AuthProvider>
+      </ErrorBoundary>
+    );
+  } catch (error: any) {
+    console.error('[RootLayout] Fatal error rendering app:', error);
+    console.error('[RootLayout] Error stack:', error?.stack);
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorTitle}>⚠️ App Failed to Load</Text>
+        <Text style={styles.errorText}>{error?.message || 'Unknown error'}</Text>
+        <Text style={styles.errorDetail}>Please restart the app</Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -136,21 +199,22 @@ const styles = StyleSheet.create({
   },
   errorTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: 'bold' as const,
     color: '#FFFFFF',
     marginBottom: 16,
-    textAlign: 'center',
+    textAlign: 'center' as const,
   },
   errorText: {
     fontSize: 16,
     color: '#FF4444',
-    textAlign: 'center',
+    textAlign: 'center' as const,
     lineHeight: 24,
     marginBottom: 12,
   },
   errorDetail: {
     fontSize: 14,
     color: '#A0A0A0',
-    textAlign: 'center',
+    textAlign: 'center' as const,
+    lineHeight: 20,
   },
 });

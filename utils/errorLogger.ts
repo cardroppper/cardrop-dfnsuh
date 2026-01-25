@@ -2,10 +2,19 @@
 // Captures console.log/warn/error and sends to Natively server for AI debugging
 
 // Declare __DEV__ global (React Native global for development mode detection)
-declare const __DEV__: boolean;
+declare const __DEV__: boolean | undefined;
 
 import { Platform } from "react-native";
 import Constants from "expo-constants";
+
+// Helper to safely check if we're in dev mode
+const isDevMode = (): boolean => {
+  try {
+    return typeof __DEV__ !== 'undefined' && __DEV__ === true;
+  } catch {
+    return false;
+  }
+};
 
 // Simple debouncing to prevent duplicate logs
 const recentLogs: { [key: string]: boolean } = {};
@@ -276,7 +285,7 @@ const stringifyArgs = (args: any[]): string => {
 
 export const setupErrorLogging = () => {
   // Don't initialize in production builds - no need for log forwarding
-  if (!__DEV__) {
+  if (!isDevMode()) {
     return;
   }
 
@@ -361,6 +370,6 @@ export const setupErrorLogging = () => {
 
 // Auto-initialize logging when this module is imported
 // Only run in development mode - production apps don't need log forwarding
-if (__DEV__) {
+if (isDevMode()) {
   setupErrorLogging();
 }
