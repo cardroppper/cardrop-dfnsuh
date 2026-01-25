@@ -1,3 +1,4 @@
+
 {
   "expo": {
     "name": "CarDrop",
@@ -6,9 +7,7 @@
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": false,
-    "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
@@ -26,7 +25,6 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.cardrop.CarDrop",
       "buildNumber": "1",
-      "icon": "./assets/icon-ios.png",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSLocationWhenInUseUsageDescription": "CarDrop needs your location to show nearby vehicles and events.",
@@ -47,13 +45,11 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.CARDROP.CarDrop",
       "versionCode": 1,
-      "icon": "./assets/icon.png",
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
@@ -67,8 +63,7 @@
       ]
     },
     "web": {
-      "bundler": "metro",
-      "favicon": "./assets/icon.png"
+      "bundler": "metro"
     },
     "scheme": "cardrop",
     "plugins": [

@@ -33,3 +33,38 @@ Performance optimizations: OFF.
 [2026-01-25T11:12:08.853Z] [Web] [LOG] Index: Unmounting
 [2026-01-25T11:12:09.697Z] [Web] [WARN] RootLayout: Failsafe timeout - forcing isReady to true
 [2026-01-25T11:12:10.847Z] [Web] [WARN] AuthContext: Failsafe timeout - forcing isLoading to false
+[2026-01-25T11:20:18.613Z] [Web] [LOG] Supabase: Initializing client...
+[2026-01-25T11:20:18.615Z] [Web] [LOG] Supabase: Client initialized successfully
+[2026-01-25T11:20:18.811Z] [Web] [LOG] Index: Auth state: {"isLoading":true,"isAuthenticated":false,"hasUser":false,"hasProfile":false,"error":null}
+[2026-01-25T11:20:18.596Z] [Web] [LOG] App: Expo Router entry point loaded
+[2026-01-25T11:20:18.792Z] [Web] [LOG] RootLayout: Rendering navigation stack
+[2026-01-25T11:20:18.801Z] [Web] [LOG] Index: Showing loading screen
+[2026-01-25T11:20:18.546Z] [Web] [LOG] Running application "main" with appParams:
+ {"rootTag":"#root"} 
+Development-level warnings: ON.
+Performance optimizations: OFF.
+[2026-01-25T11:20:18.676Z] [Web] [LOG] RootLayout: Showing loading screen
+[2026-01-25T11:20:18.788Z] [Web] [LOG] RootLayout: Splash screen hidden
+[2026-01-25T11:20:18.826Z] [Web] [LOG] AuthContext: Setting up auth state listener...
+[2026-01-25T11:20:18.826Z] [Web] [LOG] AuthContext: No active session
+[2026-01-25T11:20:18.808Z] [Web] [LOG] Index: Mounted
+[2026-01-25T11:20:18.657Z] [Web] [WARN] Route "./integrations/supabase/client.ts" is missing the required default export. Ensure a React component is exported as default.
+[2026-01-25T11:20:18.596Z] [Web] [LOG] App: Starting Expo Router entry point...
+[2026-01-25T11:20:18.657Z] [Web] [WARN] Route "./integrations/supabase/types.ts" is missing the required default export. Ensure a React component is exported as default.
+[2026-01-25T11:20:18.819Z] [Web] [LOG] AuthContext: Checking for existing session...
+[2026-01-25T11:20:18.851Z] [Web] [LOG] LoginScreen: Component rendered
+[2026-01-25T11:20:18.787Z] [Web] [LOG] RootLayout: Initialization complete
+[2026-01-25T11:20:18.683Z] [Web] [LOG] RootLayout: Initializing app...
+[2026-01-25T11:20:18.815Z] [Web] [LOG] AuthContext: Initializing authentication...
+[2026-01-25T11:20:18.620Z] [Web] [LOG] [BLEService] Web platform detected, BLE not available
+[2026-01-25T11:20:18.826Z] [Web] [LOG] AuthContext: Setting isLoading to false
+[2026-01-25T11:20:18.683Z] [Web] [LOG] RootLayout: Starting initialization...
+[2026-01-25T11:20:18.732Z] [Web] [LOG] [BLEService] BLE not supported on this platform or module not loaded
+[2026-01-25T11:20:18.832Z] [Web] [LOG] Index: Unmounting
+[2026-01-25T11:20:18.838Z] [Web] [LOG] Index: Auth state: {"isLoading":false,"isAuthenticated":false,"hasUser":false,"hasProfile":false,"error":null}
+[2026-01-25T11:20:18.848Z] [Web] [LOG] AuthLayout: Rendering auth navigation stack
+[2026-01-25T11:20:18.841Z] [Web] [LOG] AuthContext: Auth state changed: INITIAL_SESSION
+[2026-01-25T11:20:18.827Z] [Web] [LOG] AuthContext: Auth state listener active
+[2026-01-25T11:20:18.828Z] [Web] [LOG] Index: User not authenticated, redirecting to login
+[2026-01-25T11:20:19.698Z] [Web] [WARN] RootLayout: Failsafe timeout - forcing isReady to true
+[2026-01-25T11:20:20.823Z] [Web] [WARN] AuthContext: Failsafe timeout - forcing isLoading to false
